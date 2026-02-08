@@ -1,6 +1,17 @@
 === Comando
 Descripcion de comando
 
+:category: nombre_directorio
+[.metadata]
+{
+  "description": "Descripción breve del comando y su función principal.",
+  "usage": "comando [OPCIONES] otros parametros",
+  "options": {
+    "-parametro1": "Descripción del parámetro 1",
+    "-parametro2": "Descripción del parámetro 2"
+  }
+}
+
 [source,shell]
 ----
 # Ejemplo comentario describiendo accion del comando

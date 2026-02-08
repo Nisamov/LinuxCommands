@@ -3,103 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LinuxCommands | Guía de Apoyo sobre Linux</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>LinuxCommands</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles/style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="canonical" href="https://github.com/Nisamov/LinuxCommands">
-<meta name="description" content="LinuxCommands es un repositorio práctico con comandos Linux explicados, ejemplos reales y utilidades para usuarios, programadores y administradores de sistemas. Aprende Bash, terminal y administración Linux paso a paso.">
-<meta name="keywords" content="linux,comandos linux,linux commands,bash,terminal linux,guía linux,administración linux,sysadmin,devops,shell script,bash scripting,aprende linux,linux para principiantes,linux avanzado,open source,software libre,github linux,herramientas linux,manual linux">
-<meta name="author" content="Nisamov, Andrés Ruslan Abadías Otal">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="LinuxCommands | Comandos y Servicios Linux">
-<meta property="og:description" content="LinuxCommands es un repositorio creado para servir como guía y apoyo a usuarios o administradores de sistemas Linux">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://github.com/Nisamov/LinuxCommands">
-<meta property="og:site_name" content="LinuxCommands">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LinuxCommands | Aprende comandos Linux">
-<meta name="twitter:description" content="Colección práctica de comandos Linux, Bash y administración de sistemas para aprender y trabajar mejor en la terminal.">
-<meta http-equiv="Content-Language" content="es-ES">
-<meta property="og:image" content="https://raw.githubusercontent.com/Nisamov/LinuxCommands/main/.github/media/LinuxCommandsWhiteTheme.png">
-<meta property="og:image:alt" content="LinuxCommands - Guía práctica de comandos y servicios Linux">
-<meta name="theme-color" content="#0f172a">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareSourceCode",
-  "name": "LinuxCommands",
-  "description": "Repositorio práctico con comandos Linux, ejemplos reales y recursos para aprender Bash y administración de sistemas.",
-  "programmingLanguage": "Shell",
-  "operatingSystem": "Linux",
-  "applicationCategory": "DeveloperTool",
-  "isAccessibleForFree": true,
-  "author": {
-    "@type": "Person",
-    "name": "Nisamov"
-  },
-  "codeRepository": "https://github.com/Nisamov/LinuxCommands",
-  "license": "https://opensource.org/licenses",
-  "keywords": "linux, comandos linux, linux commands, bash, terminal linux, guía linux, administración linux, sysadmin, devops, shell script, bash scripting, aprende linux, linux para principiantes, linux avanzado, open source, software libre, github linux, herramientas linux, manual linux, commands, services, dhcp, netplan, codespace, code, admin, service, shell, cheatsheet"
-}
-</script>
 </head>
 <body>
 <nav class="sidebar">
     <div class="sidebar-header">
-        <div class="logo">
-            <i class="fab fa-linux"></i>
-            <h2>
-                <a href="https://github.com/Nisamov/LinuxCommands" title="Acceder a LinuxCommands">LinuxCommands</a>
-            </h2>
-        </div>
+        <h2>LinuxCommands</h2>
         <p class="subtitle">Documentación Técnica</p>
-        <div class="github-badge">
-            <a href="https://github.com/Nisamov/LinuxCommands" class="github-link">
-                <i class="fab fa-github"></i> Ver en GitHub
-            </a>
-            <span class="stars">
-                <i class="fas fa-star"></i> Star
-            </span>
-        </div>
     </div>
     <ul>
-        <li><a href="#objetivos"><i class="fas fa-bullseye"></i> Objetivos</a></li>
-        <li><a href="#enfoque"><i class="fas fa-compass"></i> Enfoque</a></li>
-        <li><a href="#estructura"><i class="fas fa-sitemap"></i> Estructura</a></li>
-        <li><a href="#descargas"><i class="fas fa-download"></i> Descargas</a></li>
-        <li><a href="#generacion"><i class="fas fa-file-code"></i> Generación HTML/PDF</a></li>
-        <li><a href="#contribuciones"><i class="fas fa-users"></i> Contribuciones</a></li>
+        <li><a href="#objetivos">Objetivos</a></li>
+        <li><a href="#enfoque">Enfoque</a></li>
+        <li><a href="#estructura">Estructura</a></li>
+        <li><a href="#generacion">Generación HTML/PDF</a></li>
+        <li><a href="#contribuciones">Contribuciones</a></li>
+        <li><a href="https://github.com/Nisamov">Perfil GitHub</a></li>
+        <li><a href="https://kernel.org/">Kernel Linux</a></li>
+        <li><a href="search.html">Buscador</a></li>
     </ul>
-    <div class="sidebar-footer">
-        <p><strong>Enlaces rápidos</strong></p>
-        <ul class="quick-links">
-            <li><a href="https://github.com/Nisamov"><i class="fas fa-user"></i> Perfil GitHub</a></li>
-            <li><a href="https://kernel.org/"><i class="fas fa-cog"></i> Kernel Linux</a></li>
-            <li><a href="https://github.com/Nisamov/LinuxCommands/releases"><i class="fas fa-tag"></i> Releases</a></li>
-        </ul>
-    </div>
 </nav>
-
 <div class="content">
 <header>
-    <div class="header-content">
-        <h1><i class="fab fa-linux"></i> LinuxCommands</h1>
-        <p class="subtitle">Estructura y referencia para documentar comandos y servicios en Linux</p>
-        <div class="header-badges">
-            <span class="badge"><i class="fas fa-code"></i> Shell Script</span>
-            <span class="badge"><i class="fas fa-server"></i> SysAdmin</span>
-            <span class="badge"><i class="fas fa-shield-alt"></i> DevOps</span>
-            <span class="badge"><i class="fas fa-book"></i> Documentación</span>
-        </div>
-    </div>
+    <h1>LinuxCommands</h1>
+    <p class="subtitle">Estructura y referencia para documentar comandos y servicios en Linux</p>
 </header>
 
 <main>
 <section id="objetivos" class="section">
-    <h2><i class="fas fa-bullseye"></i> Objetivos del proyecto</h2>
+    <h2>Objetivos del proyecto</h2>
     <ul>
         <li>Establecer un <strong>formato estándar y reutilizable</strong> para documentar comandos Linux.</li>
         <li>Facilitar documentación <strong>legible, clara y mantenible</strong>.</li>
@@ -109,7 +42,7 @@
 </section>
 
 <section id="enfoque" class="section">
-    <h2><i class="fas fa-compass"></i> Enfoque</h2>
+    <h2>Enfoque</h2>
     <p>LinuxCommands no sustituye herramientas como <code>man</code> o páginas oficiales, sino que complementa la documentación mediante:</p>
     <ul>
         <li>Ficheros <code>commands.md</code> organizados por categorías.</li>
@@ -120,173 +53,27 @@
 </section>
 
 <section id="estructura" class="section">
-    <h2><i class="fas fa-sitemap"></i> Estructura del repositorio</h2>
+    <h2>Estructura del repositorio</h2>
     <p>El repositorio se organiza en módulos principales:</p>
-    <div class="modules-grid">
-        <div class="module-card">
-            <i class="fas fa-folder"></i>
-            <h3>document_management</h3>
-            <p>Comandos y documentación centralizada</p>
-        </div>
-        <div class="module-card">
-            <i class="fas fa-book"></i>
-            <h3>fundamentals</h3>
-            <p>Conceptos básicos y estructura del sistema</p>
-        </div>
-        <div class="module-card">
-            <i class="fas fa-network-wired"></i>
-            <h3>networking</h3>
-            <p>Configuración de red, herramientas y servicios</p>
-        </div>
-        <div class="module-card">
-            <i class="fas fa-lock"></i>
-            <h3>permission_management</h3>
-            <p>Control de permisos y ACLs</p>
-        </div>
-        <div class="module-card">
-            <i class="fas fa-terminal"></i>
-            <h3>scripting</h3>
-            <p>Scripts de Bash y eBPF con ejemplos</p>
-        </div>
-        <div class="module-card">
-            <i class="fas fa-shield-alt"></i>
-            <h3>security</h3>
-            <p>Seguridad, canales seguros, VPNs y proxies</p>
-        </div>
-        <div class="module-card">
-            <i class="fas fa-cogs"></i>
-            <h3>services</h3>
-            <p>Gestión de servicios</p>
-        </div>
-        <div class="module-card">
-            <i class="fas fa-cogs"></i>
-            <h3>processes</h3>
-            <p>Gestión de procesos</p>
-        </div>
-        <div class="module-card">
-            <i class="fas fa-box"></i>
-            <h3>software_management</h3>
-            <p>Instalación y gestión de paquetes</p>
-        </div>
-        <div class="module-card">
-            <i class="fas fa-hdd"></i>
-            <h3>storage</h3>
-            <p>Backup, RAID, particiones y gestión de volúmenes</p>
-        </div>
-        <div class="module-card">
-            <i class="fas fa-users"></i>
-            <h3>user_permissions</h3>
-            <p>Gestión de usuarios y grupos</p>
-        </div>
-        <div class="module-card">
-            <i class="fas fa-server"></i>
-            <h3>web_server</h3>
-            <p>Documentación de Apache, Nginx y WordPress</p>
-        </div>
-    </div>
-</section>
-
-<section id="descargas" class="section">
-    <h2><i class="fas fa-download"></i> Descargar Documentación en PDF</h2>
-    <p>La documentación está disponible en múltiples idiomas. Puedes descargar la versión PDF generada automáticamente desde las releases del repositorio:</p>
-    
-    <div class="download-grid">
-        <div class="download-card">
-            <div class="flag-icon">🇪🇸</div>
-            <h3>Español</h3>
-            <p>Versión completa en español</p>
-            <a href="https://github.com/Nisamov/LinuxCommands/releases/download/v1.0/LinuxCommands_ES.pdf" class="download-btn">
-                <i class="fas fa-download"></i> Descargar
-            </a>
-        </div>
-        
-        <div class="download-card">
-            <div class="flag-icon">🇺🇸</div>
-            <h3>English</h3>
-            <p>Complete English version</p>
-            <a href="https://github.com/Nisamov/LinuxCommands/releases/download/v1.0/LinuxCommands_EN.pdf" class="download-btn">
-                <i class="fas fa-download"></i> Download
-            </a>
-        </div>
-        
-        <div class="download-card">
-            <div class="flag-icon">🇫🇷</div>
-            <h3>Français</h3>
-            <p>Version complète en français</p>
-            <a href="https://github.com/Nisamov/LinuxCommands/releases/download/v1.0/LinuxCommands_FR.pdf" class="download-btn">
-                <i class="fas fa-download"></i> Télécharger
-            </a>
-        </div>
-
-        <div class="download-card">
-            <div class="flag-icon">🇵🇹</div>
-            <h3>Português</h3>
-            <p>Versão completa em português</p>
-            <a href="https://github.com/Nisamov/LinuxCommands/releases/download/v1.0/LinuxCommands_PT.pdf" class="download-btn">
-                <i class="fas fa-download"></i> Baixar
-            </a>
-        </div>
-        
-        <div class="download-card">
-            <div class="flag-icon">🇩🇪</div>
-            <h3>Deutsch</h3>
-            <p>Komplette deutsche Version</p>
-            <a href="https://github.com/Nisamov/LinuxCommands/releases/download/v1.0/LinuxCommands_DE.pdf" class="download-btn">
-                <i class="fas fa-download"></i> Herunterladen
-            </a>
-        </div>
-        
-        <div class="download-card">
-            <div class="flag-icon">🇷🇺</div>
-            <h3>Русский</h3>
-            <p>Полная русская версия</p>
-            <a href="https://github.com/Nisamov/LinuxCommands/releases/download/v1.0/LinuxCommands_RU.pdf" class="download-btn">
-                <i class="fas fa-download"></i> Скачать
-            </a>
-        </div>
-        
-        <div class="download-card">
-            <div class="flag-icon">🇨🇳</div>
-            <h3>中文</h3>
-            <p>完整中文版本</p>
-            <a href="https://github.com/Nisamov/LinuxCommands/releases/download/v1.0/LinuxCommands_ZH.pdf" class="download-btn">
-                <i class="fas fa-download"></i> 下载
-            </a>
-        </div>
-        
-        <div class="download-card">
-            <div class="flag-icon">🇯🇵</div>
-            <h3>日本語</h3>
-            <p>完全な日本語版</p>
-            <a href="https://github.com/Nisamov/LinuxCommands/releases/download/v1.0/LinuxCommands_JA.pdf" class="download-btn">
-                <i class="fas fa-download"></i> をダウンロード
-            </a>
-        </div>
-        
-        <div class="download-card">
-            <div class="flag-icon">🇰🇷</div>
-            <h3>한국어</h3>
-            <p>완전한 한국어 버전</p>
-            <a href="https://github.com/Nisamov/LinuxCommands/releases/download/v1.0/LinuxCommands_KO.pdf" class="download-btn">
-                <i class="fas fa-download"></i> 다운로드
-            </a>
-        </div>
-    </div>
-    
-    <div class="releases-link">
-        <p><i class="fas fa-info-circle"></i> Todas las versiones están disponibles en la sección de <a href="https://github.com/Nisamov/LinuxCommands/releases">Releases del repositorio</a>.</p>
-    </div>
+    <ul>
+        <li><strong>document_management:</strong> Comandos y documentación centralizada.</li>
+        <li><strong>fundamentals:</strong> Conceptos básicos y estructura del sistema.</li>
+        <li><strong>networking:</strong> Configuración de red, herramientas y servicios.</li>
+        <li><strong>permission_management:</strong> Control de permisos y ACLs.</li>
+        <li><strong>scripting:</strong> Scripts de Bash y eBPF con ejemplos.</li>
+        <li><strong>security:</strong> Seguridad, canales seguros, VPNs y proxies.</li>
+        <li><strong>services:</strong> Gestión de servicios y procesos.</li>
+        <li><strong>software_management:</strong> Instalación y gestión de paquetes.</li>
+        <li><strong>storage:</strong> Backup, RAID, particiones y gestión de volúmenes.</li>
+        <li><strong>user_permissions:</strong> Gestión de usuarios y grupos.</li>
+        <li><strong>web_server:</strong> Documentación de Apache, Nginx y WordPress.</li>
+    </ul>
 </section>
 
 <section id="generacion" class="section">
-    <h2><i class="fas fa-file-code"></i> Generación de HTML / PDF</h2>
+    <h2>Generación de HTML / PDF</h2>
     <p>Se puede generar la documentación localmente usando <code>asciidoctor</code>:</p>
-    <div class="code-block">
-        <div class="code-header">
-            <span>Generar documentación localmente</span>
-            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
-        </div>
-        <pre><code># Instalar Asciidoctor
+    <pre><code># Instalar Asciidoctor
 gem install asciidoctor
 gem install asciidoctor-pdf
 
@@ -296,96 +83,27 @@ asciidoctor -b html5 document_management/index.adoc -o document_management/index
 # Generar PDF
 asciidoctor-pdf document_management/index.adoc -o document_management/LinuxCommands.pdf
 </code></pre>
-    </div>
     <p>Esta generación permite revisar la jerarquía y el índice centralizado antes de publicar.</p>
-    <p>También puedes acceder a los <a href="https://github.com/Nisamov/LinuxCommands/releases">documentos generados automáticamente</a> por el repositorio.</p>
 </section>
 
 <section id="contribuciones" class="section">
-    <h2><i class="fas fa-users"></i> Contribuciones</h2>
-    <div class="contributors-grid">
-        <div class="contributor-card">
-            <div class="contributor-avatar">👨‍💻</div>
-            <h3>Andrés Abadías</h3>
-            <p class="role">Creador</p>
-            <a href="https://github.com/Nisamov" class="github-link">
-                <i class="fab fa-github"></i> Nisamov
-            </a>
-        </div>
-        <div class="contributor-card">
-            <div class="contributor-avatar">👩‍🏫</div>
-            <h3>Clara Cirac Nerín</h3>
-            <p class="role">Profesora</p>
-        </div>
-        <div class="contributor-card">
-            <div class="contributor-avatar">👨‍🏫</div>
-            <h3>Juan Palacios Pérez</h3>
-            <p class="role">Profesor</p>
-        </div>
-        <div class="contributor-card">
-            <div class="contributor-avatar">👨‍🎓</div>
-            <h3>Diego Gracía</h3>
-            <p class="role">Estudiante</p>
-        </div>
-        <div class="contributor-card">
-            <div class="contributor-avatar">👨‍🏫</div>
-            <h3>David Torralba</h3>
-            <p class="role">Profesor</p>
-        </div>
-    </div>
+    <h2>Contribuciones</h2>
+    <p>Las contribuciones son bienvenidas siguiendo la estructura y formato definidos (no se incluyen usuarios de GitHub):</p>
+    <ul>
+        <li>⥏﹅⥑ <a href="https://github.com/Nisamov">Andrés Abadías</a> – Creador</li>
+        <li>⥏﹆⥑ Unai Urrestarazu – Profesor</li>
+        <li>⥏﹆⥑ Clara Cirac Nerín – Profesora</li>
+        <li>⥏﹆⥑ Juan Palacios Pérez – Profesor</li>
+        <li>⥏﹆⥑ Diego Gracía – Estudiante</li>
+        <li>⥏﹆⥑ David Torralba – Profesor</li>
+    </ul>
 </section>
 </main>
 
 <footer>
-    <div class="footer-content">
-        <div class="footer-logo">
-            <i class="fab fa-linux"></i>
-            <span>LinuxCommands</span>
-        </div>
-        <p>Repositorio creado por <a href="https://github.com/Nisamov">Nisamov</a> | Licencia <a href="LICENSE">MIT</a></p>
-        <div class="footer-links">
-            <a href="https://github.com/Nisamov/LinuxCommands"><i class="fab fa-github"></i> GitHub</a>
-            <a href="https://github.com/Nisamov/LinuxCommands/issues"><i class="fas fa-bug"></i> Issues</a>
-            <a href="https://github.com/Nisamov/LinuxCommands/pulls"><i class="fas fa-code-branch"></i> Pull Requests</a>
-        </div>
-    </div>
+    <p>Repositorio creado por <a href="https://github.com/Nisamov">Nisamov</a> | Licencia <a href="LICENSE">MIT</a></p>
 </footer>
 </div>
-
-<script>
-function copyCode(button) {
-    const codeBlock = button.parentElement.nextElementSibling;
-    const code = codeBlock.querySelector('code').innerText;
-    
-    navigator.clipboard.writeText(code).then(() => {
-        const originalText = button.textContent;
-        button.textContent = '¡Copiado!';
-        button.style.background = '#10b981';
-        
-        setTimeout(() => {
-            button.textContent = originalText;
-            button.style.background = '';
-        }, 2000);
-    });
-}
-
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        if(targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if(targetElement) {
-            window.scrollTo({
-                top: targetElement.offsetTop - 20,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-</script>
 
 </body>
 </html>
