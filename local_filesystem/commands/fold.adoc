@@ -1,6 +1,19 @@
 === fold
 Dividir líneas largas en varias más cortas, ajustando el ancho de la línea.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Dividir líneas largas en varias más cortas, ajustando el ancho de la línea.",
+  "usage": "fold [OPCIONES] fichero",
+  "options": {
+    "-w": "Ancho máximo de línea",
+    "-s": "Ajustar por espacios en blanco",
+    "-b": "Contar bytes en lugar de caracteres",
+    "--help": "Mostrar ayuda"
+  }
+}
+
 [source,bash]
 ----
 # Ajustar líneas a 80 caracteres

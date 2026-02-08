@@ -1,12 +1,26 @@
 === tree
 Listar ficheros con estructura de árbol.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Listar ficheros con estructura de árbol.",
+  "usage": "tree [OPCIONES]",
+  "options": {
+    "-d": "Mostrar solo directorios",
+    "-f": "Mostrar los archivos con su respectiva ruta",
+    "-a": "Mostrar archivos ocultos",
+    "-u": "Mostrar propietario de cada archivo",
+    "-g": "Mostrar grupos de ficheros",
+    "-h": "Mostrar peso de cada archivo"
+  }
+}
+
 [source,bash]
 ----
 # Listar directorio en forma de árbol
 tree
 ----
-
 
 -d:: `tree -d` Mostrar solo directorios
 

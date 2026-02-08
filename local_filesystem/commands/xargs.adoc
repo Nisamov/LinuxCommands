@@ -1,6 +1,22 @@
 === xargs
 Construir y ejecutar comandos a partir de la entrada estándar.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Construir y ejecutar comandos a partir de la entrada estándar.",
+  "usage": "xargs [OPCIONES] COMANDO",
+  "options": {
+    "-n": "Número de argumentos por ejecución",
+    "-I": "Reemplazar argumentos con un marcador",
+    "-0": "Usar separador nulo",
+    "-p": "Confirmar antes de ejecutar",
+    "-t": "Mostrar el comando antes de ejecutarlo",
+    "-r": "No ejecutar si no hay entrada",
+    "--max-procs": "Ejecución en paralelo"
+  }
+}
+
 [source,bash]
 ----
 # Uso básico de xargs

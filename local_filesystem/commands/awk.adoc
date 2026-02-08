@@ -1,6 +1,22 @@
 === awk
 Procesar y analizar texto estructurado por columnas.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Herramienta de procesamiento de texto para analizar y manipular datos estructurados por columnas.",
+  "usage": "awk [OPCIONES] 'programa' archivo",
+  "options": {
+    "-F": "Definir separador de campos",
+    "-print": "Mostrar campos específicos",
+    "-condicion": "Filtrar líneas según una condición",
+    "-BEGIN": "Ejecutar acciones iniciales antes de procesar el archivo",
+    "-END": "Ejecutar acciones finales después de procesar el archivo",
+    "-NR": "Número de registro (línea)",
+    "-NF": "Número de campos por línea"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar primera linea del fichero

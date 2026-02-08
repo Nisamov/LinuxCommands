@@ -1,12 +1,25 @@
 === lsattr
 Mostrar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Mostrar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.",
+  "usage": "lsattr [OPCIONES] [ARCHIVO...]",
+  "options": {
+    "-R": "Mostrar atributos de todos los archivos en un directorio recursivamente",
+    "-d": "Mostrar atributos de directorios en lugar de su contenido",
+    "-V": "Mostrar versión del comando",
+    "--help": "Mostrar ayuda",
+    "--quiet": "Suprimir mensajes innecesarios"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar atributos de un archivo
 lsattr fichero.txt
 ----
-
 
 -R:: `lsattr -R` Recursivo
 

@@ -1,6 +1,18 @@
 === basename
 Extraer el nombre del fichero o directorio a partir de una ruta.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Herramienta para obtener el nombre de un fichero o directorio a partir de una ruta completa, con opciones para eliminar sufijos o procesar múltiples rutas.",
+  "usage": "basename [OPCIONES] RUTA [SUFIJO]",
+  "options": {
+    "-s": "Eliminar un sufijo específico del nombre",
+    "-a": "Procesar múltiples rutas",
+    "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+  }
+}
+
 [source,bash]
 ----
 # Obtener el nombre del fichero desde una ruta completa

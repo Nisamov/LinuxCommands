@@ -1,6 +1,23 @@
 === scp
 Copiar ficheros de forma segura entre hosts usando SSH.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Copiar ficheros de forma segura entre hosts usando SSH.",
+  "usage": "scp [OPCIONES] FICHERO_ORIGEN USUARIO@HOST:DESTINO",
+  "options": {
+    "-r": "Copiar directorios recursivamente",
+    "-P": "Especificar puerto SSH",
+    "-p": "Mantener permisos y fechas",
+    "-C": "Comprimir datos durante la transferencia",
+    "-i": "Usar archivo de clave privada para autenticar",
+    "-B": "Modo batch (sin preguntas interactivas)",
+    "-l": "Limitar ancho de banda (KB/s)",
+    "-o": "Pasando opciones a SSH"
+  }
+}
+
 [source,bash]
 ----
 # Copiar un fichero a un host remoto

@@ -1,6 +1,23 @@
 === gpasswd
 El comando `gpasswd` permite administrar la información de un grupo en Linux, incluyendo la asignación de administradores, la gestión de contraseñas de grupo y la modificación de la membresía de usuarios.
 
+:category: local_group
+[.metadata]
+{
+  "description": "Administrar grupos de usuarios en Linux, incluyendo asignación de administradores, gestión de contraseñas y membresía.",
+  "usage": "gpasswd [OPCIONES] grupo",
+  "options": {
+    "-A": "Agregar administrador de grupo",
+    "-D": "Quitar administrador de grupo",
+    "-p": "Cambiar contraseña de grupo",
+    "-a": "Añadir usuario a grupo",
+    "-d": "Quitar usuario de grupo",
+    "-r": "Bloquear grupo",
+    "-u": "Desbloquear grupo",
+    "--help": "Mostrar ayuda en pantalla"
+  }
+}
+
 -Agregar administrador de grupo:: `-A`
 
 [source,bash]

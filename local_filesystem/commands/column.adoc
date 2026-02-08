@@ -1,6 +1,18 @@
 === column
 Formatear la salida en columnas para mejorar la legibilidad.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Herramienta para formatear la salida en columnas para mejorar la legibilidad.",
+  "usage": "column [OPCIONES] [ARCHIVO]",
+  "options": {
+    "-t": "Ajustar columnas en tabla",
+    "-s": "Definir delimitador",
+    "-x": "Llenar filas antes de columnas"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar un listado en columnas

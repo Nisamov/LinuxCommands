@@ -1,6 +1,17 @@
 === echo
 Mostrar una línea de texto o variables en la salida estándar.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Mostrar una línea de texto o variables en la salida estándar.",
+  "usage": "echo [OPCIONES] TEXTO",
+  "options": {
+    "-n": "No añadir salto de línea final",
+    "-e": "Interpretar escapes como \\n, \\t"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar una cadena simple

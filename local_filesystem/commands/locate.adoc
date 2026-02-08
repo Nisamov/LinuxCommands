@@ -1,6 +1,22 @@
 === locate
 Buscar rápidamente archivos en el sistema usando la base de datos actualizada por `updatedb`.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Buscar rápidamente archivos en el sistema usando la base de datos actualizada por `updatedb`.",
+  "usage": "locate [OPCIONES] patrón",
+  "options": {
+    "-i": "Ignorar mayúsculas/minúsculas",
+    "-r": "Usar expresiones regulares",
+    "-c": "Contar coincidencias",
+    "-l": "Limitar el número de resultados",
+    "--existing": "Mostrar solo archivos existentes",
+    "--database": "Especificar base de datos",
+    "--help": "Mostrar ayudaA"
+  }
+}
+
 [source,bash]
 ----
 # Buscar archivos por nombre

@@ -1,6 +1,15 @@
-
 === unlink
 Eliminar el enlace a un fichero (equivalente a `rm` para ficheros simples). Acepta un único argumento: el nombre del fichero a eliminar.
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Eliminar un enlace simbólico o fichero.",
+  "usage": "unlink FICHERO",
+  "options": {
+    "-h": "Mostrar ayuda breve"
+  }
+}
 
 [source,bash]
 ----

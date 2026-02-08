@@ -1,6 +1,18 @@
-
 === more
 Ver ficheros de texto paginados en la terminal (similar a `less`).
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Ver ficheros de texto paginados en la terminal (similar a `less`).",
+  "usage": "more [OPCIONES] FICHERO...",
+  "options": {
+    "-d": "Mostrar mensaje de ayuda al final de cada página",
+    "-c": "Limpiar pantalla antes de mostrar la siguiente página",
+    "-s": "Sustituir múltiples líneas en blanco por una sola",
+    "-u": "No subrayar el texto (útil para terminales sin soporte de subrayado)"
+  }
+}
 
 [source,bash]
 ----

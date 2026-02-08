@@ -1,6 +1,21 @@
 === nl
 Numerar líneas de un fichero o de la entrada estándar.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Numerar líneas de un fichero o de la entrada estándar.",
+  "usage": "nl [OPCIONES] FICHERO",
+  "options": {
+    "-b": "Especificar qué líneas numerar",
+    "-v": "Número inicial",
+    "-i": "Incremento entre números de línea",
+    "-n": "Formato del número",
+    "-s": "Separador entre número y línea",
+    "-w": "Ancho del número de línea"
+  }
+}
+
 [source,bash]
 ----
 # Numerar todas las líneas de un archivo

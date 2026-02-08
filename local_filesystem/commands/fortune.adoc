@@ -1,6 +1,18 @@
 === fortune
 Mostrar frases aleatorias (fortunes) desde una base de datos local.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Mostrar frases aleatorias (fortunes) desde una base de datos local.",
+  "usage": "fortune [OPCIONES]",
+  "options": {
+    "-s": "Mostrar una fortuna aleatoria",
+    "-l": "Mostrar todas las frases disponibles",
+    "-f": "Especificar un fichero de frases personalizado"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar una fortuna aleatoria

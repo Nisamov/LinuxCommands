@@ -1,6 +1,17 @@
 === rmdir
 Eliminar directorios vacíos.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Eliminar directorios vacíos.",
+  "usage": "rmdir [OPCIONES] DIRECTORIO",
+  "options": {
+    "-p": "Eliminar directorios intermedios si están vacíos",
+    "--help": "Mostrar ayuda breve"
+  }
+}
+
 [source,bash]
 ----
 # Eliminar un directorio vacio

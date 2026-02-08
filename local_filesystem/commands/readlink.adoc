@@ -1,6 +1,18 @@
 === readlink
 Mostrar el destino de un enlace simbólico.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Mostrar el destino de un enlace simbólico.",
+  "usage": "readlink [OPCIONES] ENLACE",
+  "options": {
+    "-f": "Resolver la ruta completa (absoluta) siguiendo todos los enlaces",
+    "-e": "Resolver la ruta sólo si el destino existe",
+    "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar el destino de un enlace simbólico

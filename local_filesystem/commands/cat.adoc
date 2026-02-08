@@ -1,6 +1,18 @@
 === cat
 Concatenar y mostrar el contenido de ficheros.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Herramienta para concatenar y mostrar el contenido de ficheros.",
+  "usage": "cat [OPCIONES] archivo",
+  "options": {
+    "-n": "Numerar líneas de salida",
+    "-b": "Numerar solo líneas no vacías",
+    "-A": "Mostrar caracteres especiales (tabuladores, finales de línea)"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar un fichero

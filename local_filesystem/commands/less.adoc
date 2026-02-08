@@ -1,6 +1,19 @@
 === less
 Ver ficheros de texto paginados en la terminal.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Ver ficheros de texto paginados en la terminal.",
+  "usage": "less [OPCIONES] fichero",
+  "options": {
+    "-n": "Mostrar número de línea",
+    "-N": "Mostrar número de línea en cada línea",
+    "-S": "Truncar líneas largas",
+    "-w": "Mostrar solo las primeras N caracteres de cada línea"
+  }
+}
+
 [source,bash]
 ----
 # Abrir un fichero con less

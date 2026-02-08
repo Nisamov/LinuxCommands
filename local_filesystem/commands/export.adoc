@@ -1,6 +1,17 @@
 === export
 Establecer variables de entorno para la sesión actual o procesos hijos.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Establecer variables de entorno para la sesión actual o procesos hijos.",
+  "usage": "export [VAR=VALOR]",
+  "options": {
+    "-n": "No añadir salto de línea final",
+    "-e": "Interpretar escapes como \\n, \\t"
+  }
+}
+
 [source,bash]
 ----
 # Establecer una variable de entorno para la sesión actual

@@ -1,6 +1,16 @@
 === newgrp
 El comando `newgrp` permite cambiar temporalmente el grupo primario de un usuario en la sesión actual de Linux. Es útil para trabajar con archivos o directorios bajo permisos de otro grupo sin cerrar sesión.
 
+:category: local_group
+[.metadata]
+{
+  "description": "Cambiar temporalmente el grupo primario de un usuario en la sesión actual de Linux.",
+  "usage": "newgrp [grupo]",
+  "options": {
+    "...": "Seccion en desarrollo"
+  }
+}
+
 -Cambiar al grupo primario de otro grupo::
 
 [source,bash]

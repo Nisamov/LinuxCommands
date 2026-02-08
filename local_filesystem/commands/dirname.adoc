@@ -1,6 +1,16 @@
 === dirname
 Extraer el directorio padre a partir de una ruta.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Extraer el directorio padre de una ruta completa.",
+  "usage": "dirname RUTA",
+  "options": {
+    "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+  }
+}
+
 [source,bash]
 ----
 # Obtener el directorio padre de una ruta

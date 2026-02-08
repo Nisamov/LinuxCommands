@@ -1,6 +1,20 @@
 === sed
 Editor de flujo de texto para filtrar y transformar texto línea a línea.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Editor de flujo de texto para filtrar y transformar texto línea a línea.",
+  "usage": "sed [OPCIONES] PATRON FICHERO",
+  "options": {
+    "-i": "Modificar el fichero directamente",
+    "-e": "Ejecutar múltiples comandos",
+    "-n": "Suprimir salida automática",
+    "-r": "Usar expresiones regulares extendidas",
+    "--follow-symlinks": "Modificar enlaces simbólicos"
+  }
+}
+
 [source,bash]
 ----
 # Reemplazo simple en un archivo

@@ -1,6 +1,18 @@
-
 === mkdir
 Crear uno o varios directorios.
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Crear uno o varios directorios.",
+  "usage": "mkdir [OPCIONES] NOMBRE_DIRECTORIO...",
+  "options": {
+    "-p": "Crear árbol de directorios (crea padres según sea necesario)",
+    "-v": "Mostrar cada directorio creado (verbose)",
+    "--help": "Mostrar ayuda",
+    "--version": "Mostrar versión del comando"
+  }
+}
 
 [source,bash]
 ----

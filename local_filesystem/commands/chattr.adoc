@@ -1,6 +1,22 @@
 === chattr
 Cambiar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Herramienta para cambiar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.",
+  "usage": "chattr [OPCIONES] archivo",
+  "options": {
+    "+i": "Hacer archivo inmutable",
+    "-i": "Hacer archivo mutable",
+    "+a": "Hacer archivo solo para añadir datos (append-only)",
+    "-a": "Quitar atributo append-only",
+    "+A": "Evitar actualización de tiempo de acceso",
+    "-A": "Permitir actualización de tiempo de acceso",
+    "-R": "Aplicar cambios recursivamente"
+  }
+}
+
 [source,bash]
 ----
 # Hacer un archivo inmutable

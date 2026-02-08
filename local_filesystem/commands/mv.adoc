@@ -1,6 +1,21 @@
 === mv
 Mover archivo entre rutas.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Mover archivos o directorios entre rutas.",
+  "usage": "mv [OPCIONES] ORIGEN DESTINO",
+  "options": {
+    "-i": "Solicitar confirmación antes de sobreescribir archivos",
+    "-v": "Mostrar archivos de origen y destino (verbose)",
+    "-f": "Forzar la acción (sobrescribir sin preguntar)",
+    "-n": "No sobrescribir archivos existentes (no-clobber)",
+    "-b": "Hacer copia de seguridad del destino al sobrescribir",
+    "--backup[=CONTROL]": "Hacer copia de seguridad con control (simple/numbered/t)"
+  }
+}
+
 [source,bash]
 ----
 # Mover un fichero a otro directorio

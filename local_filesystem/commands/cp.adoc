@@ -1,6 +1,25 @@
 === cp
 Copiar archivos o directorios.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Herramienta para copiar archivos o directorios.",
+  "usage": "cp [OPCIONES] ORIGEN DESTINO",
+  "options": {
+    "-r": "Copiar recursivamente",
+    "-f": "Forzar la copia sobrescribiendo sin preguntar",
+    "-a": "Copiar archivos manteniendo atributos (recursivo)",
+    "-b": "Crear copia de seguridad del destino",
+    "-i": "Pedir confirmación antes de sobrescribir",
+    "-v": "Mostrar archivos mientras se copian (verbose)",
+    "--preserve=ATTRS": "Preservar atributos (mode,ownership,timestamps)",
+    "--no-preserve=ATTRS": "No preservar ciertos atributos",
+    "--parents": "Mantener la ruta de origen al copiar",
+    "--reflink[=always|never]": "Intentar copia por referencia (CoW)"
+  }
+}
+
 [source,bash]
 ----
 # Copiar un fichero a un directorio destino

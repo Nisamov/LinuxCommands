@@ -1,6 +1,22 @@
 === join
 Combinar líneas de dos ficheros basándose en un campo común.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Combinar líneas de dos ficheros basándose en un campo común.",
+  "usage": "join [OPCIONES] fichero1 fichero2",
+  "options": {
+    "-1": "Especificar campo del primer fichero",
+    "-2": "Especificar campo del segundo fichero",
+    "-a": "Incluir líneas sin coincidencias",
+    "-e": "Rellenar campos vacíos",
+    "-o": "Especificar campos a mostrar",
+    "-t": "Definir delimitador",
+    "-v": "Mostrar solo líneas sin coincidencia"
+  }
+}
+
 [source,bash]
 ----
 # Unir dos ficheros por la primera columna

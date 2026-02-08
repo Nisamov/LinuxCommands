@@ -1,6 +1,21 @@
 === iconv
 Convertir la codificación de caracteres de archivos o flujos de texto.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Convertir la codificación de caracteres de archivos o flujos de texto.",
+  "usage": "iconv [OPCIONES] fichero",
+  "options": {
+    "-f": "Especificar codificación de origen (from)",
+    "-t": "Especificar codificación de destino (to)",
+    "-o": "Especificar archivo de salida",
+    "-c": "Omitir caracteres no convertibles",
+    "-l": "Listar todas las codificaciones disponibles",
+    "--verbose": "Mostrar información detallada"
+  }
+}
+
 [source,bash]
 ----
 # Convertir un archivo de UTF-8 a ISO-8859-1

@@ -1,6 +1,20 @@
 === paste
 Combinar columnas de uno o más ficheros línea a línea.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Combinar columnas de uno o más ficheros línea a línea.",
+  "usage": "paste [OPCIONES] FICHEROS",
+  "options": {
+    "-d": "Definir delimitador entre columnas",
+    "-s": "Serializar líneas de un fichero",
+    "--help": "Mostrar ayuda",
+    "--version": "Mostrar versión",
+    "-m": "Combinar múltiples archivos de forma paralela"
+  }
+}
+
 [source,bash]
 ----
 # Combinar dos archivos separando por tabulador

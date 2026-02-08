@@ -1,6 +1,20 @@
 === bzip2
 Empaquetamiento de múltiples archivos y directorios.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Herramienta para comprimir y descomprimir archivos con alta compresión.",
+  "usage": "bzip2 [OPCIONES] archivo",
+  "options": {
+    "-c": "Escribir salida a stdout",
+    "-d": "Descomprimir archivo",
+    "-k": "Mantener archivo original",
+    "-v": "Mostrar información de progreso",
+    "-z": "Comprimir archivo"
+  }
+}
+
 [source,bash]
 ----
 # Empaquetado de archivos

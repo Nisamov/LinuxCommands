@@ -1,0 +1,38 @@
+name: Actualización base JSON
+
+# Generacion de JSON o actualizacion del mismo para la correcta indexacion de los comandos del repositorio
+# Es posible acceder al buscador en la pagina del reposiotrio, apartado "buscador"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**/*.adoc'
+      - '.github/scripts/build_commands_db.py'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run database builder
+        run: python .github/scripts/build_commands_db.py
+
+      - name: Commit cambios
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .github/web/commands.json
+          git commit -m "Actualizacion JSON" || echo "Sin cambios por aplicar"
+          git push

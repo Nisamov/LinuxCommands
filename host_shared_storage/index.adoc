@@ -11,6 +11,8 @@
 :doctype: article
 :lang: es
 :author: Andrés Ruslan Abadías Otal
+:command_category: shared storage
+:license: MIT License
 
 == Introducción
 Este manual está pensado como guía de referencia para:

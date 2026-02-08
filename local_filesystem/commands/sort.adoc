@@ -1,6 +1,23 @@
 === sort
 Ordenar lineas de texto.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Ordenar lineas de texto.",
+  "usage": "sort [OPCIONES] FICHERO",
+  "options": {
+    "-n": "Ordenar por valor numérico",
+    "-r": "Ordenar en orden inverso",
+    "-u": "Eliminar duplicados",
+    "-k": "Ordenar por columna específica",
+    "-t": "Usar separador de campo",
+    "-f": "Ignorar diferencias entre mayúsculas/minúsculas",
+    "-h": "Ordenar por números con sufijos (1K, 2M)",
+    "-o": "Guardar salida en archivo"
+  }
+}
+
 [source,bash]
 ----
 # Ordenar un fichero alfabéticamente

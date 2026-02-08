@@ -1,6 +1,26 @@
 === grep
 Buscar cadenas de texto en ficheros según patrones (expresiones regulares).
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Buscar cadenas de texto en ficheros según patrones (expresiones regulares).",
+  "usage": "grep [OPCIONES] patron fichero",
+  "options": {
+    "-i": "Buscar ignorando mayúsculas/minúsculas",
+    "-r": "Buscar recursivamente en directorios",
+    "-n": "Mostrar número de línea",
+    "-v": "Mostrar líneas que NO coinciden",
+    "-E": "Usar expresiones regulares extendidas",
+    "-o": "Mostrar sólo la parte coincidente de cada línea",
+    "-P": "Usar expresiones regulares Perl-compatible (PCRE)",
+    "-l": "Mostrar sólo nombres de ficheros con coincidencias",
+    "-c": "Contar coincidencias por fichero",
+    "-q": "Modo silencioso (devuelve código de salida)",
+    "--color=auto": "Resaltar coincidencias"
+  }
+}
+
 [source,bash]
 ----
 # Buscar una cadena en un fichero

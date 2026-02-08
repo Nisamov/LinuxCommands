@@ -1,6 +1,19 @@
 === ln
 Creación de enlaces duros y simbólicos.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Crear enlaces duros y simbólicos.",
+  "usage": "ln [OPCIONES] origen destino",
+  "options": {
+    "-s": "Crear un enlace simbólico",
+    "-f": "Forzar creación de enlace sobrescribiendo el destino",
+    "-i": "Solicitar confirmación antes de sobrescribir",
+    "--help": "Mostrar ayuda breve"
+  }
+}
+
 [source,bash]
 ----
 # Crear un enlace simbólico

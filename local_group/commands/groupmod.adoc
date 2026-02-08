@@ -1,6 +1,18 @@
 === groupmod
 El comando `groupmod` permite modificar la información de un grupo existente en Linux, como su nombre o identificador (GID). Se debe usar con precaución para no afectar la asignación de permisos de los usuarios.
 
+:category: local_group
+[.metadata]
+{
+  "description": "Modificar grupos existentes en el sistema Linux, definiendo su nombre, GID y otras propiedades.",
+  "usage": "groupmod [OPCIONES] grupo",
+  "options": {
+    "-n": "Cambiar el nombre del grupo",
+    "-g": "Cambiar el GID del grupo",
+    "--help": "Mostrar ayuda en pantalla"
+  }
+}
+
 -Cambiar nombre de grupo:: `-n`
 
 [source,bash]

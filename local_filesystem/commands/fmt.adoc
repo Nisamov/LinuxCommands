@@ -1,6 +1,19 @@
 === fmt
 Formatear texto ajustando líneas y párrafos para mejorar legibilidad.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Formatear texto ajustando líneas y párrafos para mejorar legibilidad.",
+  "usage": "fmt [OPCIONES] fichero",
+  "options": {
+    "-w": "Ancho máximo de línea",
+    "--prefix": "Mantener prefijo de cada línea",
+    "-c": "Centrar líneas",
+    "--help": "Mostrar ayuda"
+  }
+}
+
 [source,bash]
 ----
 # Ajustar líneas a 75 caracteres

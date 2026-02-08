@@ -1,6 +1,32 @@
 === ls
 Listar ficheros del directorio actual.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Listar ficheros del directorio actual.",
+  "usage": "ls [OPCIONES] [DIRECTORIO]",
+  "options": {
+    "-l": "Lista detallada (permisos, propietario, tamaño)",
+    "-a": "Mostrar ficheros ocultos",
+    "-h": "Mostrar tamaños legibles por humanos",
+    "-t": "Ordenar por fecha de modificación",
+    "-S": "Ordenar por tamaño (mayor a menor)",
+    "-r": "Invertir orden",
+    "-R": "Mostrar recursivamente",
+    "-d": "Mostrar directorios en sí, no su contenido",
+    "-F": "Añadir indicador de tipo a nombres",
+    "-1": "Un elemento por línea",
+    "-Q": "Poner nombres entre comillas",
+    "-v": "Orden natural (útil con números)",
+    "-X": "Ordenar por extensión",
+    "--color": "Colorear la salida",
+    "--block-size": "Mostrar tamaños en unidad específica",
+    "--time": "Seleccionar campo de tiempo",
+    "--sort": "Ordenar según criterio (size,time,version,extension)"
+  }
+}
+
 [source,bash]
 ----
 # Listar ficheros en el directorio actual

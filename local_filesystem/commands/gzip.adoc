@@ -1,6 +1,21 @@
 === gzip
 Empaquetamiento de múltiples archivos y directorios.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Empaquetar archivos con compresión gzip.",
+  "usage": "gzip [OPCIONES] archivo(s)",
+  "options": {
+    "-c": "Escribir salida a stdout",
+    "-d": "Desempaquetar archivo",
+    "-f": "Forzar sobrescritura",
+    "-k": "Mantener archivos originales",
+    "-9": "Usar máxima compresión",
+    "--help": "Mostrar ayuda"
+  }
+}
+
 [source,bash]
 ----
 # Empaquetar archivos

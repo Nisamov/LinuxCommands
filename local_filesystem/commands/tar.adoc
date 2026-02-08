@@ -1,6 +1,27 @@
 === tar
 Empaquetamiento de múltiples archivos y directorios.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Empaquetamiento de múltiples archivos y directorios.",
+  "usage": "tar [OPCIONES] ARCHIVO",
+  "options": {
+    "-c": "Crear un nuevo archivo tar",
+    "-f": "Especificar nombre de archivo tar",
+    "-x": "Extraer archivos de un tar",
+    "-t": "Listar contenido del tar",
+    "-v": "Verbose: mostrar archivos procesados",
+    "-z": "Comprimir/Descomprimir usando gzip (con -c/-x)",
+    "-j": "Usar bzip2",
+    "-J": "Usar xz",
+    "--exclude": "Excluir archivos/paths coincidentes",
+    "--strip-components": "Omitir N componentes del path al extraer",
+    "--no-same-owner": "No restaurar propietario (útil como usuario no root)",
+    "--remove-files": "Eliminar archivos que se han archivado"
+  }
+}
+
 TAR (Tape ARchive) es un software que empaqueta múltiples archivos y directorios en un único archivo contenedor (`.tar`). 
 **Importante**: TAR por sí solo no comprime, solo empaqueta.
 

@@ -1,6 +1,18 @@
 === head
 Mostrar las primeras líneas de uno o varios ficheros.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Mostrar las primeras líneas de uno o varios ficheros.",
+  "usage": "head [OPCIONES] fichero(s)",
+  "options": {
+    "-n <numero>": "Mostrar las primeras N líneas",
+    "-c <bytes>": "Mostrar los primeros N bytes",
+    "--help": "Mostrar ayuda"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar las 10 primeras líneas (por defecto)

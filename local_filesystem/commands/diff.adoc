@@ -1,6 +1,19 @@
 === diff
 Comparar ficheros línea por línea y mostrar diferencias.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Comparar ficheros línea por línea y mostrar diferencias.",
+  "usage": "diff [OPCIONES] archivo1 archivo2",
+  "options": {
+    "-c": "Mostrar diferencias con contexto",
+    "-u": "Mostrar diferencias en formato unificado",
+    "-r": "Comparar directorios recursivamente",
+    "-i": "Ignorar mayúsculas/minúsculas"
+  }
+}
+
 [source,bash]
 ----
 # Comparar dos ficheros

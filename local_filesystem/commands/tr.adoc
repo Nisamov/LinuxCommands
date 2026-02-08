@@ -1,6 +1,19 @@
 === tr
 Traducir o eliminar caracteres desde la entrada estándar.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Traducir o eliminar caracteres desde la entrada estándar.",
+  "usage": "tr [OPCIONES] CONJUNTO1 CONJUNTO2",
+  "options": {
+    "-d": "Eliminar caracteres",
+    "-s": "Sustituir repeticiones por una sola",
+    "-c": "Complementar el conjunto de caracteres",
+    "--help": "Mostrar ayuda"
+  }
+}
+
 [source,bash]
 ----
 # Reemplazar caracteres

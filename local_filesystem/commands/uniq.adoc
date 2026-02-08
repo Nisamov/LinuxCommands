@@ -1,6 +1,21 @@
 === uniq
 Eliminar lineas duplicadas consecutivas.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Eliminar lineas duplicadas consecutivas.",
+  "usage": "uniq [OPCIONES] FICHERO",
+  "options": {
+    "-c": "Mostrar numero de repeticiones en columna",
+    "-d": "Mostrar lineas duplicadas",
+    "-u": "Mostrar lineas no duplicadas",
+    "-i": "Ignorar mayúsculas/minúsculas",
+    "-f": "Ignorar las primeras N columnas (palabras)",
+    "-s": "Ignorar los primeros N caracteres"
+  }
+}
+
 [source,bash]
 ----
 # Eliminar líneas duplicadas consecutivas

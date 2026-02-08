@@ -1,12 +1,25 @@
 === wc
 Contar líneas, palabras y bytes de uno o varios ficheros.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Contar líneas, palabras y bytes de uno o varios ficheros.",
+  "usage": "wc [OPCIONES] FICHERO",
+  "options": {
+    "-l": "Mostrar número de líneas",
+    "-w": "Mostrar número de palabras",
+    "-c": "Mostrar número de bytes",
+    "-m": "Mostrar número de caracteres",
+    "-L": "Mostrar la longitud de la línea más larga"
+  }
+}
+
 [source,bash]
 ----
 # Contar líneas, palabras y bytes
 wc fichero.txt
 ----
-
 
 -l:: `wc -l` Mostrar número de líneas
 

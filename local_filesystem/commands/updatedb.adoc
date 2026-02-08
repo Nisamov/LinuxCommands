@@ -1,6 +1,22 @@
 === updatedb
 Actualizar la base de datos utilizada por el comando locate.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Actualizar la base de datos utilizada por el comando locate.",
+  "usage": "updatedb [OPCIONES]",
+  "options": {
+    "-U": "Definir directorios a indexar",
+    "-o": "Especificar archivo de base de datos",
+    "--prunepaths": "Excluir rutas",
+    "--prunefs": "Excluir sistemas de ficheros",
+    "--prunenames": "Excluir nombres concretos",
+    "--localpaths": "Indexar solo sistemas locales",
+    "--debug": "Mostrar información de depuración"
+  }
+}
+
 [source,bash]
 ----
 # Actualizar la base de datos de locate

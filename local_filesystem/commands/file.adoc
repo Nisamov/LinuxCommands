@@ -1,6 +1,19 @@
 === file
 Determinar el tipo de fichero según su contenido.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Determinar el tipo de fichero según su contenido.",
+  "usage": "file [OPCIONES] RUTA",
+  "options": {
+    "-b": "Mostrar tipo sin el nombre del fichero",
+    "-i": "Mostrar tipo MIME",
+    "-L": "Seguir enlaces simbólicos",
+    "--mime-type": "Mostrar sólo MIME type"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar tipo de un fichero

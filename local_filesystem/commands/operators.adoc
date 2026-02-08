@@ -1,6 +1,19 @@
-
 === operadores
 Descripción breve de operadores y redirecciones en shell.
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Descripción breve de operadores y redirecciones en shell.",
+  "usage": "operators [OPCIONES]",
+  "options": {
+    ">": "Redirigir salida estándar a un fichero (sobrescribe)",
+    ">>": "Redirigir salida estándar a un fichero (añadir)",
+    "|": "Pipe: enviar salida de un comando como entrada a otro",
+    "&": "Ejecutar en segundo plano",
+    "2>": "Redirigir salida de error (stderr)"
+  }
+}
 
 [source,bash]
 ----

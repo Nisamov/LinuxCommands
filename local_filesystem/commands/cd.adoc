@@ -1,6 +1,18 @@
 === cd
 Establecer directorio de trabajo.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Herramienta para cambiar el directorio de trabajo actual.",
+  "usage": "cd [OPCIONES] DIRECTORIO",
+  "options": {
+    "-": "Volver al directorio anterior (OLDPWD)",
+    "~": "Ir al directorio home del usuario",
+    "..": "Ir al directorio padre"
+  }
+}
+
 [source,bash]
 ----
 # Ir al directorio padre

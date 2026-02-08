@@ -1,6 +1,22 @@
 === xz
 Comprimir y descomprimir archivos usando el algoritmo LZMA/LZMA2.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Comprimir y descomprimir archivos usando el algoritmo LZMA/LZMA2.",
+  "usage": "xz [OPCIONES] FICHERO",
+  "options": {
+    "-d": "Descomprimir archivos .xz",
+    "-k": "Mantener el archivo original",
+    "-l": "Mostrar información del archivo comprimido",
+    "-c": "Enviar salida a stdout",
+    "-t": "Comprobar integridad del archivo",
+    "-0-9": "Nivel de compresión (0-9)",
+    "-z": "Forzar compresión (opción por defecto)"
+  }
+}
+
 [source,bash]
 ----
 # Comprimir un archivo

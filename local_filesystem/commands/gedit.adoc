@@ -1,6 +1,16 @@
 === gedit
 Editor de texto gráfico para entornos GNOME.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Editor de texto gráfico para entornos GNOME.",
+  "usage": "gedit [OPCIONES] fichero",
+  "options": {
+    "--help": "Mostrar ayuda"
+  }
+}
+
 [source,bash]
 ----
 # Abrir un fichero en gedit

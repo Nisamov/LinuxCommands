@@ -1,5 +1,8 @@
 name: Auto-generate README index
 
+# Un simple sistema de mostrar de forma automatica, directorios raiz en los README
+# Agregado por aumentar eficiencia de busqueda al estar en la plataforma github
+
 on:
   push:
     branches:

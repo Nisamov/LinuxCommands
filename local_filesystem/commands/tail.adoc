@@ -1,6 +1,19 @@
-
 === tail
 Mostrar las últimas líneas de uno o más ficheros.
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Mostrar las últimas líneas de uno o más ficheros.",
+  "usage": "tail [OPCIONES] FICHERO",
+  "options": {
+    "-n": "Mostrar las últimas N líneas",
+    "-f": "Seguir un fichero conforme crece",
+    "-F": "Seguir fichero por nombre y reabrir si rota",
+    "-c": "Mostrar por bytes en lugar de líneas",
+    "-q": "Silenciar encabezados cuando se pasan varios ficheros"
+  }
+}
 
 [source,bash]
 ----

@@ -1,6 +1,20 @@
 === touch
 Actualizar la marca temporal de un fichero o crear un fichero vacío si no existe.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Actualizar la marca temporal de un fichero o crear un fichero vacío si no existe.",
+  "usage": "touch [OPCIONES] FICHERO",
+  "options": {
+    "-a": "Cambiar solo el tiempo de acceso",
+    "-m": "Cambiar solo tiempo de modificación",
+    "-c": "No crear archivo si no existe",
+    "-t": "Establecer tiempo específico",
+    "-r": "Copiar timestamp de otro fichero"
+  }
+}
+
 [source,bash]
 ----
 # Crear un fichero vacío o actualizar su timestamp

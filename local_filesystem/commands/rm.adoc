@@ -1,6 +1,22 @@
 === rm
-
 Eliminar ficheros o directorios (con precaución).
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Eliminar ficheros o directorios (con precaución).",
+  "usage": "rm [OPCIONES] FICHEROS",
+  "options": {
+    "-r": "Eliminar directorios de forma recursiva",
+    "-i": "Solicitar confirmación antes de borrar cada fichero",
+    "-f": "Forzar la eliminación sin preguntar",
+    "-v": "Mostrar operaciones realizadas",
+    "-d": "Eliminar directorios vacíos",
+    "--preserve-root": "No permitir eliminar la raíz '/'",
+    "--no-preserve-root": "Permite operar sobre '/'",
+    "--help": "Mostrar ayuda breve"
+  }
+}
 
 [source,bash]
 ----

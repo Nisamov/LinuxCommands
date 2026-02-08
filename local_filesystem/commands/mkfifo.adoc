@@ -1,7 +1,16 @@
-
-
 === mkfifo
 Crear una tubería con nombre (FIFO) en el sistema de ficheros.
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Crear una tubería con nombre (FIFO) en el sistema de ficheros.",
+  "usage": "mkfifo [OPCIONES] NOMBRE_TUBERIA",
+  "options": {
+    "-m": "Establecer permisos de la tubería (modo)",
+    "-Z": "Establecer contexto de seguridad (SELinux)"
+  }
+}
 
 [source,bash]
 ----

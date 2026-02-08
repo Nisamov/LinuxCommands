@@ -1,6 +1,18 @@
 === realpath
 Mostrar la ruta absoluta y real de un fichero o directorio.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Mostrar la ruta absoluta y real de un fichero o directorio.",
+  "usage": "realpath [OPCIONES] RUTA",
+  "options": {
+    "-e": "Resolver la ruta sólo si el destino existe",
+    "-m": "Resolver la ruta incluso si el destino no existe",
+    "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+  }
+}
+
 [source,bash]
 ----
 # Obtener la ruta absoluta real

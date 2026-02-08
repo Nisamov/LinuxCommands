@@ -1,6 +1,17 @@
 === groups
 El comando `groups` muestra todos los grupos a los que pertenece un usuario en Linux. Por defecto, muestra los grupos del usuario que ejecuta el comando, pero también se puede especificar otro usuario.
 
+:category: local_group
+[.metadata]
+{
+  "description": "Mostrar los grupos a los que pertenece un usuario en Linux.",
+  "usage": "groups [usuario]",
+  "options": {
+    "usuario": "Especificar el nombre de usuario para mostrar sus grupos. Si se omite, se muestran los grupos del usuario actual.",
+    "--help": "Mostrar la ayuda en pantalla"
+  }
+}
+
 -Mostrar grupos del usuario actual::
 
 [source,bash]

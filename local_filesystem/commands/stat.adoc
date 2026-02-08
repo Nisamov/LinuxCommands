@@ -1,6 +1,20 @@
 === stat
 Mostrar estado y metadatos de un fichero o directorio.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Mostrar estado y metadatos de un fichero o directorio.",
+  "usage": "stat [OPCIONES] FICHERO",
+  "options": {
+    "-c": "Mostrar información en formato personalizado",
+    "-f": "Mostrar información del sistema de ficheros",
+    "-L": "Seguir enlaces simbólicos",
+    "-t": "Formato compacto",
+    "--printf": "Usar printf para formato personalizado"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar información completa

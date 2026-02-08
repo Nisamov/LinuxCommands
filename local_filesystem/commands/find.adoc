@@ -1,6 +1,23 @@
 === find
 Buscar ficheros y directorios que cumplan criterios especificados.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Buscar ficheros y directorios que cumplan criterios especificados.",
+  "usage": "find [RUTA] [OPCIONES]",
+  "options": {
+    "-name": "Buscar por nombre",
+    "-type": "Buscar por tipo (f=fichero, d=directorio)",
+    "-mtime": "Buscar por fecha de modificación",
+    "-atime": "Buscar por fecha de acceso",
+    "-size": "Buscar por tamaño",
+    "-maxdepth": "Limitar profundidad máxima",
+    "-mindepth": "Limitar profundidad mínima",
+    "-exec": "Ejecutar comando sobre resultados"
+  }
+}
+
 [source,bash]
 ----
 # Buscar por nombre en árbol actual

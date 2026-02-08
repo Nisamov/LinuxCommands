@@ -1,6 +1,16 @@
 === groupdel
 El comando `groupdel` permite eliminar grupos existentes del sistema Linux. Se debe usar con precaución, ya que no se puede eliminar un grupo que todavía tenga usuarios asignados.
 
+:category: local_group
+[.metadata]
+{
+  "description": "Eliminar grupos existentes del sistema Linux.",
+  "usage": "groupdel grupo",
+  "options": {
+    "--help": "Mostrar ayuda en pantalla"
+  }
+}
+
 -Eliminar grupo básico::
 
 [source,bash]

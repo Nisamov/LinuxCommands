@@ -1,6 +1,19 @@
 === cut
 Extraer secciones de cada línea de un fichero o flujo de datos.
 
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Extraer secciones de cada línea de un fichero o flujo de datos usando delimitadores o rangos de caracteres.",
+  "usage": "cut [OPCIONES] archivo",
+  "options": {
+    "-c": "Extraer caracteres por rango",
+    "-d": "Usar un delimitador para campos",
+    "-f": "Seleccionar columnas (campos)",
+    "--complement": "Invertir selección de campos o caracteres"
+  }
+}
+
 [source,bash]
 ----
 # Uso básico: extraer campos o caracteres
