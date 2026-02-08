@@ -49,7 +49,7 @@ def build_database():
                 if cmd_data:
                     database.append(cmd_data)
                     print(f"Indexado: {cmd_data['name']}")
-    output_path = os.path.join(BASE_PATH, 'docs', 'commands.json'
+    output_path = os.path.join(BASE_PATH, 'docs', 'commands.json')
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, 'w', encoding='utf-8') as out:
         json.dump(database, out, ensure_ascii=False, indent=2)
