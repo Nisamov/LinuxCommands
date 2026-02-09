@@ -1,6 +1,24 @@
 === sudo
 Permite ejecutar comandos con privilegios de superusuario o de otro usuario.
 
+:category: local_permissions
+[.metadata]
+{
+  "description": "Ejecutar comandos con privilegios de superusuario o de otro usuario.",
+  "usage": "sudo [OPCIONES] COMANDO",
+  "options": {
+    "-u usuario": "Ejecutar un comando como otro usuario",
+    "-i": "Simular una sesión completa de inicio de sesión con el entorno del usuario",
+    "-e archivo": "Editar archivos como superusuario",
+    "-l": "Listar los comandos que el usuario puede ejecutar con sudo",
+    "-L": "Bloquear el entorno del shell para prevenir cambios en autenticación durante su ejecución",
+    "-V": "Mostrar versión de sudo y opciones de configuración compiladas",
+    "-b": "Ejecutar un comando en segundo plano",
+    "-A": "Solicitar la contraseña mediante un helper externo",
+    "-B": "Activar notificación sonora al solicitar contraseña"
+  }
+}
+
 [source,bash]
 ----
 # Ejecutar un comando como superusuario

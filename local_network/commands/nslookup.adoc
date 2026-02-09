@@ -1,6 +1,19 @@
 === nslookup
 Consultar información de DNS de dominios y direcciones IP de manera interactiva o directa.
 
+:category: local_network
+[.metadata]
+{
+  "description": "Consultar información de DNS de dominios y direcciones IP de manera interactiva o directa.",
+  "usage": "nslookup [OPCIONES]",
+  "options": {
+    "-a": "Mostrar todas las entradas DNS",
+    "-n": "Mostrar direcciones IP y nombres sin resolver",
+    "-s": "Añadir una entrada estática en la tabla DNS",
+    "-d": "Eliminar una entrada de la tabla DNS",
+  }
+}
+
 [source,bash]
 ----
 # Consultar IP de un dominio

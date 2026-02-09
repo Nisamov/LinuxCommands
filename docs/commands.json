@@ -1,5 +1,61 @@
 [
   {
+    "description": "Cambiar el propietario y/o grupo de archivos y directorios en Linux.",
+    "usage": "chown [OPCIONES] ARCHIVO",
+    "options": {
+      "-R": "Cambiar propietario y grupo de todos los archivos y subdirectorios de forma recursiva",
+      "-c": "Muestra solo los cambios realizados",
+      "--": "Permite cambiar el propietario de archivos cuyo nombre comienza con '-'"
+    },
+    "name": "chown",
+    "category": "local_permissions",
+    "source_path": "local_permissions/commands/chown.adoc"
+  },
+  {
+    "description": "Establecer los permisos predeterminados para nuevos archivos y directorios creados por el usuario.",
+    "usage": "umask [MÁSCARA]",
+    "options": {
+      "MÁSCARA": "Especifica la máscara de permisos en formato octal (por ejemplo, 022) o simbólico (por ejemplo, u=rwx,g=rx,o=rx)"
+    },
+    "name": "umask",
+    "category": "local_permissions",
+    "source_path": "local_permissions/commands/umask.adoc"
+  },
+  {
+    "description": "Ejecutar comandos con privilegios de superusuario o de otro usuario.",
+    "usage": "sudo [OPCIONES] COMANDO",
+    "options": {
+      "-u usuario": "Ejecutar un comando como otro usuario",
+      "-i": "Simular una sesión completa de inicio de sesión con el entorno del usuario",
+      "-e archivo": "Editar archivos como superusuario",
+      "-l": "Listar los comandos que el usuario puede ejecutar con sudo",
+      "-L": "Bloquear el entorno del shell para prevenir cambios en autenticación durante su ejecución",
+      "-V": "Mostrar versión de sudo y opciones de configuración compiladas",
+      "-b": "Ejecutar un comando en segundo plano",
+      "-A": "Solicitar la contraseña mediante un helper externo",
+      "-B": "Activar notificación sonora al solicitar contraseña"
+    },
+    "name": "sudo",
+    "category": "local_permissions",
+    "source_path": "local_permissions/commands/sudo.adoc"
+  },
+  {
+    "description": "Modificar los permisos de archivos y directorios en Linux.",
+    "usage": "chmod [OPCIONES] ARCHIVO",
+    "options": {
+      "+x": "Otorgar permisos de ejecución a un archivo",
+      "-x": "Revocar permisos de ejecución a un archivo",
+      "u+s": "Establecer el bit SUID en un archivo",
+      "g+s": "Establecer el bit SGID en un directorio",
+      "+t": "Establecer el sticky bit, solo el propietario puede modificar archivos en el directorio",
+      "-R": "Aplicar cambios de forma recursiva a un directorio",
+      "-v": "Muestra información detallada de los cambios aplicados"
+    },
+    "name": "chmod",
+    "category": "local_permissions",
+    "source_path": "local_permissions/commands/chmod.adoc"
+  },
+  {
     "description": "Administrar grupos de usuarios en Linux, incluyendo asignación de administradores, gestión de contraseñas y membresía.",
     "usage": "gpasswd [OPCIONES] grupo",
     "options": {
@@ -72,6 +128,226 @@
     "name": "groupdel",
     "category": "local_group",
     "source_path": "local_group/commands/groupdel.adoc"
+  },
+  {
+    "description": "Consultar y configurar interfaces de red, rutas, direcciones y vecinos en Linux (reemplazo moderno de ifconfig y arp).",
+    "usage": "ip [OPCIONES]",
+    "options": {
+      "addr": "Mostrar o configurar direcciones IP",
+      "link": "Consultar o configurar interfaces de red",
+      "route": "Consultar o configurar rutas de red",
+      "neigh": "Consultar o configurar tabla ARP/vecinos",
+      "flush": "Limpiar tablas de vecinos",
+      "-s": "Mostrar estadísticas de tráfico de interfaces"
+    },
+    "name": "ip",
+    "category": "local_network",
+    "source_path": "local_network/commands/ip.adoc"
+  },
+  {
+    "description": "Descargar archivos desde la web mediante HTTP, HTTPS o FTP utilizando el comando wget.",
+    "usage": "wget [OPCIONES]",
+    "options": {
+      "-O": "Guardar con un nombre específico",
+      "-c": "Continuar descargas interrumpidas",
+      "-q": "Modo silencioso",
+      "--limit-rate": "Limitar velocidad de descarga",
+      "--no-check-certificate": "Ignorar errores de certificado SSL",
+      "-r": "Descarga recursiva de sitios web",
+      "-np": "No ascender al directorio padre al descargar recursivamente",
+      "--user / --password": "Autenticación HTTP/FTP"
+    },
+    "name": "wget",
+    "category": "local_network",
+    "source_path": "local_network/commands/wget.adoc"
+  },
+  {
+    "description": "Rastrear la ruta de los paquetes a un host y medir tiempos de respuesta",
+    "usage": "traceroute [OPCIONES]",
+    "options": {
+      "-I": "Usar ICMP en lugar de UDP (similar a ping)",
+      "-n": "No resolver nombres de host, mostrar solo IPs",
+      "-m": "Número máximo de saltos",
+      "-q": "Número de consultas por salto",
+      "-w": "Tiempo de espera por respuesta (segundos)",
+      "-p": "Especificar puerto inicial (para UDP)"
+    },
+    "name": "traceroute",
+    "category": "local_network",
+    "source_path": "local_network/commands/traceroute.adoc"
+  },
+  {
+    "description": "Escaneo y análisis de puertos, servicios y dispositivos en la red utilizando nmap.",
+    "usage": "nmap [OPCIONES]",
+    "options": {
+      "-p": "Especificar puertos a escanear",
+      "-sS": "Escaneo TCP SYN (stealth scan)",
+      "-sU": "Escaneo de puertos UDP",
+      "-A": "Detección de sistema operativo y servicios",
+      "-O": "Detectar sistema operativo",
+      "-T": "Ajustar velocidad/agresividad del escaneo (0-5)",
+      "-v": "Modo verbose para más detalles",
+      "--open": "Mostrar solo puertos abiertos"
+    },
+    "name": "nmap",
+    "category": "local_network",
+    "source_path": "local_network/commands/nmap.adoc"
+  },
+  {
+    "description": "Comprobar la conectividad de red y el tiempo de respuesta entre hosts.",
+    "usage": "ping [OPCIONES]",
+    "options": {
+      "-c": "Número de paquetes a enviar",
+      "-i": "Intervalo entre paquetes (en segundos)",
+      "-t": "Tiempo de vida (TTL) de los paquetes",
+      "-s": "Tamaño del paquete en bytes",
+      "-q": "Salida en modo silencioso (resumen)",
+      "-W": "Tiempo de espera por respuesta (en segundos)",
+      "-f": "Flood ping (envío rápido, requiere permisos de root)",
+      "-D": "Mostrar timestamp de cada paquete"
+    },
+    "name": "ping",
+    "category": "local_network",
+    "source_path": "local_network/commands/ping.adoc"
+  },
+  {
+    "description": "Capturar y analizar paquetes de red en tiempo real.",
+    "usage": "tcpdump [OPCIONES]",
+    "options": {
+      "-i": "Especificar interfaz de red",
+      "-n": "No resolver nombres DNS ni puertos",
+      "-c": "Limitar número de paquetes capturados",
+      "-w": "Guardar captura en un archivo",
+      "-r": "Leer un archivo de captura",
+      "-p": "No poner la interfaz en modo promiscuo",
+      "-s": "Establecer tamaño del snaplen"
+    },
+    "name": "tcpdump",
+    "category": "local_network",
+    "source_path": "local_network/commands/tcpdump.adoc"
+  },
+  {
+    "description": "Consultar información de DNS y diagnosticar resolución de nombres de dominio.",
+    "usage": "dig [OPCIONES] [DOMINIO]",
+    "options": {
+      "-a": "Mostrar todas las entradas DNS",
+      "-n": "Mostrar direcciones IP sin resolver nombres",
+      "-s": "Añadir una entrada estática en la caché DNS",
+      "-d": "Eliminar una entrada de la caché DNS"
+    },
+    "name": "dig",
+    "category": "local_network",
+    "source_path": "local_network/commands/dig.adoc"
+  },
+  {
+    "description": "Mostrar conexiones de red activas, puertos abiertos y estadísticas, reemplazo moderno de netstat.",
+    "usage": "ss [OPCIONES]",
+    "options": {
+      "-t": "Mostrar solo conexiones TCP",
+      "-u": "Mostrar solo conexiones UDP",
+      "-l": "Mostrar solo puertos en escucha (listening)",
+      "-n": "Mostrar direcciones y puertos en formato numérico",
+      "-p": "Mostrar PID y proceso asociado a la conexión",
+      "-a": "Mostrar todas las conexiones y puertos en escucha",
+      "-s": "Mostrar resumen estadístico de protocolos de red",
+      "-r": "Mostrar tabla de rutas (similar a netstat -r)"
+    },
+    "name": "ss",
+    "category": "local_network",
+    "source_path": "local_network/commands/ss.adoc"
+  },
+  {
+    "description": "Mostrar conexiones de red activas, puertos abiertos, rutas y estadísticas de red.",
+    "usage": "netstat [OPCIONES]",
+    "options": {
+      "-t": "Mostrar solo conexiones TCP",
+      "-u": "Mostrar solo conexiones UDP",
+      "-l": "Mostrar solo puertos escuchando",
+      "-n": "Mostrar direcciones y puertos en formato numérico",
+      "-p": "Mostrar PID y programa que usa la conexión",
+      "-a": "Mostrar todas las conexiones y puertos escuchando",
+      "-s": "Mostrar estadísticas de protocolos de red",
+      "-r": "Mostrar tabla de rutas"
+    },
+    "name": "netstat",
+    "category": "local_network",
+    "source_path": "local_network/commands/netstat.adoc"
+  },
+  {
+    "description": "Transferir datos desde o hacia un servidor usando distintos protocolos (HTTP, HTTPS, FTP…).",
+    "usage": "curl [OPCIONES] [URL]",
+    "options": {
+      "-o": "Guardar salida en un archivo",
+      "-O": "Guardar con el nombre original del archivo",
+      "-L": "Seguir redirecciones",
+      "-I": "Obtener solo cabeceras HTTP",
+      "-d": "Enviar datos en una petición POST",
+      "-H": "Añadir cabeceras HTTP personalizadas",
+      "-u": "Autenticación HTTP básica",
+      "-s": "Modo silencioso",
+      "--limit-rate": "Limitar velocidad de descarga/subida"
+    },
+    "name": "curl",
+    "category": "local_network",
+    "source_path": "local_network/commands/curl.adoc"
+  },
+  {
+    "description": "Consultar información de DNS de dominios y direcciones IP de manera interactiva o directa.",
+    "usage": "nslookup [OPCIONES]",
+    "options": {
+      "-a": "Mostrar todas las entradas DNS",
+      "-n": "Mostrar direcciones IP y nombres sin resolver",
+      "-s": "Añadir una entrada estática en la tabla DNS",
+      "-d": "Eliminar una entrada de la tabla DNS"
+    },
+    "name": "nslookup",
+    "category": "local_network",
+    "source_path": "local_network/commands/nslookup.adoc"
+  },
+  {
+    "description": "Mostrar y gestionar la tabla ARP para ver las asociaciones entre direcciones IP y MAC en la red local.",
+    "usage": "arp [OPCIONES]",
+    "options": {
+      "-a": "Mostrar todas las entradas ARP",
+      "-n": "Mostrar direcciones IP y MAC sin resolver nombres",
+      "-s": "Añadir una entrada estática en la tabla ARP",
+      "-d": "Eliminar una entrada de la tabla ARP",
+      "-i": "Especificar interfaz de red"
+    },
+    "name": "arp",
+    "category": "local_network",
+    "source_path": "local_network/commands/arp.adoc"
+  },
+  {
+    "description": "Consultar información de registro de dominios y direcciones IP.",
+    "usage": "whois [OPCIONES]",
+    "options": {
+      "-H": "Salida más limpia sin cabeceras innecesarias",
+      "-v": "Información detallada",
+      "-h": "Consultar un servidor WHOIS específico",
+      "-p": "Especificar puerto del servidor WHOIS",
+      "--verbose": "Mostrar salida completa y extendida"
+    },
+    "name": "whois",
+    "category": "local_network",
+    "source_path": "local_network/commands/whois.adoc"
+  },
+  {
+    "description": "Consultar y configurar interfaces de red en sistemas Linux utilizando el comando ifconfig.",
+    "usage": "ifconfig [OPCIONES]",
+    "options": {
+      "-a": "Mostrar todas las interfaces",
+      "-s": "Mostrar solo estadísticas",
+      "-up": "Activar una interfaz",
+      "-down": "Desactivar una interfaz",
+      "-ip": "Asignar dirección IP a una interfaz",
+      "-broadcast": "Configurar dirección de broadcast",
+      "-mtu": "Cambiar tamaño máximo de paquete (MTU)",
+      "-promisc": "Activar modo promiscuo"
+    },
+    "name": "ifconfig",
+    "category": "local_network",
+    "source_path": "local_network/commands/ifconfig.adoc"
   },
   {
     "description": "Combinar líneas de dos ficheros basándose en un campo común.",
@@ -199,6 +475,22 @@
     "name": "rm",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/rm.adoc"
+  },
+  {
+    "description": "Construir y ejecutar comandos a partir de la entrada estándar.",
+    "usage": "xargs [OPCIONES] COMANDO",
+    "options": {
+      "-n": "Número de argumentos por ejecución",
+      "-I": "Reemplazar argumentos con un marcador",
+      "-0": "Usar separador nulo",
+      "-p": "Confirmar antes de ejecutar",
+      "-t": "Mostrar el comando antes de ejecutarlo",
+      "-r": "No ejecutar si no hay entrada",
+      "--max-procs": "Ejecución en paralelo"
+    },
+    "name": "xargs",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/xargs.adoc"
   },
   {
     "description": "Actualizar la base de datos utilizada por el comando locate.",
@@ -415,6 +707,23 @@
     "source_path": "local_filesystem/commands/unlink.adoc"
   },
   {
+    "description": "Buscar ficheros y directorios que cumplan criterios especificados.",
+    "usage": "find [RUTA] [OPCIONES]",
+    "options": {
+      "-name": "Buscar por nombre",
+      "-type": "Buscar por tipo (f=fichero, d=directorio)",
+      "-mtime": "Buscar por fecha de modificación",
+      "-atime": "Buscar por fecha de acceso",
+      "-size": "Buscar por tamaño",
+      "-maxdepth": "Limitar profundidad máxima",
+      "-mindepth": "Limitar profundidad mínima",
+      "-exec": "Ejecutar comando sobre resultados"
+    },
+    "name": "find",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/find.adoc"
+  },
+  {
     "description": "Extraer secciones de cada línea de un fichero o flujo de datos usando delimitadores o rangos de caracteres.",
     "usage": "cut [OPCIONES] archivo",
     "options": {
@@ -619,6 +928,22 @@
     "source_path": "local_filesystem/commands/fortune.adoc"
   },
   {
+    "description": "Herramienta de procesamiento de texto para analizar y manipular datos estructurados por columnas.",
+    "usage": "awk [OPCIONES] 'programa' archivo",
+    "options": {
+      "-F": "Definir separador de campos",
+      "-print": "Mostrar campos específicos",
+      "-condicion": "Filtrar líneas según una condición",
+      "-BEGIN": "Ejecutar acciones iniciales antes de procesar el archivo",
+      "-END": "Ejecutar acciones finales después de procesar el archivo",
+      "-NR": "Número de registro (línea)",
+      "-NF": "Número de campos por línea"
+    },
+    "name": "awk",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/awk.adoc"
+  },
+  {
     "description": "Mostrar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.",
     "usage": "lsattr [OPCIONES] [ARCHIVO...]",
     "options": {
@@ -658,6 +983,26 @@
     "name": "ln",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/ln.adoc"
+  },
+  {
+    "description": "Buscar cadenas de texto en ficheros según patrones (expresiones regulares).",
+    "usage": "grep [OPCIONES] patron fichero",
+    "options": {
+      "-i": "Buscar ignorando mayúsculas/minúsculas",
+      "-r": "Buscar recursivamente en directorios",
+      "-n": "Mostrar número de línea",
+      "-v": "Mostrar líneas que NO coinciden",
+      "-E": "Usar expresiones regulares extendidas",
+      "-o": "Mostrar sólo la parte coincidente de cada línea",
+      "-P": "Usar expresiones regulares Perl-compatible (PCRE)",
+      "-l": "Mostrar sólo nombres de ficheros con coincidencias",
+      "-c": "Contar coincidencias por fichero",
+      "-q": "Modo silencioso (devuelve código de salida)",
+      "--color=auto": "Resaltar coincidencias"
+    },
+    "name": "grep",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/grep.adoc"
   },
   {
     "description": "Listar ficheros del directorio actual.",
@@ -712,6 +1057,19 @@
     "name": "less",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/less.adoc"
+  },
+  {
+    "description": "Crear uno o varios directorios.",
+    "usage": "mkdir [OPCIONES] NOMBRE_DIRECTORIO...",
+    "options": {
+      "-p": "Crear árbol de directorios (crea padres según sea necesario)",
+      "-v": "Mostrar cada directorio creado (verbose)",
+      "--help": "Mostrar ayuda",
+      "--version": "Mostrar versión del comando"
+    },
+    "name": "mkdir",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/mkdir.adoc"
   },
   {
     "description": "Buscar rápidamente archivos en el sistema usando la base de datos actualizada por `updatedb`.",

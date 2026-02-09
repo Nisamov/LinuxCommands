@@ -1,6 +1,18 @@
 === chown
 Cambiar el propietario y/o grupo de archivos y directorios en Linux.
 
+:category: local_permissions
+[.metadata]
+{
+  "description": "Cambiar el propietario y/o grupo de archivos y directorios en Linux.",
+  "usage": "chown [OPCIONES] ARCHIVO",
+  "options": {
+    "-R": "Cambiar propietario y grupo de todos los archivos y subdirectorios de forma recursiva",
+    "-c": "Muestra solo los cambios realizados",
+    "--": "Permite cambiar el propietario de archivos cuyo nombre comienza con '-'"
+  }
+}
+
 [source,bash]
 ----
 # Cambiar propietario de un archivo

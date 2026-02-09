@@ -1,6 +1,16 @@
 === umask
 Establece los permisos predeterminados para nuevos archivos y directorios creados por el usuario.
 
+:category: local_permissions
+[.metadata]
+{
+  "description": "Establecer los permisos predeterminados para nuevos archivos y directorios creados por el usuario.",
+  "usage": "umask [MÁSCARA]",
+  "options": {
+    "MÁSCARA": "Especifica la máscara de permisos en formato octal (por ejemplo, 022) o simbólico (por ejemplo, u=rwx,g=rx,o=rx)"
+  }
+}
+
 [source,bash]
 ----
 # Ver la máscara de permisos actual

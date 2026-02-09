@@ -1,6 +1,23 @@
 === ifconfig
 Consultar y configurar interfaces de red en sistemas Linux.
 
+:category: local_network
+[.metadata]
+{
+  "description": "Consultar y configurar interfaces de red en sistemas Linux utilizando el comando ifconfig.",
+  "usage": "ifconfig [OPCIONES]",
+  "options": {
+    "-a": "Mostrar todas las interfaces",
+    "-s": "Mostrar solo estadísticas",
+    "-up": "Activar una interfaz",
+    "-down": "Desactivar una interfaz",
+    "-ip": "Asignar dirección IP a una interfaz",
+    "-broadcast": "Configurar dirección de broadcast",
+    "-mtu": "Cambiar tamaño máximo de paquete (MTU)",
+    "-promisc": "Activar modo promiscuo"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar todas las interfaces y sus configuraciones

@@ -1,6 +1,24 @@
 === curl
 Transferir datos desde o hacia un servidor usando distintos protocolos (HTTP, HTTPS, FTP…).
 
+:category: local_network
+[.metadata]
+{
+  "description": "Transferir datos desde o hacia un servidor usando distintos protocolos (HTTP, HTTPS, FTP…).",
+  "usage": "curl [OPCIONES] [URL]",
+  "options": {
+    "-o": "Guardar salida en un archivo",
+    "-O": "Guardar con el nombre original del archivo",
+    "-L": "Seguir redirecciones",
+    "-I": "Obtener solo cabeceras HTTP",
+    "-d": "Enviar datos en una petición POST",
+    "-H": "Añadir cabeceras HTTP personalizadas",
+    "-u": "Autenticación HTTP básica",
+    "-s": "Modo silencioso",
+    "--limit-rate": "Limitar velocidad de descarga/subida"
+  }
+}
+
 [source,bash]
 ----
 # Hacer una petición GET a una URL

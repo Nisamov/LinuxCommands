@@ -1,6 +1,23 @@
 === ss
 Mostrar conexiones de red activas, puertos abiertos y estadísticas, reemplazo moderno de netstat.
 
+:category: local_network
+[.metadata]
+{
+  "description": "Mostrar conexiones de red activas, puertos abiertos y estadísticas, reemplazo moderno de netstat.",
+  "usage": "ss [OPCIONES]",
+  "options": {
+    "-t": "Mostrar solo conexiones TCP",
+    "-u": "Mostrar solo conexiones UDP",
+    "-l": "Mostrar solo puertos en escucha (listening)",
+    "-n": "Mostrar direcciones y puertos en formato numérico",
+    "-p": "Mostrar PID y proceso asociado a la conexión",
+    "-a": "Mostrar todas las conexiones y puertos en escucha",
+    "-s": "Mostrar resumen estadístico de protocolos de red",
+    "-r": "Mostrar tabla de rutas (similar a netstat -r)"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar todas las conexiones TCP y UDP

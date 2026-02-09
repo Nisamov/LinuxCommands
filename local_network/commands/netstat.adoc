@@ -1,6 +1,23 @@
 === netstat
 Mostrar conexiones de red activas, puertos abiertos, rutas y estadísticas de red.
 
+:category: local_network
+[.metadata]
+{
+  "description": "Mostrar conexiones de red activas, puertos abiertos, rutas y estadísticas de red.",
+  "usage": "netstat [OPCIONES]",
+  "options": {
+    "-t": "Mostrar solo conexiones TCP",
+    "-u": "Mostrar solo conexiones UDP",
+    "-l": "Mostrar solo puertos escuchando",
+    "-n": "Mostrar direcciones y puertos en formato numérico",
+    "-p": "Mostrar PID y programa que usa la conexión",
+    "-a": "Mostrar todas las conexiones y puertos escuchando",
+    "-s": "Mostrar estadísticas de protocolos de red",
+    "-r": "Mostrar tabla de rutas"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar todas las conexiones de red activas

@@ -1,6 +1,23 @@
 === wget
 Descargar archivos desde la web mediante HTTP, HTTPS o FTP.
 
+:category: local_network
+[.metadata]
+{
+  "description": "Descargar archivos desde la web mediante HTTP, HTTPS o FTP utilizando el comando wget.",
+  "usage": "wget [OPCIONES]",
+  "options": {
+    "-O": "Guardar con un nombre específico",
+    "-c": "Continuar descargas interrumpidas",
+    "-q": "Modo silencioso",
+    "--limit-rate": "Limitar velocidad de descarga",
+    "--no-check-certificate": "Ignorar errores de certificado SSL",
+    "-r": "Descarga recursiva de sitios web",
+    "-np": "No ascender al directorio padre al descargar recursivamente",
+    "--user / --password": "Autenticación HTTP/FTP"
+  }
+}
+
 [source,bash]
 ----
 # Descargar un archivo desde una URL

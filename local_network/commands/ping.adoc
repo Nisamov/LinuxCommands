@@ -1,6 +1,23 @@
 === ping
 Comprobar la conectividad de red y el tiempo de respuesta entre hosts.
 
+:category: local_network
+[.metadata]
+{
+  "description": "Comprobar la conectividad de red y el tiempo de respuesta entre hosts.",
+  "usage": "ping [OPCIONES]",
+  "options": {
+    "-c": "Número de paquetes a enviar",
+    "-i": "Intervalo entre paquetes (en segundos)",
+    "-t": "Tiempo de vida (TTL) de los paquetes",
+    "-s": "Tamaño del paquete en bytes",
+    "-q": "Salida en modo silencioso (resumen)",
+    "-W": "Tiempo de espera por respuesta (en segundos)",
+    "-f": "Flood ping (envío rápido, requiere permisos de root)",
+    "-D": "Mostrar timestamp de cada paquete"
+  }
+}
+
 [source,bash]
 ----
 # Hacer ping a un host

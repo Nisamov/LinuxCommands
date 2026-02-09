@@ -1,6 +1,23 @@
 === nmap
 Escaneo y análisis de puertos, servicios y dispositivos en la red.
 
+:category: local_network
+[.metadata]
+{
+  "description": "Escaneo y análisis de puertos, servicios y dispositivos en la red utilizando nmap.",
+  "usage": "nmap [OPCIONES]",
+  "options": {
+    "-p": "Especificar puertos a escanear",
+    "-sS": "Escaneo TCP SYN (stealth scan)",
+    "-sU": "Escaneo de puertos UDP",
+    "-A": "Detección de sistema operativo y servicios",
+    "-O": "Detectar sistema operativo",
+    "-T": "Ajustar velocidad/agresividad del escaneo (0-5)",
+    "-v": "Modo verbose para más detalles",
+    "--open": "Mostrar solo puertos abiertos"
+  }
+}
+
 [source,bash]
 ----
 # Escanear puertos comunes de un host

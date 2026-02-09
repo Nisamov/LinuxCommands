@@ -1,6 +1,19 @@
 === dig
 Consultar información de DNS y diagnosticar resolución de nombres de dominio.
 
+:category: local_network
+[.metadata]
+{
+  "description": "Consultar información de DNS y diagnosticar resolución de nombres de dominio.",
+  "usage": "dig [OPCIONES] [DOMINIO]",
+  "options": {
+    "-a": "Mostrar todas las entradas DNS",
+    "-n": "Mostrar direcciones IP sin resolver nombres",
+    "-s": "Añadir una entrada estática en la caché DNS",
+    "-d": "Eliminar una entrada de la caché DNS",
+  }
+}
+
 [source,bash]
 ----
 # Consultar el registro A de un dominio

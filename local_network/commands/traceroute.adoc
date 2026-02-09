@@ -1,6 +1,21 @@
 === traceroute
 Mostrar la ruta que siguen los paquetes hasta un host y medir el tiempo de respuesta de cada salto.
 
+:category: local_network
+[.metadata]
+{
+  "description": "Rastrear la ruta de los paquetes a un host y medir tiempos de respuesta",
+  "usage": "traceroute [OPCIONES]",
+  "options": {
+    "-I": "Usar ICMP en lugar de UDP (similar a ping)",
+    "-n": "No resolver nombres de host, mostrar solo IPs",
+    "-m": "Número máximo de saltos",
+    "-q": "Número de consultas por salto",
+    "-w": "Tiempo de espera por respuesta (segundos)",
+    "-p": "Especificar puerto inicial (para UDP)"
+  }
+}
+
 [source,bash]
 ----
 # Hacer traceroute a un host
