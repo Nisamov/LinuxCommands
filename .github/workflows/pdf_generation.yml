@@ -258,17 +258,6 @@ jobs:
             fi
           done
 
-      - name: Verificar PDFs generados
-        run: |
-          echo "=== Verificando PDFs generados ==="
-          ls -la pdf/
-          echo ""
-          echo "=== Verificando fuentes instaladas ==="
-          fc-list | grep -i "noto\|cjk" | sort | uniq | head -30
-          echo ""
-          echo "=== Tamaño de PDFs ==="
-          du -h pdf/*.pdf
-
       - name: Crear releases por idioma
         run: |
           echo "Creando releases separados por idioma..."
