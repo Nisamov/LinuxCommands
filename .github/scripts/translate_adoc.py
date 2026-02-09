@@ -55,75 +55,51 @@ def should_translate_line(line: str) -> bool:
     """Determina si una línea completa debe ser traducida"""
     stripped = line.rstrip()
     
-    # Línea vacía
     if not stripped:
         return False
-    
-    # Comentarios
     if COMMENT_LINE.match(stripped):
         return False
-    
-    # Directivas includes
     if INCLUDE_DIRECTIVE.match(stripped):
         return False
-    
-    # Definiciones de atributos
     if ATTRIBUTE_DEF.match(stripped):
         return False
-    
-    # Bloques de código fuente
     if SOURCE_BLOCK.match(stripped):
         return False
-    
-    # Tablas
     if TABLE_BLOCK.match(stripped):
         return False
-    
-    # Líneas que son solo macros
     if MACRO_LINE.match(stripped):
         return False
     
     return True
 
 def extract_translatable_text(line: str) -> tuple[str, str, str]:
-    """
-    Extrae texto traducible de una línea.
-    Devuelve: (prefijo, texto_a_traducir, sufijo)
-    """
-    stripped = line.rstrip()
-    
-    # Elementos de lista
+    """Extrae texto traducible de una línea"""
     list_match = LIST_ITEM.match(line)
     if list_match:
         prefix = list_match.group(0)
         text = line[len(prefix):].rstrip()
         return prefix, text, ""
     
-    # Elementos enumerados
     enum_match = ENUM_ITEM.match(line)
     if enum_match:
         prefix = enum_match.group(0)
         text = line[len(prefix):].rstrip()
         return prefix, text, ""
     
-    # Para otras líneas, intentar preservar indentación
     leading_spaces = len(line) - len(line.lstrip())
     prefix = line[:leading_spaces]
     text = line[leading_spaces:].rstrip()
-    
     return prefix, text, ""
 
 def translate_text(text: str) -> str:
-    """Traduce texto con manejo de errores"""
+    """Traduce texto con manejo de errores y NoneType"""
     if not text or not text.strip():
         return text
     
-    # Para idiomas CJK, asegurarnos de que el texto tenga caracteres válidos
     if target_lang_code in ['zh-CN', 'ko', 'ja']:
-        # Normalizar Unicode
         text = unicodedata.normalize('NFC', text)
     
-    # Limitar longitud para evitar errores de la API
+    # Fragmentar textos muy largos
     if len(text) > 4500:
         chunks = []
         paragraphs = text.split('\n\n')
@@ -154,31 +130,21 @@ def translate_text(text: str) -> str:
         max_retries = 3
         for attempt in range(max_retries):
             try:
-                # Para CJK, no escapar HTML (mejor manejo)
+                # Traducción principal
                 if target_lang_code in ['zh-CN', 'ko', 'ja']:
                     translated = translator.translate(chunk)
                 else:
                     chunk_clean = html.escape(chunk) if '<' in chunk or '>' in chunk else chunk
                     translated = translator.translate(chunk_clean)
-                    if '&' in translated:
+                    if translated and '&' in translated:
                         translated = html.unescape(translated)
                 
-                if translated and translated != chunk:
-                    # Verificar que la traducción tenga caracteres válidos
-                    try:
-                        translated.encode('utf-8')
-                        translated_chunks.append(translated)
-                        break
-                    except UnicodeEncodeError:
-                        print(f"  Advertencia: Caracteres no UTF-8 en traducción, usando original")
-                        translated_chunks.append(chunk)
-                        break
-                else:
-                    translated_chunks.append(chunk)
-                    break
+                # Fallback si None
+                translated = translated or chunk
                 
-                time.sleep(0.5)
-                
+                translated_chunks.append(translated)
+                break
+            
             except Exception as e:
                 if attempt < max_retries - 1:
                     print(f"  Reintento {attempt + 1}/{max_retries}...")
@@ -190,34 +156,36 @@ def translate_text(text: str) -> str:
     
     result = '\n\n'.join(translated_chunks)
     
-    # Post-procesamiento para CJK
     if target_lang_code in ['zh-CN', 'ko', 'ja']:
-        # Eliminar espacios extra que pueden causar problemas
         result = re.sub(r'\s+', ' ', result)
-        # Asegurar que los caracteres CJK estén bien formados
         result = unicodedata.normalize('NFC', result)
     
     return result
 
 def translate_adoc(content: str) -> str:
-    """Traduce contenido AsciiDoc manteniendo estructura"""
+    """Traduce contenido AsciiDoc manteniendo estructura, ignorando metadata JSON"""
     lines = content.splitlines()
     translated_lines = []
     
     in_code_block = False
     in_table = False
-    buffer = []
-    current_indent = ""
+    in_metadata_block = False
     
     for i, line in enumerate(lines):
-        original_line = line
+        # Detectar inicio de bloque de metadata
+        if line.strip() == "[.metadata]":
+            in_metadata_block = True
+            continue
+        if in_metadata_block:
+            if line.strip() == "}":
+                in_metadata_block = False
+            continue  # saltar todas las líneas del bloque
         
         # Detectar bloques de código
         if CODE_BLOCK_DELIM.match(line.rstrip()):
             in_code_block = not in_code_block
             translated_lines.append(line)
             continue
-        
         if in_code_block:
             translated_lines.append(line)
             continue
@@ -227,26 +195,21 @@ def translate_adoc(content: str) -> str:
             in_table = not in_table
             translated_lines.append(line)
             continue
-        
         if in_table:
             translated_lines.append(line)
             continue
         
-        # Verificar si la línea debe ser traducida
+        # Líneas que no se deben traducir
         if not should_translate_line(line):
             translated_lines.append(line)
             continue
         
-        # Extraer texto traducible
+        # Extraer y traducir
         prefix, text, suffix = extract_translatable_text(line)
-        
         if text:
             try:
                 translated_text = translate_text(text)
-                if translated_text:
-                    translated_lines.append(prefix + translated_text + suffix)
-                else:
-                    translated_lines.append(line)
+                translated_lines.append(prefix + translated_text + suffix)
             except Exception as e:
                 print(f"  Error en línea {i+1}: {str(e)[:50]}")
                 translated_lines.append(line)
@@ -255,7 +218,6 @@ def translate_adoc(content: str) -> str:
     
     result = '\n'.join(translated_lines)
     
-    # Asegurar encoding UTF-8 para CJK
     if target_lang_code in ['zh-CN', 'ko', 'ja']:
         try:
             result = result.encode('utf-8', 'ignore').decode('utf-8')
@@ -267,35 +229,21 @@ def translate_adoc(content: str) -> str:
 def process_file(src_file: Path, dst_file: Path):
     """Procesa un archivo .adoc individual"""
     print(f"Procesando: {src_file}")
-    
     try:
-        # Leer contenido
         text = src_file.read_text(encoding="utf-8")
-        
-        # Verificar si el archivo tiene contenido
         if not text.strip():
             print(f"  Archivo vacío, copiando sin cambios")
             dst_file.parent.mkdir(parents=True, exist_ok=True)
             dst_file.write_text(text, encoding="utf-8")
             return
-        
-        # Traducir
-        print(f"  Traduciendo {len(text)} caracteres a {TARGET_LANG}...")
         translated_text = translate_adoc(text)
-        
-        # Escribir archivo traducido con encoding explícito
         dst_file.parent.mkdir(parents=True, exist_ok=True)
         dst_file.write_text(translated_text, encoding="utf-8")
-        
         print(f"  ✓ Traducido a {TARGET_LANG}: {dst_file}")
-        
-        # Pausa más larga para idiomas CJK
         if target_lang_code in ['zh-CN', 'ko', 'ja']:
-            time.sleep(2)  # Pausa para evitar rate limiting
-        
+            time.sleep(2)
     except Exception as e:
         print(f"  ✗ ERROR procesando {src_file}: {str(e)}")
-        # Copiar el archivo original si hay error
         dst_file.parent.mkdir(parents=True, exist_ok=True)
         try:
             dst_file.write_text(src_file.read_text(encoding="utf-8"), encoding="utf-8")
@@ -313,7 +261,6 @@ for i, src_file in enumerate(adoc_files, 1):
     print(f"\n[{i}/{len(adoc_files)}] ", end="")
     process_file(src_file, dst_file)
     
-    # Pausa más larga para CJK
     if target_lang_code in ['zh-CN', 'ko', 'ja'] and i % 3 == 0:
         print("  Pausando 5 segundos para evitar rate limiting...")
         time.sleep(5)
@@ -323,7 +270,7 @@ for i, src_file in enumerate(adoc_files, 1):
 
 print(f"\n✓ Traducción completada. Archivos {TARGET_LANG} guardados en: {DST_ROOT}")
 
-# Verificar que los archivos tienen encoding correcto
+# Verificar encoding de archivos generados
 print("\nVerificando encoding de archivos generados")
 for dst_file in DST_ROOT.rglob("*.adoc"):
     try:
