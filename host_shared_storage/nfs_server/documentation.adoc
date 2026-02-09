@@ -1,0 +1,34 @@
+=== Servidor NFS
+
+Este sistema de ficheros requiere del servidor SAMBA para funcionar.
+
+Instalación de paquetes en equipo servidor
+[source,bash]
+----
+sudo apt install nfs-kernel-server
+sudo apt install rpcbind # Dependencias necesarias
+----
+
+Instalación de paquete en equipo cliente
+[source,bash]
+----
+sudo apt install nfs-common
+----
+
+Edición de configuración en equipo servidor `/etc/exports`
+[source,bash]
+----
+/home/samba/carpeta1 192.168.10.10(rw,sync,subtree_check,no_root_squash)
+----
+
+Comprobación de parámetros
+[source,bash]
+----
+sudo nano exportfs -a
+----
+
+Reiniciar servicio
+[source,bash]
+----
+sudo service nfs-kernel-server restart
+----

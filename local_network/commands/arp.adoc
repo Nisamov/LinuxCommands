@@ -1,6 +1,20 @@
 === arp
 Consultar y manipular la tabla ARP (asociaciones IP ⇄ MAC) en la red local.
 
+:category: local_network
+[.metadata]
+{
+  "description": "Mostrar y gestionar la tabla ARP para ver las asociaciones entre direcciones IP y MAC en la red local.",
+  "usage": "arp [OPCIONES]",
+  "options": {
+    "-a": "Mostrar todas las entradas ARP",
+    "-n": "Mostrar direcciones IP y MAC sin resolver nombres",
+    "-s": "Añadir una entrada estática en la tabla ARP",
+    "-d": "Eliminar una entrada de la tabla ARP",
+    "-i": "Especificar interfaz de red"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar tabla ARP completa

@@ -1,1 +1,69 @@
-null
+=== Servidor SAMBA
+
+Instalación de paquetes
+
+[source,bash]
+----
+sudo apt install samba
+----
+
+Creación de usuarios a los que se les asignarán los permisos
+
+[source,bash]
+----
+sudo adduser usuario1 # Agregar tantos usuarios como se requieran
+----
+
+Creación de directorios que van a ser modificados
+
+[source,bash]
+----
+sudo mkdir /etc/samba/carpeta1
+----
+
+Asignar permisos al directorio (al estar en directorio `/etc` está capado)
+
+[source,bash]
+----
+sudo chmod 777 /etc/samba/carpeta1
+----
+
+Edición de configuración del Samba `/etc/samba/smb.conf`
+[source,bash]
+----
+# En la parte inferior del fichero
+[carpeta1] # Nombre de carpeta
+    comment = Carpeta Publica # Comentario de carpeta
+    path = /etc/samba/carpeta1 # Ruta donde se encuentra la carpeta
+    browseable = yes # Permitir que el directorio aparezca en el explorador de archivos
+    guest ok = yes #Permite usuarios anonimos
+    #public = yes # Permite usuarios anonimos - comentado para evitar redundancia
+    writeable = yes # Permiso de escritura en el directorio sobre usuarios anonimos
+    #directory mask = 044
+    #create msk = 044
+    valid users = usuario1, usuario2, usuario3 #Usuarios que tienen acceso al directorio
+    write list = usuario1, usuario2 # Permiso de lectura y escritura en el directorio
+    read list = usuario2 # Permiso de lectura en el directorio
+    veto files = /*.avi/*.mp3/*.pdf/*.exe # Ficheros con extensiones bloqueadas
+    delete veto files = yes # Eliminacion de ficheros con estenxiones bloqueadas
+----
+
+Guardar fichero `CONTROL + O` y reiniciar servicio nmbd.
+
+[source,bash]
+----
+service nmbd restart && service smbd restart && service nmbd status
+----
+
+Para acceder a los directorios Samba desde un equipo externo, se requiere acceder de la siguiente forma:
+* Windows: Barra de direcciones > Directory Network > IP
+[source,bash]
+----
+\\192.168.10.10
+----
+
+* Ubuntu: Interfaz de directorios > Otras ubicaciones > smb:///IP
+[source,bash]
+----
+smb:///192.168.10.10
+----

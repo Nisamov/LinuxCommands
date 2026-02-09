@@ -1,6 +1,20 @@
 === whois
 Consultar información de registro de dominios y direcciones IP.
 
+:category: local_network
+[.metadata]
+{
+  "description": "Consultar información de registro de dominios y direcciones IP.",
+  "usage": "whois [OPCIONES]",
+  "options": {
+    "-H": "Salida más limpia sin cabeceras innecesarias",
+    "-v": "Información detallada",
+    "-h": "Consultar un servidor WHOIS específico",
+    "-p": "Especificar puerto del servidor WHOIS",
+    "--verbose": "Mostrar salida completa y extendida"
+  }
+}
+
 [source,bash]
 ----
 # Consultar información de un dominio

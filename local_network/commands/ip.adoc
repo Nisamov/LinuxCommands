@@ -1,6 +1,21 @@
 === ip
 Consultar y configurar interfaces de red, rutas, direcciones y vecinos en Linux (reemplazo moderno de ifconfig y arp).
 
+:category: local_network
+[.metadata]
+{
+  "description": "Consultar y configurar interfaces de red, rutas, direcciones y vecinos en Linux (reemplazo moderno de ifconfig y arp).",
+  "usage": "ip [OPCIONES]",
+  "options": {
+    "addr": "Mostrar o configurar direcciones IP",
+    "link": "Consultar o configurar interfaces de red",
+    "route": "Consultar o configurar rutas de red",
+    "neigh": "Consultar o configurar tabla ARP/vecinos",
+    "flush": "Limpiar tablas de vecinos",
+    "-s": "Mostrar estadísticas de tráfico de interfaces"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar todas las interfaces y sus direcciones

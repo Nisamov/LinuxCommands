@@ -1,6 +1,22 @@
 === tcpdump
 Capturar y analizar paquetes de red en tiempo real.
 
+:category: local_network
+[.metadata]
+{
+  "description": "Capturar y analizar paquetes de red en tiempo real.",
+  "usage": "tcpdump [OPCIONES]",
+  "options": {
+    "-i": "Especificar interfaz de red",
+    "-n": "No resolver nombres DNS ni puertos",
+    "-c": "Limitar número de paquetes capturados",
+    "-w": "Guardar captura en un archivo",
+    "-r": "Leer un archivo de captura",
+    "-p": "No poner la interfaz en modo promiscuo",
+    "-s": "Establecer tamaño del snaplen"
+  }
+}
+
 [source,bash]
 ----
 # Capturar tráfico en la interfaz por defecto

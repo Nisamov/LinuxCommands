@@ -1,6 +1,22 @@
 === chmod
 Modificar los permisos de archivos y directorios en Linux.
 
+:category: local_permissions
+[.metadata]
+{
+  "description": "Modificar los permisos de archivos y directorios en Linux.",
+  "usage": "chmod [OPCIONES] ARCHIVO",
+  "options": {
+    "+x": "Otorgar permisos de ejecución a un archivo",
+    "-x": "Revocar permisos de ejecución a un archivo",
+    "u+s": "Establecer el bit SUID en un archivo",
+    "g+s": "Establecer el bit SGID en un directorio",
+    "+t": "Establecer el sticky bit, solo el propietario puede modificar archivos en el directorio",
+    "-R": "Aplicar cambios de forma recursiva a un directorio",
+    "-v": "Muestra información detallada de los cambios aplicados"
+  }
+}
+
 [source,bash]
 ----
 # Otorgar permisos de ejecución a un archivo
