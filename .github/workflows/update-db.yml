@@ -33,6 +33,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add .github/web/commands.json
+          git add docs/commands.json
           git commit -m "Actualizacion JSON" || echo "Sin cambios por aplicar"
           git push
