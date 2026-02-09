@@ -18,13 +18,12 @@ Descripcion de comando
 comando -parametros fichero
 ----
 
-=== Ejemplo comando 2
-Descripcion de comando
+-nisa:: `ejemplo -nisa` Descripcion parámetro "nisa"
 
 [source,shell]
 ----
-# Ejemplo comentario describiendo accion del comando
-comando -parametros fichero
+# Ejemplo comentario describiendo accion del comando "nisa"
+comando -nisa
 ----
 
 //Deja por lo menos dos espacios para evitar colisiones entre ficheros
