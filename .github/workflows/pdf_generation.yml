@@ -116,8 +116,7 @@ jobs:
           ASCIIDOCTOR=$(which asciidoctor-pdf)
           
           # Lista específica de módulos a procesar
-          MODULES="document_management fundamentals networking permission_management services software_management storage"
-          
+          MODULES="local_fundamentals local_filesystem local_group local_network local_permissions local_scripts local_security local_services local_software local_storage local_system_data local_users"
           for MODULE in $MODULES; do
             if [ -d "$MODULE" ] && [ -f "$MODULE/index.adoc" ]; then
               echo "=== Procesando módulo: $MODULE ==="
