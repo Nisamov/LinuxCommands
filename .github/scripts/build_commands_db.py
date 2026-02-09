@@ -14,26 +14,54 @@ def extract_json_metadata(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
+
+            # exigir línea :category:
             category_match = re.search(r':category:\s*([^\n\r]+)', content)
-            if category_match:
-                category = category_match.group(1).strip()
-            else:
-                parts = file_path.split(os.sep)
-                category = parts[-3] if len(parts) > 2 else "general"
-            metadata_match = re.search(r'\[\.metadata\]\s*(\{.*\})', content, re.DOTALL)
-            if metadata_match:
-                raw_json = metadata_match.group(1)
-                clean_json = robust_json_clean(raw_json)
-                try:
-                    data = json.loads(clean_json)
-                    data['name'] = os.path.basename(file_path).replace('.adoc', '')
-                    data['category'] = category
-                    rel_path = os.path.relpath(file_path, start=BASE_PATH)
-                    data['source_path'] = rel_path.replace('\\', '/')
-                    return data
-                except json.JSONDecodeError as e:
-                    print(f"Error JSON en {os.path.basename(file_path)}: {e}")
-            return None
+            if not category_match:
+                return None
+            category = category_match.group(1).strip()
+
+            # localizar la sección [.metadata] y extraer el JSON buscando la llave de cierre emparejada
+            md_pos = content.find('[.metadata]')
+            if md_pos == -1:
+                return None
+            start_brace = content.find('{', md_pos)
+            if start_brace == -1:
+                return None
+
+            # buscar la llave de cierre correspondiente contando llaves
+            i = start_brace
+            depth = 0
+            end_brace = None
+            while i < len(content):
+                ch = content[i]
+                if ch == '{':
+                    depth += 1
+                elif ch == '}':
+                    depth -= 1
+                    if depth == 0:
+                        end_brace = i
+                        break
+                i += 1
+
+            if end_brace is None:
+                print(f"Error JSON en {os.path.basename(file_path)}: llave de cierre no encontrada")
+                return None
+
+            raw_json = content[start_brace:end_brace+1]
+            clean_json = robust_json_clean(raw_json)
+            try:
+                data = json.loads(clean_json)
+            except json.JSONDecodeError as e:
+                print(f"Error JSON en {os.path.basename(file_path)}: {e}")
+                return None
+
+            # asegurar campos esenciales y mantener estructura esperada
+            data['name'] = data.get('name', os.path.basename(file_path).replace('.adoc', ''))
+            data['category'] = category
+            rel_path = os.path.relpath(file_path, start=BASE_PATH)
+            data['source_path'] = rel_path.replace('\\', '/')
+            return data
     except Exception as e:
         print(f"Error crítico en {file_path}: {e}")
         return None

@@ -1,5 +1,21 @@
 [
   {
+    "description": "Herramienta de procesamiento de texto para analizar y manipular datos estructurados por columnas.",
+    "usage": "awk [OPCIONES] 'programa' archivo",
+    "options": {
+      "-F": "Definir separador de campos",
+      "-print": "Mostrar campos específicos",
+      "-condicion": "Filtrar líneas según una condición",
+      "-BEGIN": "Ejecutar acciones iniciales antes de procesar el archivo",
+      "-END": "Ejecutar acciones finales después de procesar el archivo",
+      "-NR": "Número de registro (línea)",
+      "-NF": "Número de campos por línea"
+    },
+    "name": "awk",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/awk.adoc"
+  },
+  {
     "description": "Herramienta para obtener el nombre de un fichero o directorio a partir de una ruta completa, con opciones para eliminar sufijos o procesar múltiples rutas.",
     "usage": "basename [OPCIONES] RUTA [SUFIJO]",
     "options": {
@@ -168,6 +184,23 @@
     "source_path": "local_filesystem/commands/file.adoc"
   },
   {
+    "description": "Buscar ficheros y directorios que cumplan criterios especificados.",
+    "usage": "find [RUTA] [OPCIONES]",
+    "options": {
+      "-name": "Buscar por nombre",
+      "-type": "Buscar por tipo (f=fichero, d=directorio)",
+      "-mtime": "Buscar por fecha de modificación",
+      "-atime": "Buscar por fecha de acceso",
+      "-size": "Buscar por tamaño",
+      "-maxdepth": "Limitar profundidad máxima",
+      "-mindepth": "Limitar profundidad mínima",
+      "-exec": "Ejecutar comando sobre resultados"
+    },
+    "name": "find",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/find.adoc"
+  },
+  {
     "description": "Formatear texto ajustando líneas y párrafos para mejorar legibilidad.",
     "usage": "fmt [OPCIONES] fichero",
     "options": {
@@ -214,6 +247,26 @@
     "name": "gedit",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/gedit.adoc"
+  },
+  {
+    "description": "Buscar cadenas de texto en ficheros según patrones (expresiones regulares).",
+    "usage": "grep [OPCIONES] patron fichero",
+    "options": {
+      "-i": "Buscar ignorando mayúsculas/minúsculas",
+      "-r": "Buscar recursivamente en directorios",
+      "-n": "Mostrar número de línea",
+      "-v": "Mostrar líneas que NO coinciden",
+      "-E": "Usar expresiones regulares extendidas",
+      "-o": "Mostrar sólo la parte coincidente de cada línea",
+      "-P": "Usar expresiones regulares Perl-compatible (PCRE)",
+      "-l": "Mostrar sólo nombres de ficheros con coincidencias",
+      "-c": "Contar coincidencias por fichero",
+      "-q": "Modo silencioso (devuelve código de salida)",
+      "--color=auto": "Resaltar coincidencias"
+    },
+    "name": "grep",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/grep.adoc"
   },
   {
     "description": "Empaquetar archivos con compresión gzip.",
@@ -354,6 +407,19 @@
     "name": "lsattr",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/lsattr.adoc"
+  },
+  {
+    "description": "Crear uno o varios directorios.",
+    "usage": "mkdir [OPCIONES] NOMBRE_DIRECTORIO...",
+    "options": {
+      "-p": "Crear árbol de directorios (crea padres según sea necesario)",
+      "-v": "Mostrar cada directorio creado (verbose)",
+      "--help": "Mostrar ayuda",
+      "--version": "Mostrar versión del comando"
+    },
+    "name": "mkdir",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/mkdir.adoc"
   },
   {
     "description": "Crear una tubería con nombre (FIFO) en el sistema de ficheros.",
@@ -682,6 +748,22 @@
     "name": "wc",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/wc.adoc"
+  },
+  {
+    "description": "Construir y ejecutar comandos a partir de la entrada estándar.",
+    "usage": "xargs [OPCIONES] COMANDO",
+    "options": {
+      "-n": "Número de argumentos por ejecución",
+      "-I": "Reemplazar argumentos con un marcador",
+      "-0": "Usar separador nulo",
+      "-p": "Confirmar antes de ejecutar",
+      "-t": "Mostrar el comando antes de ejecutarlo",
+      "-r": "No ejecutar si no hay entrada",
+      "--max-procs": "Ejecución en paralelo"
+    },
+    "name": "xargs",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/xargs.adoc"
   },
   {
     "description": "Comprimir y descomprimir archivos usando el algoritmo LZMA/LZMA2.",
