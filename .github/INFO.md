@@ -8,7 +8,7 @@ El formato de los comandos en los archivos `commands.md` se basa en el [Document
 
 ## Origen del Proyecto
 
-El proyecto tiene su registro inicial el `01/03/2023`, aunque el origen real del documento se remonta al verano de 2022, cuando Nisamov comenzó a explorar Linux y documentar sus aprendizajes.
+El proyecto tiene su registro inicial el `01/03/2023`, aunque el origen real del documento se remonta al verano de 2022, cuando Nisamov comenzó a explorar Linux y documentar sus aprendizajes en casa de unos amigos, donde se quedó en un cuarto con su portatil (Thinkpad) mientras exploraba un entorno nuevo, siendo Kali Linux, el primer contacto con Linux que tuvo.
 
 El repositorio se creó oficialmente el `25/11/2023` a las `10:42`, marcando el inicio del proyecto que hoy alberga todo este contenido.
 
@@ -56,5 +56,3 @@ El repositorio ha contado con la colaboración de varias personas, quienes han a
 ## Licencia
 
 Este proyecto se distribuye bajo la **Licencia MIT**.
-
-> Repositorio creado por [Andrés Abadías](https://github.com/Nisamov)
