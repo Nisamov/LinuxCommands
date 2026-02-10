@@ -1,6 +1,6 @@
 name: Generación de Documentación PDF Multilingüe
 
-# El proceso puede tardar entre 2 y 3 horas
+# El proceso puede tardar entre 3 y 4 horas
 # Segun el repositorio crezca, esta cifra irá en aumento.
 # Es posible ejecutar este script manualmente, pero no se recomienda debido al tiempo que toma.
 
@@ -94,6 +94,19 @@ jobs:
           done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configurar Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Eliminar todos los tags locales
+        run: |
+          git tag -l | xargs -r git tag -d
+
+      - name: Eliminar todos los tags remotos
+        run: |
+          git tag -l | xargs -r -n 1 git push origin :refs/tags/
 
       - name: Crear tema simple para CJK (opcional)
         run: |
