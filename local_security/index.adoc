@@ -32,6 +32,7 @@ include::network_security/fail2ban/theory.adoc[]
 include::network_security/firewall_ufw/theory.adoc[]
 include::network_security/openvpn/theory.adoc[]
 include::network_security/proxy_squid/theory.adoc[]
+include::network_security/kerberos/theory.adoc[]
 
 == Auditoría local
 include::local_audit/lynis/lynis.adoc[]

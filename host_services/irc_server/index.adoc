@@ -1,4 +1,4 @@
-= Scripts Locales
+= Servidores IRC
 :toc:
 :toclevels: 3
 :icons: font
@@ -19,18 +19,22 @@ Este manual está pensado como guía de referencia para:
 * Administradores de sistemas Linux
 * Usuarios técnicos en proceso de aprendizaje
 
-== BASH
-include::bash/theory.adoc[]
-//include::bash/automations/.sh[]
-include::bash/example_scripts/echo.sh[]
-include::bash/example_scripts/for.sh[]
-include::bash/example_scripts/if_else.sh[]
-include::bash/example_scripts/input.sh[]
-include::bash/example_scripts/variables.sh[]
-include::bash/example_scripts/while.sh[]
-//Los ejercicios no están incluidos en la documentación
+== Teoría
+include::theory/theory.adoc[]
 
-== eBPF
-include::eBPF/theory.adoc[]
-include::eBPF/example_scripts/trace_open.bt[]
+== Inspircd
+include::inspircd/installation.adoc[]
+include::inspircd/configuration.adoc[]
+
+== Mattermost
+include::mattermost/installation.adoc[]
+include::mattermost/configuration.adoc[]
+
+== Ngircd
+include::ngircd/installation.adoc[]
+include::ngircd/configuration.adoc[]
+
+== UnrealIRCd
+include::unrealircd/installation.adoc[]
+include::unrealircd/configuration.adoc[]
 

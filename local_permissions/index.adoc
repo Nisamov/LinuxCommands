@@ -1,4 +1,4 @@
-= Permission Management
+= Administración de Permisos
 :toc:
 :toclevels: 3
 :icons: font
