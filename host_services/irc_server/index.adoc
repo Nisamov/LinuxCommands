@@ -1,0 +1,40 @@
+= Servidores IRC
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectnums:
+:pdf-page-size: A4
+:pdf-page-margin: [2cm, 2cm, 2cm, 2cm]
+:description: LinuxCommands es un repositorio creado para servir como guía y apoyo a usuarios o administradores de sistemas Linux
+:url-repo: https://github.com/Nisamov/LinuxCommands
+:doctype: article
+:lang: es
+:author: Andrés Ruslan Abadías Otal
+
+== Introducción
+Este manual está pensado como guía de referencia para:
+
+* Ámbito escolar y formativo
+* Administradores de sistemas Linux
+* Usuarios técnicos en proceso de aprendizaje
+
+== Teoría
+include::theory/theory.adoc[]
+
+== Inspircd
+include::inspircd/installation.adoc[]
+include::inspircd/configuration.adoc[]
+
+== Mattermost
+include::mattermost/installation.adoc[]
+include::mattermost/configuration.adoc[]
+
+== Ngircd
+include::ngircd/installation.adoc[]
+include::ngircd/configuration.adoc[]
+
+== UnrealIRCd
+include::unrealircd/installation.adoc[]
+include::unrealircd/configuration.adoc[]
+
