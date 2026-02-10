@@ -27,23 +27,10 @@ Con el tiempo, se fue estructurando para que sea más fácil de navegar y consul
 <summary><strong>• OBJETIVOS DEL PORYECTO</strong></summary>
 <h1>Objetivos del proyecto</h1>
 
-- Proporcionar un **formato claro y reutilizable** para documentar comandos Linux.
-- Facilitar una documentación **legible para humanos y mantenible a largo plazo**.
+- Proporcionar un formato claro y reutilizable para documentar comandos y servicios de Linux.
+- Facilitar una documentación legible para humanos y mantenible a largo plazo.
 - Reducir duplicación, ambigüedad y variaciones innecesarias entre repositorios.
 - Servir como referencia práctica para administradores de sistemas, desarrolladores y equipos técnicos.
-</details>
-
----
-<details open>
-<summary><strong>• ENFOQUE DEL PORYECTO</strong></summary>
-<h1>Enfoque del proyecto</h1>
-
-El repositorio no pretende sustituir herramientas existentes como `man`, sino **complementarlas** mediante:
-
-- Ficheros `commands.md` estructurados,
-- Convenciones claras de documentación,
-- Ejemplos prácticos y homogéneos,
-- Una organización pensada para crecer sin perder consistencia.
 </details>
 
 ---
@@ -79,23 +66,34 @@ La organización del repositorio está pensada para facilitar la navegación y e
 
 El repositorio sigue un estándar fijo de documentación para mantener el orden y permitir una correcta indexación a la hora de generar PDFs.
 
-Premodelos de ejemplo:
-- [Ejemplo de premodelo en Markdown (.md)](.github/templates/markdown.md)
-- [Ejemplo de premodelo en Documento Ascii tipo Index (.adoc)](.github/templates/asciidocument_index.adoc)
-- [Ejemplo de premodelo en Documento Ascii para Comandos (.adoc)](.github/templates/asciidocument_command.adoc)
+1. Clonación de repositorio - [Crear Pull Request](https://github.com/Nisamov/LinuxCommands/pulls)
+2. Cambios o creación de contenido (siguiendo la estructura en el repositorio)
+    - [Ejemplo de premodelo en Markdown (.md)](.github/templates/markdown.md)
+    - [Ejemplo de premodelo en Documento Ascii tipo Index (.adoc)](.github/templates/asciidocument_index.adoc)
+    - [Ejemplo de premodelo en Documento Ascii para Comandos (.adoc)](.github/templates/asciidocument_command.adoc)
+3. Abrir pull request y rellenar las casillas indicadas
+4. Solicitar comprobación de pull resquest
+
+### Indexación de comandos
+La indexación que se lleva a cabo en el repositorio, permite su muestra en la [página web | búsqueda](https://nisamov.github.io/LinuxCommands/search.html).
+
+Esto es posible gracias al formato con el que están montados los ficheros `.adoc`:
+```JSON
+:category: directorio_origen
+[.metadata]
+{
+  "description": "Descripción",
+  "usage": "comando [OPCIONES] 'programa' archivo",
+  "options": {
+    "-opcion1": "Opcion1",
+    "-opcion2": "Opcion2",
+    "-opcion3": "Opcion3",
+  }
+}
+```
+Esta estructura está unicamente en rutas semejantes a `*/commands/*.adoc`, lo que permite que se identifique su contenido como un comando y al aplicar dicha estructura, se crea así un comando nuevo que será procesado por un workflow para ser aplicado directamente en `docs/commands.json`.
 
 Se pide tener en cuenta el [PULL_REQUEST_TEMPLATE](.github/PULL_REQUEST_TEMPLATE) en caso de querer colaborar con el repositorio.
-</details>
-
----
-<details open>
-<summary><strong>• CONTRIBUYE AL PROYECTO</strong></summary>
-<h1>Contribuye al proyecto</h1>
-
-Las contribuciones son bienvenidas siempre que respeten el formato y la estructura definidos.  
-El objetivo es mantener una documentación coherente y de alta calidad.
-
-[![Crear Pull Request](https://img.shields.io/badge/Crear_Pull_Request-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Nisamov/LinuxCommands/pulls)
 </details>
 
 ---
