@@ -27,6 +27,7 @@ Deje sin marcar "[ ]" las secciones que no han recibido cambios.
 
 - [ ] .github/
 - [ ] docs/
+- [ ] host_services/
 - [ ] host_shared_storage/
 - [ ] host_web_server/
 - [ ] linux_fundamentals/
