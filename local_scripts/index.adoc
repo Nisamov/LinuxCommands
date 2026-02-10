@@ -1,4 +1,4 @@
-= Scripting
+= Scripts Locales
 :toc:
 :toclevels: 3
 :icons: font
