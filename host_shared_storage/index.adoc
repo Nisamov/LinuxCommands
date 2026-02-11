@@ -22,11 +22,14 @@ Este manual está pensado como guía de referencia para:
 * Usuarios técnicos en proceso de aprendizaje
 
 == LDAP
-include::ldap/documentation.adoc[]
+include::ldap_server/theory.adoc[]
+include::ldap_server/documentation.adoc[]
 
 == Samba
-include::samba/documentation.adoc[]
+include::samba_server/theory.adoc[]
+include::samba_server/documentation.adoc[]
 
 == NFS
-include::nfs/documentation.adoc[]
+include::nfs_server/theory.adoc[]
+include::nfs_server/documentation.adoc[]
 
