@@ -1,6 +1,22 @@
 === initctl
 Gestionar servicios y trabajos (jobs) en sistemas con Upstart (Ubuntu 9.10-14.10, RHEL 6).
 
+:category: local_services
+[.metadata]
+{
+  "description": "Gestionar servicios y trabajos (jobs) en sistemas con Upstart (Ubuntu 9.10-14.10, RHEL 6).",
+  "usage": "initctl [OPCIONES] TRABAJO",
+  "options": {
+    "--list": "Listar trabajos y sus estados",
+    "--start": "Iniciar un trabajo",
+    "--stop": "Detener un trabajo",
+    "--restart": "Reiniciar un trabajo",
+    "--reload": "Recargar configuración de un trabajo",
+    "--status": "Ver estado de un trabajo",
+    "--emit": "Emitir evento a trabajos"
+  }
+}
+
 [source,bash]
 ----
 # Listar todos los trabajos y sus estados

@@ -1,6 +1,25 @@
 === dnf
 Gestión de paquetes en sistemas Red Hat, Fedora, Rocky Linux y derivados
 
+:category: local_software
+[.metadata]
+{
+  "description": "Gestionar paquetes en sistemas Red Hat, Fedora, Rocky Linux y derivados.",
+  "usage": "dnf [OPCIONES] PAQUETE",
+  "options": {
+    "-h, --help": "Mostrar ayuda",
+    "-y, --assumeyes": "Responder 'sí' a todas las preguntas",
+    "-q, --quiet": "Modo silencioso",
+    "--refresh": "Forzar actualización de metadatos",
+    "--best": "Intentar usar la mejor versión disponible",
+    "--nobest": "No usar la mejor versión disponible",
+    "--skip-broken": "Omitir paquetes con dependencias rotas",
+    "--exclude=PAQUETE": "Excluir un paquete específico",
+    "--enablerepo=REPOSITORIO": "Habilitar un repositorio específico",
+    "--disablerepo=REPOSITORIO": "Deshabilitar un repositorio específico"
+  }
+}
+
 El comando `dnf` (Dandified YUM) es el gestor de paquetes moderno que sustituye a `yum`.
 Gestiona paquetes RPM y resuelve dependencias de forma automática.
 

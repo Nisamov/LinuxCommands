@@ -1,6 +1,25 @@
 === lsof
 Listar archivos abiertos y los procesos que los están utilizando.
 
+:category: local_process
+[.metadata]
+{
+  "description": "Listar archivos abiertos y los procesos que los están utilizando.",
+  "usage": "lsof [OPCIONES]",
+  "options": {
+    "-u": "Filtrar por usuario",
+    "-p": "Filtrar por PID",
+    "-c": "Filtrar por nombre de comando",
+    "-i": "Mostrar conexiones de red",
+    "-iTCP": "Filtrar conexiones TCP",
+    "-i:PUERTO": "Filtrar por puerto",
+    "-n": "No resolver nombres DNS",
+    "-P": "No resolver nombres de puertos",
+    "-D": "Buscar en un directorio",
+    "-t": "Mostrar solo PIDs"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar todos los archivos abiertos del sistema

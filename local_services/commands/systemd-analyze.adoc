@@ -1,6 +1,22 @@
 === systemd-analyze
 Analizar y depurar el rendimiento de arranque de systemd.
 
+:category: local_services
+[.metadata]
+{
+  "description": "Analizar y depurar el rendimiento de arranque de systemd.",
+  "usage": "systemd-analyze [OPCIONES]",
+  "options": {
+    "--list": "Listar servicios y sus estados",
+    "--start": "Iniciar un servicio",
+    "--stop": "Detener un servicio",
+    "--restart": "Reiniciar un servicio",
+    "--reload": "Recargar configuración de un servicio",
+    "--status": "Ver estado de un servicio",
+    "--emit": "Emitir evento a servicios"
+  }
+}
+
 [source,bash]
 ----
 # Ver tiempo total de arranque

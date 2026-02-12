@@ -1,6 +1,25 @@
 === dpkg
 Gestión de paquetes de bajo nivel en sistemas Debian y derivados
 
+:category: local_software
+[.metadata]
+{
+  "description": "Gestor de paquetes de bajo nivel para sistemas Debian y derivados. Permite instalar, eliminar y consultar paquetes .deb localmente sin resolver dependencias automáticamente.",
+  "usage": "dpkg [OPCIONES] PAQUETE",
+  "options": {
+    "-i": "Instalar un paquete .deb",
+    "-r": "Eliminar un paquete pero mantener archivos de configuración",
+    "-P": "Eliminar completamente un paquete y su configuración (purge)",
+    "-l": "Listar todos los paquetes instalados o filtrar por nombre",
+    "-s": "Mostrar información del estado de un paquete instalado",
+    "-L": "Listar los archivos instalados por un paquete",
+    "-S": "Buscar a qué paquete pertenece un archivo",
+    "-c": "Listar el contenido de un archivo .deb sin instalarlo",
+    "-I": "Mostrar información detallada de un archivo .deb",
+    "--configure": "Configurar paquetes desempaquetados pero no configurados"
+  }
+}
+
 El comando `dpkg` es el gestor de paquetes de bajo nivel para paquetes `.deb`.
 No resuelve dependencias automáticamente; normalmente se usa junto con `apt`.
 

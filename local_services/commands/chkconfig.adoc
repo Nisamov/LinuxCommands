@@ -1,6 +1,20 @@
 === chkconfig
 Gestionar servicios en sistemas basados en Red Hat con SysVinit (RHEL/CentOS 6 y anteriores).
 
+:category: local_services
+[.metadata]
+{
+  "description": "Gestionar servicios en sistemas basados en Red Hat con SysVinit (RHEL/CentOS 6 y anteriores).",
+  "usage": "chkconfig [OPCIONES] SERVICIO",
+  "options": {
+    "--list": "Listar servicios y sus niveles de ejecución",
+    "--level NIVELES": "Especificar niveles de ejecución (ej: 2345)",
+    "--add": "Agregar un nuevo servicio al sistema",
+    "--del": "Eliminar un servicio del sistema",
+    "--override": "Sobrescribir configuración existente de un servicio"
+  }
+}
+
 [source,bash]
 ----
 # Listar servicios y sus niveles de ejecución

@@ -1,6 +1,22 @@
 === update-rc.d
 Gestionar enlaces de inicio en sistemas Debian/Ubuntu con SysVinit.
 
+:category: local_services
+[.metadata]
+{
+  "description": "Gestionar servicios y trabajos (jobs) en sistemas con SysVinit (Debian/Ubuntu).",
+  "usage": "update-rc.d [OPCIONES] SERVICIO",
+  "options": {
+    "--list": "Listar servicios y sus estados",
+    "--start": "Iniciar un servicio",
+    "--stop": "Detener un servicio",
+    "--restart": "Reiniciar un servicio",
+    "--reload": "Recargar configuración de un servicio",
+    "--status": "Ver estado de un servicio",
+    "--emit": "Emitir evento a servicios"
+  }
+}
+
 [source,bash]
 ----
 # Ver información de un servicio

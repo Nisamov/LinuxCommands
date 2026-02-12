@@ -1,6 +1,20 @@
 === rc-service
 Gestionar servicios en sistemas con OpenRC (Gentoo, Alpine Linux, Artix Linux).
 
+:category: local_services
+[.metadata]
+{
+  "description": "Gestionar servicios y trabajos (jobs) en sistemas con OpenRC (Gentoo, Alpine Linux, Artix Linux).",
+  "usage": "rc-service [OPCIONES] SERVICIO",
+  "options": {
+    "start": "Iniciar el servicio.",
+    "stop": "Detener el servicio.",
+    "restart": "Reiniciar el servicio.",
+    "reload": "Recargar la configuración sin reiniciar.",
+    "status": "Ver el estado actual del servicio."
+  }
+}
+
 [source,bash]
 ----
 # Ver estado de un servicio

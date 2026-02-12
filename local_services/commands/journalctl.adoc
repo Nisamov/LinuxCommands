@@ -1,6 +1,21 @@
 === journalctl
 Consultar y administrar los registros del sistema de systemd (journal).
 
+:category: local_services
+[.metadata]
+{
+  "description": "Consultar y administrar los registros del sistema de systemd (journal).",
+  "usage": "journalctl [OPCIONES]",
+  "options": {
+    "-u, --unit": "Filtrar por unidad de servicio",
+    "-f, --follow": "Seguir los logs en tiempo real",
+    "-b, --boot": "Filtrar por arranque",
+    "-p, --priority": "Filtrar por nivel de prioridad",
+    "--since": "Filtrar por fecha/hora de inicio",
+    "--until": "Filtrar por fecha/hora de fin"
+  }
+}
+
 [source,bash]
 ----
 # Ver todos los logs del sistema

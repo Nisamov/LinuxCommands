@@ -1,6 +1,19 @@
 === htop
 Monitor de procesos interactivo con interfaz visual mejorada que reemplaza a `top`.
 
+:category: local_process
+[.metadata]
+{
+  "description": "Monitor de procesos interactivo con interfaz visual mejorada que reemplaza a `top`.",
+  "usage": "htop [OPCIONES]",
+  "options": {
+    "--no-color": "Desactiva colores en la salida",
+    "--no-mouse": "Desactiva soporte para mouse",
+    "-d, --delay": "Especifica el intervalo de actualización en décimas de segundo",
+    "--batch": "Ejecuta en modo no interactivo y exporta salida"
+  }
+}
+
 [source,bash]
 ----
 # Iniciar htop

@@ -1,6 +1,25 @@
 === pacman
 Gestión de paquetes en Arch Linux y derivados
 
+:category: local_software
+[.metadata]
+{
+  "description": "Gestor de paquetes de bajo nivel para sistemas Arch Linux y derivados. Permite instalar, eliminar y consultar paquetes .pkg.tar.xz localmente sin resolver dependencias automáticamente.",
+  "usage": "pacman [OPCIONES] PAQUETE",
+  "options": {
+    "-i": "Instalar un paquete .pkg.tar.xz",
+    "-r": "Eliminar un paquete pero mantener archivos de configuración",
+    "-P": "Eliminar completamente un paquete y su configuración (purge)",
+    "-l": "Listar todos los paquetes instalados o filtrar por nombre",
+    "-s": "Mostrar información del estado de un paquete instalado",
+    "-L": "Listar los archivos instalados por un paquete",
+    "-S": "Buscar a qué paquete pertenece un archivo",
+    "-c": "Listar el contenido de un archivo .pkg.tar.xz sin instalarlo",
+    "-I": "Mostrar información detallada de un archivo .pkg.tar.xz",
+    "--configure": "Configurar paquetes desempaquetados pero no configurados"
+  }
+}
+
 El comando `pacman` es el gestor de paquetes nativo de Arch Linux. Gestiona paquetes
 binarios y resuelve dependencias automáticamente, manteniendo el sistema en modelo
 rolling release.

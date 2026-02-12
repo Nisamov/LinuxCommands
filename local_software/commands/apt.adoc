@@ -1,6 +1,25 @@
 === apt
 Gestión de paquetes en sistemas Debian y derivados
 
+:category: local_software
+[.metadata]
+{
+  "description": "Gestionar paquetes en sistemas Debian y derivados.",
+  "usage": "apt [OPCIONES] PAQUETE",
+  "options": {
+    "-h, --help": "Mostrar ayuda",
+    "-v, --version": "Mostrar versión",
+    "--no-install-recommends": "No instalar paquetes recomendados",
+    "--assume-yes": "Responder 'sí' a todas las preguntas",
+    "--quiet": "Modo silencioso",
+    "--verbose": "Modo detallado",
+    "--simulate": "Simular la operación sin realizar cambios",
+    "--allow-downgrades": "Permitir degradaciones de paquetes",
+    "--allow-remove-essential": "Permitir eliminación de paquetes esenciales",
+    "--allow-change-held-packages": "Permitir cambios en paquetes retenidos"
+  }
+}
+
 Instalación y administración de paquetes mediante la interfaz de alto nivel `apt`.
 El comando `apt` sustituye en uso interactivo a `apt-get` y `apt-cache`, aunque estos
 siguen existiendo.

@@ -1,6 +1,27 @@
 === rc-status
 Mostrar estado de servicios en sistemas con OpenRC.
 
+:category: local_services
+[.metadata]
+{
+  "description": "Mostrar estado de servicios en sistemas con OpenRC.",
+  "usage": "rc-status [OPCIONES]",
+  "options": {
+    "-s, --services": "Mostrar solo servicios activos",
+    "-l, --list": "Mostrar runlevels y dependencias",
+    "--crashed": "Mostrar servicios caídos",
+    "--stopped": "Mostrar servicios detenidos",
+    "--inactive": "Mostrar servicios inactivos",
+    "-a, --all": "Mostrar todos los servicios instalados",
+    "--deps": "Mostrar árbol de dependencias",
+    "--list-deps servicio": "Mostrar dependencias específicas de un servicio",
+    "--order": "Mostrar orden de inicio de servicios",
+    "--time": "Mostrar tiempos de inicio de servicios",
+    "--verbose": "Mostrar información detallada de servicios",
+    "--full": "Mostrar nombre completo de servicios"
+  }
+}
+
 [source,bash]
 ----
 # Ver estado general de servicios

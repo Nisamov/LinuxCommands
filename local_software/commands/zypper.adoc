@@ -1,6 +1,21 @@
 === zypper
 Gestión de paquetes en sistemas SUSE y openSUSE
 
+:category: local_software
+[.metadata]
+{
+  "description": "Gestor de paquetes de alto nivel para sistemas SUSE y openSUSE.",
+  "usage": "zypper [OPCIONES] PAQUETE",
+  "options": {
+    "install": "Instalar un paquete rpm",
+    "remove": "Eliminar un paquete rpm",
+    "list": "Listar paquetes rpm instalados",
+    "find": "Buscar paquetes rpm",
+    "refresh": "Actualizar paquetes rpm",
+    "services": "Gestionar servicios rpm"
+  }
+}
+
 El comando `zypper` es el gestor de paquetes de alto nivel en sistemas SUSE.
 Trabaja con paquetes RPM y resuelve dependencias automáticamente.
 

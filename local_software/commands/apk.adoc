@@ -1,6 +1,22 @@
 === apk
 Gestión de paquetes en Alpine Linux
 
+:category: local_software
+[.metadata]
+{
+  "description": "Gestionar paquetes en Alpine Linux.",
+  "usage": "apk [OPCIONES] PAQUETE",
+  "options": {
+    "--list": "Listar paquetes instalados",
+    "--add": "Instalar un paquete",
+    "--del": "Eliminar un paquete",
+    "--search": "Buscar paquetes",
+    "--info": "Mostrar información de un paquete",
+    "--upgrade": "Actualizar paquetes",
+    "--cache": "Gestionar caché de paquetes"
+  }
+}
+
 El comando `apk` es el gestor de paquetes ligero de Alpine Linux, muy utilizado
 en contenedores y sistemas minimalistas.
 

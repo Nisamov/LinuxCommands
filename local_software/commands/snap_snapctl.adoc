@@ -1,6 +1,21 @@
 === snap / snapctl
 Gestión de paquetes Snap (paquetes universales)
 
+:category: local_software
+[.metadata]
+{
+  "description": "Gestor de paquetes Snap (paquetes universales).",
+  "usage": "snap [OPCIONES] PAQUETE",
+  "options": {
+    "install": "Instalar un paquete snap",
+    "remove": "Eliminar un paquete snap",
+    "list": "Listar paquetes snap instalados",
+    "find": "Buscar paquetes snap",
+    "refresh": "Actualizar paquetes snap",
+    "services": "Gestionar servicios snap"
+  }
+}
+
 Snap es un sistema de paquetes autocontenidos desarrollado por Canonical.
 `snapctl` se utiliza principalmente para administración avanzada.
 

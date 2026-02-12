@@ -1,6 +1,27 @@
 === pgrep
 Buscar procesos en ejecución basándose en su nombre u otros atributos y mostrar sus PIDs.
 
+:category: local_process
+[.metadata]
+{
+  "description": "Buscar procesos en ejecución basándose en su nombre u otros atributos y mostrar sus PIDs.",
+  "usage": "pgrep [OPCIONES] PATRÓN",
+  "options": {
+    "-u": "Filtrar por usuario",
+    "-p": "Filtrar por PID",
+    "-c": "Filtrar por nombre de comando",
+    "-f": "Coincidencia parcial (expresiones regulares)",
+    "-G": "Filtrar por grupo",
+    "-t": "Filtrar por terminal asociada",
+    "-P": "Filtrar por proceso padre",
+    "-s": "Filtrar por ID de sesión",
+    "-n": "Mostrar el proceso más reciente",
+    "-o": "Mostrar el proceso más antiguo",
+    "-l": "Mostrar nombre del comando junto con PID",
+    "-a": "Mostrar información detallada del proceso"
+  }
+}
+
 [source,bash]
 ----
 # Buscar procesos por nombre exacto

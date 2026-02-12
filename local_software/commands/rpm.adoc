@@ -1,6 +1,25 @@
 === rpm
 Gestión de paquetes de bajo nivel en sistemas basados en RPM
 
+:category: local_software
+[.metadata]
+{
+  "description": "Gestor de paquetes de bajo nivel para sistemas basados en RPM. Permite instalar, eliminar y consultar paquetes .rpm localmente sin resolver dependencias automáticamente.",
+  "usage": "rpm [OPCIONES] PAQUETE",
+  "options": {
+    "-i": "Instalar un paquete .rpm",
+    "-r": "Eliminar un paquete pero mantener archivos de configuración",
+    "-P": "Eliminar completamente un paquete y su configuración (purge)",
+    "-l": "Listar todos los paquetes instalados o filtrar por nombre",
+    "-s": "Mostrar información del estado de un paquete instalado",
+    "-L": "Listar los archivos instalados por un paquete",
+    "-S": "Buscar a qué paquete pertenece un archivo",
+    "-c": "Listar el contenido de un archivo .rpm sin instalarlo",
+    "-I": "Mostrar información detallada de un archivo .rpm",
+    "--configure": "Configurar paquetes desempaquetados pero no configurados"
+  }
+}
+
 El comando `rpm` es el gestor de paquetes de bajo nivel para paquetes `.rpm`.
 No gestiona repositorios ni resuelve dependencias automáticamente; suele usarse
 junto con `dnf` o `yum`.

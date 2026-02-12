@@ -1,6 +1,22 @@
 === getfacl
 Mostrar las listas de control de acceso (ACL) de ficheros y directorios.
 
+:category: local_permissions
+[.metadata]
+{
+  "description": "Mostrar las listas de control de acceso (ACL) de ficheros y directorios.",
+  "usage": "getfacl [OPCIONES] archivo",
+  "options": {
+    "-R": "Recursivo",
+    "-d": "Mostrar ACL por defecto",
+    "-c": "Salida compacta (sin comentarios)",
+    "--absolute-names": "Mostrar rutas absolutas",
+    "--omit-header": "Omitir cabeceras",
+    "--version": "Mostrar versión",
+    "--help": "Mostrar ayuda"
+  }
+}
+
 [source,bash]
 ----
 # Ver ACL de un archivo

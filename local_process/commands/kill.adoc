@@ -1,6 +1,17 @@
 === kill
 Enviar señales a procesos para modificar su comportamiento o terminarlos.
 
+:category: local_process
+[.metadata]
+{
+  "description": "Enviar señales a procesos para modificar su comportamiento o terminarlos.",
+  "usage": "kill [OPCIONES] PID",
+  "options": {
+    "-PID": "Especificar proceso por ID",
+    "-PGID": "Enviar señal a grupo de procesos"
+  }
+}
+
 [source,bash]
 ----
 # Enviar señal por defecto (SIGTERM) a un proceso

@@ -1,6 +1,22 @@
 === ps
 Mostrar información sobre procesos en ejecución (Process Status).
 
+:category: local_process
+[.metadata]
+{
+  "description": "Mostrar información sobre procesos en ejecución (Process Status).",
+  "usage": "ps [OPCIONES]",
+  "options": {
+    "-aux": "Mostrar todos los procesos con información detallada",
+    "-ef": "Mostrar todos los procesos en formato extendido",
+    "-eo": "Mostrar campos personalizados",
+    "-f": "Mostrar información detallada de cada proceso",
+    "-l": "Mostrar información larga de cada proceso",
+    "-j": "Mostrar información de hilos (threads)",
+    "--forest": "Mostrar árbol de procesos"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar procesos del usuario actual

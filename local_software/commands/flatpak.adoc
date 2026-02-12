@@ -1,6 +1,21 @@
 === flatpak
 Gestión de paquetes Flatpak (paquetes universales)
 
+:category: local_software
+[.metadata]
+{
+  "description": "Gestor de paquetes Flatpak para aplicaciones universales.",
+  "usage": "flatpak [OPCIONES] PAQUETE",
+  "options": {
+    "remote-add": "Añadir un repositorio remoto",
+    "install": "Instalar una aplicación",
+    "uninstall": "Eliminar una aplicación",
+    "list": "Listar aplicaciones instaladas",
+    "search": "Buscar aplicaciones",
+    "update": "Actualizar aplicaciones"
+  }
+}
+
 Flatpak es un sistema de distribución de aplicaciones orientado a escritorio,
 independiente de la distribución.
 

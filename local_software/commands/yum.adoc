@@ -1,6 +1,21 @@
 === yum
 Gestión de paquetes en sistemas Red Hat antiguos y compatibles
 
+:category: local_software
+[.metadata]
+{
+  "description": "Gestor de paquetes de bajo nivel para sistemas Red Hat y derivados. Permite instalar, eliminar y consultar paquetes .rpm localmente sin resolver dependencias automáticamente.",
+  "usage": "yum [OPCIONES] PAQUETE",
+  "options": {
+    "install": "Instalar un paquete rpm",
+    "remove": "Eliminar un paquete rpm",
+    "list": "Listar paquetes rpm instalados",
+    "find": "Buscar paquetes rpm",
+    "refresh": "Actualizar paquetes rpm",
+    "services": "Gestionar servicios rpm"
+  }
+}
+
 El comando `yum` (Yellowdog Updater, Modified) es el gestor de paquetes clásico
 en sistemas basados en RPM. Actualmente está obsoleto en favor de `dnf`, pero
 sigue presente en sistemas antiguos como CentOS 7.

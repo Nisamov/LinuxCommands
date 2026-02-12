@@ -1,6 +1,24 @@
 === setfacl
 Establecer o modificar listas de control de acceso (ACL) en ficheros y directorios.
 
+:category: local_permissions
+[.metadata]
+{
+  "description": "Establecer o modificar listas de control de acceso (ACL) en ficheros y directorios.",
+  "usage": "setfacl [OPCIONES] archivo",
+  "options": {
+    "-m": "Modificar o añadir entradas ACL",
+    "-x": "Eliminar entradas ACL",
+    "-b": "Quitar todas las ACL",
+    "-k": "Quitar la máscara (mask)",
+    "-R": "Aplicar recursivamente",
+    "-d": "Establecer ACL por defecto",
+    "--remove-all": "Eliminar todas las ACL (equivale a -b)",
+    "--version": "Mostrar versión",
+    "--help": "Mostrar ayuda"
+  }
+}
+
 [source,bash]
 ----
 # Asignar permisos ACL básicos

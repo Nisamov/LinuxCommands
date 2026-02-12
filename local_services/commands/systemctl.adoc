@@ -1,6 +1,22 @@
 === systemctl
 Controlar y gestionar el sistema y servicios de systemd.
 
+:category: local_services
+[.metadata]
+{
+  "description": "Gestionar servicios y trabajos (jobs) en sistemas con systemd (Ubuntu 15.04+, RHEL 7+).",
+  "usage": "systemctl [OPCIONES] SERVICIO",
+  "options": {
+    "--list": "Listar servicios y sus estados",
+    "--start": "Iniciar un servicio",
+    "--stop": "Detener un servicio",
+    "--restart": "Reiniciar un servicio",
+    "--reload": "Recargar configuración de un servicio",
+    "--status": "Ver estado de un servicio",
+    "--emit": "Emitir evento a servicios"
+  }
+}
+
 [source,bash]
 ----
 # Ver estado del sistema

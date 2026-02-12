@@ -1,6 +1,20 @@
 === top
 Monitor interactivo de procesos en tiempo real.
 
+:category: local_process
+[.metadata]
+{
+  "description": "Monitor interactivo de procesos en tiempo real.",
+  "usage": "top",
+  "options": {
+    "-b": "Modo batch (para scripts)",
+    "-d": "Intervalo de actualización (segundos)",
+    "-n": "Número de actualizaciones",
+    "-p": "Mostrar solo procesos específicos",
+    "-u": "Mostrar solo procesos de un usuario específico"
+  }
+}
+
 [source,bash]
 ----
 # Iniciar top
