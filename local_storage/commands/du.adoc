@@ -1,6 +1,21 @@
 === du
 Mostrar el uso de espacio en disco de archivos y directorios.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Mostrar el uso de espacio en disco de archivos y directorios.",
+  "usage": "du [OPCIONES] [DIRECTORIO]",
+  "options": {
+    "-h": "Mostrar tamaños en formato legible",
+    "-s": "Mostrar solo el total de cada argumento",
+    "-a": "Incluir archivos además de directorios",
+    "-d": "Profundidad máxima de directorios (GNU)",
+    "--max-depth": "Limitar la profundidad del directorio",
+    "--exclude": "Excluir archivos o directorios"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar el uso de espacio del directorio actual

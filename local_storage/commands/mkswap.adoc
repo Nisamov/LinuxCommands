@@ -1,6 +1,23 @@
 === mkswap
 Configurar un área de intercambio (swap) en un dispositivo o archivo.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar áreas de intercambio (swap) en dispositivos.",
+  "usage": "mkswap [OPCIONES] [DISPOSITIVO]",
+  "options": {
+    "-l": "Listar áreas de intercambio",
+    "-t": "Cambiar tipo de área de intercambio (modo interactivo)",
+    "-n": "Crear nueva área de intercambio (modo interactivo)",
+    "-d": "Borrar una área de intercambio (modo interactivo)",
+    "-L": "Asignar una etiqueta al área de swap",
+    "-c": "Comprobar bloques dañados antes de crear swap",
+    "-v": "Modo verbose para mostrar información detallada",
+    "--uuid": "Especificar UUID del swap"
+  }
+}
+
 [source,bash]
 ----
 # Crear swap en un dispositivo

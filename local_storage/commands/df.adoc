@@ -1,6 +1,24 @@
 === df
 Mostrar el uso de espacio en disco de los sistemas de ficheros montados.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Mostrar el uso de espacio en disco de los sistemas de ficheros montados.",
+  "usage": "df [OPCIONES] [SISTEMA_DE_FICHEROS]",
+  "options": {
+    "--label": "Definir tipo de sistema de ficheros (msdos, gpt, etc.)",
+    "-l": "Listar sistemas de ficheros detectados",
+    "-h": "Mostrar tamaños en formato legible",
+    "-T": "Mostrar tipo de sistema de ficheros",
+    "-a": "Incluir sistemas de ficheros especiales",
+    "-i": "Mostrar uso de inodos",
+    "--total": "Mostrar total acumulado",
+    "--exclude-type": "Excluir tipos de FS",
+    "device": "Consultar un punto concreto"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar uso de disco en bloques

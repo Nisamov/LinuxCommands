@@ -1,6 +1,25 @@
 === swapoff
 Desactivar áreas de intercambio (swap) en el sistema.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar áreas de intercambio en el sistema.",
+  "usage": "swapoff [OPCIONES] [DISPOSITIVO]",
+  "options": {
+    "-l": "Listar áreas de intercambio",
+    "-t": "Cambiar tipo de área de intercambio (modo interactivo)",
+    "-n": "Crear nueva área de intercambio (modo interactivo)",
+    "-d": "Borrar una área de intercambio (modo interactivo)",
+    "-p": "Mostrar tabla de áreas de intercambio (modo interactivo)",
+    "-a": "Desactivar todas las áreas de intercambio listadas en /etc/fstab",
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "-n": "Simular la desactivación sin aplicarla (dry-run)",
+    "device": "Desactivar un swap específico",
+    "file": "Desactivar un archivo de swap específico"
+  }
+}
+
 [source,bash]
 ----
 # Desactivar todo el swap del sistema

@@ -1,6 +1,26 @@
 === lvdisplay
 Mostrar información detallada de volúmenes lógicos en LVM.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Mostrar información detallada de volúmenes lógicos en LVM.",
+  "usage": "lvdisplay [OPCIONES] [LV]",
+  "options": {
+    "-l": "Listar volúmenes lógicos",
+    "-t": "Mostrar información de tipo de volumen",
+    "-n": "Mostrar nombre del volumen lógico",
+    "-d": "Mostrar información detallada del volumen lógico",
+    "-C": "Salida en columnas (formato compacto)",
+    "-v": "Modo verbose para más detalles",
+    "-n nombre": "Filtrar por nombre de volumen lógico",
+    "--select": "Filtrar volúmenes según atributos",
+    "-L": "Mostrar tamaño en bytes (exacto)",
+    "-m": "Mostrar mapeo físico de cada volumen lógico",
+    "-p": "Mostrar permisos de los volúmenes lógicos"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar todos los volúmenes lógicos del sistema

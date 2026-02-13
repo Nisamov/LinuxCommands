@@ -1,6 +1,27 @@
 === resize2fs
 Redimensionar sistemas de ficheros ext2/ext3/ext4 en un dispositivo o volumen lógico. Puede ampliarlos o reducirlos (reducir requiere que el FS esté desmontado o en modo read-only).
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Redimensionar sistemas de ficheros ext2/ext3/ext4 en un dispositivo o volumen lógico.",
+  "usage": "resize2fs [OPCIONES] [DISPOSITIVO]",
+  "options": {
+    "-l": "Listar sistemas de ficheros",
+    "-t": "Cambiar tipo de sistema de ficheros",
+    "-n": "Crear nuevo sistema de ficheros",
+    "-d": "Borrar un sistema de ficheros",
+    "-p": "Mostrar tabla de sistemas de ficheros",
+    "-w": "Escribir cambios en disco",
+    "-q": "Salir sin guardar cambios",
+    "-h": "Mostrar ayuda",
+    "-L": "Establecer tamaño final del sistema de ficheros",
+    "-M": "Reducir el FS al tamaño mínimo posible",
+    "-p": "Modo progreso, mostrar barra de progreso",
+    "-v": "Modo verbose, mostrar información detallada"
+  }
+}
+
 [source,bash]
 ----
 # Redimensionar un sistema de ficheros al tamaño máximo disponible

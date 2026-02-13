@@ -1,6 +1,21 @@
 === vgs
 Mostrar información resumida de grupos de volúmenes (VG) en LVM.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Mostrar información resumida de grupos de volúmenes en LVM.",
+  "usage": "vgs [OPCIONES]",
+  "options": {
+    "-o": "Seleccionar columnas a mostrar",
+    "--segments": "Mostrar detalles de los segmentos de cada VG",
+    "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+    "--noheadings": "Ocultar encabezados de columnas",
+    "-v": "Modo verbose para mostrar información detallada",
+    "--select": "Filtrar grupos según criterios"
+  }
+}
+
 [source,bash]
 ----
 # Listar todos los grupos de volúmenes del sistema

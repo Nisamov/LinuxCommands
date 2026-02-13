@@ -1,6 +1,19 @@
 === vgextend
 Añadir volúmenes físicos (PV) a un grupo de volúmenes (VG) existente en LVM.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Añadir volúmenes físicos a un grupo de volúmenes existente en LVM.",
+  "usage": "vgextend [OPCIONES] [GRUPO] [PV...]",
+  "options": {
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "-u": "Asignar un UUID específico al VG durante la extensión",
+    "-Z": "Establecer formato de metadatos (lvm1 o lvm2)",
+    "--physicalextentsize": "Definir tamaño de las extensiones físicas"
+  }
+}
+
 [source,bash]
 ----
 # Añadir /dev/sdc al grupo de volúmenes vg1

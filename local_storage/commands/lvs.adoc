@@ -1,5 +1,25 @@
 === lvs
-Mostrar información resumida de volúmenes lógicos en LVM.
+Modificar y gestionar volúmenes lógicos en LVM, permite listar, crear, eliminar y cambiar el tipo de volúmenes lógicos de manera interactiva, así como mostrar información detallada sobre los mismos.
+
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+  "usage": "lvs [OPCIONES]",
+  "options": {
+    "-l": "Listar volúmenes lógicos",
+    "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+    "-n": "Crear nuevo volumen lógico (modo interactivo)",
+    "-d": "Borrar un volumen lógico (modo interactivo)",
+    "-a": "Incluir volúmenes inactivos o internos",
+    "-o": "Seleccionar columnas a mostrar",
+    "--segments": "Mostrar información detallada de segmentos de LV",
+    "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+    "--noheadings": "Ocultar encabezados de columnas",
+    "-v": "Modo verbose para información más detallada",
+    "--select": "Filtrar volúmenes según criterios"
+  }
+}
 
 [source,bash]
 ----

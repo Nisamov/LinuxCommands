@@ -1,5 +1,23 @@
 === lvscan
-Escanear y mostrar el estado de todos los volúmenes lógicos en LVM.
+Modificar y gestionar volúmenes lógicos en LV, incluyendo opciones para listar, crear, borrar y cambiar tipos de volúmenes lógicos, así como mostrar información detallada y filtrar resultados según criterios específicos.
+
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+  "usage": "lvscan [OPCIONES]",
+  "options": {
+    "-l": "Listar volúmenes lógicos",
+    "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+    "-n": "Crear nuevo volumen lógico (modo interactivo)",
+    "-d": "Borrar un volumen lógico (modo interactivo)",
+    "-p": "Mostrar información de un volumen lógico (modo interactivo)",
+    "-a": "Incluir volúmenes inactivos o internos",
+    "--cache": "Usar caché de LVM para acelerar el escaneo",
+    "-v": "Modo verbose para mostrar detalles adicionales",
+    "--ignorelockingfailure": "Ignorar errores de bloqueo de dispositivos"
+  }
+}
 
 [source,bash]
 ----

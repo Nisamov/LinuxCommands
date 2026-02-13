@@ -1,6 +1,20 @@
 === vgcreate
 Crear un grupo de volúmenes (VG) en LVM a partir de uno o varios volúmenes físicos (PV).
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+  "usage": "vgcreate [OPCIONES] [GRUPO]",
+  "options": {
+    "v": "Modo verbose para mostrar detalles de la operación",
+    "s": "Especificar tamaño del cluster de metadatos",
+    "u": "Asignar un UUID específico al grupo de volúmenes",
+    "Z": "Establecer formato de metadatos (lvm1 o lvm2)",
+    "--physicalextentsize": "Alternativa para definir tamaño del cluster"
+  }
+}
+
 [source,bash]
 ----
 # Crear un grupo de volúmenes llamado vg1 usando /dev/sdb y /dev/sdc

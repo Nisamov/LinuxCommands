@@ -1,6 +1,22 @@
 === lvrename
 Renombrar volúmenes lógicos en LVM.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+  "usage": "lvrename [OPCIONES] [LV] [NUEVO_NOMBRE]",
+  "options": {
+    "-l": "Listar volúmenes lógicos",
+    "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+    "-n": "Crear nuevo volumen lógico (modo interactivo)",
+    "-d": "Borrar un volumen lógico (modo interactivo)",
+    "-p": "Mostrar información de un volumen lógico (modo interactivo)",
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "--test": "Simular operación sin aplicarla"
+  }
+}
+
 [source,bash]
 ----
 # Renombrar un volumen lógico existente

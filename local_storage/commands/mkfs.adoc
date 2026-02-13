@@ -1,6 +1,23 @@
 === mkfs
 Crear sistemas de ficheros en dispositivos o volúmenes lógicos.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar sistemas de ficheros en dispositivos.",
+  "usage": "mkfs [OPCIONES] [DISPOSITIVO]",
+  "options": {
+    "-l": "Listar sistemas de ficheros",
+    "-t": "Cambiar tipo de sistema de ficheros (modo interactivo)",
+    "-n": "Crear nuevo sistema de ficheros (modo interactivo)",
+    "-d": "Borrar un sistema de ficheros (modo interactivo)",
+    "-c": "Comprobar bloques dañados antes de crear el sistema de ficheros",
+    "-L": "Asignar una etiqueta al sistema de ficheros",
+    "-F": "Forzar la creación incluso si el dispositivo parece estar en uso",
+    "-v": "Modo verbose para mostrar detalles de la operación"
+  }
+}
+
 [source,bash]
 ----
 # Crear un sistema de ficheros ext4 en un dispositivo

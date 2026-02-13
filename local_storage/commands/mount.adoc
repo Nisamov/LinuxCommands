@@ -1,6 +1,24 @@
 === mount
 Montar sistemas de ficheros en directorios del sistema.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar sistemas de ficheros en dispositivos.",
+  "usage": "mkfs [OPCIONES] [DISPOSITIVO]",
+  "options": {
+    "-l": "Listar sistemas de ficheros",
+    "-t": "Cambiar tipo de sistema de ficheros (modo interactivo)",
+    "-n": "Crear nuevo sistema de ficheros (modo interactivo)",
+    "-d": "Borrar un sistema de ficheros (modo interactivo)",
+    "-a": "Montar todos los sistemas de ficheros listados en /etc/fstab",
+    "-r": "Montar en modo solo lectura",
+    "-o": "Especificar opciones de montaje",
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "-noatime": "Evitar actualizar timestamp de acceso en archivos"
+  }
+}
+
 [source,bash]
 ----
 # Montar un dispositivo en un punto de montaje

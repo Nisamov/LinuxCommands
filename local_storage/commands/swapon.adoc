@@ -1,6 +1,18 @@
-```adoc
 === swapon
 Activar áreas de intercambio (swap) en el sistema.
+
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar áreas de intercambio en el sistema.",
+  "usage": "swapon [OPCIONES] [DISPOSITIVO]",
+  "options": {
+    "-a": "Activar todas las particiones o ficheros de swap listados en /etc/fstab",
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "-s": "Mostrar un resumen de swaps activos",
+    "-p": "Establecer prioridad de uso del swap"
+  }
+}
 
 [source,bash]
 ----
@@ -55,5 +67,4 @@ swapon -s
 # Activar swap con prioridad 10
 swapon -p 10 /dev/sda2
 ----
-```
 

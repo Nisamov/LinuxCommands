@@ -1,6 +1,21 @@
 === partx
 Actualizar la tabla de particiones del kernel para un dispositivo de bloque.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar tablas de particiones en discos.",
+  "usage": "partx [OPCIONES] [DISCO]",
+  "options": {
+    "-a": "Añadir particiones detectadas al kernel",
+    "-d": "Eliminar particiones del kernel",
+    "-n inicio:fín": "Especificar rango de particiones",
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "-l": "Listar particiones reconocidas en un dispositivo",
+    "--show-labels": "Mostrar etiquetas de particiones"
+  }
+}
+
 [source,bash]
 ----
 # Añadir todas las particiones de un disco al kernel

@@ -1,6 +1,18 @@
 === vgscan
 Escanear y detectar todos los grupos de volúmenes (VG) en LVM.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Escanear y detectar todos los grupos de volúmenes en LVM.",
+  "usage": "vgscan [OPCIONES]",
+  "options": {
+    "-a": "Incluir VG inactivos o internos",
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "--ignorelockingfailure": "Ignorar errores de bloqueo de dispositivos"
+  }
+}
+
 [source,bash]
 ----
 # Escanear todos los grupos de volúmenes del sistema

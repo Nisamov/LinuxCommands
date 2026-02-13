@@ -1,6 +1,26 @@
 === lvresize
 Redimensionar volúmenes lógicos en LVM, aumentando o reduciendo su tamaño. Puede redimensionar también el sistema de ficheros si se usa la opción adecuada.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+  "usage": "lvresize [OPCIONES] [LV]",
+  "options": {
+    "-l": "Listar volúmenes lógicos",
+    "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+    "-n": "Crear nuevo volumen lógico (modo interactivo)",
+    "-d": "Borrar un volumen lógico (modo interactivo)",
+    "-p": "Mostrar información de un volumen lógico (modo interactivo)",
+    "-L": "Redimensionar a un tamaño específico",
+    "-l": "Redimensionar usando porcentaje del grupo de volúmenes",
+    "-r": "Redimensionar automáticamente el sistema de ficheros",
+    "--resizefs": "Redimensionar el sistema de ficheros antes o después de cambiar el LV",
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "--test": "Simular la operación sin aplicarla"w
+  }
+}
+
 [source,bash]
 ----
 # Redimensionar un volumen lógico a un tamaño específico

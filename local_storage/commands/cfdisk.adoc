@@ -1,6 +1,19 @@
 === cfdisk
 Herramienta interactiva para crear, modificar y gestionar tablas de particiones de forma visual en modo texto.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Crear y gestionar tablas de particiones de forma interactiva",
+  "usage": "cfdisk [OPCIONES] [DISPOSITIVO]",
+  "options": {
+    "--label": "Definir tipo de tabla de particiones (msdos, gpt, etc.)",
+    "-l": "Listar tablas de particiones detectadas",
+    "-h": "Mostrar ayuda",
+    "-z": "Ignorar geometría existente (modo limpio)"
+  }
+}
+
 [source,bash]
 ----
 # Abrir cfdisk sobre el disco por defecto

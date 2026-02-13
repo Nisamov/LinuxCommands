@@ -1,6 +1,22 @@
 === fdisk
 Herramienta para crear, modificar y gestionar tablas de particiones en discos.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar tablas de particiones en discos.",
+  "usage": "fdisk [OPCIONES] [DISCO]",
+  "options": {
+    "-l": "Listar tablas de particiones",
+    "-t": "Cambiar tipo de partición (modo interactivo)",
+    "-n": "Crear nueva partición (modo interactivo)",
+    "-d": "Borrar una partición (modo interactivo)",
+    "-p": "Mostrar tabla de particiones (modo interactivo)",
+    "-w": "Escribir cambios en disco (modo interactivo)",
+    "-q": "Salir sin guardar cambios (modo interactivo)"
+  }
+}
+
 [source,bash]
 ----
 # Abrir fdisk sobre un disco (modo interactivo)

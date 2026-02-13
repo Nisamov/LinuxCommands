@@ -1,6 +1,18 @@
 === pvremove
 Eliminar la información de LVM de un volumen físico, dejándolo listo para usar como disco normal. **Precaución:** borra todos los datos de LVM en el dispositivo.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Eliminar la información de LVM de un volumen físico.",
+  "usage": "pvremove [OPCIONES] [DISCO]",
+  "options": {
+    "-f": "Forzar eliminación sin pedir confirmación",
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "--force": "Alternativa explícita para forzar eliminación"
+  }
+}
+
 [source,bash]
 ----
 # Eliminar información LVM de un volumen físico

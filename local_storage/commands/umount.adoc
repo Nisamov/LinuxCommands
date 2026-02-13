@@ -1,4 +1,3 @@
-```adoc
 === umount
 Desmontar sistemas de ficheros montados en directorios del sistema.
 
@@ -63,5 +62,4 @@ umount -t tmpfs /mnt/tmp
 # Desmontar /mnt y todos sus submontajes
 umount --recursive /mnt
 ----
-```
 

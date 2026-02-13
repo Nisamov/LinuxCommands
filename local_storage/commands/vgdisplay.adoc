@@ -1,6 +1,25 @@
 === vgdisplay
 Mostrar información detallada de grupos de volúmenes (VG) en LVM.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+  "usage": "vgdisplay [OPCIONES] [GRUPO]",
+  "options": {
+    "-l": "Listar grupos de volúmenes",
+    "-t": "Cambiar tipo de grupo de volúmenes (modo interactivo)",
+    "-n": "Crear nuevo grupo de volúmenes (modo interactivo)",
+    "-d": "Borrar un grupo de volúmenes (modo interactivo)",
+    "-p": "Mostrar tabla de grupos de volúmenes (modo interactivo)",
+    "-v": "Modo verbose para mostrar información adicional",
+    "-n nombre": "Filtrar por nombre de grupo de volúmenes",
+    "-C": "Salida en columnas (formato compacto)",
+    "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+    "--maps": "Mostrar mapeo de volúmenes lógicos sobre los PV del grupo"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar todos los grupos de volúmenes del sistema

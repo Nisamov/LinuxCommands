@@ -1,6 +1,24 @@
 === lsblk
 Listar dispositivos de bloques y su estructura (discos, particiones, puntos de montaje).
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Listar dispositivos de bloques y su estructura.",
+  "usage": "lsblk [OPCIONES]",
+  "options": {
+    "-f": "Mostrar sistema de ficheros y UUID",
+    "-o": "Seleccionar columnas a mostrar",
+    "-a": "Incluir dispositivos vacíos",
+    "-p": "Mostrar rutas completas (/dev/…)",
+    "-r": "Salida sin formato de árbol",
+    "-b": "Mostrar tamaños en bytes",
+    "-m": "Mostrar permisos y propietario",
+    "--json": "Salida en formato JSON",
+    "--fs": "Mostrar solo información de sistemas de ficheros"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar dispositivos de bloques en forma de árbol

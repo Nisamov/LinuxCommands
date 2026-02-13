@@ -1,6 +1,23 @@
 === lvcreate
 Crear volúmenes lógicos dentro de un grupo de volúmenes (LVM).
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Crear volúmenes lógicos dentro de un grupo de volúmenes (LVM).",
+  "usage": "lvcreate [OPCIONES] [VG]",
+  "options": {
+    "-l": "Especificar tamaño en bloques lógicos",
+    "-L": "Especificar tamaño en megabytes o gigabytes",
+    "-n": "Nombrar el volumen lógico",
+    "--size": "Alternativa a -L para especificar tamaño",
+    "--snapshot": "Crear un snapshot de un LV existente",
+    "--thin": "Crear volumen lógico delgado (thin provisioning)",
+    "--poolmetadata": "Especificar nombre de metadata para thin pool",
+    "-v": "Modo verbose para mostrar información detallada"
+  }
+}
+
 [source,bash]
 ----
 # Crear un volumen lógico básico

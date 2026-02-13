@@ -1,6 +1,26 @@
 === lvreduce
 Reducir el tamaño de volúmenes lógicos en LVM. **Precaución:** esta operación puede causar pérdida de datos si el sistema de ficheros no se redimensiona antes.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+  "usage": "lvreduce [OPCIONES] [LV]",
+  "options": {
+    "-l": "Listar volúmenes lógicos",
+    "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+    "-n": "Crear nuevo volumen lógico (modo interactivo)",
+    "-d": "Borrar un volumen lógico (modo interactivo)",
+    "-p": "Mostrar información de un volumen lógico (modo interactivo)",
+    "-L": "Definir tamaño final del volumen lógico",
+    "-l": "Especificar tamaño en porcentaje del espacio del grupo de volúmenes",
+    "-r": "Redimensionar automáticamente el sistema de ficheros (si es compatible)",
+    "--resizefs": "Alternativa explícita para redimensionar FS antes de reducir LV",
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "--test": "Simular operación sin aplicarla"
+  }
+}
+
 [source,bash]
 ----
 # Reducir un volumen lógico a un tamaño específico

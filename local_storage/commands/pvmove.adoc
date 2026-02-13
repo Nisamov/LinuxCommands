@@ -1,6 +1,19 @@
 === pvmove
 Mover datos de volúmenes lógicos de un volumen físico a otro dentro de LVM. Permite liberar un PV para mantenimiento o reemplazo sin interrumpir los LV activos.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Mover datos de volúmenes lógicos de un volumen físico a otro dentro de LVM.",
+  "usage": "pvmove [OPCIONES] [ORIGEN] [DESTINO]",
+  "options": {
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "-n": "Simular la operación sin aplicarla (dry-run)",
+    "--alloc": "Especificar la política de asignación de bloques",
+    "--abort": "Cancelar una operación de pvmove en curso"
+  }
+}
+
 [source,bash]
 ----
 # Mover todos los datos de /dev/sdb a /dev/sdc

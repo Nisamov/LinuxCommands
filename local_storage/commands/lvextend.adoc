@@ -1,6 +1,26 @@
 === lvextend
 Ampliar el tamaño de volúmenes lógicos en LVM.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+  "usage": "lvextend [OPCIONES] [LV]",
+  "options": {
+    "-l": "Listar volúmenes lógicos",
+    "-t": "Mostrar información de tipo de volumen",
+    "-n": "Mostrar nombre del volumen lógico",
+    "-d": "Mostrar información detallada del volumen lógico",
+    "-p": "Mostrar permisos de los volúmenes lógicos",
+    "-s": "Mostrar tamaño de los volúmenes lógicos",
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "-L": "Definir tamaño final del volumen lógico",
+    "-r": "Redimensionar el sistema de archivos",
+    "--resizefs": "Redimensionar el sistema de archivos automáticamente",
+    "--test": "Simular la operación sin aplicarla"
+  }
+}
+
 [source,bash]
 ----
 # Ampliar un volumen lógico a un tamaño específico

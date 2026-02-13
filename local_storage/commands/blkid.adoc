@@ -1,6 +1,22 @@
 === blkid
 Identificar y mostrar información de dispositivos de bloques (UUID, tipo de sistema de ficheros, etiquetas, etc.).
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Gestionar información de dispositivos de bloques.",
+  "usage": "blkid [OPCIONES] [DISPOSITIVO]",
+  "options": {
+    "--list": "Listar dispositivos de bloques",
+    "--add": "Agregar un dispositivo de bloque",
+    "--del": "Eliminar un dispositivo de bloque",
+    "--search": "Buscar dispositivos de bloque",
+    "--info": "Mostrar información de un dispositivo de bloque",
+    "--upgrade": "Actualizar información de dispositivos de bloque",
+    "--cache": "Gestionar caché de dispositivos de bloque"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar todos los dispositivos de bloques detectados

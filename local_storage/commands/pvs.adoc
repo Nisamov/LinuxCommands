@@ -1,6 +1,22 @@
 === pvs
 Mostrar información resumida de volúmenes físicos (PV) en LVM.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Mostrar información resumida de volúmenes físicos (PV) en LVM.",
+  "usage": "pvs [OPCIONES]",
+  "options": {
+    "-a": "Incluir volúmenes físicos inactivos o internos",
+    "-o": "Seleccionar columnas a mostrar",
+    "--segments": "Mostrar detalles de segmentos físicos de cada PV",
+    "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+    "--noheadings": "Ocultar encabezados de columnas",
+    "-v": "Modo verbose para mostrar más detalles",
+    "--select": "Filtrar volúmenes según criterios"
+  }
+}
+
 [source,bash]
 ----
 # Listar todos los volúmenes físicos del sistema

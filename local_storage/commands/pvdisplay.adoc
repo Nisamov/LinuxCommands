@@ -1,6 +1,24 @@
 === pvdisplay
 Mostrar información detallada de volúmenes físicos (PV) en LVM.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Mostrar información detallada de volúmenes físicos (PV) en LVM.",
+  "usage": "pvdisplay [OPCIONES] [DISCO]",
+  "options": {
+    "-l": "Listar volúmenes físicos",
+    "-t": "Cambiar tipo de volumen físico (modo interactivo)",
+    "-n": "Crear nuevo volumen físico (modo interactivo)",
+    "-d": "Borrar un volumen físico (modo interactivo)",
+    "-p": "Mostrar tabla de volúmenes físicos (modo interactivo)",
+    "-v": "Modo verbose para mostrar detalles adicionales",
+    "-C": "Salida en formato de columnas (compacta)",
+    "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+    "--maps": "Mostrar mapeo físico de volúmenes lógicos sobre PV"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar todos los volúmenes físicos del sistema

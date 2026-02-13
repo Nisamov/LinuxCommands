@@ -1,6 +1,24 @@
 === losetup
 Gestionar dispositivos de bucle (loop) para asociar ficheros como dispositivos de bloques.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Gestionar dispositivos de bucle (loop) para asociar ficheros como dispositivos de bloques.",
+  "usage": "losetup [OPCIONES] [DISPOSITIVO]",
+  "options": {
+    "-l": "Listar dispositivos de bucle",
+    "-f": "Buscar el primer dispositivo de bucle libre",
+    "-fP": "Asociar fichero y crear particiones automáticamente",
+    "-d": "Desasociar un dispositivo de bucle",
+    "-a": "Mostrar asociaciones activas",
+    "-o": "Definir offset en bytes",
+    "--sizelimit": "Limitar tamaño visible",
+    "-j": "Buscar loop por fichero",
+    "-c": "Releer tamaño del fichero asociado"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar todos los dispositivos loop activos

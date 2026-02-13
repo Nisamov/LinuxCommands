@@ -1,6 +1,19 @@
 === vgchange
 Activar o desactivar grupos de volúmenes en LVM.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+  "usage": "vgchange [OPCIONES] [GRUPO]",
+  "options": {
+    "-ay": "Activar un grupo de volúmenes",
+    "-an": "Desactivar un grupo de volúmenes",
+    "-v": "Modo verbose para mostrar detalles de la operación",
+    "--test": "Simular operación sin aplicarla"
+  }
+}
+
 [source,bash]
 ----
 # Activar un grupo de volúmenes
