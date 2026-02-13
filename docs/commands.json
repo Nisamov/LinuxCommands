@@ -1501,6 +1501,574 @@
     "source_path": "local_permissions/commands/sudo.adoc"
   },
   {
+    "description": "Listar dispositivos de bloques y su estructura.",
+    "usage": "lsblk [OPCIONES]",
+    "options": {
+      "-f": "Mostrar sistema de ficheros y UUID",
+      "-o": "Seleccionar columnas a mostrar",
+      "-a": "Incluir dispositivos vacíos",
+      "-p": "Mostrar rutas completas (/dev/…)",
+      "-r": "Salida sin formato de árbol",
+      "-b": "Mostrar tamaños en bytes",
+      "-m": "Mostrar permisos y propietario",
+      "--json": "Salida en formato JSON",
+      "--fs": "Mostrar solo información de sistemas de ficheros"
+    },
+    "name": "lsblk",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lsblk.adoc"
+  },
+  {
+    "description": "Mostrar información detallada de volúmenes físicos (PV) en LVM.",
+    "usage": "pvdisplay [OPCIONES] [DISCO]",
+    "options": {
+      "-l": "Listar volúmenes físicos",
+      "-t": "Cambiar tipo de volumen físico (modo interactivo)",
+      "-n": "Crear nuevo volumen físico (modo interactivo)",
+      "-d": "Borrar un volumen físico (modo interactivo)",
+      "-p": "Mostrar tabla de volúmenes físicos (modo interactivo)",
+      "-v": "Modo verbose para mostrar detalles adicionales",
+      "-C": "Salida en formato de columnas (compacta)",
+      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+      "--maps": "Mostrar mapeo físico de volúmenes lógicos sobre PV"
+    },
+    "name": "pvdisplay",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/pvdisplay.adoc"
+  },
+  {
+    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+    "usage": "vgreduce [OPCIONES] [GRUPO] [PV...]",
+    "options": {
+      "-v, --verbose": "Mostrar detalles de la operación.",
+      "--removemissing": "Eliminar PV que faltan (no detectables físicamente).",
+      "--force": "Forzar la operación (solo si es seguro)."
+    },
+    "name": "vgreduce",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgreduce.adoc"
+  },
+  {
+    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+    "usage": "vgchange [OPCIONES] [GRUPO]",
+    "options": {
+      "-ay": "Activar un grupo de volúmenes",
+      "-an": "Desactivar un grupo de volúmenes",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--test": "Simular operación sin aplicarla"
+    },
+    "name": "vgchange",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgchange.adoc"
+  },
+  {
+    "description": "Modificar y gestionar áreas de intercambio (swap) en dispositivos.",
+    "usage": "mkswap [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar áreas de intercambio",
+      "-t": "Cambiar tipo de área de intercambio (modo interactivo)",
+      "-n": "Crear nueva área de intercambio (modo interactivo)",
+      "-d": "Borrar una área de intercambio (modo interactivo)",
+      "-L": "Asignar una etiqueta al área de swap",
+      "-c": "Comprobar bloques dañados antes de crear swap",
+      "-v": "Modo verbose para mostrar información detallada",
+      "--uuid": "Especificar UUID del swap"
+    },
+    "name": "mkswap",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/mkswap.adoc"
+  },
+  {
+    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+    "usage": "lvreduce [OPCIONES] [LV]",
+    "options": {
+      "-l": "Especificar tamaño en porcentaje del espacio del grupo de volúmenes",
+      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+      "-n": "Crear nuevo volumen lógico (modo interactivo)",
+      "-d": "Borrar un volumen lógico (modo interactivo)",
+      "-p": "Mostrar información de un volumen lógico (modo interactivo)",
+      "-L": "Definir tamaño final del volumen lógico",
+      "-r": "Redimensionar automáticamente el sistema de ficheros (si es compatible)",
+      "--resizefs": "Alternativa explícita para redimensionar FS antes de reducir LV",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--test": "Simular operación sin aplicarla"
+    },
+    "name": "lvreduce",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvreduce.adoc"
+  },
+  {
+    "description": "Mostrar información detallada de volúmenes lógicos en LVM.",
+    "usage": "lvdisplay [OPCIONES] [LV]",
+    "options": {
+      "-l": "Listar volúmenes lógicos",
+      "-t": "Mostrar información de tipo de volumen",
+      "-n": "Mostrar nombre del volumen lógico",
+      "-d": "Mostrar información detallada del volumen lógico",
+      "-C": "Salida en columnas (formato compacto)",
+      "-v": "Modo verbose para más detalles",
+      "-n nombre": "Filtrar por nombre de volumen lógico",
+      "--select": "Filtrar volúmenes según atributos",
+      "-L": "Mostrar tamaño en bytes (exacto)",
+      "-m": "Mostrar mapeo físico de cada volumen lógico",
+      "-p": "Mostrar permisos de los volúmenes lógicos"
+    },
+    "name": "lvdisplay",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvdisplay.adoc"
+  },
+  {
+    "description": "Redimensionar sistemas de ficheros ext2/ext3/ext4 en un dispositivo o volumen lógico.",
+    "usage": "resize2fs [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar sistemas de ficheros",
+      "-t": "Cambiar tipo de sistema de ficheros",
+      "-n": "Crear nuevo sistema de ficheros",
+      "-d": "Borrar un sistema de ficheros",
+      "-p": "Modo progreso, mostrar barra de progreso",
+      "-w": "Escribir cambios en disco",
+      "-q": "Salir sin guardar cambios",
+      "-h": "Mostrar ayuda",
+      "-L": "Establecer tamaño final del sistema de ficheros",
+      "-M": "Reducir el FS al tamaño mínimo posible",
+      "-v": "Modo verbose, mostrar información detallada"
+    },
+    "name": "resize2fs",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/resize2fs.adoc"
+  },
+  {
+    "description": "Mostrar el uso de espacio en disco de los sistemas de ficheros montados.",
+    "usage": "df [OPCIONES] [SISTEMA_DE_FICHEROS]",
+    "options": {
+      "--label": "Definir tipo de sistema de ficheros (msdos, gpt, etc.)",
+      "-l": "Listar sistemas de ficheros detectados",
+      "-h": "Mostrar tamaños en formato legible",
+      "-T": "Mostrar tipo de sistema de ficheros",
+      "-a": "Incluir sistemas de ficheros especiales",
+      "-i": "Mostrar uso de inodos",
+      "--total": "Mostrar total acumulado",
+      "--exclude-type": "Excluir tipos de FS",
+      "device": "Consultar un punto concreto"
+    },
+    "name": "df",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/df.adoc"
+  },
+  {
+    "description": "Inicializa un dispositivo de bloque para ser utilizado como volumen físico en LVM, permitiendo la gestión avanzada de almacenamiento.",
+    "usage": "pvcreate [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar volúmenes físicos",
+      "-t": "Cambiar tipo de volumen físico (modo interactivo)",
+      "-n": "Crear nuevo volumen físico (modo interactivo)",
+      "-d": "Borrar un volumen físico (modo interactivo)",
+      "-p": "Mostrar tabla de volúmenes físicos (modo interactivo)",
+      "-f": "Forzar inicialización aunque el dispositivo tenga datos existentes",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-c": "Especificar tamaño del cluster",
+      "-u": "Asignar un UUID específico al PV",
+      "-Z": "Establecer formato de metadatos (lvm1 o lvm2)",
+      "--dataalignment": "Alinear datos según tamaño"
+    },
+    "name": "pvcreate",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/pvcreate.adoc"
+  },
+  {
+    "description": "Gestionar dispositivos de bucle (loop) para asociar ficheros como dispositivos de bloques.",
+    "usage": "losetup [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar dispositivos de bucle",
+      "-f": "Buscar el primer dispositivo de bucle libre",
+      "-fP": "Asociar fichero y crear particiones automáticamente",
+      "-d": "Desasociar un dispositivo de bucle",
+      "-a": "Mostrar asociaciones activas",
+      "-o": "Definir offset en bytes",
+      "--sizelimit": "Limitar tamaño visible",
+      "-j": "Buscar loop por fichero",
+      "-c": "Releer tamaño del fichero asociado"
+    },
+    "name": "losetup",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/losetup.adoc"
+  },
+  {
+    "description": "Modificar y gestionar tablas de particiones en discos.",
+    "usage": "partx [OPCIONES] [DISCO]",
+    "options": {
+      "-a": "Añadir particiones detectadas al kernel",
+      "-d": "Eliminar particiones del kernel",
+      "-n inicio:fín": "Especificar rango de particiones",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-l": "Listar particiones reconocidas en un dispositivo",
+      "--show-labels": "Mostrar etiquetas de particiones"
+    },
+    "name": "partx",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/partx.adoc"
+  },
+  {
+    "description": "Mostrar el uso de espacio en disco de archivos y directorios.",
+    "usage": "du [OPCIONES] [DIRECTORIO]",
+    "options": {
+      "-h": "Mostrar tamaños en formato legible",
+      "-s": "Mostrar solo el total de cada argumento",
+      "-a": "Incluir archivos además de directorios",
+      "-d": "Profundidad máxima de directorios (GNU)",
+      "--max-depth": "Limitar la profundidad del directorio",
+      "--exclude": "Excluir archivos o directorios"
+    },
+    "name": "du",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/du.adoc"
+  },
+  {
+    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+    "usage": "vgcreate [OPCIONES] [GRUPO]",
+    "options": {
+      "v": "Modo verbose para mostrar detalles de la operación",
+      "s": "Especificar tamaño del cluster de metadatos",
+      "u": "Asignar un UUID específico al grupo de volúmenes",
+      "Z": "Establecer formato de metadatos (lvm1 o lvm2)",
+      "--physicalextentsize": "Alternativa para definir tamaño del cluster"
+    },
+    "name": "vgcreate",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgcreate.adoc"
+  },
+  {
+    "description": "Modificar y gestionar áreas de intercambio en el sistema.",
+    "usage": "swapoff [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar áreas de intercambio",
+      "-t": "Cambiar tipo de área de intercambio (modo interactivo)",
+      "-n": "Simular la desactivación sin aplicarla (dry-run)",
+      "-d": "Borrar una área de intercambio (modo interactivo)",
+      "-p": "Mostrar tabla de áreas de intercambio (modo interactivo)",
+      "-a": "Desactivar todas las áreas de intercambio listadas en /etc/fstab",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "device": "Desactivar un swap específico",
+      "file": "Desactivar un archivo de swap específico"
+    },
+    "name": "swapoff",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/swapoff.adoc"
+  },
+  {
+    "description": "Crear y gestionar tablas de particiones de forma interactiva",
+    "usage": "cfdisk [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "--label": "Definir tipo de tabla de particiones (msdos, gpt, etc.)",
+      "-l": "Listar tablas de particiones detectadas",
+      "-h": "Mostrar ayuda",
+      "-z": "Ignorar geometría existente (modo limpio)"
+    },
+    "name": "cfdisk",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/cfdisk.adoc"
+  },
+  {
+    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+    "usage": "lvs [OPCIONES]",
+    "options": {
+      "-l": "Listar volúmenes lógicos",
+      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+      "-n": "Crear nuevo volumen lógico (modo interactivo)",
+      "-d": "Borrar un volumen lógico (modo interactivo)",
+      "-a": "Incluir volúmenes inactivos o internos",
+      "-o": "Seleccionar columnas a mostrar",
+      "--segments": "Mostrar información detallada de segmentos de LV",
+      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+      "--noheadings": "Ocultar encabezados de columnas",
+      "-v": "Modo verbose para información más detallada",
+      "--select": "Filtrar volúmenes según criterios"
+    },
+    "name": "lvs",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvs.adoc"
+  },
+  {
+    "description": "Mover datos de volúmenes lógicos de un volumen físico a otro dentro de LVM.",
+    "usage": "pvmove [OPCIONES] [ORIGEN] [DESTINO]",
+    "options": {
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-n": "Simular la operación sin aplicarla (dry-run)",
+      "--alloc": "Especificar la política de asignación de bloques",
+      "--abort": "Cancelar una operación de pvmove en curso"
+    },
+    "name": "pvmove",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/pvmove.adoc"
+  },
+  {
+    "description": "Añadir volúmenes físicos a un grupo de volúmenes existente en LVM.",
+    "usage": "vgextend [OPCIONES] [GRUPO] [PV...]",
+    "options": {
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-u": "Asignar un UUID específico al VG durante la extensión",
+      "-Z": "Establecer formato de metadatos (lvm1 o lvm2)",
+      "--physicalextentsize": "Definir tamaño de las extensiones físicas"
+    },
+    "name": "vgextend",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgextend.adoc"
+  },
+  {
+    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+    "usage": "vgremove [OPCIONES] [GRUPO]",
+    "options": {
+      "-f": "Forzar la eliminación sin confirmación",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--test": "Simular la operación sin aplicarla"
+    },
+    "name": "vgremove",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgremove.adoc"
+  },
+  {
+    "description": "Modificar y gestionar sistemas de ficheros en dispositivos.",
+    "usage": "mkfs [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar sistemas de ficheros",
+      "-t": "Cambiar tipo de sistema de ficheros (modo interactivo)",
+      "-n": "Crear nuevo sistema de ficheros (modo interactivo)",
+      "-d": "Borrar un sistema de ficheros (modo interactivo)",
+      "-c": "Comprobar bloques dañados antes de crear el sistema de ficheros",
+      "-L": "Asignar una etiqueta al sistema de ficheros",
+      "-F": "Forzar la creación incluso si el dispositivo parece estar en uso",
+      "-v": "Modo verbose para mostrar detalles de la operación"
+    },
+    "name": "mkfs",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/mkfs.adoc"
+  },
+  {
+    "description": "Escanear y detectar todos los grupos de volúmenes en LVM.",
+    "usage": "vgscan [OPCIONES]",
+    "options": {
+      "-a": "Incluir VG inactivos o internos",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--ignorelockingfailure": "Ignorar errores de bloqueo de dispositivos"
+    },
+    "name": "vgscan",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgscan.adoc"
+  },
+  {
+    "description": "Mostrar información resumida de volúmenes físicos (PV) en LVM.",
+    "usage": "pvs [OPCIONES]",
+    "options": {
+      "-a": "Incluir volúmenes físicos inactivos o internos",
+      "-o": "Seleccionar columnas a mostrar",
+      "--segments": "Mostrar detalles de segmentos físicos de cada PV",
+      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+      "--noheadings": "Ocultar encabezados de columnas",
+      "-v": "Modo verbose para mostrar más detalles",
+      "--select": "Filtrar volúmenes según criterios"
+    },
+    "name": "pvs",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/pvs.adoc"
+  },
+  {
+    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+    "usage": "lvextend [OPCIONES] [LV]",
+    "options": {
+      "-l": "Listar volúmenes lógicos",
+      "-t": "Mostrar información de tipo de volumen",
+      "-n": "Mostrar nombre del volumen lógico",
+      "-d": "Mostrar información detallada del volumen lógico",
+      "-p": "Mostrar permisos de los volúmenes lógicos",
+      "-s": "Mostrar tamaño de los volúmenes lógicos",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-L": "Definir tamaño final del volumen lógico",
+      "-r": "Redimensionar el sistema de archivos",
+      "--resizefs": "Redimensionar el sistema de archivos automáticamente",
+      "--test": "Simular la operación sin aplicarla"
+    },
+    "name": "lvextend",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvextend.adoc"
+  },
+  {
+    "description": "Eliminar volúmenes lógicos en LVM. **Precaución:** esta operación borra todos los datos del volumen.",
+    "usage": "lvremove [OPCIONES] [LV]",
+    "options": {
+      "-l": "Listar volúmenes lógicos",
+      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+      "-n": "Crear nuevo volumen lógico (modo interactivo)",
+      "-d": "Borrar un volumen lógico (modo interactivo)",
+      "-p": "Mostrar información de un volumen lógico (modo interactivo)",
+      "-f": "Forzar la eliminación sin confirmación",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--test": "Simular eliminación sin aplicarla"
+    },
+    "name": "lvremove",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvremove.adoc"
+  },
+  {
+    "description": "Mostrar información resumida de grupos de volúmenes en LVM.",
+    "usage": "vgs [OPCIONES]",
+    "options": {
+      "-o": "Seleccionar columnas a mostrar",
+      "--segments": "Mostrar detalles de los segmentos de cada VG",
+      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+      "--noheadings": "Ocultar encabezados de columnas",
+      "-v": "Modo verbose para mostrar información detallada",
+      "--select": "Filtrar grupos según criterios"
+    },
+    "name": "vgs",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgs.adoc"
+  },
+  {
+    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+    "usage": "lvrename [OPCIONES] [LV] [NUEVO_NOMBRE]",
+    "options": {
+      "-l": "Listar volúmenes lógicos",
+      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+      "-n": "Crear nuevo volumen lógico (modo interactivo)",
+      "-d": "Borrar un volumen lógico (modo interactivo)",
+      "-p": "Mostrar información de un volumen lógico (modo interactivo)",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--test": "Simular operación sin aplicarla"
+    },
+    "name": "lvrename",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvrename.adoc"
+  },
+  {
+    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+    "usage": "lvscan [OPCIONES]",
+    "options": {
+      "-l": "Listar volúmenes lógicos",
+      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+      "-n": "Crear nuevo volumen lógico (modo interactivo)",
+      "-d": "Borrar un volumen lógico (modo interactivo)",
+      "-p": "Mostrar información de un volumen lógico (modo interactivo)",
+      "-a": "Incluir volúmenes inactivos o internos",
+      "--cache": "Usar caché de LVM para acelerar el escaneo",
+      "-v": "Modo verbose para mostrar detalles adicionales",
+      "--ignorelockingfailure": "Ignorar errores de bloqueo de dispositivos"
+    },
+    "name": "lvscan",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvscan.adoc"
+  },
+  {
+    "description": "Modificar y gestionar tablas de particiones en discos.",
+    "usage": "fdisk [OPCIONES] [DISCO]",
+    "options": {
+      "-l": "Listar tablas de particiones",
+      "-t": "Cambiar tipo de partición (modo interactivo)",
+      "-n": "Crear nueva partición (modo interactivo)",
+      "-d": "Borrar una partición (modo interactivo)",
+      "-p": "Mostrar tabla de particiones (modo interactivo)",
+      "-w": "Escribir cambios en disco (modo interactivo)",
+      "-q": "Salir sin guardar cambios (modo interactivo)"
+    },
+    "name": "fdisk",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/fdisk.adoc"
+  },
+  {
+    "description": "Gestionar información de dispositivos de bloques.",
+    "usage": "blkid [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "--list": "Listar dispositivos de bloques",
+      "--add": "Agregar un dispositivo de bloque",
+      "--del": "Eliminar un dispositivo de bloque",
+      "--search": "Buscar dispositivos de bloque",
+      "--info": "Mostrar información de un dispositivo de bloque",
+      "--upgrade": "Actualizar información de dispositivos de bloque",
+      "--cache": "Gestionar caché de dispositivos de bloque"
+    },
+    "name": "blkid",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/blkid.adoc"
+  },
+  {
+    "description": "Modificar y gestionar áreas de intercambio en el sistema.",
+    "usage": "swapon [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-a": "Activar todas las particiones o ficheros de swap listados en /etc/fstab",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-s": "Mostrar un resumen de swaps activos",
+      "-p": "Establecer prioridad de uso del swap"
+    },
+    "name": "swapon",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/swapon.adoc"
+  },
+  {
+    "description": "Crear volúmenes lógicos dentro de un grupo de volúmenes (LVM).",
+    "usage": "lvcreate [OPCIONES] [VG]",
+    "options": {
+      "-l": "Especificar tamaño en bloques lógicos",
+      "-L": "Especificar tamaño en megabytes o gigabytes",
+      "-n": "Nombrar el volumen lógico",
+      "--size": "Alternativa a -L para especificar tamaño",
+      "--snapshot": "Crear un snapshot de un LV existente",
+      "--thin": "Crear volumen lógico delgado (thin provisioning)",
+      "--poolmetadata": "Especificar nombre de metadata para thin pool",
+      "-v": "Modo verbose para mostrar información detallada"
+    },
+    "name": "lvcreate",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvcreate.adoc"
+  },
+  {
+    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+    "usage": "vgdisplay [OPCIONES] [GRUPO]",
+    "options": {
+      "-l": "Listar grupos de volúmenes",
+      "-t": "Cambiar tipo de grupo de volúmenes (modo interactivo)",
+      "-n": "Crear nuevo grupo de volúmenes (modo interactivo)",
+      "-d": "Borrar un grupo de volúmenes (modo interactivo)",
+      "-p": "Mostrar tabla de grupos de volúmenes (modo interactivo)",
+      "-v": "Modo verbose para mostrar información adicional",
+      "-n nombre": "Filtrar por nombre de grupo de volúmenes",
+      "-C": "Salida en columnas (formato compacto)",
+      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+      "--maps": "Mostrar mapeo de volúmenes lógicos sobre los PV del grupo"
+    },
+    "name": "vgdisplay",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgdisplay.adoc"
+  },
+  {
+    "description": "Eliminar la información de LVM de un volumen físico.",
+    "usage": "pvremove [OPCIONES] [DISCO]",
+    "options": {
+      "-f": "Forzar eliminación sin pedir confirmación",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--force": "Alternativa explícita para forzar eliminación"
+    },
+    "name": "pvremove",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/pvremove.adoc"
+  },
+  {
+    "description": "Modificar y gestionar sistemas de ficheros en dispositivos.",
+    "usage": "mkfs [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar sistemas de ficheros",
+      "-t": "Cambiar tipo de sistema de ficheros (modo interactivo)",
+      "-n": "Crear nuevo sistema de ficheros (modo interactivo)",
+      "-d": "Borrar un sistema de ficheros (modo interactivo)",
+      "-a": "Montar todos los sistemas de ficheros listados en /etc/fstab",
+      "-r": "Montar en modo solo lectura",
+      "-o": "Especificar opciones de montaje",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-noatime": "Evitar actualizar timestamp de acceso en archivos"
+    },
+    "name": "mount",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/mount.adoc"
+  },
+  {
     "description": "Mostrar los grupos a los que pertenece un usuario en Linux.",
     "usage": "groups [usuario]",
     "options": {
