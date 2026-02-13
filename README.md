@@ -102,7 +102,14 @@ Esto es posible gracias al formato con el que están montados los ficheros `.ado
 ```
 Esta estructura está unicamente en rutas semejantes a `*/commands/*.adoc`, lo que permite que se identifique su contenido como un comando y al aplicar dicha estructura, se crea así un comando nuevo que será procesado por un workflow para ser aplicado directamente en `docs/commands.json`.
 
-Se pide tener en cuenta el [PULL_REQUEST_TEMPLATE](.github/PULL_REQUEST_TEMPLATE) en caso de querer colaborar con el repositorio.
+Se pide tener en cuenta el [PULL_REQUEST_TEMPLATE](.github/PULL_REQUEST_TEMPLATE) en caso de querer colaborar con el repositorio, así como las contribuciones han de cumplir los siguientes puntos:
+- [x] [Requerido] El contenido agregado está en el idioma nativo del repositorio (Espñaol)
+- [x] [Requerido] Los comandos documentados han sido revisados y validados
+- [x] [Requerido] La estructura sigue el Modelo Base del repositorio
+- [x] [Requerido] Se ha verificado que no hay errores tipográficos o de sintaxis
+
+Otros puntos que no cuenten con "[Requerido]" son opcionales y no influirán en su posibilidad de aceptación como contribución.
+
 </details>
 
 ---
@@ -131,7 +138,7 @@ El repositorio se adapta a diferentes lenguas mediante la automatización de la 
   <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/JA">日本語</a>
 </p>
 
-> En caso de ver iconos semejantes a "▯" es porbable que sea necesario [descargar fuentes CJK](https://github.com/notofonts/noto-cjk/releases/latest) en el equipo.
+> En caso de ver iconos semejantes a "▯" es probable que sea necesario [descargar fuentes CJK](https://github.com/notofonts/noto-cjk/releases/latest) en el equipo.
 </details>
 
 ---

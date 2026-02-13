@@ -49,6 +49,7 @@ Deje sin marcar "[ ]" las secciones que no han recibido cambios.
 ---
 
 ## Comprobación de pull - No tocar
+- [ ] [Requerido] El contenido agregado está en el idioma nativo del repositorio (Espñaol)
 - [ ] [Requerido] Los comandos documentados han sido revisados y validados
 - [ ] [Requerido] La estructura sigue el Modelo Base del repositorio
 - [ ] Se ha aplicado una corrección en la generación de documentos
