@@ -1,6 +1,18 @@
 === passwd
 Cambiar la contraseña de un usuario o administrar la expiración de la misma.
 
+:category: local_users
+[.metadata]
+{
+  "description": "Cambiar la contraseña de un usuario o administrar la expiración de la misma",
+  "usage": "passwd [OPCIONES] USUARIO",
+  "options": {
+    "--expire": "Forzar al usuario a cambiar la contraseña en el próximo inicio de sesión",
+    "--lock": "Bloquear la cuenta del usuario",
+    "--unlock": "Desbloquear la cuenta del usuario"
+  }
+}
+
 [source,bash]
 ----
 # Cambiar la contraseña del usuario actual

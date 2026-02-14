@@ -1,6 +1,20 @@
 === chfn
 Modificar la información personal asociada a una cuenta de usuario.
 
+:category: local_users
+[.metadata]
+{
+  "description": "Modificar la información personal asociada a una cuenta de usuario",
+  "usage": "chfn [OPCIONES] USUARIO",
+  "options": {
+    "--full-name": "Definir nombre completo",
+    "--office": "Definir número de oficina",
+    "--work-phone": "Definir teléfono de trabajo",
+    "--home-phone": "Definir teléfono particular",
+    "--gecos": "Definir toda la información GECOS en una sola operación"
+  }
+}
+
 [source,bash]
 ----
 # Cambiar la información personal del usuario de forma interactiva

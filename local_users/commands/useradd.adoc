@@ -1,6 +1,24 @@
 === useradd
 Crear cuentas de usuario de bajo nivel mediante opciones explícitas (no interactivo).
 
+:category: local_users
+[.metadata]
+{
+  "description": "Crear cuentas de usuario de bajo nivel mediante opciones explícitas (no interactivo).",
+  "usage": "useradd [OPCIONES] USUARIO",
+  "options": {
+    "-m": "Crear directorio personal",
+    "-d": "Definir directorio personal",
+    "-s": "Definir shell de inicio",
+    "-g": "Definir grupo principal",
+    "-G": "Asignar grupos secundarios",
+    "-u": "Especificar UID",
+    "-e": "Fecha de expiración de la cuenta",
+    "-c": "Comentario / información GECOS",
+    "-r": "Crear usuario de sistema"
+  }
+}
+
 [source,bash]
 ----
 # Crear un usuario básico

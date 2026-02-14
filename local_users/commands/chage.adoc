@@ -1,6 +1,22 @@
 === chage
 Gestionar la caducidad de contraseñas y políticas de envejecimiento de cuentas de usuario.
 
+:category: local_users
+[.metadata]
+{
+  "description": "Gestionar la caducidad de contraseñas y políticas de envejecimiento de cuentas de usuario",
+  "usage": "chage [OPCIONES] USUARIO",
+  "options": {
+    "-l": "Listar información de expiración",
+    "-M": "Días máximos antes de que caduque la contraseña",
+    "-m": "Días mínimos entre cambios de contraseña",
+    "-W": "Días de aviso antes de la caducidad",
+    "-I": "Días de inactividad tras caducar la contraseña",
+    "-E": "Fecha de expiración de la cuenta",
+    "-d": "Establecer fecha del último cambio de contraseña"
+  }
+}
+
 [source,bash]
 ----
 # Mostrar información de caducidad del usuario

@@ -1,6 +1,22 @@
 === adduser
 Crear y gestionar cuentas de usuario de forma interactiva.
 
+:category: local_users
+[.metadata]
+{
+  "description": "Crear y gestionar cuentas de usuario de forma interactiva",
+  "usage": "adduser [OPCIONES] USUARIO",
+  "options": {
+    "--home": "Definir directorio personal",
+    "--shell": "Definir shell por defecto",
+    "--ingroup": "Asignar grupo principal",
+    "--disabled-password": "Crear usuario sin contraseña",
+    "--gecos": "Definir información del usuario",
+    "--uid": "Especificar UID manualmente",
+    "--no-create-home": "No crear directorio personal"
+  }
+}
+
 [source,bash]
 ----
 # Crear un nuevo usuario con asistente interactivo

@@ -1,6 +1,19 @@
 === deluser
 Eliminar cuentas de usuario y opcionalmente sus archivos y configuraciones.
 
+:category: local_users
+[.metadata]
+{
+  "description": "Eliminar cuentas de usuario y opcionalmente sus archivos y configuraciones",
+  "usage": "deluser [OPCIONES] USUARIO",
+  "options": {
+    "--remove-home": "Borrar usuario junto con su directorio personal",
+    "--remove-all-files": "Borrar todos los archivos del usuario en el sistema",
+    "--group": "Eliminar grupo asociado al usuario",
+    "--backup": "Hacer copia de seguridad de archivos antes de eliminar"
+  }
+}
+
 [source,bash]
 ----
 # Eliminar un usuario sin borrar su home

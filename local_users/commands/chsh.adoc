@@ -1,6 +1,18 @@
 === chsh
 Cambiar el shell de inicio de sesión de un usuario.
 
+:category: local_users
+[.metadata]
+{
+  "description": "Cambiar el shell de inicio de sesión de un usuario",
+  "usage": "chsh [OPCIONES] USUARIO",
+  "options": {
+    "-s": "Definir shell de login",
+    "-l": "Listar shells disponibles en el sistema",
+    "--help": "Mostrar ayuda del comando"
+  }
+}
+
 [source,bash]
 ----
 # Cambiar el shell del usuario de forma interactiva

@@ -1,6 +1,19 @@
 === su
 Cambiar de usuario en el sistema o ejecutar comandos con la identidad de otro usuario.
 
+:category: local_users
+[.metadata]
+{
+  "description": "Cambiar de usuario en el sistema o ejecutar comandos con la identidad de otro usuario",
+  "usage": "su [OPCIONES] USUARIO",
+  "options": {
+    "-c": "Ejecutar un comando como otro usuario",
+    "-": "Iniciar sesión como otro usuario con su entorno completo",
+    "usuario": "Cambiar a otro usuario (por defecto root)",
+    "-i": "Iniciar sesión como otro usuario sin cargar su entorno completo, cargando variables de entorno del usuario"
+  }
+}
+
 usuario:: `su [usuario]` Cambiar a otro usuario (por defecto root)
 
 [source,bash]
