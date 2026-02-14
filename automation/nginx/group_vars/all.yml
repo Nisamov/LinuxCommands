@@ -1,0 +1,4 @@
+---
+domain_name: "mipagina.duckdns.org"
+web_root: "/var/www/mipagina.es"
+ssl_cert_path: "/etc/nginx/ssl"

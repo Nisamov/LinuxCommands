@@ -1,0 +1,5 @@
+---
+domain_name: "mipagina.es"
+web_root: "/var/www/mipagina.es"
+cert_dir: "/etc/apache2/certificate"
+server_ip: "40.0.0.2"

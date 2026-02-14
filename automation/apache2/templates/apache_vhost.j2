@@ -1,0 +1,21 @@
+<VirtualHost *:80>
+    ServerName www.{{ domain_name }}
+    ServerAdmin webmaster@localhost
+    DocumentRoot {{ web_root }}
+    Redirect permanent / http://www.{{ domain_name }}
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName {{ domain_name }}
+    Redirect / http://www.{{ domain_name }}
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName www.{{ domain_name }}
+    DocumentRoot {{ web_root }}
+    SSLEngine on
+    SSLCertificateFile {{ cert_dir }}/apache-certificado.crt
+    SSLCertificateKeyFile {{ cert_dir }}/apache.key
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
