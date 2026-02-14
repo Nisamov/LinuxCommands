@@ -1,5 +1,119 @@
 [
   {
+    "description": "Eliminar cuentas de usuario y opcionalmente sus archivos y configuraciones",
+    "usage": "deluser [OPCIONES] USUARIO",
+    "options": {
+      "--remove-home": "Borrar usuario junto con su directorio personal",
+      "--remove-all-files": "Borrar todos los archivos del usuario en el sistema",
+      "--group": "Eliminar grupo asociado al usuario",
+      "--backup": "Hacer copia de seguridad de archivos antes de eliminar"
+    },
+    "name": "deluser",
+    "category": "local_users",
+    "source_path": "local_users/commands/deluser.adoc"
+  },
+  {
+    "description": "Cambiar la contraseña de un usuario o administrar la expiración de la misma",
+    "usage": "passwd [OPCIONES] USUARIO",
+    "options": {
+      "--expire": "Forzar al usuario a cambiar la contraseña en el próximo inicio de sesión",
+      "--lock": "Bloquear la cuenta del usuario",
+      "--unlock": "Desbloquear la cuenta del usuario"
+    },
+    "name": "passwd",
+    "category": "local_users",
+    "source_path": "local_users/commands/passwd.adoc"
+  },
+  {
+    "description": "Modificar la información personal asociada a una cuenta de usuario",
+    "usage": "chfn [OPCIONES] USUARIO",
+    "options": {
+      "--full-name": "Definir nombre completo",
+      "--office": "Definir número de oficina",
+      "--work-phone": "Definir teléfono de trabajo",
+      "--home-phone": "Definir teléfono particular",
+      "--gecos": "Definir toda la información GECOS en una sola operación"
+    },
+    "name": "chfn",
+    "category": "local_users",
+    "source_path": "local_users/commands/chfn.adoc"
+  },
+  {
+    "description": "Cambiar el shell de inicio de sesión de un usuario",
+    "usage": "chsh [OPCIONES] USUARIO",
+    "options": {
+      "-s": "Definir shell de login",
+      "-l": "Listar shells disponibles en el sistema",
+      "--help": "Mostrar ayuda del comando"
+    },
+    "name": "chsh",
+    "category": "local_users",
+    "source_path": "local_users/commands/chsh.adoc"
+  },
+  {
+    "description": "Crear cuentas de usuario de bajo nivel mediante opciones explícitas (no interactivo).",
+    "usage": "useradd [OPCIONES] USUARIO",
+    "options": {
+      "-m": "Crear directorio personal",
+      "-d": "Definir directorio personal",
+      "-s": "Definir shell de inicio",
+      "-g": "Definir grupo principal",
+      "-G": "Asignar grupos secundarios",
+      "-u": "Especificar UID",
+      "-e": "Fecha de expiración de la cuenta",
+      "-c": "Comentario / información GECOS",
+      "-r": "Crear usuario de sistema"
+    },
+    "name": "useradd",
+    "category": "local_users",
+    "source_path": "local_users/commands/useradd.adoc"
+  },
+  {
+    "description": "Gestionar la caducidad de contraseñas y políticas de envejecimiento de cuentas de usuario",
+    "usage": "chage [OPCIONES] USUARIO",
+    "options": {
+      "-l": "Listar información de expiración",
+      "-M": "Días máximos antes de que caduque la contraseña",
+      "-m": "Días mínimos entre cambios de contraseña",
+      "-W": "Días de aviso antes de la caducidad",
+      "-I": "Días de inactividad tras caducar la contraseña",
+      "-E": "Fecha de expiración de la cuenta",
+      "-d": "Establecer fecha del último cambio de contraseña"
+    },
+    "name": "chage",
+    "category": "local_users",
+    "source_path": "local_users/commands/chage.adoc"
+  },
+  {
+    "description": "Crear y gestionar cuentas de usuario de forma interactiva",
+    "usage": "adduser [OPCIONES] USUARIO",
+    "options": {
+      "--home": "Definir directorio personal",
+      "--shell": "Definir shell por defecto",
+      "--ingroup": "Asignar grupo principal",
+      "--disabled-password": "Crear usuario sin contraseña",
+      "--gecos": "Definir información del usuario",
+      "--uid": "Especificar UID manualmente",
+      "--no-create-home": "No crear directorio personal"
+    },
+    "name": "adduser",
+    "category": "local_users",
+    "source_path": "local_users/commands/adduser.adoc"
+  },
+  {
+    "description": "Cambiar de usuario en el sistema o ejecutar comandos con la identidad de otro usuario",
+    "usage": "su [OPCIONES] USUARIO",
+    "options": {
+      "-c": "Ejecutar un comando como otro usuario",
+      "-": "Iniciar sesión como otro usuario con su entorno completo",
+      "usuario": "Cambiar a otro usuario (por defecto root)",
+      "-i": "Iniciar sesión como otro usuario sin cargar su entorno completo, cargando variables de entorno del usuario"
+    },
+    "name": "su",
+    "category": "local_users",
+    "source_path": "local_users/commands/su.adoc"
+  },
+  {
     "description": "Transferir datos desde o hacia un servidor usando distintos protocolos (HTTP, HTTPS, FTP…).",
     "usage": "curl [OPCIONES] [URL]",
     "options": {
