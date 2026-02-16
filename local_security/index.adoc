@@ -30,8 +30,10 @@ include::secure_channels/secure_channel_ftp/theory.adoc[]
 == Seguridad en red
 include::network_security/fail2ban/theory.adoc[]
 include::network_security/firewall_ufw/theory.adoc[]
-include::network_security/openvpn/theory.adoc[]
-include::network_security/proxy_squid/theory.adoc[]
+include::network_security/vpn/theory/theory.adoc[]
+include::network_security/vpn/openvpn/theory.adoc[]
+include::network_security/proxy/theory/theory.adoc[]
+include::network_security/proxy/proxy_squid/theory.adoc[]
 include::network_security/kerberos/theory.adoc[]
 
 == Auditoría local
