@@ -78,7 +78,9 @@ El repositorio sigue un estándar fijo de documentación para mantener el orden 
 - [Ejemplo de premodelo en Markdown (.md)](.github/templates/markdown.md)
 - [Ejemplo de premodelo en Documento Ascii tipo Index (.adoc)](.github/templates/asciidocument_index.adoc)
 - [Ejemplo de premodelo en Documento Ascii para Comandos (.adoc)](.github/templates/asciidocument_command.adoc)
+- [Formato y significado en nombres de directorios](STRUCTURE.md)
 
+Más información en [CONTRIBUTING](.github/CONTRIBUTING.md).
 </details>
 
 ---
