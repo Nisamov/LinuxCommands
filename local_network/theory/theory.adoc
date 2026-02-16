@@ -3,6 +3,10 @@
 :toclevels: 3
 :sectnums:
 
+Una red local es una infraestructura de red que conecta computadoras y dispositivos dentro de un espacio físico pequeño. Suelen ser propiedad privada y son rápidas, económicas y seguras
+
+Una red local o LAN (Local Area Network) es un conjunto de dispositivos conectados entre sí en un área geográfica limitada, como una casa, oficina o edificio. Las redes locales permiten compartir recursos como archivos, impresoras, aplicaciones y conexiones a Internet.
+
 ==== Conceptos Básicos de Red
 
 [cols="2,5,3", options="header"]
