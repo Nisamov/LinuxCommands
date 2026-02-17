@@ -14,7 +14,7 @@ El contenido de este repositorio se proporciona "tal cual", para fines informati
 ## Reporte de Hallazgos Críticos
 Si identifica un comando, script o instrucción que contenga errores sintácticos peligrosos o que pueda causar daños colaterales no advertidos, le agradecemos que lo reporte de manera responsable:
 
-1.  **Canal de comunicación:** Envíe los detalles del hallazgo a **[Nuevo issude/error critico](https://github.com/Nisamov/LinuxCommands/issues/new/choose)**.
+1.  **Canal de comunicación:** Envíe los detalles del hallazgo a **[nuevo issue/error critico](https://github.com/Nisamov/LinuxCommands/issues/new/choose)**.
 2.  **Información requerida:** Indique el archivo, la línea específica y una breve explicación de por qué considera que la instrucción es de alto riesgo.
 3.  **Resolución:** Una vez validado el reporte, se procederá a corregir o añadir la advertencia correspondiente en el menor tiempo posible.
 ---
