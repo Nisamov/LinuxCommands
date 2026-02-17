@@ -1,0 +1,31 @@
+=== Configuracones y Sintaxis NFS
+
+Dentro del fichero `/etc/exports` se definen las rutas que se van a compartir, así como los permisos de acceso a cada una de ellas.
+La sintaxis de cada línea es la siguiente:
+[source,bash]
+----
+/ruta/absoluta ip_cliente(permiso1,permiso2,...)
+----
+
+En el apartado de ip_cliente se pueden usar comodines, por ejemplo `*` para permitir el acceso a cualquier equipo, o `192.168.10.*` para permitir el acceso a cualquier equipo de la subred `192.168.10.0/24`.
+
+Por otro lado, en el apartado de permisos se pueden usar los siguientes parámetros:
+
+[cols="1,2", options="header"]
+|===
+| Permiso | Descripción
+|---
+| rw | Permite lectura y escritura
+| ro | Permite solo lectura
+| root-squash | Reduce los privilegios del usuario root en el cliente
+| no_root_squash | Mantiene los privilegios del usuario root en el cliente
+| sync | Sincroniza los cambios en disco
+| async | Permite la escritura asincrónica
+| no_subtree_check | Desactiva la verificación de subárbol
+| subtree_check | Activa la verificación de subárbol
+| wdelay | Retrasa la escritura
+| no_wdelay | No retrasa la escritura
+| anonuid | UID anónimo para los clientes
+| anongid | GID anónimo para los clientes
+|===
+

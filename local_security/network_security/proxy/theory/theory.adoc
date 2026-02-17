@@ -1,0 +1,12 @@
+=== Teoría Proxy
+
+Un proxy es un servidor que actúa como intermediario entre un cliente y otro servidor. El cliente se conecta al proxy, que luego realiza la solicitud en nombre del cliente y devuelve la respuesta al cliente. Los proxies se utilizan para diversos propósitos, como mejorar el rendimiento, filtrar contenido, ocultar la identidad del cliente o proporcionar acceso a recursos restringidos.
+
+Existen varios tipos de proxies, entre ellos:
+* Proxy HTTP: Se utiliza para manejar solicitudes HTTP y HTTPS. Puede almacenar en caché contenido web para mejorar el rendimiento y filtrar contenido no deseado.
+* Proxy SOCKS: Es un proxy de bajo nivel que puede manejar cualquier tipo de tráfico, no solo HTTP. Se utiliza comúnmente para aplicaciones que no son compatibles con proxies HTTP.
+* Proxy transparente: No requiere configuración en el cliente, ya que intercepta el tráfico de red sin que el cliente lo sepa. Se utiliza a menudo para monitorear o filtrar tráfico sin necesidad de configurar cada dispositivo.
+* Proxy inverso: Se coloca frente a uno o más servidores y maneja las solicitudes en su nombre. Se utiliza para distribuir la carga, mejorar la seguridad y ocultar la estructura interna de la red.
+* Proxy caché: Almacena en caché las respuestas de los servidores para mejorar el rendimiento y reducir la carga en la red.
+* Proxy de anonimato: Oculta la dirección IP del cliente para proteger su privacidad.
+

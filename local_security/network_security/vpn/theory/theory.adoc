@@ -1,0 +1,17 @@
+=== Teoría de VPN
+Las VPN (Redes Privadas Virtuales) son una tecnología que permite crear una conexión segura y cifrada a través de una red pública, como Internet. Las VPN se utilizan para proteger la privacidad y la seguridad de los datos, así como para acceder a recursos de red de forma remota.
+
+Las VPN funcionan mediante la creación de un "túnel" cifrado entre el dispositivo del usuario y el servidor VPN. Todo el tráfico de datos se envía a través de este túnel, lo que impide que terceros puedan interceptar o acceder a la información.
+
+Existen diferentes tipos de protocolos de VPN, cada uno con sus propias características y niveles de seguridad. Algunos de los protocolos más comunes incluyen:
+
+* PPTP (Protocolo de Túnel Punto a Punto): Un protocolo de VPN más antiguo y menos seguro, que se utiliza principalmente para conexiones rápidas y sencillas.
+* L2TP/IPsec (Protocolo de Túnel de Capa 2): Un protocolo más seguro que combina L2TP con IPsec para proporcionar cifrado y autenticación.
+* OpenVPN: Un protocolo de código abierto que ofrece un alto nivel de seguridad y flexibilidad, y es ampliamente utilizado en soluciones de VPN comerciales y gratuitas.
+* IKEv2/IPsec (Intercambio de Claves de Internet): Un protocolo de VPN que ofrece una buena combinación de seguridad y rendimiento, y es especialmente adecuado para dispositivos móviles.
+
+Las VPN se utilizan en una variedad de situaciones, como:
+
+* Acceso remoto a redes corporativas: Permiten a los empleados acceder de forma segura a los recursos de la empresa desde ubicaciones remotas.
+* Protección de la privacidad en línea: Ayudan a ocultar la dirección IP del usuario y cifrar su tráfico de Internet, lo que dificulta el seguimiento por parte de terceros.
+* Evitar restricciones geográficas: Permiten a los usuarios acceder a contenido bloqueado o restringido en función de su ubicación geográfica.
