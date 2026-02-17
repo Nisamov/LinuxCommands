@@ -74,6 +74,3 @@ cache:: `apk cache` Gestionar caché
 apk cache clean
 ----
 
-NOTE: `apk` está diseñado para ser rápido y minimalista, ideal para entornos
-de contenedores y sistemas embebidos.
-

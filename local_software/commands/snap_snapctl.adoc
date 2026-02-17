@@ -73,6 +73,3 @@ services:: `snap services` Gestionar servicios snap
 snap services
 ----
 
-NOTE: Los paquetes Snap se actualizan automáticamente y se ejecutan en entornos
-aislados (sandbox).
-

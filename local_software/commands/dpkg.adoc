@@ -117,6 +117,3 @@ dpkg -I paquete.deb
 dpkg --configure -a
 ----
 
-NOTE: `dpkg` no gestiona repositorios ni dependencias automáticamente.
-Para una gestión completa del sistema se recomienda usar `apt`.
-

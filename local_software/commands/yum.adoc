@@ -129,6 +129,3 @@ yum history
 yum history undo ID
 ----
 
-NOTE: `yum` ha sido sustituido por `dnf` en sistemas modernos (RHEL 8+, Fedora).
-Se recomienda migrar a `dnf` siempre que sea posible.
-

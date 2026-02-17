@@ -144,9 +144,3 @@ release-upgrade:: `do-release-upgrade` Actualizar la distribución completa
 sudo do-release-upgrade
 ----
 
-NOTE: `apt` es una interfaz de alto nivel que integra funcionalidades de `apt-get`,
-`apt-cache` y `apt-config`.  
-`upgrade` actualiza paquetes instalados sin eliminar dependencias.  
-`full-upgrade` o `dist-upgrade` actualiza todo el sistema manejando cambios de dependencias.  
-`do-release-upgrade` actualiza la distribución completa y requiere reinicio.
-

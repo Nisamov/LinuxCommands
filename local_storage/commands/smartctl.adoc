@@ -1,0 +1,50 @@
+=== smartctl
+Control y monitoreo de sistemas de almacenamiento (S.M.A.R.T.)
+
+:category: hardware_storage
+[.metadata]
+{
+  "description": "Herramienta para monitorizar el estado de salud de discos duros y SSD mediante S.M.A.R.T.",
+  "usage": "smartctl [OPCIONES] DISPOSITIVO",
+  "options": {
+    "--info": "Mostrar información del dispositivo",
+    "--health": "Comprobar el estado de salud general",
+    "--attributes": "Mostrar atributos S.M.A.R.T. detallados",
+    "--test": "Ejecutar pruebas de diagnóstico",
+    "--log": "Ver registros de errores o de pruebas",
+    "--all": "Mostrar toda la información S.M.A.R.T."
+  }
+}
+
+El comando `smartctl` es fundamental para predecir fallos en unidades de disco y realizar diagnósticos profundos del hardware de almacenamiento.
+
+[source,bash]
+----
+# Obtener información general del disco
+smartctl -i /dev/sda
+----
+
+health:: `smartctl -H` Comprobar salud rápida
++
+[source,bash]
+----
+# Verificar si el disco ha pasado la prueba de salud
+smartctl -H /dev/nvme0n1
+----
+
+attributes:: `smartctl -A` Atributos detallados
++
+[source,bash]
+----
+# Ver contadores de errores y horas de encendido
+smartctl -A /dev/sdb
+----
+
+test:: `smartctl -t` Ejecutar auto-tests
++
+[source,bash]
+----
+# Iniciar un test corto en segundo plano
+smartctl -t short /dev/sda
+----
+

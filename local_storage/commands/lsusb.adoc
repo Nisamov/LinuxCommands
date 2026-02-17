@@ -1,0 +1,40 @@
+=== lsusb
+Listar dispositivos USB
+
+:category: hardware_bus
+[.metadata]
+{
+  "description": "Muestra información sobre los buses USB y los dispositivos conectados a ellos.",
+  "usage": "lsusb [OPCIONES]",
+  "options": {
+    "-v": "Mostrar información detallada (verbose)",
+    "-t": "Mostrar la jerarquía USB en forma de árbol",
+    "-s": "Mostrar solo dispositivos específicos por bus/devnum",
+    "-d": "Filtrar por ID de vendedor y producto"
+  }
+}
+
+El comando `lsusb` es la herramienta rápida para verificar si el sistema operativo reconoce un periférico conectado por USB.
+
+[source,bash]
+----
+# Listar dispositivos USB conectados
+lsusb
+----
+
+tree:: `lsusb -t` Estructura jerárquica
++
+[source,bash]
+----
+# Ver a qué puerto y controlador pertenece cada dispositivo
+lsusb -t
+----
+
+verbose:: `lsusb -v` Detalles técnicos
++
+[source,bash]
+----
+# Ver descriptores detallados de un dispositivo específico
+lsusb -v -d 046d:c52b
+----
+

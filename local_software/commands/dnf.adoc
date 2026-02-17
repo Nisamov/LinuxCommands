@@ -150,6 +150,3 @@ dnf history
 dnf history undo ID
 ----
 
-NOTE: `dnf` es extensible mediante plugins, soporta transacciones reversibles
-y ofrece una mejor resolución de dependencias que `yum`.
-

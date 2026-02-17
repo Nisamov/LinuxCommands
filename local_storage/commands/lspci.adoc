@@ -1,0 +1,40 @@
+=== lspci
+Listar dispositivos PCI
+
+:category: hardware_bus
+[.metadata]
+{
+  "description": "Muestra información sobre todos los buses PCI y los dispositivos conectados a ellos.",
+  "usage": "lspci [OPCIONES]",
+  "options": {
+    "-v": "Mostrar información detallada",
+    "-nn": "Mostrar IDs de fabricante y dispositivo en texto y número",
+    "-t": "Mostrar diagrama en árbol de la topología PCI",
+    "-k": "Mostrar drivers de kernel utilizados por cada dispositivo"
+  }
+}
+
+`lspci` es esencial para identificar tarjetas gráficas, adaptadores de red y controladores de almacenamiento internos.
+
+[source,bash]
+----
+# Listar todos los dispositivos PCI
+lspci
+----
+
+kernel:: `lspci -k` Controladores y módulos
++
+[source,bash]
+----
+# Ver qué driver está gestionando cada componente
+lspci -k
+----
+
+ids:: `lspci -nn` Identificadores de hardware
++
+[source,bash]
+----
+# Ver el ID exacto (Vendor:Device) para buscar drivers compatibles
+lspci -nn | grep Ethernet
+----
+

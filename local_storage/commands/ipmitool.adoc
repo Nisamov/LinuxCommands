@@ -1,0 +1,41 @@
+=== ipmitool
+Interfaz de gestión de plataforma inteligente (IPMI)
+
+:category: hardware_management
+[.metadata]
+{
+  "description": "Utilidad para gestionar y configurar dispositivos con interfaz IPMI (servidores).",
+  "usage": "ipmitool [OPCIONES] <COMANDO>",
+  "options": {
+    "sdr": "Listar registros de datos de sensores",
+    "lan": "Configurar parámetros de red del BMC",
+    "chassis": "Controlar el estado del chasis y energía",
+    "fru": "Ver información de inventario de hardware",
+    "sel": "Ver el registro de eventos del sistema"
+  }
+}
+
+`ipmitool` permite la gestión fuera de banda (Out-of-Band) de servidores, siendo vital para tareas de administración remota y monitorización de hardware físico.
+
+[source,bash]
+----
+# Ver estado de los sensores (temperatura, voltajes, ventiladores)
+ipmitool sdr
+----
+
+chassis:: `ipmitool chassis` Control de energía
++
+[source,bash]
+----
+# Encender, apagar o reiniciar el servidor físicamente
+ipmitool chassis power status
+----
+
+sel:: `ipmitool sel` Logs de hardware
++
+[source,bash]
+----
+# Listar errores críticos de hardware registrados
+ipmitool sel list
+----
+

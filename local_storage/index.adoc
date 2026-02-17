@@ -39,6 +39,8 @@ include::commands/fdisk.adoc[]
 include::commands/lsblk.adoc[]
 include::commands/mkfs.adoc[]
 include::commands/partx.adoc[]
+include::commands/nvme-cli.adoc[]
+include::commands/smartctl.adoc[]
 
 == Comandos de montaje y swap
 include::commands/mount.adoc[]
@@ -77,4 +79,9 @@ include::commands/lvscan.adoc[]
 
 == Comandos especializados
 include::commands/losetup.adoc[]
+include::commands/ipmitool.adoc[]
+
+== Enumeración y buses de hardware
+include::commands/lspci.adoc[]
+include::commands/lsusb.adoc[]
 

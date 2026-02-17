@@ -121,7 +121,3 @@ rpm -V paquete
 rpm -K paquete.rpm
 ----
 
-NOTE: `rpm` trabaja directamente contra la base de datos RPM y no resuelve
-dependencias automáticamente. Para gestión completa del sistema se recomienda
-usar `dnf`.
-

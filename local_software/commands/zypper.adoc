@@ -73,6 +73,3 @@ dup:: `zypper dup` Actualización de distribución
 zypper dup
 ----
 
-NOTE: `zypper dup` es equivalente a una actualización completa del sistema y puede
-instalar o eliminar paquetes para resolver dependencias.
-

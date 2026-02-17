@@ -145,6 +145,3 @@ pacman -Sc
 pacman -Scc
 ----
 
-NOTE: En Arch Linux se recomienda actualizar siempre el sistema de forma completa
-usando `pacman -Syu` y evitar actualizaciones parciales.
-

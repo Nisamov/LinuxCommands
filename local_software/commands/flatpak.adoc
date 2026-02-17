@@ -65,5 +65,3 @@ update:: `flatpak update` Actualizar aplicaciones
 flatpak update
 ----
 
-NOTE: Flatpak utiliza runtimes compartidos y aislamiento mediante sandbox.
-

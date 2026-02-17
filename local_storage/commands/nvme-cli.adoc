@@ -1,0 +1,40 @@
+Gestión de unidades NVMe
+
+:category: hardware_storage
+[.metadata]
+{
+  "description": "Herramienta de línea de comandos para gestionar y diagnosticar unidades NVMe.",
+  "usage": "nvme <SUBCOMANDO> [OPCIONES] DISPOSITIVO",
+  "options": {
+    "list": "Listar todos los dispositivos NVMe detectados",
+    "smart-log": "Ver estadísticas S.M.A.R.T. de la unidad",
+    "id-ctrl": "Identificar el controlador NVMe",
+    "format": "Formatear de forma segura el dispositivo",
+    "sanitize": "Eliminación segura de datos"
+  }
+}
+
+`nvme-cli` es el estándar para interactuar con dispositivos PCIe/NVMe, permitiendo desde ver temperaturas hasta gestionar namespaces.
+
+[source,bash]
+----
+# Listar todas las unidades NVMe instaladas
+nvme list
+----
+
+smart-log:: `nvme smart-log` Datos de salud
++
+[source,bash]
+----
+# Ver temperatura y vida útil restante
+nvme smart-log /dev/nvme0
+----
+
+id-ctrl:: `nvme id-ctrl` Información técnica
++
+[source,bash]
+----
+# Ver capacidades del controlador y firmware
+nvme id-ctrl /dev/nvme0
+----
+
