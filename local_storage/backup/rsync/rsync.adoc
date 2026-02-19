@@ -1,6 +1,24 @@
 === rsync
 Sincronizar archivos y directorios de forma eficiente, local o remotamente.
 
+:category: local_storage
+[.metadata]
+{
+  "description": "Sincronización de archivos y directorios, local o remota, con soporte para compresión y exclusión de archivos.",
+  "usage": "rsync [OPCIONES] origen/ destino/",
+  "options": {
+    "inicio": "Sin opciones, sincroniza archivos de origen a destino",
+    "-a": "Modo archivo (recursivo, preserva permisos, tiempos, enlaces)",
+    "-v": "Mostrar información detallada durante la sincronización",
+    "--dry-run": "Simular la ejecución sin realizar cambios",
+    "--delete": "Eliminar en destino los archivos que no existen en origen",
+    "-z": "Comprimir datos durante la transferencia",
+    "-e": "Especificar el método de transporte (ej. ssh)",
+    "--progress": "Mostrar progreso de la transferencia",
+    "--exclude": "Excluir archivos o directorios específicos"
+  }
+}
+
 [source,bash]
 ----
 # Sincronizar un directorio localmente

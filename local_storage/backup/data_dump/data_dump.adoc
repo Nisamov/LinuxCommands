@@ -1,0 +1,89 @@
+=== dd
+Convertir y copiar archivos, permitiendo gestionar datos a bajo nivel en el sistema. Conocido también como "Disk Destroyer" por su capacidad de sobreescribir dispositivos enteros.
+
+:category: local_storage
+[.metadata]
+{
+  "description": "Conversión y copia de archivos a bajo nivel, útil para crear imágenes de disco, clonar dispositivos, generar archivos de prueba y realizar copias de seguridad.",
+  "usage": "dd [OPCIONES]",
+  "options": {
+    "if": "Especifica el archivo o dispositivo de entrada",
+    "of": "Especifica el archivo o dispositivo de salida",
+    "bs": "Define el tamaño de bloque para la lectura y escritura",
+    "count": "Número de bloques a copiar",
+    "status": "Controla la información mostrada durante la ejecución",
+    "conv": "Aplica conversiones al flujo de datos (ej. noerror, sync)"
+  }
+}
+
+[source,bash]
+----
+# Estructura básica: origen, destino y tamaño de bloque
+dd if=ArchivoOrigen of=ArchivoDestino.extensión bs=Bloques
+----
+
+if=:: `input file` Especifica el archivo o dispositivo de origen.
+
+[source,bash]
+----
+# Usar el generador de ceros como origen
+dd if=/dev/zero of=fichero_vacio.bin bs=1M count=10
+----
+
+of=:: `output file` Especifica el archivo o dispositivo de destino (si no existe, lo crea).
+
+[source,bash]
+----
+# Crear una imagen ISO de un DVD
+dd if=/dev/sr0 of=imagen_sistema.iso
+----
+
+bs=:: `block size` Define el tamaño de los bloques de lectura y escritura (ej. 1M, 4k). Si no se indica, el valor por defecto es 512 bytes.
+
+[source,bash]
+----
+# Generar un archivo de 999999 bytes con contenido nulo
+dd if=/dev/null of=fich.txt bs=999999
+----
+
+count=:: Número de bloques enteros a copiar.
+
+[source,bash]
+----
+# Crear un fichero binario de exactamente 20MB
+dd if=/dev/zero of=archivo_20MB.bin bs=1M count=20
+----
+
+status=:: Controla el nivel de información que se muestra por pantalla.
+
+[source,bash]
+----
+# Ver el progreso de la copia en tiempo real
+dd if=/dev/sda of=/dev/sdb status=progress
+----
+
+conv=:: `conversion` Aplica conversiones al flujo de datos (ej. `noerror` para saltar errores de lectura, `sync` para rellenar con ceros si hay errores).
+
+[source,bash]
+----
+# Clonar un disco duro saltando sectores defectuosos
+dd if=/dev/sda of=/dev/sdb conv=noerror,sync
+----
+
+[CAUTION]
+====
+El uso de `dd` con dispositivos físicos (`/dev/sdX`) es extremadamente peligroso. Un error en el parámetro `of` puede destruir irreversiblemente el sistema operativo o los datos del usuario.
+====
+
+[source,bash]
+----
+# Peligro: Llena la primera partición del primer disco con datos aleatorios
+dd if=/dev/random of=/dev/sda1
+----
+
+[source,bash]
+----
+# Generar un archivo con 999999 bits aleatorios
+dd if=/dev/random of=fich_aleatorio.txt bs=999999
+----
+
