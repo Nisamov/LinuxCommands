@@ -1615,6 +1615,39 @@
     "source_path": "local_permissions/commands/sudo.adoc"
   },
   {
+    "description": "Sincronización de archivos y directorios, local o remota, con soporte para compresión y exclusión de archivos.",
+    "usage": "rsync [OPCIONES] origen/ destino/",
+    "options": {
+      "inicio": "Sin opciones, sincroniza archivos de origen a destino",
+      "-a": "Modo archivo (recursivo, preserva permisos, tiempos, enlaces)",
+      "-v": "Mostrar información detallada durante la sincronización",
+      "--dry-run": "Simular la ejecución sin realizar cambios",
+      "--delete": "Eliminar en destino los archivos que no existen en origen",
+      "-z": "Comprimir datos durante la transferencia",
+      "-e": "Especificar el método de transporte (ej. ssh)",
+      "--progress": "Mostrar progreso de la transferencia",
+      "--exclude": "Excluir archivos o directorios específicos"
+    },
+    "name": "rsync",
+    "category": "local_storage",
+    "source_path": "local_storage/backup/rsync/rsync.adoc"
+  },
+  {
+    "description": "Conversión y copia de archivos a bajo nivel, útil para crear imágenes de disco, clonar dispositivos, generar archivos de prueba y realizar copias de seguridad.",
+    "usage": "dd [OPCIONES]",
+    "options": {
+      "if": "Especifica el archivo o dispositivo de entrada",
+      "of": "Especifica el archivo o dispositivo de salida",
+      "bs": "Define el tamaño de bloque para la lectura y escritura",
+      "count": "Número de bloques a copiar",
+      "status": "Controla la información mostrada durante la ejecución",
+      "conv": "Aplica conversiones al flujo de datos (ej. noerror, sync)"
+    },
+    "name": "data_dump",
+    "category": "local_storage",
+    "source_path": "local_storage/backup/data_dump/data_dump.adoc"
+  },
+  {
     "description": "Listar dispositivos de bloques y su estructura.",
     "usage": "lsblk [OPCIONES]",
     "options": {
@@ -1958,6 +1991,46 @@
     "source_path": "local_storage/commands/mkfs.adoc"
   },
   {
+    "description": "Muestra información sobre los buses USB y los dispositivos conectados a ellos.",
+    "usage": "lsusb [OPCIONES]",
+    "options": {
+      "-v": "Mostrar información detallada (verbose)",
+      "-t": "Mostrar la jerarquía USB en forma de árbol",
+      "-s": "Mostrar solo dispositivos específicos por bus/devnum",
+      "-d": "Filtrar por ID de vendedor y producto"
+    },
+    "name": "lsusb",
+    "category": "hardware_bus",
+    "source_path": "local_storage/commands/lsusb.adoc"
+  },
+  {
+    "description": "Muestra información sobre todos los buses PCI y los dispositivos conectados a ellos.",
+    "usage": "lspci [OPCIONES]",
+    "options": {
+      "-v": "Mostrar información detallada",
+      "-nn": "Mostrar IDs de fabricante y dispositivo en texto y número",
+      "-t": "Mostrar diagrama en árbol de la topología PCI",
+      "-k": "Mostrar drivers de kernel utilizados por cada dispositivo"
+    },
+    "name": "lspci",
+    "category": "hardware_bus",
+    "source_path": "local_storage/commands/lspci.adoc"
+  },
+  {
+    "description": "Herramienta de línea de comandos para gestionar y diagnosticar unidades NVMe.",
+    "usage": "nvme <SUBCOMANDO> [OPCIONES] DISPOSITIVO",
+    "options": {
+      "list": "Listar todos los dispositivos NVMe detectados",
+      "smart-log": "Ver estadísticas S.M.A.R.T. de la unidad",
+      "id-ctrl": "Identificar el controlador NVMe",
+      "format": "Formatear de forma segura el dispositivo",
+      "sanitize": "Eliminación segura de datos"
+    },
+    "name": "nvme-cli",
+    "category": "hardware_storage",
+    "source_path": "local_storage/commands/nvme-cli.adoc"
+  },
+  {
     "description": "Escanear y detectar todos los grupos de volúmenes en LVM.",
     "usage": "vgscan [OPCIONES]",
     "options": {
@@ -2134,6 +2207,21 @@
     "source_path": "local_storage/commands/lvcreate.adoc"
   },
   {
+    "description": "Herramienta para monitorizar el estado de salud de discos duros y SSD mediante S.M.A.R.T.",
+    "usage": "smartctl [OPCIONES] DISPOSITIVO",
+    "options": {
+      "--info": "Mostrar información del dispositivo",
+      "--health": "Comprobar el estado de salud general",
+      "--attributes": "Mostrar atributos S.M.A.R.T. detallados",
+      "--test": "Ejecutar pruebas de diagnóstico",
+      "--log": "Ver registros de errores o de pruebas",
+      "--all": "Mostrar toda la información S.M.A.R.T."
+    },
+    "name": "smartctl",
+    "category": "hardware_storage",
+    "source_path": "local_storage/commands/smartctl.adoc"
+  },
+  {
     "description": "Modificar y gestionar grupos de volúmenes en LVM.",
     "usage": "vgdisplay [OPCIONES] [GRUPO]",
     "options": {
@@ -2163,6 +2251,20 @@
     "name": "pvremove",
     "category": "local_storage",
     "source_path": "local_storage/commands/pvremove.adoc"
+  },
+  {
+    "description": "Utilidad para gestionar y configurar dispositivos con interfaz IPMI (servidores).",
+    "usage": "ipmitool [OPCIONES] <COMANDO>",
+    "options": {
+      "sdr": "Listar registros de datos de sensores",
+      "lan": "Configurar parámetros de red del BMC",
+      "chassis": "Controlar el estado del chasis y energía",
+      "fru": "Ver información de inventario de hardware",
+      "sel": "Ver el registro de eventos del sistema"
+    },
+    "name": "ipmitool",
+    "category": "hardware_management",
+    "source_path": "local_storage/commands/ipmitool.adoc"
   },
   {
     "description": "Modificar y gestionar sistemas de ficheros en dispositivos.",
