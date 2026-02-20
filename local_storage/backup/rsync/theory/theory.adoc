@@ -1,0 +1,26 @@
+=== Gestión Avanzada de Copias de Seguridad con RSYNC
+
+Rsync (Remote Sync) es una herramienta de software para la transferencia y sincronización de archivos que opera de manera eficiente tanto en entornos locales como a través de redes. Su arquitectura está diseñada para optimizar el uso del ancho de banda y garantizar la integridad de los datos replicados.
+
+==== Fundamentos del Algoritmo Delta-Transfer
+El núcleo de esta tecnología es su capacidad para detectar diferencias a nivel de bloque. En lugar de comparar archivos enteros mediante fechas, rsync divide los archivos en segmentos y genera sumas de comprobación (checksums). Solo los bloques que han sufrido modificaciones son transmitidos, permitiendo que el destino reconstruya el archivo final combinando los datos antiguos con los nuevos segmentos recibidos.
+
+==== Modos de Operación y Transporte
+La versatilidad de la herramienta permite dos métodos principales de ejecución:
+* **Acceso mediante Shell Remoto:** Generalmente utiliza SSH para cifrar la comunicación, aprovechando la infraestructura de seguridad existente en el sistema.
+* **Modo Demonio (rsync daemon):** El sistema actúa como un servidor propio, escuchando en un puerto específico y permitiendo la creación de "módulos" con reglas de acceso y almacenamiento predefinidas.
+
+==== Preservación de la Identidad del Sistema de Archivos
+A diferencia de las copias simples, rsync es capaz de realizar una "clonación de estado" que incluye:
+* **Atributos de Propiedad:** Mapeo de identificadores de usuario (UID) y de grupo (GID).
+* **Enlaces del Sistema:** Gestión inteligente de enlaces simbólicos (links) y enlaces duros (hard links) para evitar la duplicación innecesaria de bloques de datos.
+* **Marcas de Tiempo:** Sincronización precisa de fechas de acceso y modificación, crucial para auditorías y sistemas de compilación.
+
+==== Estrategias de Filtrado y Exclusión
+El sistema permite una granularidad total mediante reglas de inclusión y exclusión. Esto facilita la creación de políticas de backup donde se pueden ignorar archivos temporales, cachés o sockets del sistema, centrándose exclusivamente en la información persistente y valiosa.
+
+==== Optimización de Recursos en Tránsito
+Para mejorar el rendimiento en redes de baja latencia o ancho de banda limitado, rsync implementa:
+* **Compresión Adaptativa:** Reducción del volumen de datos antes de la salida de red.
+* **Agrupación de Escrituras:** Minimiza las operaciones de entrada/salida (I/O) en el disco de destino para prolongar la vida útil del hardware y mejorar la velocidad de escritura.
+

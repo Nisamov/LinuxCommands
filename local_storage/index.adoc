@@ -27,8 +27,10 @@ include::partitions/theory.adoc[]
 
 == Copias de seguridad
 include::backup/theory.adoc[]
-include::backup/rsync/rsync.adoc[]
-include::backup/data_dump/data_dump.adoc[]
+include::backup/rsync/theory/theory.adoc[]
+include::backup/rsync/commands/rsync.adoc[]
+include::backup/data_dump/theory/theory.adoc[]
+include::backup/data_dump/commands/data_dump.adoc[]
 
 == Comandos generales de discos y particiones
 include::commands/blkid.adoc[]
