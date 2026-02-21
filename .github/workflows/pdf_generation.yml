@@ -288,7 +288,7 @@ jobs:
           if [ -n "$JA_FILES" ]; then
             echo "Archivos JA: $JA_FILES"
             gh release create JA $JA_FILES \
-              --title "🔵 PDF ドキュメント 📕 (Con soporte de fuentes CJK)" \
+              --title "🔵 PDF ドキュメント 📕" \
               --notes "![Documentación Japonés]($JAImg)"
           fi
           
@@ -297,7 +297,7 @@ jobs:
           if [ -n "$KO_FILES" ]; then
             echo "Archivos KO: $KO_FILES"
             gh release create KO $KO_FILES \
-              --title "🔵 PDF 문서 📕 (Con soporte de fuentes CJK)" \
+              --title "🔵 PDF 문서 📕" \
               --notes "![Documentación Coreano]($KOImg)"
           fi
           
@@ -306,7 +306,7 @@ jobs:
           if [ -n "$ZH_FILES" ]; then
             echo "Archivos ZH: $ZH_FILES"
             gh release create ZH $ZH_FILES \
-              --title "🔵 PDF 文档 📕 (Con soporte de fuentes CJK)" \
+              --title "🔵 PDF 文档 📕" \
               --notes "![Documentación Chino]($ZHImg)"
           fi
           

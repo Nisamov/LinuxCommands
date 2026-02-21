@@ -1,6 +1,6 @@
 === El Comando DD: Copia y Conversión a Bajo Nivel
 
-El comando `dd` es una utilidad de flujo de datos que opera directamente con descriptores de archivo a un nivel cercano al hardware. A diferencia de las herramientas de copia convencionales que gestionan archivos y directorios, `dd` trata la información como un flujo de bytes puros, lo que lo hace indispensable para la gestión de dispositivos de almacenamiento y forense digital.
+El comando `dd` (data dump) es una utilidad de flujo de datos que opera directamente con descriptores de archivo a un nivel cercano al hardware. A diferencia de las herramientas de copia convencionales que gestionan archivos y directorios, `dd` trata la información como un flujo de bytes puros, lo que lo hace indispensable para la gestión de dispositivos de almacenamiento y forense digital.
 
 ==== Arquitectura de Copia de Bloques
 La unidad fundamental de operación de `dd` es el "bloque". La herramienta lee una cantidad específica de datos desde el origen y los escribe en el destino. Esta abstracción permite ignorar el sistema de archivos (NTFS, EXT4, FAT32) y clonar la estructura física exacta de un disco o partición, incluyendo sectores de arranque (MBR/GPT) y tablas de particiones.
