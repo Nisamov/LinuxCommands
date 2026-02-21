@@ -1,1119 +1,925 @@
 [
   {
-    "description": "Eliminar cuentas de usuario y opcionalmente sus archivos y configuraciones",
-    "usage": "deluser [OPCIONES] USUARIO",
+    "description": "Monitor interactivo de procesos en tiempo real.",
+    "usage": "top",
     "options": {
-      "--remove-home": "Borrar usuario junto con su directorio personal",
-      "--remove-all-files": "Borrar todos los archivos del usuario en el sistema",
-      "--group": "Eliminar grupo asociado al usuario",
-      "--backup": "Hacer copia de seguridad de archivos antes de eliminar"
+      "-b": "Modo batch (para scripts)",
+      "-d": "Intervalo de actualización (segundos)",
+      "-n": "Número de actualizaciones",
+      "-p": "Mostrar solo procesos específicos",
+      "-u": "Mostrar solo procesos de un usuario específico"
     },
-    "name": "deluser",
-    "category": "local_users",
-    "source_path": "local_users/commands/deluser.adoc"
+    "name": "top",
+    "category": "local_process",
+    "source_path": "local_process/commands/top.adoc"
   },
   {
-    "description": "Cambiar la contraseña de un usuario o administrar la expiración de la misma",
-    "usage": "passwd [OPCIONES] USUARIO",
+    "description": "Monitor de procesos interactivo con interfaz visual mejorada que reemplaza a `top`.",
+    "usage": "htop [OPCIONES]",
     "options": {
-      "--expire": "Forzar al usuario a cambiar la contraseña en el próximo inicio de sesión",
-      "--lock": "Bloquear la cuenta del usuario",
-      "--unlock": "Desbloquear la cuenta del usuario"
+      "--no-color": "Desactiva colores en la salida",
+      "--no-mouse": "Desactiva soporte para mouse",
+      "-d, --delay": "Especifica el intervalo de actualización en décimas de segundo",
+      "--batch": "Ejecuta en modo no interactivo y exporta salida"
     },
-    "name": "passwd",
-    "category": "local_users",
-    "source_path": "local_users/commands/passwd.adoc"
+    "name": "htop",
+    "category": "local_process",
+    "source_path": "local_process/commands/htop.adoc"
   },
   {
-    "description": "Modificar la información personal asociada a una cuenta de usuario",
-    "usage": "chfn [OPCIONES] USUARIO",
+    "description": "Buscar procesos en ejecución basándose en su nombre u otros atributos y mostrar sus PIDs.",
+    "usage": "pgrep [OPCIONES] PATRÓN",
     "options": {
-      "--full-name": "Definir nombre completo",
-      "--office": "Definir número de oficina",
-      "--work-phone": "Definir teléfono de trabajo",
-      "--home-phone": "Definir teléfono particular",
-      "--gecos": "Definir toda la información GECOS en una sola operación"
+      "-u": "Filtrar por usuario",
+      "-p": "Filtrar por PID",
+      "-c": "Filtrar por nombre de comando",
+      "-f": "Coincidencia parcial (expresiones regulares)",
+      "-G": "Filtrar por grupo",
+      "-t": "Filtrar por terminal asociada",
+      "-P": "Filtrar por proceso padre",
+      "-s": "Filtrar por ID de sesión",
+      "-n": "Mostrar el proceso más reciente",
+      "-o": "Mostrar el proceso más antiguo",
+      "-l": "Mostrar nombre del comando junto con PID",
+      "-a": "Mostrar información detallada del proceso"
     },
-    "name": "chfn",
-    "category": "local_users",
-    "source_path": "local_users/commands/chfn.adoc"
+    "name": "pgrep",
+    "category": "local_process",
+    "source_path": "local_process/commands/pgrep.adoc"
   },
   {
-    "description": "Cambiar el shell de inicio de sesión de un usuario",
-    "usage": "chsh [OPCIONES] USUARIO",
+    "description": "Listar archivos abiertos y los procesos que los están utilizando.",
+    "usage": "lsof [OPCIONES]",
     "options": {
-      "-s": "Definir shell de login",
-      "-l": "Listar shells disponibles en el sistema",
-      "--help": "Mostrar ayuda del comando"
+      "-u": "Filtrar por usuario",
+      "-p": "Filtrar por PID",
+      "-c": "Filtrar por nombre de comando",
+      "-i": "Mostrar conexiones de red",
+      "-iTCP": "Filtrar conexiones TCP",
+      "-i:PUERTO": "Filtrar por puerto",
+      "-n": "No resolver nombres DNS",
+      "-P": "No resolver nombres de puertos",
+      "-D": "Buscar en un directorio",
+      "-t": "Mostrar solo PIDs"
     },
-    "name": "chsh",
-    "category": "local_users",
-    "source_path": "local_users/commands/chsh.adoc"
+    "name": "lsof",
+    "category": "local_process",
+    "source_path": "local_process/commands/lsof.adoc"
   },
   {
-    "description": "Crear cuentas de usuario de bajo nivel mediante opciones explícitas (no interactivo).",
-    "usage": "useradd [OPCIONES] USUARIO",
+    "description": "Mostrar información sobre procesos en ejecución (Process Status).",
+    "usage": "ps [OPCIONES]",
     "options": {
-      "-m": "Crear directorio personal",
-      "-d": "Definir directorio personal",
-      "-s": "Definir shell de inicio",
-      "-g": "Definir grupo principal",
-      "-G": "Asignar grupos secundarios",
-      "-u": "Especificar UID",
-      "-e": "Fecha de expiración de la cuenta",
-      "-c": "Comentario / información GECOS",
-      "-r": "Crear usuario de sistema"
+      "-aux": "Mostrar todos los procesos con información detallada",
+      "-ef": "Mostrar todos los procesos en formato extendido",
+      "-eo": "Mostrar campos personalizados",
+      "-f": "Mostrar información detallada de cada proceso",
+      "-l": "Mostrar información larga de cada proceso",
+      "-j": "Mostrar información de hilos (threads)",
+      "--forest": "Mostrar árbol de procesos"
     },
-    "name": "useradd",
-    "category": "local_users",
-    "source_path": "local_users/commands/useradd.adoc"
+    "name": "ps",
+    "category": "local_process",
+    "source_path": "local_process/commands/ps.adoc"
   },
   {
-    "description": "Gestionar la caducidad de contraseñas y políticas de envejecimiento de cuentas de usuario",
-    "usage": "chage [OPCIONES] USUARIO",
+    "description": "Enviar señales a procesos para modificar su comportamiento o terminarlos.",
+    "usage": "kill [OPCIONES] PID",
     "options": {
-      "-l": "Listar información de expiración",
-      "-M": "Días máximos antes de que caduque la contraseña",
-      "-m": "Días mínimos entre cambios de contraseña",
-      "-W": "Días de aviso antes de la caducidad",
-      "-I": "Días de inactividad tras caducar la contraseña",
-      "-E": "Fecha de expiración de la cuenta",
-      "-d": "Establecer fecha del último cambio de contraseña"
+      "-PID": "Especificar proceso por ID",
+      "-PGID": "Enviar señal a grupo de procesos"
     },
-    "name": "chage",
-    "category": "local_users",
-    "source_path": "local_users/commands/chage.adoc"
+    "name": "kill",
+    "category": "local_process",
+    "source_path": "local_process/commands/kill.adoc"
   },
   {
-    "description": "Crear y gestionar cuentas de usuario de forma interactiva",
-    "usage": "adduser [OPCIONES] USUARIO",
+    "description": "Cambiar el propietario y/o grupo de archivos y directorios en Linux.",
+    "usage": "chown [OPCIONES] ARCHIVO",
     "options": {
-      "--home": "Definir directorio personal",
-      "--shell": "Definir shell por defecto",
-      "--ingroup": "Asignar grupo principal",
-      "--disabled-password": "Crear usuario sin contraseña",
-      "--gecos": "Definir información del usuario",
-      "--uid": "Especificar UID manualmente",
-      "--no-create-home": "No crear directorio personal"
+      "-R": "Cambiar propietario y grupo de todos los archivos y subdirectorios de forma recursiva",
+      "-c": "Muestra solo los cambios realizados",
+      "--": "Permite cambiar el propietario de archivos cuyo nombre comienza con '-'"
     },
-    "name": "adduser",
-    "category": "local_users",
-    "source_path": "local_users/commands/adduser.adoc"
+    "name": "chown",
+    "category": "local_permissions",
+    "source_path": "local_permissions/commands/chown.adoc"
   },
   {
-    "description": "Cambiar de usuario en el sistema o ejecutar comandos con la identidad de otro usuario",
-    "usage": "su [OPCIONES] USUARIO",
+    "description": "Establecer los permisos predeterminados para nuevos archivos y directorios creados por el usuario.",
+    "usage": "umask [MÁSCARA]",
     "options": {
-      "-c": "Ejecutar un comando como otro usuario",
-      "-": "Iniciar sesión como otro usuario con su entorno completo",
-      "usuario": "Cambiar a otro usuario (por defecto root)",
-      "-i": "Iniciar sesión como otro usuario sin cargar su entorno completo, cargando variables de entorno del usuario"
+      "MÁSCARA": "Especifica la máscara de permisos en formato octal (por ejemplo, 022) o simbólico (por ejemplo, u=rwx,g=rx,o=rx)"
     },
-    "name": "su",
-    "category": "local_users",
-    "source_path": "local_users/commands/su.adoc"
+    "name": "umask",
+    "category": "local_permissions",
+    "source_path": "local_permissions/commands/umask.adoc"
   },
   {
-    "description": "Transferir datos desde o hacia un servidor usando distintos protocolos (HTTP, HTTPS, FTP…).",
-    "usage": "curl [OPCIONES] [URL]",
+    "description": "Ejecutar comandos con privilegios de superusuario o de otro usuario.",
+    "usage": "sudo [OPCIONES] COMANDO",
     "options": {
-      "-o": "Guardar salida en un archivo",
-      "-O": "Guardar con el nombre original del archivo",
-      "-L": "Seguir redirecciones",
-      "-I": "Obtener solo cabeceras HTTP",
-      "-d": "Enviar datos en una petición POST",
-      "-H": "Añadir cabeceras HTTP personalizadas",
-      "-u": "Autenticación HTTP básica",
-      "-s": "Modo silencioso",
-      "--limit-rate": "Limitar velocidad de descarga/subida"
+      "-u usuario": "Ejecutar un comando como otro usuario",
+      "-i": "Simular una sesión completa de inicio de sesión con el entorno del usuario",
+      "-e archivo": "Editar archivos como superusuario",
+      "-l": "Listar los comandos que el usuario puede ejecutar con sudo",
+      "-L": "Bloquear el entorno del shell para prevenir cambios en autenticación durante su ejecución",
+      "-V": "Mostrar versión de sudo y opciones de configuración compiladas",
+      "-b": "Ejecutar un comando en segundo plano",
+      "-A": "Solicitar la contraseña mediante un helper externo",
+      "-B": "Activar notificación sonora al solicitar contraseña"
     },
-    "name": "curl",
-    "category": "local_network",
-    "source_path": "local_network/commands/curl.adoc"
+    "name": "sudo",
+    "category": "local_permissions",
+    "source_path": "local_permissions/commands/sudo.adoc"
   },
   {
-    "description": "Mostrar conexiones de red activas, puertos abiertos y estadísticas, reemplazo moderno de netstat.",
-    "usage": "ss [OPCIONES]",
+    "description": "Modificar los permisos de archivos y directorios en Linux.",
+    "usage": "chmod [OPCIONES] ARCHIVO",
     "options": {
-      "-t": "Mostrar solo conexiones TCP",
-      "-u": "Mostrar solo conexiones UDP",
-      "-l": "Mostrar solo puertos en escucha (listening)",
-      "-n": "Mostrar direcciones y puertos en formato numérico",
-      "-p": "Mostrar PID y proceso asociado a la conexión",
-      "-a": "Mostrar todas las conexiones y puertos en escucha",
-      "-s": "Mostrar resumen estadístico de protocolos de red",
-      "-r": "Mostrar tabla de rutas (similar a netstat -r)"
+      "+x": "Otorgar permisos de ejecución a un archivo",
+      "-x": "Revocar permisos de ejecución a un archivo",
+      "u+s": "Establecer el bit SUID en un archivo",
+      "g+s": "Establecer el bit SGID en un directorio",
+      "+t": "Establecer el sticky bit, solo el propietario puede modificar archivos en el directorio",
+      "-R": "Aplicar cambios de forma recursiva a un directorio",
+      "-v": "Muestra información detallada de los cambios aplicados"
     },
-    "name": "ss",
-    "category": "local_network",
-    "source_path": "local_network/commands/ss.adoc"
+    "name": "chmod",
+    "category": "local_permissions",
+    "source_path": "local_permissions/commands/chmod.adoc"
   },
   {
-    "description": "Escaneo y análisis de puertos, servicios y dispositivos en la red utilizando nmap.",
-    "usage": "nmap [OPCIONES]",
+    "description": "Establecer o modificar listas de control de acceso (ACL) en ficheros y directorios.",
+    "usage": "setfacl [OPCIONES] archivo",
     "options": {
-      "-p": "Especificar puertos a escanear",
-      "-sS": "Escaneo TCP SYN (stealth scan)",
-      "-sU": "Escaneo de puertos UDP",
-      "-A": "Detección de sistema operativo y servicios",
-      "-O": "Detectar sistema operativo",
-      "-T": "Ajustar velocidad/agresividad del escaneo (0-5)",
-      "-v": "Modo verbose para más detalles",
-      "--open": "Mostrar solo puertos abiertos"
-    },
-    "name": "nmap",
-    "category": "local_network",
-    "source_path": "local_network/commands/nmap.adoc"
-  },
-  {
-    "description": "Rastrear la ruta de los paquetes a un host y medir tiempos de respuesta",
-    "usage": "traceroute [OPCIONES]",
-    "options": {
-      "-I": "Usar ICMP en lugar de UDP (similar a ping)",
-      "-n": "No resolver nombres de host, mostrar solo IPs",
-      "-m": "Número máximo de saltos",
-      "-q": "Número de consultas por salto",
-      "-w": "Tiempo de espera por respuesta (segundos)",
-      "-p": "Especificar puerto inicial (para UDP)"
-    },
-    "name": "traceroute",
-    "category": "local_network",
-    "source_path": "local_network/commands/traceroute.adoc"
-  },
-  {
-    "description": "Capturar y analizar paquetes de red en tiempo real.",
-    "usage": "tcpdump [OPCIONES]",
-    "options": {
-      "-i": "Especificar interfaz de red",
-      "-n": "No resolver nombres DNS ni puertos",
-      "-c": "Limitar número de paquetes capturados",
-      "-w": "Guardar captura en un archivo",
-      "-r": "Leer un archivo de captura",
-      "-p": "No poner la interfaz en modo promiscuo",
-      "-s": "Establecer tamaño del snaplen"
-    },
-    "name": "tcpdump",
-    "category": "local_network",
-    "source_path": "local_network/commands/tcpdump.adoc"
-  },
-  {
-    "description": "Mostrar conexiones de red activas, puertos abiertos, rutas y estadísticas de red.",
-    "usage": "netstat [OPCIONES]",
-    "options": {
-      "-t": "Mostrar solo conexiones TCP",
-      "-u": "Mostrar solo conexiones UDP",
-      "-l": "Mostrar solo puertos escuchando",
-      "-n": "Mostrar direcciones y puertos en formato numérico",
-      "-p": "Mostrar PID y programa que usa la conexión",
-      "-a": "Mostrar todas las conexiones y puertos escuchando",
-      "-s": "Mostrar estadísticas de protocolos de red",
-      "-r": "Mostrar tabla de rutas"
-    },
-    "name": "netstat",
-    "category": "local_network",
-    "source_path": "local_network/commands/netstat.adoc"
-  },
-  {
-    "description": "Consultar y configurar interfaces de red, rutas, direcciones y vecinos en Linux (reemplazo moderno de ifconfig y arp).",
-    "usage": "ip [OPCIONES]",
-    "options": {
-      "addr": "Mostrar o configurar direcciones IP",
-      "link": "Consultar o configurar interfaces de red",
-      "route": "Consultar o configurar rutas de red",
-      "neigh": "Consultar o configurar tabla ARP/vecinos",
-      "flush": "Limpiar tablas de vecinos",
-      "-s": "Mostrar estadísticas de tráfico de interfaces"
-    },
-    "name": "ip",
-    "category": "local_network",
-    "source_path": "local_network/commands/ip.adoc"
-  },
-  {
-    "description": "Consultar y configurar interfaces de red en sistemas Linux utilizando el comando ifconfig.",
-    "usage": "ifconfig [OPCIONES]",
-    "options": {
-      "-a": "Mostrar todas las interfaces",
-      "-s": "Mostrar solo estadísticas",
-      "-up": "Activar una interfaz",
-      "-down": "Desactivar una interfaz",
-      "-ip": "Asignar dirección IP a una interfaz",
-      "-broadcast": "Configurar dirección de broadcast",
-      "-mtu": "Cambiar tamaño máximo de paquete (MTU)",
-      "-promisc": "Activar modo promiscuo"
-    },
-    "name": "ifconfig",
-    "category": "local_network",
-    "source_path": "local_network/commands/ifconfig.adoc"
-  },
-  {
-    "description": "Consultar información de DNS y diagnosticar resolución de nombres de dominio.",
-    "usage": "dig [OPCIONES] [DOMINIO]",
-    "options": {
-      "-a": "Mostrar todas las entradas DNS",
-      "-n": "Mostrar direcciones IP sin resolver nombres",
-      "-s": "Añadir una entrada estática en la caché DNS",
-      "-d": "Eliminar una entrada de la caché DNS"
-    },
-    "name": "dig",
-    "category": "local_network",
-    "source_path": "local_network/commands/dig.adoc"
-  },
-  {
-    "description": "Consultar información de DNS de dominios y direcciones IP de manera interactiva o directa.",
-    "usage": "nslookup [OPCIONES]",
-    "options": {
-      "-a": "Mostrar todas las entradas DNS",
-      "-n": "Mostrar direcciones IP y nombres sin resolver",
-      "-s": "Añadir una entrada estática en la tabla DNS",
-      "-d": "Eliminar una entrada de la tabla DNS"
-    },
-    "name": "nslookup",
-    "category": "local_network",
-    "source_path": "local_network/commands/nslookup.adoc"
-  },
-  {
-    "description": "Comprobar la conectividad de red y el tiempo de respuesta entre hosts.",
-    "usage": "ping [OPCIONES]",
-    "options": {
-      "-c": "Número de paquetes a enviar",
-      "-i": "Intervalo entre paquetes (en segundos)",
-      "-t": "Tiempo de vida (TTL) de los paquetes",
-      "-s": "Tamaño del paquete en bytes",
-      "-q": "Salida en modo silencioso (resumen)",
-      "-W": "Tiempo de espera por respuesta (en segundos)",
-      "-f": "Flood ping (envío rápido, requiere permisos de root)",
-      "-D": "Mostrar timestamp de cada paquete"
-    },
-    "name": "ping",
-    "category": "local_network",
-    "source_path": "local_network/commands/ping.adoc"
-  },
-  {
-    "description": "Mostrar y gestionar la tabla ARP para ver las asociaciones entre direcciones IP y MAC en la red local.",
-    "usage": "arp [OPCIONES]",
-    "options": {
-      "-a": "Mostrar todas las entradas ARP",
-      "-n": "Mostrar direcciones IP y MAC sin resolver nombres",
-      "-s": "Añadir una entrada estática en la tabla ARP",
-      "-d": "Eliminar una entrada de la tabla ARP",
-      "-i": "Especificar interfaz de red"
-    },
-    "name": "arp",
-    "category": "local_network",
-    "source_path": "local_network/commands/arp.adoc"
-  },
-  {
-    "description": "Descargar archivos desde la web mediante HTTP, HTTPS o FTP utilizando el comando wget.",
-    "usage": "wget [OPCIONES]",
-    "options": {
-      "-O": "Guardar con un nombre específico",
-      "-c": "Continuar descargas interrumpidas",
-      "-q": "Modo silencioso",
-      "--limit-rate": "Limitar velocidad de descarga",
-      "--no-check-certificate": "Ignorar errores de certificado SSL",
-      "-r": "Descarga recursiva de sitios web",
-      "-np": "No ascender al directorio padre al descargar recursivamente",
-      "--user / --password": "Autenticación HTTP/FTP"
-    },
-    "name": "wget",
-    "category": "local_network",
-    "source_path": "local_network/commands/wget.adoc"
-  },
-  {
-    "description": "Consultar información de registro de dominios y direcciones IP.",
-    "usage": "whois [OPCIONES]",
-    "options": {
-      "-H": "Salida más limpia sin cabeceras innecesarias",
-      "-v": "Información detallada",
-      "-h": "Consultar un servidor WHOIS específico",
-      "-p": "Especificar puerto del servidor WHOIS",
-      "--verbose": "Mostrar salida completa y extendida"
-    },
-    "name": "whois",
-    "category": "local_network",
-    "source_path": "local_network/commands/whois.adoc"
-  },
-  {
-    "description": "Convertir la codificación de caracteres de archivos o flujos de texto.",
-    "usage": "iconv [OPCIONES] fichero",
-    "options": {
-      "-f": "Especificar codificación de origen (from)",
-      "-t": "Especificar codificación de destino (to)",
-      "-o": "Especificar archivo de salida",
-      "-c": "Omitir caracteres no convertibles",
-      "-l": "Listar todas las codificaciones disponibles",
-      "--verbose": "Mostrar información detallada"
-    },
-    "name": "iconv",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/iconv.adoc"
-  },
-  {
-    "description": "Listar ficheros del directorio actual.",
-    "usage": "ls [OPCIONES] [DIRECTORIO]",
-    "options": {
-      "-l": "Lista detallada (permisos, propietario, tamaño)",
-      "-a": "Mostrar ficheros ocultos",
-      "-h": "Mostrar tamaños legibles por humanos",
-      "-t": "Ordenar por fecha de modificación",
-      "-S": "Ordenar por tamaño (mayor a menor)",
-      "-r": "Invertir orden",
-      "-R": "Mostrar recursivamente",
-      "-d": "Mostrar directorios en sí, no su contenido",
-      "-F": "Añadir indicador de tipo a nombres",
-      "-1": "Un elemento por línea",
-      "-Q": "Poner nombres entre comillas",
-      "-v": "Orden natural (útil con números)",
-      "-X": "Ordenar por extensión",
-      "--color": "Colorear la salida",
-      "--block-size": "Mostrar tamaños en unidad específica",
-      "--time": "Seleccionar campo de tiempo",
-      "--sort": "Ordenar según criterio (size,time,version,extension)"
-    },
-    "name": "ls",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/ls.adoc"
-  },
-  {
-    "description": "Mostrar estado y metadatos de un fichero o directorio.",
-    "usage": "stat [OPCIONES] FICHERO",
-    "options": {
-      "-c": "Mostrar información en formato personalizado",
-      "-f": "Mostrar información del sistema de ficheros",
-      "-L": "Seguir enlaces simbólicos",
-      "-t": "Formato compacto",
-      "--printf": "Usar printf para formato personalizado"
-    },
-    "name": "stat",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/stat.adoc"
-  },
-  {
-    "description": "Herramienta de procesamiento de texto para analizar y manipular datos estructurados por columnas.",
-    "usage": "awk [OPCIONES] 'programa' archivo",
-    "options": {
-      "-F": "Definir separador de campos",
-      "-print": "Mostrar campos específicos",
-      "-condicion": "Filtrar líneas según una condición",
-      "-BEGIN": "Ejecutar acciones iniciales antes de procesar el archivo",
-      "-END": "Ejecutar acciones finales después de procesar el archivo",
-      "-NR": "Número de registro (línea)",
-      "-NF": "Número de campos por línea"
-    },
-    "name": "awk",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/awk.adoc"
-  },
-  {
-    "description": "Mostrar la ruta absoluta y real de un fichero o directorio.",
-    "usage": "realpath [OPCIONES] RUTA",
-    "options": {
-      "-e": "Resolver la ruta sólo si el destino existe",
-      "-m": "Resolver la ruta incluso si el destino no existe",
-      "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
-    },
-    "name": "realpath",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/realpath.adoc"
-  },
-  {
-    "description": "Crear enlaces duros y simbólicos.",
-    "usage": "ln [OPCIONES] origen destino",
-    "options": {
-      "-s": "Crear un enlace simbólico",
-      "-f": "Forzar creación de enlace sobrescribiendo el destino",
-      "-i": "Solicitar confirmación antes de sobrescribir",
-      "--help": "Mostrar ayuda breve"
-    },
-    "name": "ln",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/ln.adoc"
-  },
-  {
-    "description": "Numerar líneas de un fichero o de la entrada estándar.",
-    "usage": "nl [OPCIONES] FICHERO",
-    "options": {
-      "-b": "Especificar qué líneas numerar",
-      "-v": "Número inicial",
-      "-i": "Incremento entre números de línea",
-      "-n": "Formato del número",
-      "-s": "Separador entre número y línea",
-      "-w": "Ancho del número de línea"
-    },
-    "name": "nl",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/nl.adoc"
-  },
-  {
-    "description": "Mostrar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.",
-    "usage": "lsattr [OPCIONES] [ARCHIVO...]",
-    "options": {
-      "-R": "Mostrar atributos de todos los archivos en un directorio recursivamente",
-      "-d": "Mostrar atributos de directorios en lugar de su contenido",
-      "-V": "Mostrar versión del comando",
-      "--help": "Mostrar ayuda",
-      "--quiet": "Suprimir mensajes innecesarios"
-    },
-    "name": "lsattr",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/lsattr.adoc"
-  },
-  {
-    "description": "Empaquetamiento de múltiples archivos y directorios.",
-    "usage": "tar [OPCIONES] ARCHIVO",
-    "options": {
-      "-c": "Crear un nuevo archivo tar",
-      "-f": "Especificar nombre de archivo tar",
-      "-x": "Extraer archivos de un tar",
-      "-t": "Listar contenido del tar",
-      "-v": "Verbose: mostrar archivos procesados",
-      "-z": "Comprimir/Descomprimir usando gzip (con -c/-x)",
-      "-j": "Usar bzip2",
-      "-J": "Usar xz",
-      "--exclude": "Excluir archivos/paths coincidentes",
-      "--strip-components": "Omitir N componentes del path al extraer",
-      "--no-same-owner": "No restaurar propietario (útil como usuario no root)",
-      "--remove-files": "Eliminar archivos que se han archivado"
-    },
-    "name": "tar",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/tar.adoc"
-  },
-  {
-    "description": "Herramienta para concatenar y mostrar el contenido de ficheros.",
-    "usage": "cat [OPCIONES] archivo",
-    "options": {
-      "-n": "Numerar líneas de salida",
-      "-b": "Numerar solo líneas no vacías",
-      "-A": "Mostrar caracteres especiales (tabuladores, finales de línea)"
-    },
-    "name": "cat",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/cat.adoc"
-  },
-  {
-    "description": "Herramienta para comprimir y descomprimir archivos con alta compresión.",
-    "usage": "bzip2 [OPCIONES] archivo",
-    "options": {
-      "-c": "Escribir salida a stdout",
-      "-d": "Descomprimir archivo",
-      "-k": "Mantener archivo original",
-      "-v": "Mostrar información de progreso",
-      "-z": "Comprimir archivo"
-    },
-    "name": "bzip2",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/bzip2.adoc"
-  },
-  {
-    "description": "Eliminar ficheros o directorios (con precaución).",
-    "usage": "rm [OPCIONES] FICHEROS",
-    "options": {
-      "-r": "Eliminar directorios de forma recursiva",
-      "-i": "Solicitar confirmación antes de borrar cada fichero",
-      "-f": "Forzar la eliminación sin preguntar",
-      "-v": "Mostrar operaciones realizadas",
-      "-d": "Eliminar directorios vacíos",
-      "--preserve-root": "No permitir eliminar la raíz '/'",
-      "--no-preserve-root": "Permite operar sobre '/'",
-      "--help": "Mostrar ayuda breve"
-    },
-    "name": "rm",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/rm.adoc"
-  },
-  {
-    "description": "Editor de flujo de texto para filtrar y transformar texto línea a línea.",
-    "usage": "sed [OPCIONES] PATRON FICHERO",
-    "options": {
-      "-i": "Modificar el fichero directamente",
-      "-e": "Ejecutar múltiples comandos",
-      "-n": "Suprimir salida automática",
-      "-r": "Usar expresiones regulares extendidas",
-      "--follow-symlinks": "Modificar enlaces simbólicos"
-    },
-    "name": "sed",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/sed.adoc"
-  },
-  {
-    "description": "Eliminar directorios vacíos.",
-    "usage": "rmdir [OPCIONES] DIRECTORIO",
-    "options": {
-      "-p": "Eliminar directorios intermedios si están vacíos",
-      "--help": "Mostrar ayuda breve"
-    },
-    "name": "rmdir",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/rmdir.adoc"
-  },
-  {
-    "description": "Establecer variables de entorno para la sesión actual o procesos hijos.",
-    "usage": "export [VAR=VALOR]",
-    "options": {
-      "-n": "No añadir salto de línea final",
-      "-e": "Interpretar escapes como \\n, \\t"
-    },
-    "name": "export",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/export.adoc"
-  },
-  {
-    "description": "Comparar ficheros línea por línea y mostrar diferencias.",
-    "usage": "diff [OPCIONES] archivo1 archivo2",
-    "options": {
-      "-c": "Mostrar diferencias con contexto",
-      "-u": "Mostrar diferencias en formato unificado",
-      "-r": "Comparar directorios recursivamente",
-      "-i": "Ignorar mayúsculas/minúsculas"
-    },
-    "name": "diff",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/diff.adoc"
-  },
-  {
-    "description": "Ver ficheros de texto paginados en la terminal.",
-    "usage": "less [OPCIONES] fichero",
-    "options": {
-      "-n": "Mostrar número de línea",
-      "-N": "Mostrar número de línea en cada línea",
-      "-S": "Truncar líneas largas",
-      "-w": "Mostrar solo las primeras N caracteres de cada línea"
-    },
-    "name": "less",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/less.adoc"
-  },
-  {
-    "description": "Mostrar frases aleatorias (fortunes) desde una base de datos local.",
-    "usage": "fortune [OPCIONES]",
-    "options": {
-      "-s": "Mostrar una fortuna aleatoria",
-      "-l": "Mostrar todas las frases disponibles",
-      "-f": "Especificar un fichero de frases personalizado"
-    },
-    "name": "fortune",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/fortune.adoc"
-  },
-  {
-    "description": "Herramienta para cambiar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.",
-    "usage": "chattr [OPCIONES] archivo",
-    "options": {
-      "+i": "Hacer archivo inmutable",
-      "-i": "Hacer archivo mutable",
-      "+a": "Hacer archivo solo para añadir datos (append-only)",
-      "-a": "Quitar atributo append-only",
-      "+A": "Evitar actualización de tiempo de acceso",
-      "-A": "Permitir actualización de tiempo de acceso",
-      "-R": "Aplicar cambios recursivamente"
-    },
-    "name": "chattr",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/chattr.adoc"
-  },
-  {
-    "description": "Actualizar la marca temporal de un fichero o crear un fichero vacío si no existe.",
-    "usage": "touch [OPCIONES] FICHERO",
-    "options": {
-      "-a": "Cambiar solo el tiempo de acceso",
-      "-m": "Cambiar solo tiempo de modificación",
-      "-c": "No crear archivo si no existe",
-      "-t": "Establecer tiempo específico",
-      "-r": "Copiar timestamp de otro fichero"
-    },
-    "name": "touch",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/touch.adoc"
-  },
-  {
-    "description": "Eliminar un enlace simbólico o fichero.",
-    "usage": "unlink FICHERO",
-    "options": {
-      "-h": "Mostrar ayuda breve"
-    },
-    "name": "unlink",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/unlink.adoc"
-  },
-  {
-    "description": "Ver ficheros de texto paginados en la terminal (similar a `less`).",
-    "usage": "more [OPCIONES] FICHERO...",
-    "options": {
-      "-d": "Mostrar mensaje de ayuda al final de cada página",
-      "-c": "Limpiar pantalla antes de mostrar la siguiente página",
-      "-s": "Sustituir múltiples líneas en blanco por una sola",
-      "-u": "No subrayar el texto (útil para terminales sin soporte de subrayado)"
-    },
-    "name": "more",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/more.adoc"
-  },
-  {
-    "description": "Crear una tubería con nombre (FIFO) en el sistema de ficheros.",
-    "usage": "mkfifo [OPCIONES] NOMBRE_TUBERIA",
-    "options": {
-      "-m": "Establecer permisos de la tubería (modo)",
-      "-Z": "Establecer contexto de seguridad (SELinux)"
-    },
-    "name": "mkfifo",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/mkfifo.adoc"
-  },
-  {
-    "description": "Extraer el directorio padre de una ruta completa.",
-    "usage": "dirname RUTA",
-    "options": {
-      "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
-    },
-    "name": "dirname",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/dirname.adoc"
-  },
-  {
-    "description": "Mostrar una línea de texto o variables en la salida estándar.",
-    "usage": "echo [OPCIONES] TEXTO",
-    "options": {
-      "-n": "No añadir salto de línea final",
-      "-e": "Interpretar escapes como \\n, \\t"
-    },
-    "name": "echo",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/echo.adoc"
-  },
-  {
-    "description": "Mostrar las últimas líneas de uno o más ficheros.",
-    "usage": "tail [OPCIONES] FICHERO",
-    "options": {
-      "-n": "Mostrar las últimas N líneas",
-      "-f": "Seguir un fichero conforme crece",
-      "-F": "Seguir fichero por nombre y reabrir si rota",
-      "-c": "Mostrar por bytes en lugar de líneas",
-      "-q": "Silenciar encabezados cuando se pasan varios ficheros"
-    },
-    "name": "tail",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/tail.adoc"
-  },
-  {
-    "description": "Descripción breve de operadores y redirecciones en shell.",
-    "usage": "operators [OPCIONES]",
-    "options": {
-      ">": "Redirigir salida estándar a un fichero (sobrescribe)",
-      ">>": "Redirigir salida estándar a un fichero (añadir)",
-      "|": "Pipe: enviar salida de un comando como entrada a otro",
-      "&": "Ejecutar en segundo plano",
-      "2>": "Redirigir salida de error (stderr)"
-    },
-    "name": "operators",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/operators.adoc"
-  },
-  {
-    "description": "Herramienta para copiar archivos o directorios.",
-    "usage": "cp [OPCIONES] ORIGEN DESTINO",
-    "options": {
-      "-r": "Copiar recursivamente",
-      "-f": "Forzar la copia sobrescribiendo sin preguntar",
-      "-a": "Copiar archivos manteniendo atributos (recursivo)",
-      "-b": "Crear copia de seguridad del destino",
-      "-i": "Pedir confirmación antes de sobrescribir",
-      "-v": "Mostrar archivos mientras se copian (verbose)",
-      "--preserve=ATTRS": "Preservar atributos (mode,ownership,timestamps)",
-      "--no-preserve=ATTRS": "No preservar ciertos atributos",
-      "--parents": "Mantener la ruta de origen al copiar",
-      "--reflink[=always|never]": "Intentar copia por referencia (CoW)"
-    },
-    "name": "cp",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/cp.adoc"
-  },
-  {
-    "description": "Combinar columnas de uno o más ficheros línea a línea.",
-    "usage": "paste [OPCIONES] FICHEROS",
-    "options": {
-      "-d": "Definir delimitador entre columnas",
-      "-s": "Serializar líneas de un fichero",
-      "--help": "Mostrar ayuda",
+      "-m": "Modificar o añadir entradas ACL",
+      "-x": "Eliminar entradas ACL",
+      "-b": "Quitar todas las ACL",
+      "-k": "Quitar la máscara (mask)",
+      "-R": "Aplicar recursivamente",
+      "-d": "Establecer ACL por defecto",
+      "--remove-all": "Eliminar todas las ACL (equivale a -b)",
       "--version": "Mostrar versión",
-      "-m": "Combinar múltiples archivos de forma paralela"
-    },
-    "name": "paste",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/paste.adoc"
-  },
-  {
-    "description": "Eliminar lineas duplicadas consecutivas.",
-    "usage": "uniq [OPCIONES] FICHERO",
-    "options": {
-      "-c": "Mostrar numero de repeticiones en columna",
-      "-d": "Mostrar lineas duplicadas",
-      "-u": "Mostrar lineas no duplicadas",
-      "-i": "Ignorar mayúsculas/minúsculas",
-      "-f": "Ignorar las primeras N columnas (palabras)",
-      "-s": "Ignorar los primeros N caracteres"
-    },
-    "name": "uniq",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/uniq.adoc"
-  },
-  {
-    "description": "Combinar líneas de dos ficheros basándose en un campo común.",
-    "usage": "join [OPCIONES] fichero1 fichero2",
-    "options": {
-      "-1": "Especificar campo del primer fichero",
-      "-2": "Especificar campo del segundo fichero",
-      "-a": "Incluir líneas sin coincidencias",
-      "-e": "Rellenar campos vacíos",
-      "-o": "Especificar campos a mostrar",
-      "-t": "Definir delimitador",
-      "-v": "Mostrar solo líneas sin coincidencia"
-    },
-    "name": "join",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/join.adoc"
-  },
-  {
-    "description": "Herramienta para formatear la salida en columnas para mejorar la legibilidad.",
-    "usage": "column [OPCIONES] [ARCHIVO]",
-    "options": {
-      "-t": "Ajustar columnas en tabla",
-      "-s": "Definir delimitador",
-      "-x": "Llenar filas antes de columnas"
-    },
-    "name": "column",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/column.adoc"
-  },
-  {
-    "description": "Contar líneas, palabras y bytes de uno o varios ficheros.",
-    "usage": "wc [OPCIONES] FICHERO",
-    "options": {
-      "-l": "Mostrar número de líneas",
-      "-w": "Mostrar número de palabras",
-      "-c": "Mostrar número de bytes",
-      "-m": "Mostrar número de caracteres",
-      "-L": "Mostrar la longitud de la línea más larga"
-    },
-    "name": "wc",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/wc.adoc"
-  },
-  {
-    "description": "Buscar rápidamente archivos en el sistema usando la base de datos actualizada por `updatedb`.",
-    "usage": "locate [OPCIONES] patrón",
-    "options": {
-      "-i": "Ignorar mayúsculas/minúsculas",
-      "-r": "Usar expresiones regulares",
-      "-c": "Contar coincidencias",
-      "-l": "Limitar el número de resultados",
-      "--existing": "Mostrar solo archivos existentes",
-      "--database": "Especificar base de datos",
-      "--help": "Mostrar ayudaA"
-    },
-    "name": "locate",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/locate.adoc"
-  },
-  {
-    "description": "Extraer secciones de cada línea de un fichero o flujo de datos usando delimitadores o rangos de caracteres.",
-    "usage": "cut [OPCIONES] archivo",
-    "options": {
-      "-c": "Extraer caracteres por rango",
-      "-d": "Usar un delimitador para campos",
-      "-f": "Seleccionar columnas (campos)",
-      "--complement": "Invertir selección de campos o caracteres"
-    },
-    "name": "cut",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/cut.adoc"
-  },
-  {
-    "description": "Mostrar el destino de un enlace simbólico.",
-    "usage": "readlink [OPCIONES] ENLACE",
-    "options": {
-      "-f": "Resolver la ruta completa (absoluta) siguiendo todos los enlaces",
-      "-e": "Resolver la ruta sólo si el destino existe",
-      "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
-    },
-    "name": "readlink",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/readlink.adoc"
-  },
-  {
-    "description": "Herramienta para cambiar el directorio de trabajo actual.",
-    "usage": "cd [OPCIONES] DIRECTORIO",
-    "options": {
-      "-": "Volver al directorio anterior (OLDPWD)",
-      "~": "Ir al directorio home del usuario",
-      "..": "Ir al directorio padre"
-    },
-    "name": "cd",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/cd.adoc"
-  },
-  {
-    "description": "Mover archivos o directorios entre rutas.",
-    "usage": "mv [OPCIONES] ORIGEN DESTINO",
-    "options": {
-      "-i": "Solicitar confirmación antes de sobreescribir archivos",
-      "-v": "Mostrar archivos de origen y destino (verbose)",
-      "-f": "Forzar la acción (sobrescribir sin preguntar)",
-      "-n": "No sobrescribir archivos existentes (no-clobber)",
-      "-b": "Hacer copia de seguridad del destino al sobrescribir",
-      "--backup[=CONTROL]": "Hacer copia de seguridad con control (simple/numbered/t)"
-    },
-    "name": "mv",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/mv.adoc"
-  },
-  {
-    "description": "Listar ficheros con estructura de árbol.",
-    "usage": "tree [OPCIONES]",
-    "options": {
-      "-d": "Mostrar solo directorios",
-      "-f": "Mostrar los archivos con su respectiva ruta",
-      "-a": "Mostrar archivos ocultos",
-      "-u": "Mostrar propietario de cada archivo",
-      "-g": "Mostrar grupos de ficheros",
-      "-h": "Mostrar peso de cada archivo"
-    },
-    "name": "tree",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/tree.adoc"
-  },
-  {
-    "description": "Construir y ejecutar comandos a partir de la entrada estándar.",
-    "usage": "xargs [OPCIONES] COMANDO",
-    "options": {
-      "-n": "Número de argumentos por ejecución",
-      "-I": "Reemplazar argumentos con un marcador",
-      "-0": "Usar separador nulo",
-      "-p": "Confirmar antes de ejecutar",
-      "-t": "Mostrar el comando antes de ejecutarlo",
-      "-r": "No ejecutar si no hay entrada",
-      "--max-procs": "Ejecución en paralelo"
-    },
-    "name": "xargs",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/xargs.adoc"
-  },
-  {
-    "description": "Empaquetar archivos con compresión gzip.",
-    "usage": "gzip [OPCIONES] archivo(s)",
-    "options": {
-      "-c": "Escribir salida a stdout",
-      "-d": "Desempaquetar archivo",
-      "-f": "Forzar sobrescritura",
-      "-k": "Mantener archivos originales",
-      "-9": "Usar máxima compresión",
       "--help": "Mostrar ayuda"
     },
-    "name": "gzip",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/gzip.adoc"
+    "name": "setfacl",
+    "category": "local_permissions",
+    "source_path": "local_permissions/access_control_lists/commands/setfacl.adoc"
   },
   {
-    "description": "Herramienta para obtener el nombre de un fichero o directorio a partir de una ruta completa, con opciones para eliminar sufijos o procesar múltiples rutas.",
-    "usage": "basename [OPCIONES] RUTA [SUFIJO]",
+    "description": "Mostrar las listas de control de acceso (ACL) de ficheros y directorios.",
+    "usage": "getfacl [OPCIONES] archivo",
     "options": {
-      "-s": "Eliminar un sufijo específico del nombre",
-      "-a": "Procesar múltiples rutas",
-      "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
-    },
-    "name": "basename",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/basename.adoc"
-  },
-  {
-    "description": "Traducir o eliminar caracteres desde la entrada estándar.",
-    "usage": "tr [OPCIONES] CONJUNTO1 CONJUNTO2",
-    "options": {
-      "-d": "Eliminar caracteres",
-      "-s": "Sustituir repeticiones por una sola",
-      "-c": "Complementar el conjunto de caracteres",
+      "-R": "Recursivo",
+      "-d": "Mostrar ACL por defecto",
+      "-c": "Salida compacta (sin comentarios)",
+      "--absolute-names": "Mostrar rutas absolutas",
+      "--omit-header": "Omitir cabeceras",
+      "--version": "Mostrar versión",
       "--help": "Mostrar ayuda"
     },
-    "name": "tr",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/tr.adoc"
+    "name": "getfacl",
+    "category": "local_permissions",
+    "source_path": "local_permissions/access_control_lists/commands/getfacl.adoc"
   },
   {
-    "description": "Formatear texto ajustando líneas y párrafos para mejorar legibilidad.",
-    "usage": "fmt [OPCIONES] fichero",
+    "description": "Modificar y gestionar áreas de intercambio en el sistema.",
+    "usage": "swapoff [OPCIONES] [DISPOSITIVO]",
     "options": {
-      "-w": "Ancho máximo de línea",
-      "--prefix": "Mantener prefijo de cada línea",
-      "-c": "Centrar líneas",
-      "--help": "Mostrar ayuda"
+      "-l": "Listar áreas de intercambio",
+      "-t": "Cambiar tipo de área de intercambio (modo interactivo)",
+      "-n": "Simular la desactivación sin aplicarla (dry-run)",
+      "-d": "Borrar una área de intercambio (modo interactivo)",
+      "-p": "Mostrar tabla de áreas de intercambio (modo interactivo)",
+      "-a": "Desactivar todas las áreas de intercambio listadas en /etc/fstab",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "device": "Desactivar un swap específico",
+      "file": "Desactivar un archivo de swap específico"
     },
-    "name": "fmt",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/fmt.adoc"
+    "name": "swapoff",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/swapoff.adoc"
   },
   {
-    "description": "Determinar el tipo de fichero según su contenido.",
-    "usage": "file [OPCIONES] RUTA",
+    "description": "Modificar y gestionar áreas de intercambio en el sistema.",
+    "usage": "swapon [OPCIONES] [DISPOSITIVO]",
     "options": {
-      "-b": "Mostrar tipo sin el nombre del fichero",
-      "-i": "Mostrar tipo MIME",
-      "-L": "Seguir enlaces simbólicos",
-      "--mime-type": "Mostrar sólo MIME type"
+      "-a": "Activar todas las particiones o ficheros de swap listados en /etc/fstab",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-s": "Mostrar un resumen de swaps activos",
+      "-p": "Establecer prioridad de uso del swap"
     },
-    "name": "file",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/file.adoc"
+    "name": "swapon",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/swapon.adoc"
   },
   {
-    "description": "Copiar ficheros de forma segura entre hosts usando SSH.",
-    "usage": "scp [OPCIONES] FICHERO_ORIGEN USUARIO@HOST:DESTINO",
+    "description": "Mover datos de volúmenes lógicos de un volumen físico a otro dentro de LVM.",
+    "usage": "pvmove [OPCIONES] [ORIGEN] [DESTINO]",
     "options": {
-      "-r": "Copiar directorios recursivamente",
-      "-P": "Especificar puerto SSH",
-      "-p": "Mantener permisos y fechas",
-      "-C": "Comprimir datos durante la transferencia",
-      "-i": "Usar archivo de clave privada para autenticar",
-      "-B": "Modo batch (sin preguntas interactivas)",
-      "-l": "Limitar ancho de banda (KB/s)",
-      "-o": "Pasando opciones a SSH"
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-n": "Simular la operación sin aplicarla (dry-run)",
+      "--alloc": "Especificar la política de asignación de bloques",
+      "--abort": "Cancelar una operación de pvmove en curso"
     },
-    "name": "scp",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/scp.adoc"
+    "name": "pvmove",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/pvmove.adoc"
   },
   {
-    "description": "Crear uno o varios directorios.",
-    "usage": "mkdir [OPCIONES] NOMBRE_DIRECTORIO...",
+    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+    "usage": "vgchange [OPCIONES] [GRUPO]",
     "options": {
-      "-p": "Crear árbol de directorios (crea padres según sea necesario)",
-      "-v": "Mostrar cada directorio creado (verbose)",
-      "--help": "Mostrar ayuda",
-      "--version": "Mostrar versión del comando"
+      "-ay": "Activar un grupo de volúmenes",
+      "-an": "Desactivar un grupo de volúmenes",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--test": "Simular operación sin aplicarla"
     },
-    "name": "mkdir",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/mkdir.adoc"
+    "name": "vgchange",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgchange.adoc"
   },
   {
-    "description": "Ordenar lineas de texto.",
-    "usage": "sort [OPCIONES] FICHERO",
+    "description": "Listar dispositivos de bloques y su estructura.",
+    "usage": "lsblk [OPCIONES]",
     "options": {
-      "-n": "Ordenar por valor numérico",
-      "-r": "Ordenar en orden inverso",
-      "-u": "Eliminar duplicados",
-      "-k": "Ordenar por columna específica",
-      "-t": "Usar separador de campo",
-      "-f": "Ignorar diferencias entre mayúsculas/minúsculas",
-      "-h": "Ordenar por números con sufijos (1K, 2M)",
-      "-o": "Guardar salida en archivo"
+      "-f": "Mostrar sistema de ficheros y UUID",
+      "-o": "Seleccionar columnas a mostrar",
+      "-a": "Incluir dispositivos vacíos",
+      "-p": "Mostrar rutas completas (/dev/…)",
+      "-r": "Salida sin formato de árbol",
+      "-b": "Mostrar tamaños en bytes",
+      "-m": "Mostrar permisos y propietario",
+      "--json": "Salida en formato JSON",
+      "--fs": "Mostrar solo información de sistemas de ficheros"
     },
-    "name": "sort",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/sort.adoc"
+    "name": "lsblk",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lsblk.adoc"
   },
   {
-    "description": "Mostrar las primeras líneas de uno o varios ficheros.",
-    "usage": "head [OPCIONES] fichero(s)",
+    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+    "usage": "lvrename [OPCIONES] [LV] [NUEVO_NOMBRE]",
     "options": {
-      "-n <numero>": "Mostrar las primeras N líneas",
-      "-c <bytes>": "Mostrar los primeros N bytes",
-      "--help": "Mostrar ayuda"
+      "-l": "Listar volúmenes lógicos",
+      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+      "-n": "Crear nuevo volumen lógico (modo interactivo)",
+      "-d": "Borrar un volumen lógico (modo interactivo)",
+      "-p": "Mostrar información de un volumen lógico (modo interactivo)",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--test": "Simular operación sin aplicarla"
     },
-    "name": "head",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/head.adoc"
+    "name": "lvrename",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvrename.adoc"
   },
   {
-    "description": "Editor de texto gráfico para entornos GNOME.",
-    "usage": "gedit [OPCIONES] fichero",
+    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+    "usage": "lvs [OPCIONES]",
     "options": {
-      "--help": "Mostrar ayuda"
+      "-l": "Listar volúmenes lógicos",
+      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+      "-n": "Crear nuevo volumen lógico (modo interactivo)",
+      "-d": "Borrar un volumen lógico (modo interactivo)",
+      "-a": "Incluir volúmenes inactivos o internos",
+      "-o": "Seleccionar columnas a mostrar",
+      "--segments": "Mostrar información detallada de segmentos de LV",
+      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+      "--noheadings": "Ocultar encabezados de columnas",
+      "-v": "Modo verbose para información más detallada",
+      "--select": "Filtrar volúmenes según criterios"
     },
-    "name": "gedit",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/gedit.adoc"
+    "name": "lvs",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvs.adoc"
   },
   {
-    "description": "Comprimir y descomprimir archivos usando el algoritmo LZMA/LZMA2.",
-    "usage": "xz [OPCIONES] FICHERO",
+    "description": "Modificar y gestionar tablas de particiones en discos.",
+    "usage": "partx [OPCIONES] [DISCO]",
     "options": {
-      "-d": "Descomprimir archivos .xz",
-      "-k": "Mantener el archivo original",
-      "-l": "Mostrar información del archivo comprimido",
-      "-c": "Enviar salida a stdout",
-      "-t": "Comprobar integridad del archivo",
-      "-0-9": "Nivel de compresión (0-9)",
-      "-z": "Forzar compresión (opción por defecto)"
+      "-a": "Añadir particiones detectadas al kernel",
+      "-d": "Eliminar particiones del kernel",
+      "-n inicio:fín": "Especificar rango de particiones",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-l": "Listar particiones reconocidas en un dispositivo",
+      "--show-labels": "Mostrar etiquetas de particiones"
     },
-    "name": "xz",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/xz.adoc"
+    "name": "partx",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/partx.adoc"
   },
   {
-    "description": "Buscar cadenas de texto en ficheros según patrones (expresiones regulares).",
-    "usage": "grep [OPCIONES] patron fichero",
+    "description": "Modificar y gestionar tablas de particiones en discos.",
+    "usage": "fdisk [OPCIONES] [DISCO]",
     "options": {
-      "-i": "Buscar ignorando mayúsculas/minúsculas",
-      "-r": "Buscar recursivamente en directorios",
-      "-n": "Mostrar número de línea",
-      "-v": "Mostrar líneas que NO coinciden",
-      "-E": "Usar expresiones regulares extendidas",
-      "-o": "Mostrar sólo la parte coincidente de cada línea",
-      "-P": "Usar expresiones regulares Perl-compatible (PCRE)",
-      "-l": "Mostrar sólo nombres de ficheros con coincidencias",
-      "-c": "Contar coincidencias por fichero",
-      "-q": "Modo silencioso (devuelve código de salida)",
-      "--color=auto": "Resaltar coincidencias"
+      "-l": "Listar tablas de particiones",
+      "-t": "Cambiar tipo de partición (modo interactivo)",
+      "-n": "Crear nueva partición (modo interactivo)",
+      "-d": "Borrar una partición (modo interactivo)",
+      "-p": "Mostrar tabla de particiones (modo interactivo)",
+      "-w": "Escribir cambios en disco (modo interactivo)",
+      "-q": "Salir sin guardar cambios (modo interactivo)"
     },
-    "name": "grep",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/grep.adoc"
+    "name": "fdisk",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/fdisk.adoc"
   },
   {
-    "description": "Actualizar la base de datos utilizada por el comando locate.",
-    "usage": "updatedb [OPCIONES]",
+    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+    "usage": "vgremove [OPCIONES] [GRUPO]",
     "options": {
-      "-U": "Definir directorios a indexar",
-      "-o": "Especificar archivo de base de datos",
-      "--prunepaths": "Excluir rutas",
-      "--prunefs": "Excluir sistemas de ficheros",
-      "--prunenames": "Excluir nombres concretos",
-      "--localpaths": "Indexar solo sistemas locales",
-      "--debug": "Mostrar información de depuración"
+      "-f": "Forzar la eliminación sin confirmación",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--test": "Simular la operación sin aplicarla"
     },
-    "name": "updatedb",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/updatedb.adoc"
+    "name": "vgremove",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgremove.adoc"
   },
   {
-    "description": "Dividir líneas largas en varias más cortas, ajustando el ancho de la línea.",
-    "usage": "fold [OPCIONES] fichero",
+    "description": "Muestra información sobre todos los buses PCI y los dispositivos conectados a ellos.",
+    "usage": "lspci [OPCIONES]",
     "options": {
-      "-w": "Ancho máximo de línea",
-      "-s": "Ajustar por espacios en blanco",
-      "-b": "Contar bytes en lugar de caracteres",
-      "--help": "Mostrar ayuda"
+      "-v": "Mostrar información detallada",
+      "-nn": "Mostrar IDs de fabricante y dispositivo en texto y número",
+      "-t": "Mostrar diagrama en árbol de la topología PCI",
+      "-k": "Mostrar drivers de kernel utilizados por cada dispositivo"
     },
-    "name": "fold",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/fold.adoc"
+    "name": "lspci",
+    "category": "hardware_bus",
+    "source_path": "local_storage/commands/lspci.adoc"
   },
   {
-    "description": "Buscar ficheros y directorios que cumplan criterios especificados.",
-    "usage": "find [RUTA] [OPCIONES]",
+    "description": "Gestionar información de dispositivos de bloques.",
+    "usage": "blkid [OPCIONES] [DISPOSITIVO]",
     "options": {
-      "-name": "Buscar por nombre",
-      "-type": "Buscar por tipo (f=fichero, d=directorio)",
-      "-mtime": "Buscar por fecha de modificación",
-      "-atime": "Buscar por fecha de acceso",
-      "-size": "Buscar por tamaño",
-      "-maxdepth": "Limitar profundidad máxima",
-      "-mindepth": "Limitar profundidad mínima",
-      "-exec": "Ejecutar comando sobre resultados"
+      "--list": "Listar dispositivos de bloques",
+      "--add": "Agregar un dispositivo de bloque",
+      "--del": "Eliminar un dispositivo de bloque",
+      "--search": "Buscar dispositivos de bloque",
+      "--info": "Mostrar información de un dispositivo de bloque",
+      "--upgrade": "Actualizar información de dispositivos de bloque",
+      "--cache": "Gestionar caché de dispositivos de bloque"
     },
-    "name": "find",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/find.adoc"
+    "name": "blkid",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/blkid.adoc"
+  },
+  {
+    "description": "Utilidad para gestionar y configurar dispositivos con interfaz IPMI (servidores).",
+    "usage": "ipmitool [OPCIONES] <COMANDO>",
+    "options": {
+      "sdr": "Listar registros de datos de sensores",
+      "lan": "Configurar parámetros de red del BMC",
+      "chassis": "Controlar el estado del chasis y energía",
+      "fru": "Ver información de inventario de hardware",
+      "sel": "Ver el registro de eventos del sistema"
+    },
+    "name": "ipmitool",
+    "category": "hardware_management",
+    "source_path": "local_storage/commands/ipmitool.adoc"
+  },
+  {
+    "description": "Mostrar información resumida de grupos de volúmenes en LVM.",
+    "usage": "vgs [OPCIONES]",
+    "options": {
+      "-o": "Seleccionar columnas a mostrar",
+      "--segments": "Mostrar detalles de los segmentos de cada VG",
+      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+      "--noheadings": "Ocultar encabezados de columnas",
+      "-v": "Modo verbose para mostrar información detallada",
+      "--select": "Filtrar grupos según criterios"
+    },
+    "name": "vgs",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgs.adoc"
+  },
+  {
+    "description": "Modificar y gestionar áreas de intercambio (swap) en dispositivos.",
+    "usage": "mkswap [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar áreas de intercambio",
+      "-t": "Cambiar tipo de área de intercambio (modo interactivo)",
+      "-n": "Crear nueva área de intercambio (modo interactivo)",
+      "-d": "Borrar una área de intercambio (modo interactivo)",
+      "-L": "Asignar una etiqueta al área de swap",
+      "-c": "Comprobar bloques dañados antes de crear swap",
+      "-v": "Modo verbose para mostrar información detallada",
+      "--uuid": "Especificar UUID del swap"
+    },
+    "name": "mkswap",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/mkswap.adoc"
+  },
+  {
+    "description": "Redimensionar sistemas de ficheros ext2/ext3/ext4 en un dispositivo o volumen lógico.",
+    "usage": "resize2fs [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar sistemas de ficheros",
+      "-t": "Cambiar tipo de sistema de ficheros",
+      "-n": "Crear nuevo sistema de ficheros",
+      "-d": "Borrar un sistema de ficheros",
+      "-p": "Modo progreso, mostrar barra de progreso",
+      "-w": "Escribir cambios en disco",
+      "-q": "Salir sin guardar cambios",
+      "-h": "Mostrar ayuda",
+      "-L": "Establecer tamaño final del sistema de ficheros",
+      "-M": "Reducir el FS al tamaño mínimo posible",
+      "-v": "Modo verbose, mostrar información detallada"
+    },
+    "name": "resize2fs",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/resize2fs.adoc"
+  },
+  {
+    "description": "Crear y gestionar tablas de particiones de forma interactiva",
+    "usage": "cfdisk [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "--label": "Definir tipo de tabla de particiones (msdos, gpt, etc.)",
+      "-l": "Listar tablas de particiones detectadas",
+      "-h": "Mostrar ayuda",
+      "-z": "Ignorar geometría existente (modo limpio)"
+    },
+    "name": "cfdisk",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/cfdisk.adoc"
+  },
+  {
+    "description": "Modificar y gestionar sistemas de ficheros en dispositivos.",
+    "usage": "mkfs [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar sistemas de ficheros",
+      "-t": "Cambiar tipo de sistema de ficheros (modo interactivo)",
+      "-n": "Crear nuevo sistema de ficheros (modo interactivo)",
+      "-d": "Borrar un sistema de ficheros (modo interactivo)",
+      "-c": "Comprobar bloques dañados antes de crear el sistema de ficheros",
+      "-L": "Asignar una etiqueta al sistema de ficheros",
+      "-F": "Forzar la creación incluso si el dispositivo parece estar en uso",
+      "-v": "Modo verbose para mostrar detalles de la operación"
+    },
+    "name": "mkfs",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/mkfs.adoc"
+  },
+  {
+    "description": "Inicializa un dispositivo de bloque para ser utilizado como volumen físico en LVM, permitiendo la gestión avanzada de almacenamiento.",
+    "usage": "pvcreate [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar volúmenes físicos",
+      "-t": "Cambiar tipo de volumen físico (modo interactivo)",
+      "-n": "Crear nuevo volumen físico (modo interactivo)",
+      "-d": "Borrar un volumen físico (modo interactivo)",
+      "-p": "Mostrar tabla de volúmenes físicos (modo interactivo)",
+      "-f": "Forzar inicialización aunque el dispositivo tenga datos existentes",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-c": "Especificar tamaño del cluster",
+      "-u": "Asignar un UUID específico al PV",
+      "-Z": "Establecer formato de metadatos (lvm1 o lvm2)",
+      "--dataalignment": "Alinear datos según tamaño"
+    },
+    "name": "pvcreate",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/pvcreate.adoc"
+  },
+  {
+    "description": "Herramienta de línea de comandos para gestionar y diagnosticar unidades NVMe.",
+    "usage": "nvme <SUBCOMANDO> [OPCIONES] DISPOSITIVO",
+    "options": {
+      "list": "Listar todos los dispositivos NVMe detectados",
+      "smart-log": "Ver estadísticas S.M.A.R.T. de la unidad",
+      "id-ctrl": "Identificar el controlador NVMe",
+      "format": "Formatear de forma segura el dispositivo",
+      "sanitize": "Eliminación segura de datos"
+    },
+    "name": "nvme-cli",
+    "category": "hardware_storage",
+    "source_path": "local_storage/commands/nvme-cli.adoc"
+  },
+  {
+    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+    "usage": "vgdisplay [OPCIONES] [GRUPO]",
+    "options": {
+      "-l": "Listar grupos de volúmenes",
+      "-t": "Cambiar tipo de grupo de volúmenes (modo interactivo)",
+      "-n": "Crear nuevo grupo de volúmenes (modo interactivo)",
+      "-d": "Borrar un grupo de volúmenes (modo interactivo)",
+      "-p": "Mostrar tabla de grupos de volúmenes (modo interactivo)",
+      "-v": "Modo verbose para mostrar información adicional",
+      "-n nombre": "Filtrar por nombre de grupo de volúmenes",
+      "-C": "Salida en columnas (formato compacto)",
+      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+      "--maps": "Mostrar mapeo de volúmenes lógicos sobre los PV del grupo"
+    },
+    "name": "vgdisplay",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgdisplay.adoc"
+  },
+  {
+    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+    "usage": "vgcreate [OPCIONES] [GRUPO]",
+    "options": {
+      "v": "Modo verbose para mostrar detalles de la operación",
+      "s": "Especificar tamaño del cluster de metadatos",
+      "u": "Asignar un UUID específico al grupo de volúmenes",
+      "Z": "Establecer formato de metadatos (lvm1 o lvm2)",
+      "--physicalextentsize": "Alternativa para definir tamaño del cluster"
+    },
+    "name": "vgcreate",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgcreate.adoc"
+  },
+  {
+    "description": "Eliminar la información de LVM de un volumen físico.",
+    "usage": "pvremove [OPCIONES] [DISCO]",
+    "options": {
+      "-f": "Forzar eliminación sin pedir confirmación",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--force": "Alternativa explícita para forzar eliminación"
+    },
+    "name": "pvremove",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/pvremove.adoc"
+  },
+  {
+    "description": "Mostrar el uso de espacio en disco de los sistemas de ficheros montados.",
+    "usage": "df [OPCIONES] [SISTEMA_DE_FICHEROS]",
+    "options": {
+      "--label": "Definir tipo de sistema de ficheros (msdos, gpt, etc.)",
+      "-l": "Listar sistemas de ficheros detectados",
+      "-h": "Mostrar tamaños en formato legible",
+      "-T": "Mostrar tipo de sistema de ficheros",
+      "-a": "Incluir sistemas de ficheros especiales",
+      "-i": "Mostrar uso de inodos",
+      "--total": "Mostrar total acumulado",
+      "--exclude-type": "Excluir tipos de FS",
+      "device": "Consultar un punto concreto"
+    },
+    "name": "df",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/df.adoc"
+  },
+  {
+    "description": "Herramienta para monitorizar el estado de salud de discos duros y SSD mediante S.M.A.R.T.",
+    "usage": "smartctl [OPCIONES] DISPOSITIVO",
+    "options": {
+      "--info": "Mostrar información del dispositivo",
+      "--health": "Comprobar el estado de salud general",
+      "--attributes": "Mostrar atributos S.M.A.R.T. detallados",
+      "--test": "Ejecutar pruebas de diagnóstico",
+      "--log": "Ver registros de errores o de pruebas",
+      "--all": "Mostrar toda la información S.M.A.R.T."
+    },
+    "name": "smartctl",
+    "category": "hardware_storage",
+    "source_path": "local_storage/commands/smartctl.adoc"
+  },
+  {
+    "description": "Mostrar información detallada de volúmenes lógicos en LVM.",
+    "usage": "lvdisplay [OPCIONES] [LV]",
+    "options": {
+      "-l": "Listar volúmenes lógicos",
+      "-t": "Mostrar información de tipo de volumen",
+      "-n": "Mostrar nombre del volumen lógico",
+      "-d": "Mostrar información detallada del volumen lógico",
+      "-C": "Salida en columnas (formato compacto)",
+      "-v": "Modo verbose para más detalles",
+      "-n nombre": "Filtrar por nombre de volumen lógico",
+      "--select": "Filtrar volúmenes según atributos",
+      "-L": "Mostrar tamaño en bytes (exacto)",
+      "-m": "Mostrar mapeo físico de cada volumen lógico",
+      "-p": "Mostrar permisos de los volúmenes lógicos"
+    },
+    "name": "lvdisplay",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvdisplay.adoc"
+  },
+  {
+    "description": "Mostrar información detallada de volúmenes físicos (PV) en LVM.",
+    "usage": "pvdisplay [OPCIONES] [DISCO]",
+    "options": {
+      "-l": "Listar volúmenes físicos",
+      "-t": "Cambiar tipo de volumen físico (modo interactivo)",
+      "-n": "Crear nuevo volumen físico (modo interactivo)",
+      "-d": "Borrar un volumen físico (modo interactivo)",
+      "-p": "Mostrar tabla de volúmenes físicos (modo interactivo)",
+      "-v": "Modo verbose para mostrar detalles adicionales",
+      "-C": "Salida en formato de columnas (compacta)",
+      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+      "--maps": "Mostrar mapeo físico de volúmenes lógicos sobre PV"
+    },
+    "name": "pvdisplay",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/pvdisplay.adoc"
+  },
+  {
+    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+    "usage": "lvextend [OPCIONES] [LV]",
+    "options": {
+      "-l": "Listar volúmenes lógicos",
+      "-t": "Mostrar información de tipo de volumen",
+      "-n": "Mostrar nombre del volumen lógico",
+      "-d": "Mostrar información detallada del volumen lógico",
+      "-p": "Mostrar permisos de los volúmenes lógicos",
+      "-s": "Mostrar tamaño de los volúmenes lógicos",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-L": "Definir tamaño final del volumen lógico",
+      "-r": "Redimensionar el sistema de archivos",
+      "--resizefs": "Redimensionar el sistema de archivos automáticamente",
+      "--test": "Simular la operación sin aplicarla"
+    },
+    "name": "lvextend",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvextend.adoc"
+  },
+  {
+    "description": "Muestra información sobre los buses USB y los dispositivos conectados a ellos.",
+    "usage": "lsusb [OPCIONES]",
+    "options": {
+      "-v": "Mostrar información detallada (verbose)",
+      "-t": "Mostrar la jerarquía USB en forma de árbol",
+      "-s": "Mostrar solo dispositivos específicos por bus/devnum",
+      "-d": "Filtrar por ID de vendedor y producto"
+    },
+    "name": "lsusb",
+    "category": "hardware_bus",
+    "source_path": "local_storage/commands/lsusb.adoc"
+  },
+  {
+    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+    "usage": "lvscan [OPCIONES]",
+    "options": {
+      "-l": "Listar volúmenes lógicos",
+      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+      "-n": "Crear nuevo volumen lógico (modo interactivo)",
+      "-d": "Borrar un volumen lógico (modo interactivo)",
+      "-p": "Mostrar información de un volumen lógico (modo interactivo)",
+      "-a": "Incluir volúmenes inactivos o internos",
+      "--cache": "Usar caché de LVM para acelerar el escaneo",
+      "-v": "Modo verbose para mostrar detalles adicionales",
+      "--ignorelockingfailure": "Ignorar errores de bloqueo de dispositivos"
+    },
+    "name": "lvscan",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvscan.adoc"
+  },
+  {
+    "description": "Escanear y detectar todos los grupos de volúmenes en LVM.",
+    "usage": "vgscan [OPCIONES]",
+    "options": {
+      "-a": "Incluir VG inactivos o internos",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--ignorelockingfailure": "Ignorar errores de bloqueo de dispositivos"
+    },
+    "name": "vgscan",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgscan.adoc"
+  },
+  {
+    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
+    "usage": "vgreduce [OPCIONES] [GRUPO] [PV...]",
+    "options": {
+      "-v, --verbose": "Mostrar detalles de la operación.",
+      "--removemissing": "Eliminar PV que faltan (no detectables físicamente).",
+      "--force": "Forzar la operación (solo si es seguro)."
+    },
+    "name": "vgreduce",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgreduce.adoc"
+  },
+  {
+    "description": "Mostrar información resumida de volúmenes físicos (PV) en LVM.",
+    "usage": "pvs [OPCIONES]",
+    "options": {
+      "-a": "Incluir volúmenes físicos inactivos o internos",
+      "-o": "Seleccionar columnas a mostrar",
+      "--segments": "Mostrar detalles de segmentos físicos de cada PV",
+      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
+      "--noheadings": "Ocultar encabezados de columnas",
+      "-v": "Modo verbose para mostrar más detalles",
+      "--select": "Filtrar volúmenes según criterios"
+    },
+    "name": "pvs",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/pvs.adoc"
+  },
+  {
+    "description": "Modificar y gestionar sistemas de ficheros en dispositivos.",
+    "usage": "mkfs [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar sistemas de ficheros",
+      "-t": "Cambiar tipo de sistema de ficheros (modo interactivo)",
+      "-n": "Crear nuevo sistema de ficheros (modo interactivo)",
+      "-d": "Borrar un sistema de ficheros (modo interactivo)",
+      "-a": "Montar todos los sistemas de ficheros listados en /etc/fstab",
+      "-r": "Montar en modo solo lectura",
+      "-o": "Especificar opciones de montaje",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-noatime": "Evitar actualizar timestamp de acceso en archivos"
+    },
+    "name": "mount",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/mount.adoc"
+  },
+  {
+    "description": "Eliminar volúmenes lógicos en LVM. **Precaución:** esta operación borra todos los datos del volumen.",
+    "usage": "lvremove [OPCIONES] [LV]",
+    "options": {
+      "-l": "Listar volúmenes lógicos",
+      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+      "-n": "Crear nuevo volumen lógico (modo interactivo)",
+      "-d": "Borrar un volumen lógico (modo interactivo)",
+      "-p": "Mostrar información de un volumen lógico (modo interactivo)",
+      "-f": "Forzar la eliminación sin confirmación",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--test": "Simular eliminación sin aplicarla"
+    },
+    "name": "lvremove",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvremove.adoc"
+  },
+  {
+    "description": "Gestionar dispositivos de bucle (loop) para asociar ficheros como dispositivos de bloques.",
+    "usage": "losetup [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-l": "Listar dispositivos de bucle",
+      "-f": "Buscar el primer dispositivo de bucle libre",
+      "-fP": "Asociar fichero y crear particiones automáticamente",
+      "-d": "Desasociar un dispositivo de bucle",
+      "-a": "Mostrar asociaciones activas",
+      "-o": "Definir offset en bytes",
+      "--sizelimit": "Limitar tamaño visible",
+      "-j": "Buscar loop por fichero",
+      "-c": "Releer tamaño del fichero asociado"
+    },
+    "name": "losetup",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/losetup.adoc"
+  },
+  {
+    "description": "Crear volúmenes lógicos dentro de un grupo de volúmenes (LVM).",
+    "usage": "lvcreate [OPCIONES] [VG]",
+    "options": {
+      "-l": "Especificar tamaño en bloques lógicos",
+      "-L": "Especificar tamaño en megabytes o gigabytes",
+      "-n": "Nombrar el volumen lógico",
+      "--size": "Alternativa a -L para especificar tamaño",
+      "--snapshot": "Crear un snapshot de un LV existente",
+      "--thin": "Crear volumen lógico delgado (thin provisioning)",
+      "--poolmetadata": "Especificar nombre de metadata para thin pool",
+      "-v": "Modo verbose para mostrar información detallada"
+    },
+    "name": "lvcreate",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvcreate.adoc"
+  },
+  {
+    "description": "Mostrar el uso de espacio en disco de archivos y directorios.",
+    "usage": "du [OPCIONES] [DIRECTORIO]",
+    "options": {
+      "-h": "Mostrar tamaños en formato legible",
+      "-s": "Mostrar solo el total de cada argumento",
+      "-a": "Incluir archivos además de directorios",
+      "-d": "Profundidad máxima de directorios (GNU)",
+      "--max-depth": "Limitar la profundidad del directorio",
+      "--exclude": "Excluir archivos o directorios"
+    },
+    "name": "du",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/du.adoc"
+  },
+  {
+    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
+    "usage": "lvreduce [OPCIONES] [LV]",
+    "options": {
+      "-l": "Especificar tamaño en porcentaje del espacio del grupo de volúmenes",
+      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
+      "-n": "Crear nuevo volumen lógico (modo interactivo)",
+      "-d": "Borrar un volumen lógico (modo interactivo)",
+      "-p": "Mostrar información de un volumen lógico (modo interactivo)",
+      "-L": "Definir tamaño final del volumen lógico",
+      "-r": "Redimensionar automáticamente el sistema de ficheros (si es compatible)",
+      "--resizefs": "Alternativa explícita para redimensionar FS antes de reducir LV",
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "--test": "Simular operación sin aplicarla"
+    },
+    "name": "lvreduce",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/lvreduce.adoc"
+  },
+  {
+    "description": "Añadir volúmenes físicos a un grupo de volúmenes existente en LVM.",
+    "usage": "vgextend [OPCIONES] [GRUPO] [PV...]",
+    "options": {
+      "-v": "Modo verbose para mostrar detalles de la operación",
+      "-u": "Asignar un UUID específico al VG durante la extensión",
+      "-Z": "Establecer formato de metadatos (lvm1 o lvm2)",
+      "--physicalextentsize": "Definir tamaño de las extensiones físicas"
+    },
+    "name": "vgextend",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/vgextend.adoc"
+  },
+  {
+    "description": "Conversión y copia de archivos a bajo nivel, útil para crear imágenes de disco, clonar dispositivos, generar archivos de prueba y realizar copias de seguridad.",
+    "usage": "dd [OPCIONES]",
+    "options": {
+      "if": "Especifica el archivo o dispositivo de entrada",
+      "of": "Especifica el archivo o dispositivo de salida",
+      "bs": "Define el tamaño de bloque para la lectura y escritura",
+      "count": "Número de bloques a copiar",
+      "status": "Controla la información mostrada durante la ejecución",
+      "conv": "Aplica conversiones al flujo de datos (ej. noerror, sync)"
+    },
+    "name": "data_dump",
+    "category": "local_storage",
+    "source_path": "local_storage/backup/data_dump/commands/data_dump.adoc"
+  },
+  {
+    "description": "Sincronización de archivos y directorios, local o remota, con soporte para compresión y exclusión de archivos.",
+    "usage": "rsync [OPCIONES] origen/ destino/",
+    "options": {
+      "inicio": "Sin opciones, sincroniza archivos de origen a destino",
+      "-a": "Modo archivo (recursivo, preserva permisos, tiempos, enlaces)",
+      "-v": "Mostrar información detallada durante la sincronización",
+      "--dry-run": "Simular la ejecución sin realizar cambios",
+      "--delete": "Eliminar en destino los archivos que no existen en origen",
+      "-z": "Comprimir datos durante la transferencia",
+      "-e": "Especificar el método de transporte (ej. ssh)",
+      "--progress": "Mostrar progreso de la transferencia",
+      "--exclude": "Excluir archivos o directorios específicos"
+    },
+    "name": "rsync",
+    "category": "local_storage",
+    "source_path": "local_storage/backup/rsync/commands/rsync.adoc"
+  },
+  {
+    "description": "Gestionar paquetes en sistemas Debian y derivados.",
+    "usage": "apt [OPCIONES] PAQUETE",
+    "options": {
+      "-h, --help": "Mostrar ayuda",
+      "-v, --version": "Mostrar versión",
+      "--no-install-recommends": "No instalar paquetes recomendados",
+      "--assume-yes": "Responder 'sí' a todas las preguntas",
+      "--quiet": "Modo silencioso",
+      "--verbose": "Modo detallado",
+      "--simulate": "Simular la operación sin realizar cambios",
+      "--allow-downgrades": "Permitir degradaciones de paquetes",
+      "--allow-remove-essential": "Permitir eliminación de paquetes esenciales",
+      "--allow-change-held-packages": "Permitir cambios en paquetes retenidos"
+    },
+    "name": "apt",
+    "category": "local_software",
+    "source_path": "local_software/commands/apt.adoc"
+  },
+  {
+    "description": "Gestor de paquetes Snap (paquetes universales).",
+    "usage": "snap [OPCIONES] PAQUETE",
+    "options": {
+      "install": "Instalar un paquete snap",
+      "remove": "Eliminar un paquete snap",
+      "list": "Listar paquetes snap instalados",
+      "find": "Buscar paquetes snap",
+      "refresh": "Actualizar paquetes snap",
+      "services": "Gestionar servicios snap"
+    },
+    "name": "snap_snapctl",
+    "category": "local_software",
+    "source_path": "local_software/commands/snap_snapctl.adoc"
+  },
+  {
+    "description": "Gestor de paquetes de bajo nivel para sistemas basados en RPM. Permite instalar, eliminar y consultar paquetes .rpm localmente sin resolver dependencias automáticamente.",
+    "usage": "rpm [OPCIONES] PAQUETE",
+    "options": {
+      "-i": "Instalar un paquete .rpm",
+      "-r": "Eliminar un paquete pero mantener archivos de configuración",
+      "-P": "Eliminar completamente un paquete y su configuración (purge)",
+      "-l": "Listar todos los paquetes instalados o filtrar por nombre",
+      "-s": "Mostrar información del estado de un paquete instalado",
+      "-L": "Listar los archivos instalados por un paquete",
+      "-S": "Buscar a qué paquete pertenece un archivo",
+      "-c": "Listar el contenido de un archivo .rpm sin instalarlo",
+      "-I": "Mostrar información detallada de un archivo .rpm",
+      "--configure": "Configurar paquetes desempaquetados pero no configurados"
+    },
+    "name": "rpm",
+    "category": "local_software",
+    "source_path": "local_software/commands/rpm.adoc"
+  },
+  {
+    "description": "Gestor de paquetes de alto nivel para sistemas SUSE y openSUSE.",
+    "usage": "zypper [OPCIONES] PAQUETE",
+    "options": {
+      "install": "Instalar un paquete rpm",
+      "remove": "Eliminar un paquete rpm",
+      "list": "Listar paquetes rpm instalados",
+      "find": "Buscar paquetes rpm",
+      "refresh": "Actualizar paquetes rpm",
+      "services": "Gestionar servicios rpm"
+    },
+    "name": "zypper",
+    "category": "local_software",
+    "source_path": "local_software/commands/zypper.adoc"
   },
   {
     "description": "Gestor de paquetes de bajo nivel para sistemas Debian y derivados. Permite instalar, eliminar y consultar paquetes .deb localmente sin resolver dependencias automáticamente.",
@@ -1151,6 +957,40 @@
     "source_path": "local_software/commands/apk.adoc"
   },
   {
+    "description": "Gestor de paquetes de bajo nivel para sistemas Red Hat y derivados. Permite instalar, eliminar y consultar paquetes .rpm localmente sin resolver dependencias automáticamente.",
+    "usage": "yum [OPCIONES] PAQUETE",
+    "options": {
+      "install": "Instalar un paquete rpm",
+      "remove": "Eliminar un paquete rpm",
+      "list": "Listar paquetes rpm instalados",
+      "find": "Buscar paquetes rpm",
+      "refresh": "Actualizar paquetes rpm",
+      "services": "Gestionar servicios rpm"
+    },
+    "name": "yum",
+    "category": "local_software",
+    "source_path": "local_software/commands/yum.adoc"
+  },
+  {
+    "description": "Gestionar paquetes en sistemas Red Hat, Fedora, Rocky Linux y derivados.",
+    "usage": "dnf [OPCIONES] PAQUETE",
+    "options": {
+      "-h, --help": "Mostrar ayuda",
+      "-y, --assumeyes": "Responder 'sí' a todas las preguntas",
+      "-q, --quiet": "Modo silencioso",
+      "--refresh": "Forzar actualización de metadatos",
+      "--best": "Intentar usar la mejor versión disponible",
+      "--nobest": "No usar la mejor versión disponible",
+      "--skip-broken": "Omitir paquetes con dependencias rotas",
+      "--exclude=PAQUETE": "Excluir un paquete específico",
+      "--enablerepo=REPOSITORIO": "Habilitar un repositorio específico",
+      "--disablerepo=REPOSITORIO": "Deshabilitar un repositorio específico"
+    },
+    "name": "dnf",
+    "category": "local_software",
+    "source_path": "local_software/commands/dnf.adoc"
+  },
+  {
     "description": "Gestor de paquetes Flatpak para aplicaciones universales.",
     "usage": "flatpak [OPCIONES] PAQUETE",
     "options": {
@@ -1185,216 +1025,34 @@
     "source_path": "local_software/commands/pacman.adoc"
   },
   {
-    "description": "Gestor de paquetes de alto nivel para sistemas SUSE y openSUSE.",
-    "usage": "zypper [OPCIONES] PAQUETE",
+    "description": "Gestionar servicios y trabajos (jobs) en sistemas con OpenRC (Gentoo, Alpine Linux, Artix Linux).",
+    "usage": "rc-service [OPCIONES] SERVICIO",
     "options": {
-      "install": "Instalar un paquete rpm",
-      "remove": "Eliminar un paquete rpm",
-      "list": "Listar paquetes rpm instalados",
-      "find": "Buscar paquetes rpm",
-      "refresh": "Actualizar paquetes rpm",
-      "services": "Gestionar servicios rpm"
+      "start": "Iniciar el servicio.",
+      "stop": "Detener el servicio.",
+      "restart": "Reiniciar el servicio.",
+      "reload": "Recargar la configuración sin reiniciar.",
+      "status": "Ver el estado actual del servicio."
     },
-    "name": "zypper",
-    "category": "local_software",
-    "source_path": "local_software/commands/zypper.adoc"
-  },
-  {
-    "description": "Gestor de paquetes de bajo nivel para sistemas basados en RPM. Permite instalar, eliminar y consultar paquetes .rpm localmente sin resolver dependencias automáticamente.",
-    "usage": "rpm [OPCIONES] PAQUETE",
-    "options": {
-      "-i": "Instalar un paquete .rpm",
-      "-r": "Eliminar un paquete pero mantener archivos de configuración",
-      "-P": "Eliminar completamente un paquete y su configuración (purge)",
-      "-l": "Listar todos los paquetes instalados o filtrar por nombre",
-      "-s": "Mostrar información del estado de un paquete instalado",
-      "-L": "Listar los archivos instalados por un paquete",
-      "-S": "Buscar a qué paquete pertenece un archivo",
-      "-c": "Listar el contenido de un archivo .rpm sin instalarlo",
-      "-I": "Mostrar información detallada de un archivo .rpm",
-      "--configure": "Configurar paquetes desempaquetados pero no configurados"
-    },
-    "name": "rpm",
-    "category": "local_software",
-    "source_path": "local_software/commands/rpm.adoc"
-  },
-  {
-    "description": "Gestor de paquetes de bajo nivel para sistemas Red Hat y derivados. Permite instalar, eliminar y consultar paquetes .rpm localmente sin resolver dependencias automáticamente.",
-    "usage": "yum [OPCIONES] PAQUETE",
-    "options": {
-      "install": "Instalar un paquete rpm",
-      "remove": "Eliminar un paquete rpm",
-      "list": "Listar paquetes rpm instalados",
-      "find": "Buscar paquetes rpm",
-      "refresh": "Actualizar paquetes rpm",
-      "services": "Gestionar servicios rpm"
-    },
-    "name": "yum",
-    "category": "local_software",
-    "source_path": "local_software/commands/yum.adoc"
-  },
-  {
-    "description": "Gestor de paquetes Snap (paquetes universales).",
-    "usage": "snap [OPCIONES] PAQUETE",
-    "options": {
-      "install": "Instalar un paquete snap",
-      "remove": "Eliminar un paquete snap",
-      "list": "Listar paquetes snap instalados",
-      "find": "Buscar paquetes snap",
-      "refresh": "Actualizar paquetes snap",
-      "services": "Gestionar servicios snap"
-    },
-    "name": "snap_snapctl",
-    "category": "local_software",
-    "source_path": "local_software/commands/snap_snapctl.adoc"
-  },
-  {
-    "description": "Gestionar paquetes en sistemas Debian y derivados.",
-    "usage": "apt [OPCIONES] PAQUETE",
-    "options": {
-      "-h, --help": "Mostrar ayuda",
-      "-v, --version": "Mostrar versión",
-      "--no-install-recommends": "No instalar paquetes recomendados",
-      "--assume-yes": "Responder 'sí' a todas las preguntas",
-      "--quiet": "Modo silencioso",
-      "--verbose": "Modo detallado",
-      "--simulate": "Simular la operación sin realizar cambios",
-      "--allow-downgrades": "Permitir degradaciones de paquetes",
-      "--allow-remove-essential": "Permitir eliminación de paquetes esenciales",
-      "--allow-change-held-packages": "Permitir cambios en paquetes retenidos"
-    },
-    "name": "apt",
-    "category": "local_software",
-    "source_path": "local_software/commands/apt.adoc"
-  },
-  {
-    "description": "Gestionar paquetes en sistemas Red Hat, Fedora, Rocky Linux y derivados.",
-    "usage": "dnf [OPCIONES] PAQUETE",
-    "options": {
-      "-h, --help": "Mostrar ayuda",
-      "-y, --assumeyes": "Responder 'sí' a todas las preguntas",
-      "-q, --quiet": "Modo silencioso",
-      "--refresh": "Forzar actualización de metadatos",
-      "--best": "Intentar usar la mejor versión disponible",
-      "--nobest": "No usar la mejor versión disponible",
-      "--skip-broken": "Omitir paquetes con dependencias rotas",
-      "--exclude=PAQUETE": "Excluir un paquete específico",
-      "--enablerepo=REPOSITORIO": "Habilitar un repositorio específico",
-      "--disablerepo=REPOSITORIO": "Deshabilitar un repositorio específico"
-    },
-    "name": "dnf",
-    "category": "local_software",
-    "source_path": "local_software/commands/dnf.adoc"
-  },
-  {
-    "description": "Mostrar información sobre procesos en ejecución (Process Status).",
-    "usage": "ps [OPCIONES]",
-    "options": {
-      "-aux": "Mostrar todos los procesos con información detallada",
-      "-ef": "Mostrar todos los procesos en formato extendido",
-      "-eo": "Mostrar campos personalizados",
-      "-f": "Mostrar información detallada de cada proceso",
-      "-l": "Mostrar información larga de cada proceso",
-      "-j": "Mostrar información de hilos (threads)",
-      "--forest": "Mostrar árbol de procesos"
-    },
-    "name": "ps",
-    "category": "local_process",
-    "source_path": "local_process/commands/ps.adoc"
-  },
-  {
-    "description": "Monitor interactivo de procesos en tiempo real.",
-    "usage": "top",
-    "options": {
-      "-b": "Modo batch (para scripts)",
-      "-d": "Intervalo de actualización (segundos)",
-      "-n": "Número de actualizaciones",
-      "-p": "Mostrar solo procesos específicos",
-      "-u": "Mostrar solo procesos de un usuario específico"
-    },
-    "name": "top",
-    "category": "local_process",
-    "source_path": "local_process/commands/top.adoc"
-  },
-  {
-    "description": "Monitor de procesos interactivo con interfaz visual mejorada que reemplaza a `top`.",
-    "usage": "htop [OPCIONES]",
-    "options": {
-      "--no-color": "Desactiva colores en la salida",
-      "--no-mouse": "Desactiva soporte para mouse",
-      "-d, --delay": "Especifica el intervalo de actualización en décimas de segundo",
-      "--batch": "Ejecuta en modo no interactivo y exporta salida"
-    },
-    "name": "htop",
-    "category": "local_process",
-    "source_path": "local_process/commands/htop.adoc"
-  },
-  {
-    "description": "Enviar señales a procesos para modificar su comportamiento o terminarlos.",
-    "usage": "kill [OPCIONES] PID",
-    "options": {
-      "-PID": "Especificar proceso por ID",
-      "-PGID": "Enviar señal a grupo de procesos"
-    },
-    "name": "kill",
-    "category": "local_process",
-    "source_path": "local_process/commands/kill.adoc"
-  },
-  {
-    "description": "Listar archivos abiertos y los procesos que los están utilizando.",
-    "usage": "lsof [OPCIONES]",
-    "options": {
-      "-u": "Filtrar por usuario",
-      "-p": "Filtrar por PID",
-      "-c": "Filtrar por nombre de comando",
-      "-i": "Mostrar conexiones de red",
-      "-iTCP": "Filtrar conexiones TCP",
-      "-i:PUERTO": "Filtrar por puerto",
-      "-n": "No resolver nombres DNS",
-      "-P": "No resolver nombres de puertos",
-      "-D": "Buscar en un directorio",
-      "-t": "Mostrar solo PIDs"
-    },
-    "name": "lsof",
-    "category": "local_process",
-    "source_path": "local_process/commands/lsof.adoc"
-  },
-  {
-    "description": "Buscar procesos en ejecución basándose en su nombre u otros atributos y mostrar sus PIDs.",
-    "usage": "pgrep [OPCIONES] PATRÓN",
-    "options": {
-      "-u": "Filtrar por usuario",
-      "-p": "Filtrar por PID",
-      "-c": "Filtrar por nombre de comando",
-      "-f": "Coincidencia parcial (expresiones regulares)",
-      "-G": "Filtrar por grupo",
-      "-t": "Filtrar por terminal asociada",
-      "-P": "Filtrar por proceso padre",
-      "-s": "Filtrar por ID de sesión",
-      "-n": "Mostrar el proceso más reciente",
-      "-o": "Mostrar el proceso más antiguo",
-      "-l": "Mostrar nombre del comando junto con PID",
-      "-a": "Mostrar información detallada del proceso"
-    },
-    "name": "pgrep",
-    "category": "local_process",
-    "source_path": "local_process/commands/pgrep.adoc"
-  },
-  {
-    "description": "Gestionar servicios y trabajos (jobs) en sistemas con Upstart (Ubuntu 9.10-14.10, RHEL 6).",
-    "usage": "initctl [OPCIONES] TRABAJO",
-    "options": {
-      "--list": "Listar trabajos y sus estados",
-      "--start": "Iniciar un trabajo",
-      "--stop": "Detener un trabajo",
-      "--restart": "Reiniciar un trabajo",
-      "--reload": "Recargar configuración de un trabajo",
-      "--status": "Ver estado de un trabajo",
-      "--emit": "Emitir evento a trabajos"
-    },
-    "name": "initctl",
+    "name": "rc-service",
     "category": "local_services",
-    "source_path": "local_services/commands/initctl.adoc"
+    "source_path": "local_services/commands/rc-service.adoc"
+  },
+  {
+    "description": "Analizar y depurar el rendimiento de arranque de systemd.",
+    "usage": "systemd-analyze [OPCIONES]",
+    "options": {
+      "--list": "Listar servicios y sus estados",
+      "--start": "Iniciar un servicio",
+      "--stop": "Detener un servicio",
+      "--restart": "Reiniciar un servicio",
+      "--reload": "Recargar configuración de un servicio",
+      "--status": "Ver estado de un servicio",
+      "--emit": "Emitir evento a servicios"
+    },
+    "name": "systemd-analyze",
+    "category": "local_services",
+    "source_path": "local_services/commands/systemd-analyze.adoc"
   },
   {
     "description": "Mostrar estado de servicios en sistemas con OpenRC.",
@@ -1418,18 +1076,36 @@
     "source_path": "local_services/commands/rc-status.adoc"
   },
   {
-    "description": "Gestionar servicios y trabajos (jobs) en sistemas con OpenRC (Gentoo, Alpine Linux, Artix Linux).",
-    "usage": "rc-service [OPCIONES] SERVICIO",
+    "description": "Gestionar servicios y trabajos (jobs) en sistemas con SysVinit (Ubuntu 9.10-14.10, RHEL 6).",
+    "usage": "service [OPCIONES] SERVICIO",
     "options": {
-      "start": "Iniciar el servicio.",
-      "stop": "Detener el servicio.",
-      "restart": "Reiniciar el servicio.",
-      "reload": "Recargar la configuración sin reiniciar.",
-      "status": "Ver el estado actual del servicio."
+      "--list": "Listar servicios y sus estados",
+      "--start": "Iniciar un servicio",
+      "--stop": "Detener un servicio",
+      "--restart": "Reiniciar un servicio",
+      "--reload": "Recargar configuración de un servicio",
+      "--status": "Ver estado de un servicio",
+      "--emit": "Emitir evento a servicios"
     },
-    "name": "rc-service",
+    "name": "service",
     "category": "local_services",
-    "source_path": "local_services/commands/rc-service.adoc"
+    "source_path": "local_services/commands/service.adoc"
+  },
+  {
+    "description": "Gestionar servicios y trabajos (jobs) en sistemas con Upstart (Ubuntu 9.10-14.10, RHEL 6).",
+    "usage": "initctl [OPCIONES] TRABAJO",
+    "options": {
+      "--list": "Listar trabajos y sus estados",
+      "--start": "Iniciar un trabajo",
+      "--stop": "Detener un trabajo",
+      "--restart": "Reiniciar un trabajo",
+      "--reload": "Recargar configuración de un trabajo",
+      "--status": "Ver estado de un trabajo",
+      "--emit": "Emitir evento a trabajos"
+    },
+    "name": "initctl",
+    "category": "local_services",
+    "source_path": "local_services/commands/initctl.adoc"
   },
   {
     "description": "Consultar y administrar los registros del sistema de systemd (journal).",
@@ -1445,6 +1121,22 @@
     "name": "journalctl",
     "category": "local_services",
     "source_path": "local_services/commands/journalctl.adoc"
+  },
+  {
+    "description": "Gestionar servicios y trabajos (jobs) en sistemas con SysVinit (Debian/Ubuntu).",
+    "usage": "update-rc.d [OPCIONES] SERVICIO",
+    "options": {
+      "--list": "Listar servicios y sus estados",
+      "--start": "Iniciar un servicio",
+      "--stop": "Detener un servicio",
+      "--restart": "Reiniciar un servicio",
+      "--reload": "Recargar configuración de un servicio",
+      "--status": "Ver estado de un servicio",
+      "--emit": "Emitir evento a servicios"
+    },
+    "name": "update-rc.d",
+    "category": "local_services",
+    "source_path": "local_services/commands/update-rc.d.adoc"
   },
   {
     "description": "Gestionar servicios y trabajos (jobs) en sistemas con systemd (Ubuntu 15.04+, RHEL 7+).",
@@ -1477,845 +1169,21 @@
     "source_path": "local_services/commands/chkconfig.adoc"
   },
   {
-    "description": "Analizar y depurar el rendimiento de arranque de systemd.",
-    "usage": "systemd-analyze [OPCIONES]",
+    "description": "Administrar grupos de usuarios en Linux, incluyendo asignación de administradores, gestión de contraseñas y membresía.",
+    "usage": "gpasswd [OPCIONES] grupo",
     "options": {
-      "--list": "Listar servicios y sus estados",
-      "--start": "Iniciar un servicio",
-      "--stop": "Detener un servicio",
-      "--restart": "Reiniciar un servicio",
-      "--reload": "Recargar configuración de un servicio",
-      "--status": "Ver estado de un servicio",
-      "--emit": "Emitir evento a servicios"
-    },
-    "name": "systemd-analyze",
-    "category": "local_services",
-    "source_path": "local_services/commands/systemd-analyze.adoc"
-  },
-  {
-    "description": "Gestionar servicios y trabajos (jobs) en sistemas con SysVinit (Debian/Ubuntu).",
-    "usage": "update-rc.d [OPCIONES] SERVICIO",
-    "options": {
-      "--list": "Listar servicios y sus estados",
-      "--start": "Iniciar un servicio",
-      "--stop": "Detener un servicio",
-      "--restart": "Reiniciar un servicio",
-      "--reload": "Recargar configuración de un servicio",
-      "--status": "Ver estado de un servicio",
-      "--emit": "Emitir evento a servicios"
-    },
-    "name": "update-rc.d",
-    "category": "local_services",
-    "source_path": "local_services/commands/update-rc.d.adoc"
-  },
-  {
-    "description": "Gestionar servicios y trabajos (jobs) en sistemas con SysVinit (Ubuntu 9.10-14.10, RHEL 6).",
-    "usage": "service [OPCIONES] SERVICIO",
-    "options": {
-      "--list": "Listar servicios y sus estados",
-      "--start": "Iniciar un servicio",
-      "--stop": "Detener un servicio",
-      "--restart": "Reiniciar un servicio",
-      "--reload": "Recargar configuración de un servicio",
-      "--status": "Ver estado de un servicio",
-      "--emit": "Emitir evento a servicios"
-    },
-    "name": "service",
-    "category": "local_services",
-    "source_path": "local_services/commands/service.adoc"
-  },
-  {
-    "description": "Mostrar las listas de control de acceso (ACL) de ficheros y directorios.",
-    "usage": "getfacl [OPCIONES] archivo",
-    "options": {
-      "-R": "Recursivo",
-      "-d": "Mostrar ACL por defecto",
-      "-c": "Salida compacta (sin comentarios)",
-      "--absolute-names": "Mostrar rutas absolutas",
-      "--omit-header": "Omitir cabeceras",
-      "--version": "Mostrar versión",
-      "--help": "Mostrar ayuda"
-    },
-    "name": "getfacl",
-    "category": "local_permissions",
-    "source_path": "local_permissions/access_control_lists/commands/getfacl.adoc"
-  },
-  {
-    "description": "Establecer o modificar listas de control de acceso (ACL) en ficheros y directorios.",
-    "usage": "setfacl [OPCIONES] archivo",
-    "options": {
-      "-m": "Modificar o añadir entradas ACL",
-      "-x": "Eliminar entradas ACL",
-      "-b": "Quitar todas las ACL",
-      "-k": "Quitar la máscara (mask)",
-      "-R": "Aplicar recursivamente",
-      "-d": "Establecer ACL por defecto",
-      "--remove-all": "Eliminar todas las ACL (equivale a -b)",
-      "--version": "Mostrar versión",
-      "--help": "Mostrar ayuda"
-    },
-    "name": "setfacl",
-    "category": "local_permissions",
-    "source_path": "local_permissions/access_control_lists/commands/setfacl.adoc"
-  },
-  {
-    "description": "Establecer los permisos predeterminados para nuevos archivos y directorios creados por el usuario.",
-    "usage": "umask [MÁSCARA]",
-    "options": {
-      "MÁSCARA": "Especifica la máscara de permisos en formato octal (por ejemplo, 022) o simbólico (por ejemplo, u=rwx,g=rx,o=rx)"
-    },
-    "name": "umask",
-    "category": "local_permissions",
-    "source_path": "local_permissions/commands/umask.adoc"
-  },
-  {
-    "description": "Modificar los permisos de archivos y directorios en Linux.",
-    "usage": "chmod [OPCIONES] ARCHIVO",
-    "options": {
-      "+x": "Otorgar permisos de ejecución a un archivo",
-      "-x": "Revocar permisos de ejecución a un archivo",
-      "u+s": "Establecer el bit SUID en un archivo",
-      "g+s": "Establecer el bit SGID en un directorio",
-      "+t": "Establecer el sticky bit, solo el propietario puede modificar archivos en el directorio",
-      "-R": "Aplicar cambios de forma recursiva a un directorio",
-      "-v": "Muestra información detallada de los cambios aplicados"
-    },
-    "name": "chmod",
-    "category": "local_permissions",
-    "source_path": "local_permissions/commands/chmod.adoc"
-  },
-  {
-    "description": "Cambiar el propietario y/o grupo de archivos y directorios en Linux.",
-    "usage": "chown [OPCIONES] ARCHIVO",
-    "options": {
-      "-R": "Cambiar propietario y grupo de todos los archivos y subdirectorios de forma recursiva",
-      "-c": "Muestra solo los cambios realizados",
-      "--": "Permite cambiar el propietario de archivos cuyo nombre comienza con '-'"
-    },
-    "name": "chown",
-    "category": "local_permissions",
-    "source_path": "local_permissions/commands/chown.adoc"
-  },
-  {
-    "description": "Ejecutar comandos con privilegios de superusuario o de otro usuario.",
-    "usage": "sudo [OPCIONES] COMANDO",
-    "options": {
-      "-u usuario": "Ejecutar un comando como otro usuario",
-      "-i": "Simular una sesión completa de inicio de sesión con el entorno del usuario",
-      "-e archivo": "Editar archivos como superusuario",
-      "-l": "Listar los comandos que el usuario puede ejecutar con sudo",
-      "-L": "Bloquear el entorno del shell para prevenir cambios en autenticación durante su ejecución",
-      "-V": "Mostrar versión de sudo y opciones de configuración compiladas",
-      "-b": "Ejecutar un comando en segundo plano",
-      "-A": "Solicitar la contraseña mediante un helper externo",
-      "-B": "Activar notificación sonora al solicitar contraseña"
-    },
-    "name": "sudo",
-    "category": "local_permissions",
-    "source_path": "local_permissions/commands/sudo.adoc"
-  },
-  {
-    "description": "Sincronización de archivos y directorios, local o remota, con soporte para compresión y exclusión de archivos.",
-    "usage": "rsync [OPCIONES] origen/ destino/",
-    "options": {
-      "inicio": "Sin opciones, sincroniza archivos de origen a destino",
-      "-a": "Modo archivo (recursivo, preserva permisos, tiempos, enlaces)",
-      "-v": "Mostrar información detallada durante la sincronización",
-      "--dry-run": "Simular la ejecución sin realizar cambios",
-      "--delete": "Eliminar en destino los archivos que no existen en origen",
-      "-z": "Comprimir datos durante la transferencia",
-      "-e": "Especificar el método de transporte (ej. ssh)",
-      "--progress": "Mostrar progreso de la transferencia",
-      "--exclude": "Excluir archivos o directorios específicos"
-    },
-    "name": "rsync",
-    "category": "local_storage",
-    "source_path": "local_storage/backup/rsync/rsync.adoc"
-  },
-  {
-    "description": "Conversión y copia de archivos a bajo nivel, útil para crear imágenes de disco, clonar dispositivos, generar archivos de prueba y realizar copias de seguridad.",
-    "usage": "dd [OPCIONES]",
-    "options": {
-      "if": "Especifica el archivo o dispositivo de entrada",
-      "of": "Especifica el archivo o dispositivo de salida",
-      "bs": "Define el tamaño de bloque para la lectura y escritura",
-      "count": "Número de bloques a copiar",
-      "status": "Controla la información mostrada durante la ejecución",
-      "conv": "Aplica conversiones al flujo de datos (ej. noerror, sync)"
-    },
-    "name": "data_dump",
-    "category": "local_storage",
-    "source_path": "local_storage/backup/data_dump/data_dump.adoc"
-  },
-  {
-    "description": "Listar dispositivos de bloques y su estructura.",
-    "usage": "lsblk [OPCIONES]",
-    "options": {
-      "-f": "Mostrar sistema de ficheros y UUID",
-      "-o": "Seleccionar columnas a mostrar",
-      "-a": "Incluir dispositivos vacíos",
-      "-p": "Mostrar rutas completas (/dev/…)",
-      "-r": "Salida sin formato de árbol",
-      "-b": "Mostrar tamaños en bytes",
-      "-m": "Mostrar permisos y propietario",
-      "--json": "Salida en formato JSON",
-      "--fs": "Mostrar solo información de sistemas de ficheros"
-    },
-    "name": "lsblk",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/lsblk.adoc"
-  },
-  {
-    "description": "Mostrar información detallada de volúmenes físicos (PV) en LVM.",
-    "usage": "pvdisplay [OPCIONES] [DISCO]",
-    "options": {
-      "-l": "Listar volúmenes físicos",
-      "-t": "Cambiar tipo de volumen físico (modo interactivo)",
-      "-n": "Crear nuevo volumen físico (modo interactivo)",
-      "-d": "Borrar un volumen físico (modo interactivo)",
-      "-p": "Mostrar tabla de volúmenes físicos (modo interactivo)",
-      "-v": "Modo verbose para mostrar detalles adicionales",
-      "-C": "Salida en formato de columnas (compacta)",
-      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
-      "--maps": "Mostrar mapeo físico de volúmenes lógicos sobre PV"
-    },
-    "name": "pvdisplay",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/pvdisplay.adoc"
-  },
-  {
-    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
-    "usage": "vgreduce [OPCIONES] [GRUPO] [PV...]",
-    "options": {
-      "-v, --verbose": "Mostrar detalles de la operación.",
-      "--removemissing": "Eliminar PV que faltan (no detectables físicamente).",
-      "--force": "Forzar la operación (solo si es seguro)."
-    },
-    "name": "vgreduce",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/vgreduce.adoc"
-  },
-  {
-    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
-    "usage": "vgchange [OPCIONES] [GRUPO]",
-    "options": {
-      "-ay": "Activar un grupo de volúmenes",
-      "-an": "Desactivar un grupo de volúmenes",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "--test": "Simular operación sin aplicarla"
-    },
-    "name": "vgchange",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/vgchange.adoc"
-  },
-  {
-    "description": "Modificar y gestionar áreas de intercambio (swap) en dispositivos.",
-    "usage": "mkswap [OPCIONES] [DISPOSITIVO]",
-    "options": {
-      "-l": "Listar áreas de intercambio",
-      "-t": "Cambiar tipo de área de intercambio (modo interactivo)",
-      "-n": "Crear nueva área de intercambio (modo interactivo)",
-      "-d": "Borrar una área de intercambio (modo interactivo)",
-      "-L": "Asignar una etiqueta al área de swap",
-      "-c": "Comprobar bloques dañados antes de crear swap",
-      "-v": "Modo verbose para mostrar información detallada",
-      "--uuid": "Especificar UUID del swap"
-    },
-    "name": "mkswap",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/mkswap.adoc"
-  },
-  {
-    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
-    "usage": "lvreduce [OPCIONES] [LV]",
-    "options": {
-      "-l": "Especificar tamaño en porcentaje del espacio del grupo de volúmenes",
-      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
-      "-n": "Crear nuevo volumen lógico (modo interactivo)",
-      "-d": "Borrar un volumen lógico (modo interactivo)",
-      "-p": "Mostrar información de un volumen lógico (modo interactivo)",
-      "-L": "Definir tamaño final del volumen lógico",
-      "-r": "Redimensionar automáticamente el sistema de ficheros (si es compatible)",
-      "--resizefs": "Alternativa explícita para redimensionar FS antes de reducir LV",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "--test": "Simular operación sin aplicarla"
-    },
-    "name": "lvreduce",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/lvreduce.adoc"
-  },
-  {
-    "description": "Mostrar información detallada de volúmenes lógicos en LVM.",
-    "usage": "lvdisplay [OPCIONES] [LV]",
-    "options": {
-      "-l": "Listar volúmenes lógicos",
-      "-t": "Mostrar información de tipo de volumen",
-      "-n": "Mostrar nombre del volumen lógico",
-      "-d": "Mostrar información detallada del volumen lógico",
-      "-C": "Salida en columnas (formato compacto)",
-      "-v": "Modo verbose para más detalles",
-      "-n nombre": "Filtrar por nombre de volumen lógico",
-      "--select": "Filtrar volúmenes según atributos",
-      "-L": "Mostrar tamaño en bytes (exacto)",
-      "-m": "Mostrar mapeo físico de cada volumen lógico",
-      "-p": "Mostrar permisos de los volúmenes lógicos"
-    },
-    "name": "lvdisplay",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/lvdisplay.adoc"
-  },
-  {
-    "description": "Redimensionar sistemas de ficheros ext2/ext3/ext4 en un dispositivo o volumen lógico.",
-    "usage": "resize2fs [OPCIONES] [DISPOSITIVO]",
-    "options": {
-      "-l": "Listar sistemas de ficheros",
-      "-t": "Cambiar tipo de sistema de ficheros",
-      "-n": "Crear nuevo sistema de ficheros",
-      "-d": "Borrar un sistema de ficheros",
-      "-p": "Modo progreso, mostrar barra de progreso",
-      "-w": "Escribir cambios en disco",
-      "-q": "Salir sin guardar cambios",
-      "-h": "Mostrar ayuda",
-      "-L": "Establecer tamaño final del sistema de ficheros",
-      "-M": "Reducir el FS al tamaño mínimo posible",
-      "-v": "Modo verbose, mostrar información detallada"
-    },
-    "name": "resize2fs",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/resize2fs.adoc"
-  },
-  {
-    "description": "Mostrar el uso de espacio en disco de los sistemas de ficheros montados.",
-    "usage": "df [OPCIONES] [SISTEMA_DE_FICHEROS]",
-    "options": {
-      "--label": "Definir tipo de sistema de ficheros (msdos, gpt, etc.)",
-      "-l": "Listar sistemas de ficheros detectados",
-      "-h": "Mostrar tamaños en formato legible",
-      "-T": "Mostrar tipo de sistema de ficheros",
-      "-a": "Incluir sistemas de ficheros especiales",
-      "-i": "Mostrar uso de inodos",
-      "--total": "Mostrar total acumulado",
-      "--exclude-type": "Excluir tipos de FS",
-      "device": "Consultar un punto concreto"
-    },
-    "name": "df",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/df.adoc"
-  },
-  {
-    "description": "Inicializa un dispositivo de bloque para ser utilizado como volumen físico en LVM, permitiendo la gestión avanzada de almacenamiento.",
-    "usage": "pvcreate [OPCIONES] [DISPOSITIVO]",
-    "options": {
-      "-l": "Listar volúmenes físicos",
-      "-t": "Cambiar tipo de volumen físico (modo interactivo)",
-      "-n": "Crear nuevo volumen físico (modo interactivo)",
-      "-d": "Borrar un volumen físico (modo interactivo)",
-      "-p": "Mostrar tabla de volúmenes físicos (modo interactivo)",
-      "-f": "Forzar inicialización aunque el dispositivo tenga datos existentes",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "-c": "Especificar tamaño del cluster",
-      "-u": "Asignar un UUID específico al PV",
-      "-Z": "Establecer formato de metadatos (lvm1 o lvm2)",
-      "--dataalignment": "Alinear datos según tamaño"
-    },
-    "name": "pvcreate",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/pvcreate.adoc"
-  },
-  {
-    "description": "Gestionar dispositivos de bucle (loop) para asociar ficheros como dispositivos de bloques.",
-    "usage": "losetup [OPCIONES] [DISPOSITIVO]",
-    "options": {
-      "-l": "Listar dispositivos de bucle",
-      "-f": "Buscar el primer dispositivo de bucle libre",
-      "-fP": "Asociar fichero y crear particiones automáticamente",
-      "-d": "Desasociar un dispositivo de bucle",
-      "-a": "Mostrar asociaciones activas",
-      "-o": "Definir offset en bytes",
-      "--sizelimit": "Limitar tamaño visible",
-      "-j": "Buscar loop por fichero",
-      "-c": "Releer tamaño del fichero asociado"
-    },
-    "name": "losetup",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/losetup.adoc"
-  },
-  {
-    "description": "Modificar y gestionar tablas de particiones en discos.",
-    "usage": "partx [OPCIONES] [DISCO]",
-    "options": {
-      "-a": "Añadir particiones detectadas al kernel",
-      "-d": "Eliminar particiones del kernel",
-      "-n inicio:fín": "Especificar rango de particiones",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "-l": "Listar particiones reconocidas en un dispositivo",
-      "--show-labels": "Mostrar etiquetas de particiones"
-    },
-    "name": "partx",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/partx.adoc"
-  },
-  {
-    "description": "Mostrar el uso de espacio en disco de archivos y directorios.",
-    "usage": "du [OPCIONES] [DIRECTORIO]",
-    "options": {
-      "-h": "Mostrar tamaños en formato legible",
-      "-s": "Mostrar solo el total de cada argumento",
-      "-a": "Incluir archivos además de directorios",
-      "-d": "Profundidad máxima de directorios (GNU)",
-      "--max-depth": "Limitar la profundidad del directorio",
-      "--exclude": "Excluir archivos o directorios"
-    },
-    "name": "du",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/du.adoc"
-  },
-  {
-    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
-    "usage": "vgcreate [OPCIONES] [GRUPO]",
-    "options": {
-      "v": "Modo verbose para mostrar detalles de la operación",
-      "s": "Especificar tamaño del cluster de metadatos",
-      "u": "Asignar un UUID específico al grupo de volúmenes",
-      "Z": "Establecer formato de metadatos (lvm1 o lvm2)",
-      "--physicalextentsize": "Alternativa para definir tamaño del cluster"
-    },
-    "name": "vgcreate",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/vgcreate.adoc"
-  },
-  {
-    "description": "Modificar y gestionar áreas de intercambio en el sistema.",
-    "usage": "swapoff [OPCIONES] [DISPOSITIVO]",
-    "options": {
-      "-l": "Listar áreas de intercambio",
-      "-t": "Cambiar tipo de área de intercambio (modo interactivo)",
-      "-n": "Simular la desactivación sin aplicarla (dry-run)",
-      "-d": "Borrar una área de intercambio (modo interactivo)",
-      "-p": "Mostrar tabla de áreas de intercambio (modo interactivo)",
-      "-a": "Desactivar todas las áreas de intercambio listadas en /etc/fstab",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "device": "Desactivar un swap específico",
-      "file": "Desactivar un archivo de swap específico"
-    },
-    "name": "swapoff",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/swapoff.adoc"
-  },
-  {
-    "description": "Crear y gestionar tablas de particiones de forma interactiva",
-    "usage": "cfdisk [OPCIONES] [DISPOSITIVO]",
-    "options": {
-      "--label": "Definir tipo de tabla de particiones (msdos, gpt, etc.)",
-      "-l": "Listar tablas de particiones detectadas",
-      "-h": "Mostrar ayuda",
-      "-z": "Ignorar geometría existente (modo limpio)"
-    },
-    "name": "cfdisk",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/cfdisk.adoc"
-  },
-  {
-    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
-    "usage": "lvs [OPCIONES]",
-    "options": {
-      "-l": "Listar volúmenes lógicos",
-      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
-      "-n": "Crear nuevo volumen lógico (modo interactivo)",
-      "-d": "Borrar un volumen lógico (modo interactivo)",
-      "-a": "Incluir volúmenes inactivos o internos",
-      "-o": "Seleccionar columnas a mostrar",
-      "--segments": "Mostrar información detallada de segmentos de LV",
-      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
-      "--noheadings": "Ocultar encabezados de columnas",
-      "-v": "Modo verbose para información más detallada",
-      "--select": "Filtrar volúmenes según criterios"
-    },
-    "name": "lvs",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/lvs.adoc"
-  },
-  {
-    "description": "Mover datos de volúmenes lógicos de un volumen físico a otro dentro de LVM.",
-    "usage": "pvmove [OPCIONES] [ORIGEN] [DESTINO]",
-    "options": {
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "-n": "Simular la operación sin aplicarla (dry-run)",
-      "--alloc": "Especificar la política de asignación de bloques",
-      "--abort": "Cancelar una operación de pvmove en curso"
-    },
-    "name": "pvmove",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/pvmove.adoc"
-  },
-  {
-    "description": "Añadir volúmenes físicos a un grupo de volúmenes existente en LVM.",
-    "usage": "vgextend [OPCIONES] [GRUPO] [PV...]",
-    "options": {
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "-u": "Asignar un UUID específico al VG durante la extensión",
-      "-Z": "Establecer formato de metadatos (lvm1 o lvm2)",
-      "--physicalextentsize": "Definir tamaño de las extensiones físicas"
-    },
-    "name": "vgextend",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/vgextend.adoc"
-  },
-  {
-    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
-    "usage": "vgremove [OPCIONES] [GRUPO]",
-    "options": {
-      "-f": "Forzar la eliminación sin confirmación",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "--test": "Simular la operación sin aplicarla"
-    },
-    "name": "vgremove",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/vgremove.adoc"
-  },
-  {
-    "description": "Modificar y gestionar sistemas de ficheros en dispositivos.",
-    "usage": "mkfs [OPCIONES] [DISPOSITIVO]",
-    "options": {
-      "-l": "Listar sistemas de ficheros",
-      "-t": "Cambiar tipo de sistema de ficheros (modo interactivo)",
-      "-n": "Crear nuevo sistema de ficheros (modo interactivo)",
-      "-d": "Borrar un sistema de ficheros (modo interactivo)",
-      "-c": "Comprobar bloques dañados antes de crear el sistema de ficheros",
-      "-L": "Asignar una etiqueta al sistema de ficheros",
-      "-F": "Forzar la creación incluso si el dispositivo parece estar en uso",
-      "-v": "Modo verbose para mostrar detalles de la operación"
-    },
-    "name": "mkfs",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/mkfs.adoc"
-  },
-  {
-    "description": "Muestra información sobre los buses USB y los dispositivos conectados a ellos.",
-    "usage": "lsusb [OPCIONES]",
-    "options": {
-      "-v": "Mostrar información detallada (verbose)",
-      "-t": "Mostrar la jerarquía USB en forma de árbol",
-      "-s": "Mostrar solo dispositivos específicos por bus/devnum",
-      "-d": "Filtrar por ID de vendedor y producto"
-    },
-    "name": "lsusb",
-    "category": "hardware_bus",
-    "source_path": "local_storage/commands/lsusb.adoc"
-  },
-  {
-    "description": "Muestra información sobre todos los buses PCI y los dispositivos conectados a ellos.",
-    "usage": "lspci [OPCIONES]",
-    "options": {
-      "-v": "Mostrar información detallada",
-      "-nn": "Mostrar IDs de fabricante y dispositivo en texto y número",
-      "-t": "Mostrar diagrama en árbol de la topología PCI",
-      "-k": "Mostrar drivers de kernel utilizados por cada dispositivo"
-    },
-    "name": "lspci",
-    "category": "hardware_bus",
-    "source_path": "local_storage/commands/lspci.adoc"
-  },
-  {
-    "description": "Herramienta de línea de comandos para gestionar y diagnosticar unidades NVMe.",
-    "usage": "nvme <SUBCOMANDO> [OPCIONES] DISPOSITIVO",
-    "options": {
-      "list": "Listar todos los dispositivos NVMe detectados",
-      "smart-log": "Ver estadísticas S.M.A.R.T. de la unidad",
-      "id-ctrl": "Identificar el controlador NVMe",
-      "format": "Formatear de forma segura el dispositivo",
-      "sanitize": "Eliminación segura de datos"
-    },
-    "name": "nvme-cli",
-    "category": "hardware_storage",
-    "source_path": "local_storage/commands/nvme-cli.adoc"
-  },
-  {
-    "description": "Escanear y detectar todos los grupos de volúmenes en LVM.",
-    "usage": "vgscan [OPCIONES]",
-    "options": {
-      "-a": "Incluir VG inactivos o internos",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "--ignorelockingfailure": "Ignorar errores de bloqueo de dispositivos"
-    },
-    "name": "vgscan",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/vgscan.adoc"
-  },
-  {
-    "description": "Mostrar información resumida de volúmenes físicos (PV) en LVM.",
-    "usage": "pvs [OPCIONES]",
-    "options": {
-      "-a": "Incluir volúmenes físicos inactivos o internos",
-      "-o": "Seleccionar columnas a mostrar",
-      "--segments": "Mostrar detalles de segmentos físicos de cada PV",
-      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
-      "--noheadings": "Ocultar encabezados de columnas",
-      "-v": "Modo verbose para mostrar más detalles",
-      "--select": "Filtrar volúmenes según criterios"
-    },
-    "name": "pvs",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/pvs.adoc"
-  },
-  {
-    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
-    "usage": "lvextend [OPCIONES] [LV]",
-    "options": {
-      "-l": "Listar volúmenes lógicos",
-      "-t": "Mostrar información de tipo de volumen",
-      "-n": "Mostrar nombre del volumen lógico",
-      "-d": "Mostrar información detallada del volumen lógico",
-      "-p": "Mostrar permisos de los volúmenes lógicos",
-      "-s": "Mostrar tamaño de los volúmenes lógicos",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "-L": "Definir tamaño final del volumen lógico",
-      "-r": "Redimensionar el sistema de archivos",
-      "--resizefs": "Redimensionar el sistema de archivos automáticamente",
-      "--test": "Simular la operación sin aplicarla"
-    },
-    "name": "lvextend",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/lvextend.adoc"
-  },
-  {
-    "description": "Eliminar volúmenes lógicos en LVM. **Precaución:** esta operación borra todos los datos del volumen.",
-    "usage": "lvremove [OPCIONES] [LV]",
-    "options": {
-      "-l": "Listar volúmenes lógicos",
-      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
-      "-n": "Crear nuevo volumen lógico (modo interactivo)",
-      "-d": "Borrar un volumen lógico (modo interactivo)",
-      "-p": "Mostrar información de un volumen lógico (modo interactivo)",
-      "-f": "Forzar la eliminación sin confirmación",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "--test": "Simular eliminación sin aplicarla"
-    },
-    "name": "lvremove",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/lvremove.adoc"
-  },
-  {
-    "description": "Mostrar información resumida de grupos de volúmenes en LVM.",
-    "usage": "vgs [OPCIONES]",
-    "options": {
-      "-o": "Seleccionar columnas a mostrar",
-      "--segments": "Mostrar detalles de los segmentos de cada VG",
-      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
-      "--noheadings": "Ocultar encabezados de columnas",
-      "-v": "Modo verbose para mostrar información detallada",
-      "--select": "Filtrar grupos según criterios"
-    },
-    "name": "vgs",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/vgs.adoc"
-  },
-  {
-    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
-    "usage": "lvrename [OPCIONES] [LV] [NUEVO_NOMBRE]",
-    "options": {
-      "-l": "Listar volúmenes lógicos",
-      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
-      "-n": "Crear nuevo volumen lógico (modo interactivo)",
-      "-d": "Borrar un volumen lógico (modo interactivo)",
-      "-p": "Mostrar información de un volumen lógico (modo interactivo)",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "--test": "Simular operación sin aplicarla"
-    },
-    "name": "lvrename",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/lvrename.adoc"
-  },
-  {
-    "description": "Modificar y gestionar volúmenes lógicos en LVM.",
-    "usage": "lvscan [OPCIONES]",
-    "options": {
-      "-l": "Listar volúmenes lógicos",
-      "-t": "Cambiar tipo de volumen lógico (modo interactivo)",
-      "-n": "Crear nuevo volumen lógico (modo interactivo)",
-      "-d": "Borrar un volumen lógico (modo interactivo)",
-      "-p": "Mostrar información de un volumen lógico (modo interactivo)",
-      "-a": "Incluir volúmenes inactivos o internos",
-      "--cache": "Usar caché de LVM para acelerar el escaneo",
-      "-v": "Modo verbose para mostrar detalles adicionales",
-      "--ignorelockingfailure": "Ignorar errores de bloqueo de dispositivos"
-    },
-    "name": "lvscan",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/lvscan.adoc"
-  },
-  {
-    "description": "Modificar y gestionar tablas de particiones en discos.",
-    "usage": "fdisk [OPCIONES] [DISCO]",
-    "options": {
-      "-l": "Listar tablas de particiones",
-      "-t": "Cambiar tipo de partición (modo interactivo)",
-      "-n": "Crear nueva partición (modo interactivo)",
-      "-d": "Borrar una partición (modo interactivo)",
-      "-p": "Mostrar tabla de particiones (modo interactivo)",
-      "-w": "Escribir cambios en disco (modo interactivo)",
-      "-q": "Salir sin guardar cambios (modo interactivo)"
-    },
-    "name": "fdisk",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/fdisk.adoc"
-  },
-  {
-    "description": "Gestionar información de dispositivos de bloques.",
-    "usage": "blkid [OPCIONES] [DISPOSITIVO]",
-    "options": {
-      "--list": "Listar dispositivos de bloques",
-      "--add": "Agregar un dispositivo de bloque",
-      "--del": "Eliminar un dispositivo de bloque",
-      "--search": "Buscar dispositivos de bloque",
-      "--info": "Mostrar información de un dispositivo de bloque",
-      "--upgrade": "Actualizar información de dispositivos de bloque",
-      "--cache": "Gestionar caché de dispositivos de bloque"
-    },
-    "name": "blkid",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/blkid.adoc"
-  },
-  {
-    "description": "Modificar y gestionar áreas de intercambio en el sistema.",
-    "usage": "swapon [OPCIONES] [DISPOSITIVO]",
-    "options": {
-      "-a": "Activar todas las particiones o ficheros de swap listados en /etc/fstab",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "-s": "Mostrar un resumen de swaps activos",
-      "-p": "Establecer prioridad de uso del swap"
-    },
-    "name": "swapon",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/swapon.adoc"
-  },
-  {
-    "description": "Crear volúmenes lógicos dentro de un grupo de volúmenes (LVM).",
-    "usage": "lvcreate [OPCIONES] [VG]",
-    "options": {
-      "-l": "Especificar tamaño en bloques lógicos",
-      "-L": "Especificar tamaño en megabytes o gigabytes",
-      "-n": "Nombrar el volumen lógico",
-      "--size": "Alternativa a -L para especificar tamaño",
-      "--snapshot": "Crear un snapshot de un LV existente",
-      "--thin": "Crear volumen lógico delgado (thin provisioning)",
-      "--poolmetadata": "Especificar nombre de metadata para thin pool",
-      "-v": "Modo verbose para mostrar información detallada"
-    },
-    "name": "lvcreate",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/lvcreate.adoc"
-  },
-  {
-    "description": "Herramienta para monitorizar el estado de salud de discos duros y SSD mediante S.M.A.R.T.",
-    "usage": "smartctl [OPCIONES] DISPOSITIVO",
-    "options": {
-      "--info": "Mostrar información del dispositivo",
-      "--health": "Comprobar el estado de salud general",
-      "--attributes": "Mostrar atributos S.M.A.R.T. detallados",
-      "--test": "Ejecutar pruebas de diagnóstico",
-      "--log": "Ver registros de errores o de pruebas",
-      "--all": "Mostrar toda la información S.M.A.R.T."
-    },
-    "name": "smartctl",
-    "category": "hardware_storage",
-    "source_path": "local_storage/commands/smartctl.adoc"
-  },
-  {
-    "description": "Modificar y gestionar grupos de volúmenes en LVM.",
-    "usage": "vgdisplay [OPCIONES] [GRUPO]",
-    "options": {
-      "-l": "Listar grupos de volúmenes",
-      "-t": "Cambiar tipo de grupo de volúmenes (modo interactivo)",
-      "-n": "Crear nuevo grupo de volúmenes (modo interactivo)",
-      "-d": "Borrar un grupo de volúmenes (modo interactivo)",
-      "-p": "Mostrar tabla de grupos de volúmenes (modo interactivo)",
-      "-v": "Modo verbose para mostrar información adicional",
-      "-n nombre": "Filtrar por nombre de grupo de volúmenes",
-      "-C": "Salida en columnas (formato compacto)",
-      "--units": "Cambiar unidades de tamaño (B, K, M, G, T)",
-      "--maps": "Mostrar mapeo de volúmenes lógicos sobre los PV del grupo"
-    },
-    "name": "vgdisplay",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/vgdisplay.adoc"
-  },
-  {
-    "description": "Eliminar la información de LVM de un volumen físico.",
-    "usage": "pvremove [OPCIONES] [DISCO]",
-    "options": {
-      "-f": "Forzar eliminación sin pedir confirmación",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "--force": "Alternativa explícita para forzar eliminación"
-    },
-    "name": "pvremove",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/pvremove.adoc"
-  },
-  {
-    "description": "Utilidad para gestionar y configurar dispositivos con interfaz IPMI (servidores).",
-    "usage": "ipmitool [OPCIONES] <COMANDO>",
-    "options": {
-      "sdr": "Listar registros de datos de sensores",
-      "lan": "Configurar parámetros de red del BMC",
-      "chassis": "Controlar el estado del chasis y energía",
-      "fru": "Ver información de inventario de hardware",
-      "sel": "Ver el registro de eventos del sistema"
-    },
-    "name": "ipmitool",
-    "category": "hardware_management",
-    "source_path": "local_storage/commands/ipmitool.adoc"
-  },
-  {
-    "description": "Modificar y gestionar sistemas de ficheros en dispositivos.",
-    "usage": "mkfs [OPCIONES] [DISPOSITIVO]",
-    "options": {
-      "-l": "Listar sistemas de ficheros",
-      "-t": "Cambiar tipo de sistema de ficheros (modo interactivo)",
-      "-n": "Crear nuevo sistema de ficheros (modo interactivo)",
-      "-d": "Borrar un sistema de ficheros (modo interactivo)",
-      "-a": "Montar todos los sistemas de ficheros listados en /etc/fstab",
-      "-r": "Montar en modo solo lectura",
-      "-o": "Especificar opciones de montaje",
-      "-v": "Modo verbose para mostrar detalles de la operación",
-      "-noatime": "Evitar actualizar timestamp de acceso en archivos"
-    },
-    "name": "mount",
-    "category": "local_storage",
-    "source_path": "local_storage/commands/mount.adoc"
-  },
-  {
-    "description": "Mostrar los grupos a los que pertenece un usuario en Linux.",
-    "usage": "groups [usuario]",
-    "options": {
-      "usuario": "Especificar el nombre de usuario para mostrar sus grupos. Si se omite, se muestran los grupos del usuario actual.",
-      "--help": "Mostrar la ayuda en pantalla"
-    },
-    "name": "groups",
-    "category": "local_group",
-    "source_path": "local_group/commands/groups.adoc"
-  },
-  {
-    "description": "Modificar grupos existentes en el sistema Linux, definiendo su nombre, GID y otras propiedades.",
-    "usage": "groupmod [OPCIONES] grupo",
-    "options": {
-      "-n": "Cambiar el nombre del grupo",
-      "-g": "Cambiar el GID del grupo",
+      "-A": "Agregar administrador de grupo",
+      "-D": "Quitar administrador de grupo",
+      "-p": "Cambiar contraseña de grupo",
+      "-a": "Añadir usuario a grupo",
+      "-d": "Quitar usuario de grupo",
+      "-r": "Bloquear grupo",
+      "-u": "Desbloquear grupo",
       "--help": "Mostrar ayuda en pantalla"
     },
-    "name": "groupmod",
+    "name": "gpasswd",
     "category": "local_group",
-    "source_path": "local_group/commands/groupmod.adoc"
-  },
-  {
-    "description": "Eliminar grupos existentes del sistema Linux.",
-    "usage": "groupdel grupo",
-    "options": {
-      "--help": "Mostrar ayuda en pantalla"
-    },
-    "name": "groupdel",
-    "category": "local_group",
-    "source_path": "local_group/commands/groupdel.adoc"
+    "source_path": "local_group/commands/gpasswd.adoc"
   },
   {
     "description": "Crear nuevos grupos en el sistema Linux, definiendo su nombre, GID y otras propiedades.",
@@ -2332,6 +1200,18 @@
     "source_path": "local_group/commands/groupadd.adoc"
   },
   {
+    "description": "Modificar grupos existentes en el sistema Linux, definiendo su nombre, GID y otras propiedades.",
+    "usage": "groupmod [OPCIONES] grupo",
+    "options": {
+      "-n": "Cambiar el nombre del grupo",
+      "-g": "Cambiar el GID del grupo",
+      "--help": "Mostrar ayuda en pantalla"
+    },
+    "name": "groupmod",
+    "category": "local_group",
+    "source_path": "local_group/commands/groupmod.adoc"
+  },
+  {
     "description": "Cambiar temporalmente el grupo primario de un usuario en la sesión actual de Linux.",
     "usage": "newgrp [grupo]",
     "options": {
@@ -2342,20 +1222,1140 @@
     "source_path": "local_group/commands/newgrp.adoc"
   },
   {
-    "description": "Administrar grupos de usuarios en Linux, incluyendo asignación de administradores, gestión de contraseñas y membresía.",
-    "usage": "gpasswd [OPCIONES] grupo",
+    "description": "Mostrar los grupos a los que pertenece un usuario en Linux.",
+    "usage": "groups [usuario]",
     "options": {
-      "-A": "Agregar administrador de grupo",
-      "-D": "Quitar administrador de grupo",
-      "-p": "Cambiar contraseña de grupo",
-      "-a": "Añadir usuario a grupo",
-      "-d": "Quitar usuario de grupo",
-      "-r": "Bloquear grupo",
-      "-u": "Desbloquear grupo",
+      "usuario": "Especificar el nombre de usuario para mostrar sus grupos. Si se omite, se muestran los grupos del usuario actual.",
+      "--help": "Mostrar la ayuda en pantalla"
+    },
+    "name": "groups",
+    "category": "local_group",
+    "source_path": "local_group/commands/groups.adoc"
+  },
+  {
+    "description": "Eliminar grupos existentes del sistema Linux.",
+    "usage": "groupdel grupo",
+    "options": {
       "--help": "Mostrar ayuda en pantalla"
     },
-    "name": "gpasswd",
+    "name": "groupdel",
     "category": "local_group",
-    "source_path": "local_group/commands/gpasswd.adoc"
+    "source_path": "local_group/commands/groupdel.adoc"
+  },
+  {
+    "description": "Consultar y configurar interfaces de red, rutas, direcciones y vecinos en Linux (reemplazo moderno de ifconfig y arp).",
+    "usage": "ip [OPCIONES]",
+    "options": {
+      "addr": "Mostrar o configurar direcciones IP",
+      "link": "Consultar o configurar interfaces de red",
+      "route": "Consultar o configurar rutas de red",
+      "neigh": "Consultar o configurar tabla ARP/vecinos",
+      "flush": "Limpiar tablas de vecinos",
+      "-s": "Mostrar estadísticas de tráfico de interfaces"
+    },
+    "name": "ip",
+    "category": "local_network",
+    "source_path": "local_network/commands/ip.adoc"
+  },
+  {
+    "description": "Descargar archivos desde la web mediante HTTP, HTTPS o FTP utilizando el comando wget.",
+    "usage": "wget [OPCIONES]",
+    "options": {
+      "-O": "Guardar con un nombre específico",
+      "-c": "Continuar descargas interrumpidas",
+      "-q": "Modo silencioso",
+      "--limit-rate": "Limitar velocidad de descarga",
+      "--no-check-certificate": "Ignorar errores de certificado SSL",
+      "-r": "Descarga recursiva de sitios web",
+      "-np": "No ascender al directorio padre al descargar recursivamente",
+      "--user / --password": "Autenticación HTTP/FTP"
+    },
+    "name": "wget",
+    "category": "local_network",
+    "source_path": "local_network/commands/wget.adoc"
+  },
+  {
+    "description": "Rastrear la ruta de los paquetes a un host y medir tiempos de respuesta",
+    "usage": "traceroute [OPCIONES]",
+    "options": {
+      "-I": "Usar ICMP en lugar de UDP (similar a ping)",
+      "-n": "No resolver nombres de host, mostrar solo IPs",
+      "-m": "Número máximo de saltos",
+      "-q": "Número de consultas por salto",
+      "-w": "Tiempo de espera por respuesta (segundos)",
+      "-p": "Especificar puerto inicial (para UDP)"
+    },
+    "name": "traceroute",
+    "category": "local_network",
+    "source_path": "local_network/commands/traceroute.adoc"
+  },
+  {
+    "description": "Escaneo y análisis de puertos, servicios y dispositivos en la red utilizando nmap.",
+    "usage": "nmap [OPCIONES]",
+    "options": {
+      "-p": "Especificar puertos a escanear",
+      "-sS": "Escaneo TCP SYN (stealth scan)",
+      "-sU": "Escaneo de puertos UDP",
+      "-A": "Detección de sistema operativo y servicios",
+      "-O": "Detectar sistema operativo",
+      "-T": "Ajustar velocidad/agresividad del escaneo (0-5)",
+      "-v": "Modo verbose para más detalles",
+      "--open": "Mostrar solo puertos abiertos"
+    },
+    "name": "nmap",
+    "category": "local_network",
+    "source_path": "local_network/commands/nmap.adoc"
+  },
+  {
+    "description": "Comprobar la conectividad de red y el tiempo de respuesta entre hosts.",
+    "usage": "ping [OPCIONES]",
+    "options": {
+      "-c": "Número de paquetes a enviar",
+      "-i": "Intervalo entre paquetes (en segundos)",
+      "-t": "Tiempo de vida (TTL) de los paquetes",
+      "-s": "Tamaño del paquete en bytes",
+      "-q": "Salida en modo silencioso (resumen)",
+      "-W": "Tiempo de espera por respuesta (en segundos)",
+      "-f": "Flood ping (envío rápido, requiere permisos de root)",
+      "-D": "Mostrar timestamp de cada paquete"
+    },
+    "name": "ping",
+    "category": "local_network",
+    "source_path": "local_network/commands/ping.adoc"
+  },
+  {
+    "description": "Capturar y analizar paquetes de red en tiempo real.",
+    "usage": "tcpdump [OPCIONES]",
+    "options": {
+      "-i": "Especificar interfaz de red",
+      "-n": "No resolver nombres DNS ni puertos",
+      "-c": "Limitar número de paquetes capturados",
+      "-w": "Guardar captura en un archivo",
+      "-r": "Leer un archivo de captura",
+      "-p": "No poner la interfaz en modo promiscuo",
+      "-s": "Establecer tamaño del snaplen"
+    },
+    "name": "tcpdump",
+    "category": "local_network",
+    "source_path": "local_network/commands/tcpdump.adoc"
+  },
+  {
+    "description": "Consultar información de DNS y diagnosticar resolución de nombres de dominio.",
+    "usage": "dig [OPCIONES] [DOMINIO]",
+    "options": {
+      "-a": "Mostrar todas las entradas DNS",
+      "-n": "Mostrar direcciones IP sin resolver nombres",
+      "-s": "Añadir una entrada estática en la caché DNS",
+      "-d": "Eliminar una entrada de la caché DNS"
+    },
+    "name": "dig",
+    "category": "local_network",
+    "source_path": "local_network/commands/dig.adoc"
+  },
+  {
+    "description": "Mostrar conexiones de red activas, puertos abiertos y estadísticas, reemplazo moderno de netstat.",
+    "usage": "ss [OPCIONES]",
+    "options": {
+      "-t": "Mostrar solo conexiones TCP",
+      "-u": "Mostrar solo conexiones UDP",
+      "-l": "Mostrar solo puertos en escucha (listening)",
+      "-n": "Mostrar direcciones y puertos en formato numérico",
+      "-p": "Mostrar PID y proceso asociado a la conexión",
+      "-a": "Mostrar todas las conexiones y puertos en escucha",
+      "-s": "Mostrar resumen estadístico de protocolos de red",
+      "-r": "Mostrar tabla de rutas (similar a netstat -r)"
+    },
+    "name": "ss",
+    "category": "local_network",
+    "source_path": "local_network/commands/ss.adoc"
+  },
+  {
+    "description": "Mostrar conexiones de red activas, puertos abiertos, rutas y estadísticas de red.",
+    "usage": "netstat [OPCIONES]",
+    "options": {
+      "-t": "Mostrar solo conexiones TCP",
+      "-u": "Mostrar solo conexiones UDP",
+      "-l": "Mostrar solo puertos escuchando",
+      "-n": "Mostrar direcciones y puertos en formato numérico",
+      "-p": "Mostrar PID y programa que usa la conexión",
+      "-a": "Mostrar todas las conexiones y puertos escuchando",
+      "-s": "Mostrar estadísticas de protocolos de red",
+      "-r": "Mostrar tabla de rutas"
+    },
+    "name": "netstat",
+    "category": "local_network",
+    "source_path": "local_network/commands/netstat.adoc"
+  },
+  {
+    "description": "Transferir datos desde o hacia un servidor usando distintos protocolos (HTTP, HTTPS, FTP…).",
+    "usage": "curl [OPCIONES] [URL]",
+    "options": {
+      "-o": "Guardar salida en un archivo",
+      "-O": "Guardar con el nombre original del archivo",
+      "-L": "Seguir redirecciones",
+      "-I": "Obtener solo cabeceras HTTP",
+      "-d": "Enviar datos en una petición POST",
+      "-H": "Añadir cabeceras HTTP personalizadas",
+      "-u": "Autenticación HTTP básica",
+      "-s": "Modo silencioso",
+      "--limit-rate": "Limitar velocidad de descarga/subida"
+    },
+    "name": "curl",
+    "category": "local_network",
+    "source_path": "local_network/commands/curl.adoc"
+  },
+  {
+    "description": "Consultar información de DNS de dominios y direcciones IP de manera interactiva o directa.",
+    "usage": "nslookup [OPCIONES]",
+    "options": {
+      "-a": "Mostrar todas las entradas DNS",
+      "-n": "Mostrar direcciones IP y nombres sin resolver",
+      "-s": "Añadir una entrada estática en la tabla DNS",
+      "-d": "Eliminar una entrada de la tabla DNS"
+    },
+    "name": "nslookup",
+    "category": "local_network",
+    "source_path": "local_network/commands/nslookup.adoc"
+  },
+  {
+    "description": "Mostrar y gestionar la tabla ARP para ver las asociaciones entre direcciones IP y MAC en la red local.",
+    "usage": "arp [OPCIONES]",
+    "options": {
+      "-a": "Mostrar todas las entradas ARP",
+      "-n": "Mostrar direcciones IP y MAC sin resolver nombres",
+      "-s": "Añadir una entrada estática en la tabla ARP",
+      "-d": "Eliminar una entrada de la tabla ARP",
+      "-i": "Especificar interfaz de red"
+    },
+    "name": "arp",
+    "category": "local_network",
+    "source_path": "local_network/commands/arp.adoc"
+  },
+  {
+    "description": "Consultar información de registro de dominios y direcciones IP.",
+    "usage": "whois [OPCIONES]",
+    "options": {
+      "-H": "Salida más limpia sin cabeceras innecesarias",
+      "-v": "Información detallada",
+      "-h": "Consultar un servidor WHOIS específico",
+      "-p": "Especificar puerto del servidor WHOIS",
+      "--verbose": "Mostrar salida completa y extendida"
+    },
+    "name": "whois",
+    "category": "local_network",
+    "source_path": "local_network/commands/whois.adoc"
+  },
+  {
+    "description": "Consultar y configurar interfaces de red en sistemas Linux utilizando el comando ifconfig.",
+    "usage": "ifconfig [OPCIONES]",
+    "options": {
+      "-a": "Mostrar todas las interfaces",
+      "-s": "Mostrar solo estadísticas",
+      "-up": "Activar una interfaz",
+      "-down": "Desactivar una interfaz",
+      "-ip": "Asignar dirección IP a una interfaz",
+      "-broadcast": "Configurar dirección de broadcast",
+      "-mtu": "Cambiar tamaño máximo de paquete (MTU)",
+      "-promisc": "Activar modo promiscuo"
+    },
+    "name": "ifconfig",
+    "category": "local_network",
+    "source_path": "local_network/commands/ifconfig.adoc"
+  },
+  {
+    "description": "Combinar líneas de dos ficheros basándose en un campo común.",
+    "usage": "join [OPCIONES] fichero1 fichero2",
+    "options": {
+      "-1": "Especificar campo del primer fichero",
+      "-2": "Especificar campo del segundo fichero",
+      "-a": "Incluir líneas sin coincidencias",
+      "-e": "Rellenar campos vacíos",
+      "-o": "Especificar campos a mostrar",
+      "-t": "Definir delimitador",
+      "-v": "Mostrar solo líneas sin coincidencia"
+    },
+    "name": "join",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/join.adoc"
+  },
+  {
+    "description": "Mostrar una línea de texto o variables en la salida estándar.",
+    "usage": "echo [OPCIONES] TEXTO",
+    "options": {
+      "-n": "No añadir salto de línea final",
+      "-e": "Interpretar escapes como \\n, \\t"
+    },
+    "name": "echo",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/echo.adoc"
+  },
+  {
+    "description": "Herramienta para obtener el nombre de un fichero o directorio a partir de una ruta completa, con opciones para eliminar sufijos o procesar múltiples rutas.",
+    "usage": "basename [OPCIONES] RUTA [SUFIJO]",
+    "options": {
+      "-s": "Eliminar un sufijo específico del nombre",
+      "-a": "Procesar múltiples rutas",
+      "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+    },
+    "name": "basename",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/basename.adoc"
+  },
+  {
+    "description": "Eliminar lineas duplicadas consecutivas.",
+    "usage": "uniq [OPCIONES] FICHERO",
+    "options": {
+      "-c": "Mostrar numero de repeticiones en columna",
+      "-d": "Mostrar lineas duplicadas",
+      "-u": "Mostrar lineas no duplicadas",
+      "-i": "Ignorar mayúsculas/minúsculas",
+      "-f": "Ignorar las primeras N columnas (palabras)",
+      "-s": "Ignorar los primeros N caracteres"
+    },
+    "name": "uniq",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/uniq.adoc"
+  },
+  {
+    "description": "Determinar el tipo de fichero según su contenido.",
+    "usage": "file [OPCIONES] RUTA",
+    "options": {
+      "-b": "Mostrar tipo sin el nombre del fichero",
+      "-i": "Mostrar tipo MIME",
+      "-L": "Seguir enlaces simbólicos",
+      "--mime-type": "Mostrar sólo MIME type"
+    },
+    "name": "file",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/file.adoc"
+  },
+  {
+    "description": "Mostrar las últimas líneas de uno o más ficheros.",
+    "usage": "tail [OPCIONES] FICHERO",
+    "options": {
+      "-n": "Mostrar las últimas N líneas",
+      "-f": "Seguir un fichero conforme crece",
+      "-F": "Seguir fichero por nombre y reabrir si rota",
+      "-c": "Mostrar por bytes en lugar de líneas",
+      "-q": "Silenciar encabezados cuando se pasan varios ficheros"
+    },
+    "name": "tail",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/tail.adoc"
+  },
+  {
+    "description": "Comprimir y descomprimir archivos usando el algoritmo LZMA/LZMA2.",
+    "usage": "xz [OPCIONES] FICHERO",
+    "options": {
+      "-d": "Descomprimir archivos .xz",
+      "-k": "Mantener el archivo original",
+      "-l": "Mostrar información del archivo comprimido",
+      "-c": "Enviar salida a stdout",
+      "-t": "Comprobar integridad del archivo",
+      "-0-9": "Nivel de compresión (0-9)",
+      "-z": "Forzar compresión (opción por defecto)"
+    },
+    "name": "xz",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/xz.adoc"
+  },
+  {
+    "description": "Formatear texto ajustando líneas y párrafos para mejorar legibilidad.",
+    "usage": "fmt [OPCIONES] fichero",
+    "options": {
+      "-w": "Ancho máximo de línea",
+      "--prefix": "Mantener prefijo de cada línea",
+      "-c": "Centrar líneas",
+      "--help": "Mostrar ayuda"
+    },
+    "name": "fmt",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/fmt.adoc"
+  },
+  {
+    "description": "Eliminar ficheros o directorios (con precaución).",
+    "usage": "rm [OPCIONES] FICHEROS",
+    "options": {
+      "-r": "Eliminar directorios de forma recursiva",
+      "-i": "Solicitar confirmación antes de borrar cada fichero",
+      "-f": "Forzar la eliminación sin preguntar",
+      "-v": "Mostrar operaciones realizadas",
+      "-d": "Eliminar directorios vacíos",
+      "--preserve-root": "No permitir eliminar la raíz '/'",
+      "--no-preserve-root": "Permite operar sobre '/'",
+      "--help": "Mostrar ayuda breve"
+    },
+    "name": "rm",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/rm.adoc"
+  },
+  {
+    "description": "Construir y ejecutar comandos a partir de la entrada estándar.",
+    "usage": "xargs [OPCIONES] COMANDO",
+    "options": {
+      "-n": "Número de argumentos por ejecución",
+      "-I": "Reemplazar argumentos con un marcador",
+      "-0": "Usar separador nulo",
+      "-p": "Confirmar antes de ejecutar",
+      "-t": "Mostrar el comando antes de ejecutarlo",
+      "-r": "No ejecutar si no hay entrada",
+      "--max-procs": "Ejecución en paralelo"
+    },
+    "name": "xargs",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/xargs.adoc"
+  },
+  {
+    "description": "Actualizar la base de datos utilizada por el comando locate.",
+    "usage": "updatedb [OPCIONES]",
+    "options": {
+      "-U": "Definir directorios a indexar",
+      "-o": "Especificar archivo de base de datos",
+      "--prunepaths": "Excluir rutas",
+      "--prunefs": "Excluir sistemas de ficheros",
+      "--prunenames": "Excluir nombres concretos",
+      "--localpaths": "Indexar solo sistemas locales",
+      "--debug": "Mostrar información de depuración"
+    },
+    "name": "updatedb",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/updatedb.adoc"
+  },
+  {
+    "description": "Mostrar las primeras líneas de uno o varios ficheros.",
+    "usage": "head [OPCIONES] fichero(s)",
+    "options": {
+      "-n <numero>": "Mostrar las primeras N líneas",
+      "-c <bytes>": "Mostrar los primeros N bytes",
+      "--help": "Mostrar ayuda"
+    },
+    "name": "head",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/head.adoc"
+  },
+  {
+    "description": "Editor de texto gráfico para entornos GNOME.",
+    "usage": "gedit [OPCIONES] fichero",
+    "options": {
+      "--help": "Mostrar ayuda"
+    },
+    "name": "gedit",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/gedit.adoc"
+  },
+  {
+    "description": "Listar ficheros con estructura de árbol.",
+    "usage": "tree [OPCIONES]",
+    "options": {
+      "-d": "Mostrar solo directorios",
+      "-f": "Mostrar los archivos con su respectiva ruta",
+      "-a": "Mostrar archivos ocultos",
+      "-u": "Mostrar propietario de cada archivo",
+      "-g": "Mostrar grupos de ficheros",
+      "-h": "Mostrar peso de cada archivo"
+    },
+    "name": "tree",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/tree.adoc"
+  },
+  {
+    "description": "Descripción breve de operadores y redirecciones en shell.",
+    "usage": "operators [OPCIONES]",
+    "options": {
+      ">": "Redirigir salida estándar a un fichero (sobrescribe)",
+      ">>": "Redirigir salida estándar a un fichero (añadir)",
+      "|": "Pipe: enviar salida de un comando como entrada a otro",
+      "&": "Ejecutar en segundo plano",
+      "2>": "Redirigir salida de error (stderr)"
+    },
+    "name": "operators",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/operators.adoc"
+  },
+  {
+    "description": "Extraer el directorio padre de una ruta completa.",
+    "usage": "dirname RUTA",
+    "options": {
+      "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+    },
+    "name": "dirname",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/dirname.adoc"
+  },
+  {
+    "description": "Mover archivos o directorios entre rutas.",
+    "usage": "mv [OPCIONES] ORIGEN DESTINO",
+    "options": {
+      "-i": "Solicitar confirmación antes de sobreescribir archivos",
+      "-v": "Mostrar archivos de origen y destino (verbose)",
+      "-f": "Forzar la acción (sobrescribir sin preguntar)",
+      "-n": "No sobrescribir archivos existentes (no-clobber)",
+      "-b": "Hacer copia de seguridad del destino al sobrescribir",
+      "--backup[=CONTROL]": "Hacer copia de seguridad con control (simple/numbered/t)"
+    },
+    "name": "mv",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/mv.adoc"
+  },
+  {
+    "description": "Empaquetamiento de múltiples archivos y directorios.",
+    "usage": "tar [OPCIONES] ARCHIVO",
+    "options": {
+      "-c": "Crear un nuevo archivo tar",
+      "-f": "Especificar nombre de archivo tar",
+      "-x": "Extraer archivos de un tar",
+      "-t": "Listar contenido del tar",
+      "-v": "Verbose: mostrar archivos procesados",
+      "-z": "Comprimir/Descomprimir usando gzip (con -c/-x)",
+      "-j": "Usar bzip2",
+      "-J": "Usar xz",
+      "--exclude": "Excluir archivos/paths coincidentes",
+      "--strip-components": "Omitir N componentes del path al extraer",
+      "--no-same-owner": "No restaurar propietario (útil como usuario no root)",
+      "--remove-files": "Eliminar archivos que se han archivado"
+    },
+    "name": "tar",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/tar.adoc"
+  },
+  {
+    "description": "Mostrar la ruta absoluta y real de un fichero o directorio.",
+    "usage": "realpath [OPCIONES] RUTA",
+    "options": {
+      "-e": "Resolver la ruta sólo si el destino existe",
+      "-m": "Resolver la ruta incluso si el destino no existe",
+      "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+    },
+    "name": "realpath",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/realpath.adoc"
+  },
+  {
+    "description": "Eliminar directorios vacíos.",
+    "usage": "rmdir [OPCIONES] DIRECTORIO",
+    "options": {
+      "-p": "Eliminar directorios intermedios si están vacíos",
+      "--help": "Mostrar ayuda breve"
+    },
+    "name": "rmdir",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/rmdir.adoc"
+  },
+  {
+    "description": "Mostrar el destino de un enlace simbólico.",
+    "usage": "readlink [OPCIONES] ENLACE",
+    "options": {
+      "-f": "Resolver la ruta completa (absoluta) siguiendo todos los enlaces",
+      "-e": "Resolver la ruta sólo si el destino existe",
+      "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+    },
+    "name": "readlink",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/readlink.adoc"
+  },
+  {
+    "description": "Traducir o eliminar caracteres desde la entrada estándar.",
+    "usage": "tr [OPCIONES] CONJUNTO1 CONJUNTO2",
+    "options": {
+      "-d": "Eliminar caracteres",
+      "-s": "Sustituir repeticiones por una sola",
+      "-c": "Complementar el conjunto de caracteres",
+      "--help": "Mostrar ayuda"
+    },
+    "name": "tr",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/tr.adoc"
+  },
+  {
+    "description": "Herramienta para cambiar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.",
+    "usage": "chattr [OPCIONES] archivo",
+    "options": {
+      "+i": "Hacer archivo inmutable",
+      "-i": "Hacer archivo mutable",
+      "+a": "Hacer archivo solo para añadir datos (append-only)",
+      "-a": "Quitar atributo append-only",
+      "+A": "Evitar actualización de tiempo de acceso",
+      "-A": "Permitir actualización de tiempo de acceso",
+      "-R": "Aplicar cambios recursivamente"
+    },
+    "name": "chattr",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/chattr.adoc"
+  },
+  {
+    "description": "Herramienta para formatear la salida en columnas para mejorar la legibilidad.",
+    "usage": "column [OPCIONES] [ARCHIVO]",
+    "options": {
+      "-t": "Ajustar columnas en tabla",
+      "-s": "Definir delimitador",
+      "-x": "Llenar filas antes de columnas"
+    },
+    "name": "column",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/column.adoc"
+  },
+  {
+    "description": "Convertir la codificación de caracteres de archivos o flujos de texto.",
+    "usage": "iconv [OPCIONES] fichero",
+    "options": {
+      "-f": "Especificar codificación de origen (from)",
+      "-t": "Especificar codificación de destino (to)",
+      "-o": "Especificar archivo de salida",
+      "-c": "Omitir caracteres no convertibles",
+      "-l": "Listar todas las codificaciones disponibles",
+      "--verbose": "Mostrar información detallada"
+    },
+    "name": "iconv",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/iconv.adoc"
+  },
+  {
+    "description": "Eliminar un enlace simbólico o fichero.",
+    "usage": "unlink FICHERO",
+    "options": {
+      "-h": "Mostrar ayuda breve"
+    },
+    "name": "unlink",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/unlink.adoc"
+  },
+  {
+    "description": "Buscar ficheros y directorios que cumplan criterios especificados.",
+    "usage": "find [RUTA] [OPCIONES]",
+    "options": {
+      "-name": "Buscar por nombre",
+      "-type": "Buscar por tipo (f=fichero, d=directorio)",
+      "-mtime": "Buscar por fecha de modificación",
+      "-atime": "Buscar por fecha de acceso",
+      "-size": "Buscar por tamaño",
+      "-maxdepth": "Limitar profundidad máxima",
+      "-mindepth": "Limitar profundidad mínima",
+      "-exec": "Ejecutar comando sobre resultados"
+    },
+    "name": "find",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/find.adoc"
+  },
+  {
+    "description": "Extraer secciones de cada línea de un fichero o flujo de datos usando delimitadores o rangos de caracteres.",
+    "usage": "cut [OPCIONES] archivo",
+    "options": {
+      "-c": "Extraer caracteres por rango",
+      "-d": "Usar un delimitador para campos",
+      "-f": "Seleccionar columnas (campos)",
+      "--complement": "Invertir selección de campos o caracteres"
+    },
+    "name": "cut",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/cut.adoc"
+  },
+  {
+    "description": "Establecer variables de entorno para la sesión actual o procesos hijos.",
+    "usage": "export [VAR=VALOR]",
+    "options": {
+      "-n": "No añadir salto de línea final",
+      "-e": "Interpretar escapes como \\n, \\t"
+    },
+    "name": "export",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/export.adoc"
+  },
+  {
+    "description": "Ver ficheros de texto paginados en la terminal (similar a `less`).",
+    "usage": "more [OPCIONES] FICHERO...",
+    "options": {
+      "-d": "Mostrar mensaje de ayuda al final de cada página",
+      "-c": "Limpiar pantalla antes de mostrar la siguiente página",
+      "-s": "Sustituir múltiples líneas en blanco por una sola",
+      "-u": "No subrayar el texto (útil para terminales sin soporte de subrayado)"
+    },
+    "name": "more",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/more.adoc"
+  },
+  {
+    "description": "Herramienta para comprimir y descomprimir archivos con alta compresión.",
+    "usage": "bzip2 [OPCIONES] archivo",
+    "options": {
+      "-c": "Escribir salida a stdout",
+      "-d": "Descomprimir archivo",
+      "-k": "Mantener archivo original",
+      "-v": "Mostrar información de progreso",
+      "-z": "Comprimir archivo"
+    },
+    "name": "bzip2",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/bzip2.adoc"
+  },
+  {
+    "description": "Herramienta para cambiar el directorio de trabajo actual.",
+    "usage": "cd [OPCIONES] DIRECTORIO",
+    "options": {
+      "-": "Volver al directorio anterior (OLDPWD)",
+      "~": "Ir al directorio home del usuario",
+      "..": "Ir al directorio padre"
+    },
+    "name": "cd",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/cd.adoc"
+  },
+  {
+    "description": "Combinar columnas de uno o más ficheros línea a línea.",
+    "usage": "paste [OPCIONES] FICHEROS",
+    "options": {
+      "-d": "Definir delimitador entre columnas",
+      "-s": "Serializar líneas de un fichero",
+      "--help": "Mostrar ayuda",
+      "--version": "Mostrar versión",
+      "-m": "Combinar múltiples archivos de forma paralela"
+    },
+    "name": "paste",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/paste.adoc"
+  },
+  {
+    "description": "Actualizar la marca temporal de un fichero o crear un fichero vacío si no existe.",
+    "usage": "touch [OPCIONES] FICHERO",
+    "options": {
+      "-a": "Cambiar solo el tiempo de acceso",
+      "-m": "Cambiar solo tiempo de modificación",
+      "-c": "No crear archivo si no existe",
+      "-t": "Establecer tiempo específico",
+      "-r": "Copiar timestamp de otro fichero"
+    },
+    "name": "touch",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/touch.adoc"
+  },
+  {
+    "description": "Comparar ficheros línea por línea y mostrar diferencias.",
+    "usage": "diff [OPCIONES] archivo1 archivo2",
+    "options": {
+      "-c": "Mostrar diferencias con contexto",
+      "-u": "Mostrar diferencias en formato unificado",
+      "-r": "Comparar directorios recursivamente",
+      "-i": "Ignorar mayúsculas/minúsculas"
+    },
+    "name": "diff",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/diff.adoc"
+  },
+  {
+    "description": "Ordenar lineas de texto.",
+    "usage": "sort [OPCIONES] FICHERO",
+    "options": {
+      "-n": "Ordenar por valor numérico",
+      "-r": "Ordenar en orden inverso",
+      "-u": "Eliminar duplicados",
+      "-k": "Ordenar por columna específica",
+      "-t": "Usar separador de campo",
+      "-f": "Ignorar diferencias entre mayúsculas/minúsculas",
+      "-h": "Ordenar por números con sufijos (1K, 2M)",
+      "-o": "Guardar salida en archivo"
+    },
+    "name": "sort",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/sort.adoc"
+  },
+  {
+    "description": "Copiar ficheros de forma segura entre hosts usando SSH.",
+    "usage": "scp [OPCIONES] FICHERO_ORIGEN USUARIO@HOST:DESTINO",
+    "options": {
+      "-r": "Copiar directorios recursivamente",
+      "-P": "Especificar puerto SSH",
+      "-p": "Mantener permisos y fechas",
+      "-C": "Comprimir datos durante la transferencia",
+      "-i": "Usar archivo de clave privada para autenticar",
+      "-B": "Modo batch (sin preguntas interactivas)",
+      "-l": "Limitar ancho de banda (KB/s)",
+      "-o": "Pasando opciones a SSH"
+    },
+    "name": "scp",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/scp.adoc"
+  },
+  {
+    "description": "Herramienta para concatenar y mostrar el contenido de ficheros.",
+    "usage": "cat [OPCIONES] archivo",
+    "options": {
+      "-n": "Numerar líneas de salida",
+      "-b": "Numerar solo líneas no vacías",
+      "-A": "Mostrar caracteres especiales (tabuladores, finales de línea)"
+    },
+    "name": "cat",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/cat.adoc"
+  },
+  {
+    "description": "Mostrar estado y metadatos de un fichero o directorio.",
+    "usage": "stat [OPCIONES] FICHERO",
+    "options": {
+      "-c": "Mostrar información en formato personalizado",
+      "-f": "Mostrar información del sistema de ficheros",
+      "-L": "Seguir enlaces simbólicos",
+      "-t": "Formato compacto",
+      "--printf": "Usar printf para formato personalizado"
+    },
+    "name": "stat",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/stat.adoc"
+  },
+  {
+    "description": "Dividir líneas largas en varias más cortas, ajustando el ancho de la línea.",
+    "usage": "fold [OPCIONES] fichero",
+    "options": {
+      "-w": "Ancho máximo de línea",
+      "-s": "Ajustar por espacios en blanco",
+      "-b": "Contar bytes en lugar de caracteres",
+      "--help": "Mostrar ayuda"
+    },
+    "name": "fold",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/fold.adoc"
+  },
+  {
+    "description": "Numerar líneas de un fichero o de la entrada estándar.",
+    "usage": "nl [OPCIONES] FICHERO",
+    "options": {
+      "-b": "Especificar qué líneas numerar",
+      "-v": "Número inicial",
+      "-i": "Incremento entre números de línea",
+      "-n": "Formato del número",
+      "-s": "Separador entre número y línea",
+      "-w": "Ancho del número de línea"
+    },
+    "name": "nl",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/nl.adoc"
+  },
+  {
+    "description": "Mostrar frases aleatorias (fortunes) desde una base de datos local.",
+    "usage": "fortune [OPCIONES]",
+    "options": {
+      "-s": "Mostrar una fortuna aleatoria",
+      "-l": "Mostrar todas las frases disponibles",
+      "-f": "Especificar un fichero de frases personalizado"
+    },
+    "name": "fortune",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/fortune.adoc"
+  },
+  {
+    "description": "Herramienta de procesamiento de texto para analizar y manipular datos estructurados por columnas.",
+    "usage": "awk [OPCIONES] 'programa' archivo",
+    "options": {
+      "-F": "Definir separador de campos",
+      "-print": "Mostrar campos específicos",
+      "-condicion": "Filtrar líneas según una condición",
+      "-BEGIN": "Ejecutar acciones iniciales antes de procesar el archivo",
+      "-END": "Ejecutar acciones finales después de procesar el archivo",
+      "-NR": "Número de registro (línea)",
+      "-NF": "Número de campos por línea"
+    },
+    "name": "awk",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/awk.adoc"
+  },
+  {
+    "description": "Mostrar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.",
+    "usage": "lsattr [OPCIONES] [ARCHIVO...]",
+    "options": {
+      "-R": "Mostrar atributos de todos los archivos en un directorio recursivamente",
+      "-d": "Mostrar atributos de directorios en lugar de su contenido",
+      "-V": "Mostrar versión del comando",
+      "--help": "Mostrar ayuda",
+      "--quiet": "Suprimir mensajes innecesarios"
+    },
+    "name": "lsattr",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/lsattr.adoc"
+  },
+  {
+    "description": "Editor de flujo de texto para filtrar y transformar texto línea a línea.",
+    "usage": "sed [OPCIONES] PATRON FICHERO",
+    "options": {
+      "-i": "Modificar el fichero directamente",
+      "-e": "Ejecutar múltiples comandos",
+      "-n": "Suprimir salida automática",
+      "-r": "Usar expresiones regulares extendidas",
+      "--follow-symlinks": "Modificar enlaces simbólicos"
+    },
+    "name": "sed",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/sed.adoc"
+  },
+  {
+    "description": "Crear enlaces duros y simbólicos.",
+    "usage": "ln [OPCIONES] origen destino",
+    "options": {
+      "-s": "Crear un enlace simbólico",
+      "-f": "Forzar creación de enlace sobrescribiendo el destino",
+      "-i": "Solicitar confirmación antes de sobrescribir",
+      "--help": "Mostrar ayuda breve"
+    },
+    "name": "ln",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/ln.adoc"
+  },
+  {
+    "description": "Buscar cadenas de texto en ficheros según patrones (expresiones regulares).",
+    "usage": "grep [OPCIONES] patron fichero",
+    "options": {
+      "-i": "Buscar ignorando mayúsculas/minúsculas",
+      "-r": "Buscar recursivamente en directorios",
+      "-n": "Mostrar número de línea",
+      "-v": "Mostrar líneas que NO coinciden",
+      "-E": "Usar expresiones regulares extendidas",
+      "-o": "Mostrar sólo la parte coincidente de cada línea",
+      "-P": "Usar expresiones regulares Perl-compatible (PCRE)",
+      "-l": "Mostrar sólo nombres de ficheros con coincidencias",
+      "-c": "Contar coincidencias por fichero",
+      "-q": "Modo silencioso (devuelve código de salida)",
+      "--color=auto": "Resaltar coincidencias"
+    },
+    "name": "grep",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/grep.adoc"
+  },
+  {
+    "description": "Listar ficheros del directorio actual.",
+    "usage": "ls [OPCIONES] [DIRECTORIO]",
+    "options": {
+      "-l": "Lista detallada (permisos, propietario, tamaño)",
+      "-a": "Mostrar ficheros ocultos",
+      "-h": "Mostrar tamaños legibles por humanos",
+      "-t": "Ordenar por fecha de modificación",
+      "-S": "Ordenar por tamaño (mayor a menor)",
+      "-r": "Invertir orden",
+      "-R": "Mostrar recursivamente",
+      "-d": "Mostrar directorios en sí, no su contenido",
+      "-F": "Añadir indicador de tipo a nombres",
+      "-1": "Un elemento por línea",
+      "-Q": "Poner nombres entre comillas",
+      "-v": "Orden natural (útil con números)",
+      "-X": "Ordenar por extensión",
+      "--color": "Colorear la salida",
+      "--block-size": "Mostrar tamaños en unidad específica",
+      "--time": "Seleccionar campo de tiempo",
+      "--sort": "Ordenar según criterio (size,time,version,extension)"
+    },
+    "name": "ls",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/ls.adoc"
+  },
+  {
+    "description": "Empaquetar archivos con compresión gzip.",
+    "usage": "gzip [OPCIONES] archivo(s)",
+    "options": {
+      "-c": "Escribir salida a stdout",
+      "-d": "Desempaquetar archivo",
+      "-f": "Forzar sobrescritura",
+      "-k": "Mantener archivos originales",
+      "-9": "Usar máxima compresión",
+      "--help": "Mostrar ayuda"
+    },
+    "name": "gzip",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/gzip.adoc"
+  },
+  {
+    "description": "Ver ficheros de texto paginados en la terminal.",
+    "usage": "less [OPCIONES] fichero",
+    "options": {
+      "-n": "Mostrar número de línea",
+      "-N": "Mostrar número de línea en cada línea",
+      "-S": "Truncar líneas largas",
+      "-w": "Mostrar solo las primeras N caracteres de cada línea"
+    },
+    "name": "less",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/less.adoc"
+  },
+  {
+    "description": "Crear uno o varios directorios.",
+    "usage": "mkdir [OPCIONES] NOMBRE_DIRECTORIO...",
+    "options": {
+      "-p": "Crear árbol de directorios (crea padres según sea necesario)",
+      "-v": "Mostrar cada directorio creado (verbose)",
+      "--help": "Mostrar ayuda",
+      "--version": "Mostrar versión del comando"
+    },
+    "name": "mkdir",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/mkdir.adoc"
+  },
+  {
+    "description": "Buscar rápidamente archivos en el sistema usando la base de datos actualizada por `updatedb`.",
+    "usage": "locate [OPCIONES] patrón",
+    "options": {
+      "-i": "Ignorar mayúsculas/minúsculas",
+      "-r": "Usar expresiones regulares",
+      "-c": "Contar coincidencias",
+      "-l": "Limitar el número de resultados",
+      "--existing": "Mostrar solo archivos existentes",
+      "--database": "Especificar base de datos",
+      "--help": "Mostrar ayudaA"
+    },
+    "name": "locate",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/locate.adoc"
+  },
+  {
+    "description": "Contar líneas, palabras y bytes de uno o varios ficheros.",
+    "usage": "wc [OPCIONES] FICHERO",
+    "options": {
+      "-l": "Mostrar número de líneas",
+      "-w": "Mostrar número de palabras",
+      "-c": "Mostrar número de bytes",
+      "-m": "Mostrar número de caracteres",
+      "-L": "Mostrar la longitud de la línea más larga"
+    },
+    "name": "wc",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/wc.adoc"
+  },
+  {
+    "description": "Crear una tubería con nombre (FIFO) en el sistema de ficheros.",
+    "usage": "mkfifo [OPCIONES] NOMBRE_TUBERIA",
+    "options": {
+      "-m": "Establecer permisos de la tubería (modo)",
+      "-Z": "Establecer contexto de seguridad (SELinux)"
+    },
+    "name": "mkfifo",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/mkfifo.adoc"
+  },
+  {
+    "description": "Herramienta para copiar archivos o directorios.",
+    "usage": "cp [OPCIONES] ORIGEN DESTINO",
+    "options": {
+      "-r": "Copiar recursivamente",
+      "-f": "Forzar la copia sobrescribiendo sin preguntar",
+      "-a": "Copiar archivos manteniendo atributos (recursivo)",
+      "-b": "Crear copia de seguridad del destino",
+      "-i": "Pedir confirmación antes de sobrescribir",
+      "-v": "Mostrar archivos mientras se copian (verbose)",
+      "--preserve=ATTRS": "Preservar atributos (mode,ownership,timestamps)",
+      "--no-preserve=ATTRS": "No preservar ciertos atributos",
+      "--parents": "Mantener la ruta de origen al copiar",
+      "--reflink[=always|never]": "Intentar copia por referencia (CoW)"
+    },
+    "name": "cp",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/cp.adoc"
+  },
+  {
+    "description": "Eliminar cuentas de usuario y opcionalmente sus archivos y configuraciones",
+    "usage": "deluser [OPCIONES] USUARIO",
+    "options": {
+      "--remove-home": "Borrar usuario junto con su directorio personal",
+      "--remove-all-files": "Borrar todos los archivos del usuario en el sistema",
+      "--group": "Eliminar grupo asociado al usuario",
+      "--backup": "Hacer copia de seguridad de archivos antes de eliminar"
+    },
+    "name": "deluser",
+    "category": "local_users",
+    "source_path": "local_users/commands/deluser.adoc"
+  },
+  {
+    "description": "Cambiar el shell de inicio de sesión de un usuario",
+    "usage": "chsh [OPCIONES] USUARIO",
+    "options": {
+      "-s": "Definir shell de login",
+      "-l": "Listar shells disponibles en el sistema",
+      "--help": "Mostrar ayuda del comando"
+    },
+    "name": "chsh",
+    "category": "local_users",
+    "source_path": "local_users/commands/chsh.adoc"
+  },
+  {
+    "description": "Gestionar la caducidad de contraseñas y políticas de envejecimiento de cuentas de usuario",
+    "usage": "chage [OPCIONES] USUARIO",
+    "options": {
+      "-l": "Listar información de expiración",
+      "-M": "Días máximos antes de que caduque la contraseña",
+      "-m": "Días mínimos entre cambios de contraseña",
+      "-W": "Días de aviso antes de la caducidad",
+      "-I": "Días de inactividad tras caducar la contraseña",
+      "-E": "Fecha de expiración de la cuenta",
+      "-d": "Establecer fecha del último cambio de contraseña"
+    },
+    "name": "chage",
+    "category": "local_users",
+    "source_path": "local_users/commands/chage.adoc"
+  },
+  {
+    "description": "Cambiar la contraseña de un usuario o administrar la expiración de la misma",
+    "usage": "passwd [OPCIONES] USUARIO",
+    "options": {
+      "--expire": "Forzar al usuario a cambiar la contraseña en el próximo inicio de sesión",
+      "--lock": "Bloquear la cuenta del usuario",
+      "--unlock": "Desbloquear la cuenta del usuario"
+    },
+    "name": "passwd",
+    "category": "local_users",
+    "source_path": "local_users/commands/passwd.adoc"
+  },
+  {
+    "description": "Crear y gestionar cuentas de usuario de forma interactiva",
+    "usage": "adduser [OPCIONES] USUARIO",
+    "options": {
+      "--home": "Definir directorio personal",
+      "--shell": "Definir shell por defecto",
+      "--ingroup": "Asignar grupo principal",
+      "--disabled-password": "Crear usuario sin contraseña",
+      "--gecos": "Definir información del usuario",
+      "--uid": "Especificar UID manualmente",
+      "--no-create-home": "No crear directorio personal"
+    },
+    "name": "adduser",
+    "category": "local_users",
+    "source_path": "local_users/commands/adduser.adoc"
+  },
+  {
+    "description": "Modificar la información personal asociada a una cuenta de usuario",
+    "usage": "chfn [OPCIONES] USUARIO",
+    "options": {
+      "--full-name": "Definir nombre completo",
+      "--office": "Definir número de oficina",
+      "--work-phone": "Definir teléfono de trabajo",
+      "--home-phone": "Definir teléfono particular",
+      "--gecos": "Definir toda la información GECOS en una sola operación"
+    },
+    "name": "chfn",
+    "category": "local_users",
+    "source_path": "local_users/commands/chfn.adoc"
+  },
+  {
+    "description": "Cambiar de usuario en el sistema o ejecutar comandos con la identidad de otro usuario",
+    "usage": "su [OPCIONES] USUARIO",
+    "options": {
+      "-c": "Ejecutar un comando como otro usuario",
+      "-": "Iniciar sesión como otro usuario con su entorno completo",
+      "usuario": "Cambiar a otro usuario (por defecto root)",
+      "-i": "Iniciar sesión como otro usuario sin cargar su entorno completo, cargando variables de entorno del usuario"
+    },
+    "name": "su",
+    "category": "local_users",
+    "source_path": "local_users/commands/su.adoc"
+  },
+  {
+    "description": "Crear cuentas de usuario de bajo nivel mediante opciones explícitas (no interactivo).",
+    "usage": "useradd [OPCIONES] USUARIO",
+    "options": {
+      "-m": "Crear directorio personal",
+      "-d": "Definir directorio personal",
+      "-s": "Definir shell de inicio",
+      "-g": "Definir grupo principal",
+      "-G": "Asignar grupos secundarios",
+      "-u": "Especificar UID",
+      "-e": "Fecha de expiración de la cuenta",
+      "-c": "Comentario / información GECOS",
+      "-r": "Crear usuario de sistema"
+    },
+    "name": "useradd",
+    "category": "local_users",
+    "source_path": "local_users/commands/useradd.adoc"
   }
 ]
