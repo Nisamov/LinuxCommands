@@ -821,21 +821,6 @@
     "source_path": "local_storage/commands/vgextend.adoc"
   },
   {
-    "description": "Conversión y copia de archivos a bajo nivel, útil para crear imágenes de disco, clonar dispositivos, generar archivos de prueba y realizar copias de seguridad.",
-    "usage": "dd [OPCIONES]",
-    "options": {
-      "if": "Especifica el archivo o dispositivo de entrada",
-      "of": "Especifica el archivo o dispositivo de salida",
-      "bs": "Define el tamaño de bloque para la lectura y escritura",
-      "count": "Número de bloques a copiar",
-      "status": "Controla la información mostrada durante la ejecución",
-      "conv": "Aplica conversiones al flujo de datos (ej. noerror, sync)"
-    },
-    "name": "data_dump",
-    "category": "local_storage",
-    "source_path": "local_storage/backup/data_dump/commands/data_dump.adoc"
-  },
-  {
     "description": "Sincronización de archivos y directorios, local o remota, con soporte para compresión y exclusión de archivos.",
     "usage": "rsync [OPCIONES] origen/ destino/",
     "options": {
@@ -852,6 +837,21 @@
     "name": "rsync",
     "category": "local_storage",
     "source_path": "local_storage/backup/rsync/commands/rsync.adoc"
+  },
+  {
+    "description": "Conversión y copia de archivos a bajo nivel, útil para crear imágenes de disco, clonar dispositivos, generar archivos de prueba y realizar copias de seguridad.",
+    "usage": "dd [OPCIONES]",
+    "options": {
+      "if": "Especifica el archivo o dispositivo de entrada",
+      "of": "Especifica el archivo o dispositivo de salida",
+      "bs": "Define el tamaño de bloque para la lectura y escritura",
+      "count": "Número de bloques a copiar",
+      "status": "Controla la información mostrada durante la ejecución",
+      "conv": "Aplica conversiones al flujo de datos (ej. noerror, sync)"
+    },
+    "name": "dd",
+    "category": "local_storage",
+    "source_path": "local_storage/backup/dd/commands/dd.adoc"
   },
   {
     "description": "Gestionar paquetes en sistemas Debian y derivados.",
