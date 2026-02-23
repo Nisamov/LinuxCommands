@@ -10,8 +10,6 @@
   &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/DE">Deutsch</a>
   &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/PT">Português</a>
-  &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/RU">Русский</a>
   &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/ZH">中文</a>
@@ -97,8 +95,6 @@ El repositorio se adapta a diferentes lenguas mediante la automatización de la 
   <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/FR">Français</a>
   &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/DE">Deutsch</a>
-  &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/PT">Português</a>
   &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/RU">Русский</a>
   &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;

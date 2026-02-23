@@ -21,7 +21,6 @@ LANG_MAP = {
     'en': 'en',      # Inglés
     'fr': 'fr',      # Francés
     'de': 'de',      # Alemán
-    'pt': 'pt',      # Portugués
     'es': 'es',      # Español
     'ru': 'ru',      # Ruso
     'zh': 'zh-CN',   # Chino simplificado

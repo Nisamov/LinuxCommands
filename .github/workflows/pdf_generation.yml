@@ -123,7 +123,7 @@ jobs:
               - Noto Sans
           EOF
 
-      - name: Generar PDFs ESP, ENG, DE, PT, RU, ZH, KO y JA
+      - name: Generar PDFs ESP, ENG, DE, RU, ZH, KO y JA
         run: |
           set -e
           ASCIIDOCTOR=$(which asciidoctor-pdf)
@@ -277,7 +277,6 @@ jobs:
           ENGImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_ENG.png"
           FRImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_FR.png"
           DEImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_DE.png"
-          PTImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_PT.png"
           RUImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_RU.png"
           ZHImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_ZH.png"
           KOImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_KO.png"
@@ -317,15 +316,6 @@ jobs:
             gh release create RU $RU_FILES \
               --title "🔵 PDF ДОКУМЕНТАЦИЯ 📕" \
               --notes "![Documentación Ruso]($RUImg)"
-          fi
-          
-          # Crear release para Portugués
-          PT_FILES=$(ls pdf/PT_*.pdf 2>/dev/null | tr '\n' ' ')
-          if [ -n "$PT_FILES" ]; then
-            echo "Archivos PT: $PT_FILES"
-            gh release create PT $PT_FILES \
-              --title "🔵 DOCUMENTAÇÃO EM PDF 📕" \
-              --notes "![Documentação Português]($PTImg)"
           fi
           
           # Crear release para Inglés
