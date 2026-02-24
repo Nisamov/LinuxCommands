@@ -1,0 +1,39 @@
+=== ¿Qué es Tcl?
+
+Tcl (*Tool Command Language*) es un lenguaje de scripting dinámico y de propósito general, diseñado bajo la premisa de que "todo es una cadena de texto" (*everything is a string*). 
+
+Originalmente creado por John Ousterhout, su potencia reside en ser un lenguaje altamente extensible y fácil de embeber en aplicaciones de C/C++, siendo el motor detrás de la famosa herramienta **Expect**.
+
+Tcl se utiliza principalmente para:
+
+- **Automatización de Redes:** Configuración y testing de equipos mediante *Expect*.
+- **Herramientas de Diseño (EDA):** Estándar en la industria de semiconductores (FPGA, ASICs).
+- **Interfaces Gráficas:** Creación rápida de GUIs mediante el toolkit **Tk**.
+- **Testing de Sistemas:** Automatización de regresiones en entornos Linux/Unix.
+
+
+==== Conceptos de Tcl
+
+[cols="2,5", options="header"]
+|===
+| Concepto | Descripción
+
+| Everything is a String
+| Los comandos, argumentos y resultados se manejan internamente como cadenas de texto.
+
+| Command Evaluation
+| La sintaxis es simple: `comando arg1 arg2 ... argN`.
+
+| Substitution
+| Uso de `$` para acceder a variables y `[]` para la sustitución de comandos.
+
+| Procs
+| Procedimientos definidos por el usuario que funcionan como funciones reutilizables.
+
+| Event-driven
+| Capacidad nativa para manejar bucles de eventos sin hilos complejos.
+
+| Expect
+| Extensión de Tcl que permite automatizar diálogos interactivos (SSH, Telnet, FTP).
+|===
+

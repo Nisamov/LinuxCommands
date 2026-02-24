@@ -34,3 +34,8 @@ include::bash/example_scripts/while.sh[]
 include::eBPF/theory.adoc[]
 include::eBPF/example_scripts/trace_open.bt[]
 
+== Tcl
+include::Tcl/theory.adoc[]
+include::Tcl/example_scripts/if_else.tcl[]
+include::Tcl/example_scripts/procedures.tcl[]
+
