@@ -37,3 +37,17 @@ Tcl se utiliza principalmente para:
 | Extensión de Tcl que permite automatizar diálogos interactivos (SSH, Telnet, FTP).
 |===
 
+Para ejecutar un script Tcl, es necesario aplicarle permisos de ejecución para luego referenciarlo directamente:
+
+[source,bash]
+----
+chmod +x miscript.tcl
+./miscript.tcl
+----
+
+O también se puede ejecutar directamente con el intérprete de Tcl:
+[source,bash]
+----
+tclsh miscript.tcl
+----
+
