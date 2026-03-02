@@ -37,6 +37,15 @@
   * `/media/usb`:: Memorias USB.
 * `/opt`:: Software adicional y opcional.
 * `/proc`:: Sistema de archivos virtual que refleja procesos y kernel.
+  * `/proc/cpuinfo`:: Información sobre la CPU.
+  * `/proc/meminfo`:: Información sobre la memoria.
+  * `/proc/uptime`:: Tiempo de actividad del sistema.
+  * `/proc/version`:: Versión del kernel.
+  * `/proc/net`:: Información de red.
+  * `/proc/sys`:: Configuraciones del kernel.
+  * `/proc/self`:: Información del proceso actual.
+  * `/proc/1`:: Información del proceso init.
+  * `/proc/loadavg`:: Promedio de carga del sistema.
 * `/run`:: Archivos de ejecución del sistema.
 * `/sbin`:: Binarios esenciales para administración.
 * `/srv`:: Datos servidos por el sistema.
@@ -69,14 +78,18 @@
 * `/run/lock`:: Bloqueos de recursos.
 * `/run/user`:: Archivos de ejecución por usuario.
 * `/root`:: Directorio home del superusuario.
-* `/etc/X11/`:: Configuraciones del sistema gráfico.
-* `/etc/init/`:: Scripts de inicio Upstart.
-* `/etc/systemd/system/`:: Unidades de systemd personalizadas.
-* `/var/lib/dpkg`:: Base de datos de paquetes Debian.
-* `/var/lib/rpm`:: Base de datos de paquetes RPM.
-* `/var/lib/apt`:: Información de APT.
-* `/var/log/apache2`:: Logs de Apache2.
-* `/var/log/nginx`:: Logs de Nginx.
+* `/etc/`:: Configuraciones del sistema.
+  * `/etc/X11/`:: Configuraciones del sistema gráfico.
+  * `/etc/init/`:: Scripts de inicio Upstart.
+  * `/etc/systemd/system/`:: Unidades de systemd personalizadas.
+* `/var`:: Archivos variables del sistema.
+  * `/var/lib`:: Datos de aplicaciones y servicios.
+    * `/var/lib/dpkg`:: Base de datos de paquetes Debian.
+    * `/var/lib/rpm`:: Base de datos de paquetes RPM.
+    * `/var/lib/apt`:: Información de APT.
+  * `/var/log`:: Logs del sistema y aplicaciones.
+    * `/var/log/apache2`:: Logs de Apache2.
+    * `/var/log/nginx`:: Logs de Nginx.
 * `/media/floppy`:: Montaje de disquetes (si existe).
 * `.`:: Directorio actual.
 * `..`:: Directorio superior.

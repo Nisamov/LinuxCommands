@@ -22,6 +22,10 @@ Este manual está pensado como guía de referencia para:
 == Teoría
 include::theory/theory.adoc[]
 
+== Protección de información critica
+include::opsec/opsec.adoc[]
+include::persec/persec.adoc[]
+
 == Canales de comunicación segura
 include::secure_channels/theory.adoc[]
 include::secure_channels/secure_channel_ssh/theory.adoc[]
