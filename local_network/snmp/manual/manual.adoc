@@ -1,0 +1,179 @@
+==== Manual de instalación SNMP
+
+===== En Linux: qué instalar
+
+En el target (a monitorizar):
+
+[source,bash]
+----
+sudo apt update
+sudo apt install -y snmpd
+----
+
+En el manager (desde donde consultas):
+
+[source,bash]
+----
+sudo apt update
+sudo apt install -y snmp
+----
+
+===== Configurar un target Linux (SNMPv2c para laboratorio)
+
+Edita `/etc/snmp/snmpd.conf` y deja algo así:
+
+[source]
+----
+agentAddress udp:161
+rocommunity public 192.168.56.0/24
+sysLocation "Aula"
+sysContact "admin@local"
+----
+
+Reinicia y habilita el servicio:
+
+[source,bash]
+----
+sudo systemctl restart snmpd
+sudo systemctl enable snmpd
+----
+
+Si hay firewall UFW:
+
+[source,bash]
+----
+sudo ufw allow from 192.168.56.0/24 to any port 161 proto udp
+----
+
+===== Comandos esenciales (manager)
+
+====== snmpget (1 dato)
+
+Sintaxis:
+
+[source,bash]
+----
+snmpget -v2c -c public IP_TARGET OID
+----
+
+Ejemplos:
+
+[source,bash]
+----
+snmpget -v2c -c public 192.168.56.11 sysDescr.0
+snmpget -v2c -c public 192.168.56.11 sysName.0
+snmpget -v2c -c public 192.168.56.11 sysUpTime.0
+----
+
+Notas:
+
+* `-v2c` → SNMP v2c
+* `-c public` → comunidad (clave simple)
+* `sysDescr.0 / sysName.0 / sysUpTime.0` → datos básicos del sistema
+* El `.0` es la instancia de un valor escalar (un solo valor)
+
+====== snmpwalk (muchos datos de un árbol)
+
+Sintaxis:
+
+[source,bash]
+----
+snmpwalk -v2c -c public IP_TARGET OID
+----
+
+Interfaces (ejemplos típicos):
+
+[source,bash]
+----
+snmpwalk -v2c -c public 192.168.56.11 ifDescr
+snmpwalk -v2c -c public 192.168.56.11 ifOperStatus
+snmpwalk -v2c -c public 192.168.56.11 ifInOctets
+snmpwalk -v2c -c public 192.168.56.11 ifOutOctets
+----
+
+Interpretación rápida:
+
+* `ifDescr.X` → nombre de la interfaz y su índice X (ifIndex)
+* El resto usa ese mismo X:
+** `ifOperStatus.X` = up/down
+** `ifInOctets.X / ifOutOctets.X` = contadores de bytes (aumentan con el tráfico)
+
+====== snmpbulkwalk (tablas grandes más rápido)
+
+[source,bash]
+----
+snmpbulkwalk -v2c -c public 192.168.56.11 ifTable
+----
+
+==== MIBs: instalar y habilitar en el manager
+
+En Prometheus/manager (Ubuntu/Debian):
+
+[source,bash]
+----
+sudo apt update
+sudo apt install -y snmp-mibs-downloader
+sudo download-mibs
+----
+
+Habilita MIBs en el cliente: edita `/etc/snmp/snmp.conf` y comenta o borra la línea:
+
+[source]
+----
+mibs :
+----
+
+Abre una terminal nueva y prueba:
+
+[source,bash]
+----
+snmpget -v2c -c public 192.168.6.54 sysUpTime.0
+snmpwalk -v2c -c public 192.168.6.54 ifDescr
+----
+
+==== MIBs y OIDs útiles (chuleta)
+
+===== SNMPv2-MIB (System)
+
+* `sysDescr.0` → descripción del sistema | OID: 1.3.6.1.2.1.1.1.0
+* `sysName.0` → nombre/hostname | OID: 1.3.6.1.2.1.1.5.0
+* `sysUpTime.0` → tiempo encendido | OID: 1.3.6.1.2.1.1.3.0
+
+===== IF-MIB (Interfaces)
+
+* `ifDescr` | OID base: 1.3.6.1.2.1.2.2.1.2
+* `ifOperStatus` | OID base: 1.3.6.1.2.1.2.2.1.8
+* `ifInOctets / ifOutOctets` | OID base: 1.3.6.1.2.1.2.2.1.10 / 1.3.6.1.2.1.2.2.1.16
+
+===== IP-MIB (IP / routing básico)
+
+* `ipForwarding.0` → OID: 1.3.6.1.2.1.4.1.0
+
+===== TCP-MIB / UDP-MIB
+
+* `tcpCurrEstab.0` → OID: 1.3.6.1.2.1.6.9.0
+* `udpInDatagrams.0` → OID: 1.3.6.1.2.1.7.1.0
+
+===== HOST-RESOURCES-MIB (CPU/RAM/discos/procesos)
+
+* `hrSystemUptime.0` → OID: 1.3.6.1.2.1.25.1.1.0
+* `hrMemorySize.0` → OID: 1.3.6.1.2.1.25.2.2.0
+* `hrProcessorLoad` (tabla) → OID base: 1.3.6.1.2.1.25.3.3.1.2
+
+===== UCD-SNMP-MIB (Net-SNMP típico en Linux)
+
+* `laLoad.1` → 1.3.6.1.4.1.2021.10.1.3.1
+* `laLoad.2` → 1.3.6.1.4.1.2021.10.1.3.2
+* `laLoad.3` → 1.3.6.1.4.1.2021.10.1.3.3
+
+==== Pruebas rápidas (target 10.179.152.20)
+
+[source,bash]
+----
+snmpget -v2c -c public 10.179.152.20 1.3.6.1.2.1.1.5.0
+snmpwalk -v2c -c public 10.179.152.20 1.3.6.1.2.1.2.2.1.2
+snmpget -v2c -c public 10.179.152.20 1.3.6.1.2.1.25.2.2.0
+snmpget -v2c -c public 10.179.152.20 1.3.6.1.4.1.2021.10.1.3.1
+----
+
+NOTE: En producción evita SNMPv2c salvo entornos muy controlados. Usa SNMPv3 (authPriv) siempre que sea posible.

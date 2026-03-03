@@ -1,0 +1,61 @@
+=== SNMP
+
+==== Qué es SNMP
+
+SNMP (Simple Network Management Protocol) es un protocolo para monitorizar y gestionar dispositivos (Linux, switches, routers, APs, impresoras) desde una máquina "manager".
+
+El agente (en el dispositivo) expone métricas y estado; el manager pregunta y recibe datos.  
+Los datos se organizan en una MIB y se consultan mediante OIDs.
+
+===== Puertos
+
+* UDP/161 → consultas (GET/WALK/BULK)
+* UDP/162 → traps (eventos enviados por el dispositivo)
+
+==== Versiones y seguridad
+
+===== SNMPv2c
+
+La "c" es de *community*.  
+Autenticación: una *community string* (public, private…), como una contraseña muy simple.
+
+Seguridad real: casi ninguna
+
+* Va en claro (sin cifrado)
+* Si alguien la captura, puede leer (y si es RW, incluso cambiar cosas)
+* Uso típico: laboratorio/red interna controlada
+* Ventaja: fácil y compatible con casi todo
+
+Ejemplo:
+
+[source,bash]
+----
+snmpget -v2c -c public 192.168.56.11 sysUpTime.0
+----
+
+===== SNMPv3
+
+SNMPv3 añade usuario + seguridad real (USM):
+
+* authNoPriv → autenticación sin cifrado (integridad sin confidencialidad)
+* authPriv → autenticación + cifrado (recomendado)
+
+Componentes típicos (v3):
+
+* Usuario: `-u snmpuser`
+* Auth: algoritmo (SHA/MD5) + clave → `-a SHA -A ...`
+* Privacidad: cifrado (AES/DES) + clave → `-x AES -X ...`
+* Nivel: `-l authPriv` o `-l authNoPriv`
+
+Ejemplo:
+
+[source,bash]
+----
+snmpget -v3 -l authPriv -u snmpuser -a SHA -A 'AuthPass123' -x AES -X 'PrivPass123' 192.168.56.11 sysUpTime.0
+----
+
+===== Comparativa rápida
+
+* v2c → simple y rápido, pero inseguro (community en claro)
+* v3 → más configuración, pero estándar en producción (usuario + auth + cifrado)
+
