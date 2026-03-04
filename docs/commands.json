@@ -334,6 +334,61 @@
     "source_path": "local_network/commands/whois.adoc"
   },
   {
+    "description": "Herramienta SNMP para obtener el valor de un OID específico en un dispositivo de red.",
+    "usage": "snmpget [OPCIONES] -v VERSION -c COMUNIDAD HOST OID",
+    "options": {
+      "-v": "Versión SNMP (1, 2c, 3)",
+      "-c": "Cadena de comunidad (SNMPv1/v2c)",
+      "-u": "Usuario (SNMPv3)",
+      "-l": "Nivel de seguridad (noAuthNoPriv, authNoPriv, authPriv)",
+      "-a": "Protocolo de autenticación",
+      "-A": "Clave de autenticación",
+      "-x": "Protocolo de privacidad",
+      "-X": "Clave de privacidad",
+      "-On": "Mostrar OID numérico",
+      "-Oqv": "Mostrar solo el valor"
+    },
+    "name": "snmpget",
+    "category": "local_network",
+    "source_path": "local_network/snmp/commands/snmpget.adoc"
+  },
+  {
+    "description": "Herramienta SNMP que utiliza la operación GETBULK (SNMPv2c/v3) para recorrer grandes tablas de forma más eficiente que snmpwalk.",
+    "usage": "snmpbulkwalk [OPCIONES] -v VERSION -c COMUNIDAD HOST OID",
+    "options": {
+      "-v": "Versión SNMP (2c o 3)",
+      "-c": "Cadena de comunidad",
+      "-Cr": "Número máximo de repeticiones por solicitud",
+      "-Cn": "Número de OIDs no repetidores",
+      "-On": "Mostrar OID numérico",
+      "-Oqv": "Mostrar solo valores",
+      "-u": "Usuario (SNMPv3)",
+      "-l": "Nivel de seguridad (SNMPv3)"
+    },
+    "name": "snmpbulkwalk",
+    "category": "local_network",
+    "source_path": "local_network/snmp/commands/snmpbulkwalk.adoc"
+  },
+  {
+    "description": "Herramienta SNMP para recorrer y consultar de forma secuencial un árbol MIB en un dispositivo de red.",
+    "usage": "snmpwalk [OPCIONES] -v VERSION -c COMUNIDAD HOST OID",
+    "options": {
+      "-v": "Versión SNMP (1, 2c, 3)",
+      "-c": "Cadena de comunidad (SNMPv1/v2c)",
+      "-u": "Usuario (SNMPv3)",
+      "-l": "Nivel de seguridad (noAuthNoPriv, authNoPriv, authPriv)",
+      "-a": "Protocolo de autenticación (MD5, SHA)",
+      "-A": "Clave de autenticación",
+      "-x": "Protocolo de privacidad (DES, AES)",
+      "-X": "Clave de privacidad",
+      "-On": "Mostrar OIDs en formato numérico",
+      "-Oqv": "Mostrar solo valores (salida limpia)"
+    },
+    "name": "snmpwalk",
+    "category": "local_network",
+    "source_path": "local_network/snmp/commands/snmpwalk.adoc"
+  },
+  {
     "description": "Convertir la codificación de caracteres de archivos o flujos de texto.",
     "usage": "iconv [OPCIONES] fichero",
     "options": {
