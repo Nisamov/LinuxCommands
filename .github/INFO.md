@@ -22,10 +22,16 @@ El repositorio se creó oficialmente el `25/11/2023` a las `10:42`, marcando el 
 4. **22/11/2023** – Surgen otros repositorios relacionados: **TermuxCommands**(Eliminado poco tiempo después) y **RouterSwitchCommands**, asi mismo, el archivo de LinuxCommands, pasó a la versión **"Linux Commands [V.B]" (Beta Version)**.
 5. **11/09/2025** – Durante el grado superior, se actualiza contenido antiguo y se agrega nuevo.
 6. **07/01/2026** – Se reorganiza la estructura del repositorio, estableciendo un estándar y mejorando el formato para facilitar la búsqueda.
-7. **19–31/01/2026** – Comienza la incorporación de múltiples idiomas, alcanzando más de 5 idiomas disponibles.
-8. **08/02/2026** – Se implementa una subpágina de búsqueda que permite indexar el repositorio y consultar comandos de manera rápida y eficiente. Los idiomas disponibles son:  
-   - Español, Inglés, Portugués, Francés, Alemán, Ruso, Chino, Japonés y Coreano.
+7. **19/01/2026** – Comienza la incorporación de múltiples idiomas, alcanzando más de 5 idiomas disponibles.
+8. **08/02/2026** – Se implementa una subpágina de búsqueda que permite indexar el repositorio y consultar comandos de manera rápida y eficiente.
+9. **03/03/2026** - Se crea la página wikidot para albergar la explicación e historia del repositorio.
 
+Los idiomas disponibles son:  
+   - Español, Inglés, Alemán, Ruso, Chino, Japonés y Coreano.
+<!--Previamente era posible obtener la traducción del francés y portugués-->
+<!--Debido al tiempo que tardaba en traducir todos los ficheros, se ha visto la necesidad de reducir varios idiomas-->
+<!--En caso de aumentar el tiempo de espera, se eliminarán los idiomas en este orden: Coreano,Alemán, Japonés, Ruso, Chino-->
+<!--Si tras la eliminación d las traducciones no es óptima para realizarse en github, se buscarán alternativas para su traducción y posibilidad de descargar desde la nube-->
 ---
 
 ## Apoyo Escolar
