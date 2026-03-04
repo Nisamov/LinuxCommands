@@ -1,0 +1,53 @@
+=== snmpbulkwalk
+Consultar múltiples objetos SNMP usando operaciones GETBULK (más eficiente en grandes tablas).
+
+:category: local_network
+[.metadata]
+{
+  "description": "Herramienta SNMP que utiliza la operación GETBULK (SNMPv2c/v3) para recorrer grandes tablas de forma más eficiente que snmpwalk.",
+  "usage": "snmpbulkwalk [OPCIONES] -v VERSION -c COMUNIDAD HOST OID",
+  "options": {
+    "-v": "Versión SNMP (2c o 3)",
+    "-c": "Cadena de comunidad",
+    "-Cr": "Número máximo de repeticiones por solicitud",
+    "-Cn": "Número de OIDs no repetidores",
+    "-On": "Mostrar OID numérico",
+    "-Oqv": "Mostrar solo valores",
+    "-u": "Usuario (SNMPv3)",
+    "-l": "Nivel de seguridad (SNMPv3)"
+  }
+}
+
+[source,bash]
+----
+# Recorrer tabla completa usando GETBULK
+snmpbulkwalk -v2c -c public 192.168.1.1
+----
+
+-Cr:: `-Cr` Definir número de repeticiones
+
+[source,bash]
+----
+# Aumentar cantidad de registros por petición
+snmpbulkwalk -v2c -c public -Cr50 192.168.1.1 IF-MIB::ifTable
+----
+
+OID:: Especificar tabla concreta
+
+[source,bash]
+----
+# Consultar tabla ARP
+snmpbulkwalk -v2c -c public 192.168.1.1 IP-MIB::ipNetToMediaTable
+----
+
+Comparación:: Diferencia principal
+
+[source,bash]
+----
+# snmpwalk usa GETNEXT (más compatible)
+snmpwalk -v2c -c public 192.168.1.1
+
+# snmpbulkwalk usa GETBULK (más eficiente)
+snmpbulkwalk -v2c -c public 192.168.1.1
+----
+

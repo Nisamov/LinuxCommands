@@ -54,8 +54,8 @@ Ejemplo:
 snmpget -v3 -l authPriv -u snmpuser -a SHA -A 'AuthPass123' -x AES -X 'PrivPass123' 192.168.56.11 sysUpTime.0
 ----
 
-===== Comparativa rápida
+===== Comparativa
 
-* v2c → simple y rápido, pero inseguro (community en claro)
+* v2c → simple y rápido, pero inseguro (community en claro), pues la clave está guardada como string y sin cifrado.
 * v3 → más configuración, pero estándar en producción (usuario + auth + cifrado)
 

@@ -1,0 +1,52 @@
+=== snmpget
+Consultar un único objeto SNMP específico.
+
+:category: local_network
+[.metadata]
+{
+  "description": "Herramienta SNMP para obtener el valor de un OID específico en un dispositivo de red.",
+  "usage": "snmpget [OPCIONES] -v VERSION -c COMUNIDAD HOST OID",
+  "options": {
+    "-v": "Versión SNMP (1, 2c, 3)",
+    "-c": "Cadena de comunidad (SNMPv1/v2c)",
+    "-u": "Usuario (SNMPv3)",
+    "-l": "Nivel de seguridad (noAuthNoPriv, authNoPriv, authPriv)",
+    "-a": "Protocolo de autenticación",
+    "-A": "Clave de autenticación",
+    "-x": "Protocolo de privacidad",
+    "-X": "Clave de privacidad",
+    "-On": "Mostrar OID numérico",
+    "-Oqv": "Mostrar solo el valor"
+  }
+}
+
+[source,bash]
+----
+# Obtener el nombre del sistema
+snmpget -v2c -c public 192.168.1.1 sysName.0
+----
+
+OID:: Especificar OID concreto
+
+[source,bash]
+----
+# Obtener tiempo de actividad del sistema
+snmpget -v2c -c public 192.168.1.1 sysUpTime.0
+----
+
+-Oqv:: `-Oqv` Mostrar solo valor
+
+[source,bash]
+----
+# Mostrar únicamente el valor sin etiquetas
+snmpget -v2c -c public -Oqv 192.168.1.1 sysContact.0
+----
+
+SNMPv3:: Ejemplo con autenticación y privacidad
+
+[source,bash]
+----
+# Consulta usando SNMPv3 con autenticación y cifrado
+snmpget -v3 -u usuario -l authPriv -a SHA -A claveAuth -x AES -X clavePriv 192.168.1.1 sysName.0
+----
+

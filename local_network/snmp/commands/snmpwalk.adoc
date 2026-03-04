@@ -1,0 +1,68 @@
+=== snmpwalk
+Consultar secuencialmente objetos SNMP recorriendo un árbol MIB.
+
+:category: local_network
+[.metadata]
+{
+  "description": "Herramienta SNMP para recorrer y consultar de forma secuencial un árbol MIB en un dispositivo de red.",
+  "usage": "snmpwalk [OPCIONES] -v VERSION -c COMUNIDAD HOST OID",
+  "options": {
+    "-v": "Versión SNMP (1, 2c, 3)",
+    "-c": "Cadena de comunidad (SNMPv1/v2c)",
+    "-u": "Usuario (SNMPv3)",
+    "-l": "Nivel de seguridad (noAuthNoPriv, authNoPriv, authPriv)",
+    "-a": "Protocolo de autenticación (MD5, SHA)",
+    "-A": "Clave de autenticación",
+    "-x": "Protocolo de privacidad (DES, AES)",
+    "-X": "Clave de privacidad",
+    "-On": "Mostrar OIDs en formato numérico",
+    "-Oqv": "Mostrar solo valores (salida limpia)"
+  }
+}
+
+[source,bash]
+----
+# Recorrer todo el árbol MIB del dispositivo
+snmpwalk -v2c -c public 192.168.1.1
+----
+
+-v:: `snmpwalk -v` Definir versión SNMP
+
+[source,bash]
+----
+# Usar SNMP versión 2c
+snmpwalk -v2c -c public 192.168.1.1
+----
+
+-c:: `snmpwalk -c` Definir comunidad
+
+[source,bash]
+----
+# Especificar comunidad personalizada
+snmpwalk -v2c -c privada 192.168.1.1
+----
+
+OID:: Especificar OID concreto a recorrer
+
+[source,bash]
+----
+# Consultar solo la tabla de interfaces
+snmpwalk -v2c -c public 192.168.1.1 IF-MIB::ifDescr
+----
+
+-On:: `-On` Mostrar OID numérico
+
+[source,bash]
+----
+# Mostrar resultados con OID en formato numérico
+snmpwalk -v2c -c public -On 192.168.1.1
+----
+
+-Oqv:: `-Oqv` Mostrar solo valores
+
+[source,bash]
+----
+# Mostrar solo valores sin nombre de OID
+snmpwalk -v2c -c public -Oqv 192.168.1.1 sysName.0
+----
+

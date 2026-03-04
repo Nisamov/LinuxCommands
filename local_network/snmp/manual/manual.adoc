@@ -1,179 +1,123 @@
-==== Manual de instalación SNMP
+= Guía de Configuración SNMP
 
-===== En Linux: qué instalar
+SNMP es el protocolo estándar para extraer información de estado y rendimiento de dispositivos de red. El "Manager" pide los datos y el "Agente" (en el equipo remoto) los entrega.
 
-En el target (a monitorizar):
+== Conceptos operativos
 
+* **Puerto UDP 161**: El canal donde el agente escucha las peticiones.
+* **OIDs**: Los códigos numéricos que identifican cada dato (ej. uso de CPU, nombre del equipo).
+* **MIBs**: Los archivos que traducen esos números a nombres que una persona pueda entender.
+
+== Preparación de los sistemas
+
+=== Instalación en el dispositivo a monitorizar (Target)
+Para que un equipo pueda responder consultas, necesita el servicio agente:
 [source,bash]
 ----
 sudo apt update
 sudo apt install -y snmpd
 ----
 
-En el manager (desde donde consultas):
-
+=== Instalación en el equipo de consulta (Manager)
+Para poder lanzar preguntas y ver las métricas, necesitas las herramientas de cliente y los traductores de nombres:
 [source,bash]
 ----
 sudo apt update
-sudo apt install -y snmp
-----
-
-===== Configurar un target Linux (SNMPv2c para laboratorio)
-
-Edita `/etc/snmp/snmpd.conf` y deja algo así:
-
-[source]
-----
-agentAddress udp:161
-rocommunity public 192.168.56.0/24
-sysLocation "Aula"
-sysContact "admin@local"
-----
-
-Reinicia y habilita el servicio:
-
-[source,bash]
-----
-sudo systemctl restart snmpd
-sudo systemctl enable snmpd
-----
-
-Si hay firewall UFW:
-
-[source,bash]
-----
-sudo ufw allow from 192.168.56.0/24 to any port 161 proto udp
-----
-
-===== Comandos esenciales (manager)
-
-====== snmpget (1 dato)
-
-Sintaxis:
-
-[source,bash]
-----
-snmpget -v2c -c public IP_TARGET OID
-----
-
-Ejemplos:
-
-[source,bash]
-----
-snmpget -v2c -c public 192.168.56.11 sysDescr.0
-snmpget -v2c -c public 192.168.56.11 sysName.0
-snmpget -v2c -c public 192.168.56.11 sysUpTime.0
-----
-
-Notas:
-
-* `-v2c` → SNMP v2c
-* `-c public` → comunidad (clave simple)
-* `sysDescr.0 / sysName.0 / sysUpTime.0` → datos básicos del sistema
-* El `.0` es la instancia de un valor escalar (un solo valor)
-
-====== snmpwalk (muchos datos de un árbol)
-
-Sintaxis:
-
-[source,bash]
-----
-snmpwalk -v2c -c public IP_TARGET OID
-----
-
-Interfaces (ejemplos típicos):
-
-[source,bash]
-----
-snmpwalk -v2c -c public 192.168.56.11 ifDescr
-snmpwalk -v2c -c public 192.168.56.11 ifOperStatus
-snmpwalk -v2c -c public 192.168.56.11 ifInOctets
-snmpwalk -v2c -c public 192.168.56.11 ifOutOctets
-----
-
-Interpretación rápida:
-
-* `ifDescr.X` → nombre de la interfaz y su índice X (ifIndex)
-* El resto usa ese mismo X:
-** `ifOperStatus.X` = up/down
-** `ifInOctets.X / ifOutOctets.X` = contadores de bytes (aumentan con el tráfico)
-
-====== snmpbulkwalk (tablas grandes más rápido)
-
-[source,bash]
-----
-snmpbulkwalk -v2c -c public 192.168.56.11 ifTable
-----
-
-==== MIBs: instalar y habilitar en el manager
-
-En Prometheus/manager (Ubuntu/Debian):
-
-[source,bash]
-----
-sudo apt update
-sudo apt install -y snmp-mibs-downloader
+sudo apt install -y snmp snmp-mibs-downloader
 sudo download-mibs
 ----
 
-Habilita MIBs en el cliente: edita `/etc/snmp/snmp.conf` y comenta o borra la línea:
+== Configuración del servicio en el Target
 
-[source]
+=== Opción 1: Acceso rápido (SNMPv2c)
+Este método es el más sencillo para pruebas. Se basa en una "comunidad" que funciona como contraseña compartida. Edita `/etc/snmp/snmpd.conf`:
+
+[source,conf]
 ----
-mibs :
+# Define que el servicio escuche en la red, no solo local
+agentAddress udp:161
+
+# Da permiso de lectura a una IP o rango específico con el nombre 'public'
+rocommunity public 192.168.56.0/24
+
+# Datos informativos del equipo
+sysLocation "Servidor_Huesca"
+sysContact "admin@dominio.com"
 ----
 
-Abre una terminal nueva y prueba:
+=== Opción 2: Acceso seguro (SNMPv3)
+Para entornos reales, se crea un usuario con contraseña y cifrado. Esto evita que cualquiera vea el tráfico de monitorización.
+
+1. Para el servicio para poder modificar la base de usuarios: `sudo systemctl stop snmpd`
+2. Genera el usuario con algoritmos de autenticación (SHA) y cifrado (AES):
+[source,bash]
+----
+sudo net-snmp-config --create-snmpv3-user -a SHA -A PassAutentica -x AES -X PassCifrado usuario_seguro
+----
+3. Arrancar nuevamente el servicio: `sudo systemctl start snmpd`
+
+=== Aplicar cambios y abrir paso en el sistema
+[source,bash]
+----
+# Reinicia el proceso para leer la nueva configuración
+sudo systemctl restart snmpd
+# Asegura que el servicio arranque solo tras un reinicio
+sudo systemctl enable snmpd
+# Permite que las consultas de red entren por el firewall
+sudo ufw allow from 192.168.56.0/24 to any port 161 proto udp
+----
+
+== Uso de herramientas de consulta en el Manager
+
+=== Obtener un valor puntual (snmpget)
+Se usa cuando sabes exactamente qué dato quieres. El `.0` al final del OID indica que es un valor único (escalar).
 
 [source,bash]
 ----
-snmpget -v2c -c public 192.168.6.54 sysUpTime.0
-snmpwalk -v2c -c public 192.168.6.54 ifDescr
+# Ejemplo en v2c: pide el nombre del equipo
+snmpget -v2c -c public 192.168.56.11 sysName.0
+
+# Ejemplo en v3: pide el tiempo de actividad con seguridad
+snmpget -v3 -l authPriv -u usuario_seguro -a SHA -A 'PassAutentica' -x AES -X 'PassCifrado' 192.168.56.11 sysUpTime.0
 ----
 
-==== MIBs y OIDs útiles (chuleta)
-
-===== SNMPv2-MIB (System)
-
-* `sysDescr.0` → descripción del sistema | OID: 1.3.6.1.2.1.1.1.0
-* `sysName.0` → nombre/hostname | OID: 1.3.6.1.2.1.1.5.0
-* `sysUpTime.0` → tiempo encendido | OID: 1.3.6.1.2.1.1.3.0
-
-===== IF-MIB (Interfaces)
-
-* `ifDescr` | OID base: 1.3.6.1.2.1.2.2.1.2
-* `ifOperStatus` | OID base: 1.3.6.1.2.1.2.2.1.8
-* `ifInOctets / ifOutOctets` | OID base: 1.3.6.1.2.1.2.2.1.10 / 1.3.6.1.2.1.2.2.1.16
-
-===== IP-MIB (IP / routing básico)
-
-* `ipForwarding.0` → OID: 1.3.6.1.2.1.4.1.0
-
-===== TCP-MIB / UDP-MIB
-
-* `tcpCurrEstab.0` → OID: 1.3.6.1.2.1.6.9.0
-* `udpInDatagrams.0` → OID: 1.3.6.1.2.1.7.1.0
-
-===== HOST-RESOURCES-MIB (CPU/RAM/discos/procesos)
-
-* `hrSystemUptime.0` → OID: 1.3.6.1.2.1.25.1.1.0
-* `hrMemorySize.0` → OID: 1.3.6.1.2.1.25.2.2.0
-* `hrProcessorLoad` (tabla) → OID base: 1.3.6.1.2.1.25.3.3.1.2
-
-===== UCD-SNMP-MIB (Net-SNMP típico en Linux)
-
-* `laLoad.1` → 1.3.6.1.4.1.2021.10.1.3.1
-* `laLoad.2` → 1.3.6.1.4.1.2021.10.1.3.2
-* `laLoad.3` → 1.3.6.1.4.1.2021.10.1.3.3
-
-==== Pruebas rápidas (target 10.179.152.20)
+=== Listar categorías completas (snmpwalk)
+Útil cuando quieres ver una lista, como todas las interfaces de red o todos los procesos.
 
 [source,bash]
 ----
-snmpget -v2c -c public 10.179.152.20 1.3.6.1.2.1.1.5.0
-snmpwalk -v2c -c public 10.179.152.20 1.3.6.1.2.1.2.2.1.2
-snmpget -v2c -c public 10.179.152.20 1.3.6.1.2.1.25.2.2.0
-snmpget -v2c -c public 10.179.152.20 1.3.6.1.4.1.2021.10.1.3.1
+# Muestra todos los nombres de las tarjetas de red detectadas
+snmpwalk -v2c -c public 192.168.56.11 ifDescr
 ----
 
-NOTE: En producción evita SNMPv2c salvo entornos muy controlados. Usa SNMPv3 (authPriv) siempre que sea posible.
+== Referencia rápida de datos (OIDs)
+
+|===
+| Categoría | Qué mide | OID Numérico
+
+| Sistema | Nombre del host | .1.3.6.1.2.1.1.5.0
+| Sistema | Tiempo desde el arranque | .1.3.6.1.2.1.1.3.0
+| Red | Tráfico de entrada (bytes) | .1.3.6.1.2.1.2.2.1.10
+| Memoria | RAM Total instalada | .1.3.6.1.2.1.25.2.2.0
+| Carga | Carga de CPU (último minuto) | .1.3.6.1.4.1.2021.10.1.3.1
+|===
+
+== Traducción de nombres en el Manager
+
+Por defecto, el sistema te devolverá números largos. Para ver nombres como `sysName` en lugar de `1.3.6.1...`, haz lo siguiente:
+
+1. Abre el archivo de configuración del cliente: `sudo nano /etc/snmp/snmp.conf`
+2. Localiza la línea que dice `mibs :` y bórrala o ponle una almohadilla `#` delante.
+3. A partir de ahora, cualquier comando mostrará los nombres de las MIBs descargadas.
+
+== Comprobación final
+Ejecuta esto para confirmar que todo el flujo funciona (instalación, red y traducción):
+
+[source,bash]
+----
+# Consulta el nombre, la RAM y la carga de CPU
+snmpget -v2c -c public 10.179.152.20 sysName.0
+snmpget -v2c -c public 10.179.152.20 hrMemorySize.0
+snmpget -v2c -c public 10.179.152.20 .1.3.6.1.4.1.2021.10.1.3.1
+----
+
