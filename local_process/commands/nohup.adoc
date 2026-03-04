@@ -1,0 +1,61 @@
+=== nohup
+Ejecutar un comando de modo que sea inmune a la señal de colgado (SIGHUP).
+
+:category: local_process
+[.metadata]
+{
+  "description": "Permite que un proceso continúe ejecutándose incluso después de que el usuario cierre la sesión o la terminal. Redirige automáticamente la salida a un archivo si no se especifica uno.",
+  "usage": "nohup COMANDO [ARG]... &",
+  "options": {
+    "--help": "Mostrar ayuda y salir",
+    "--version": "Mostrar información de versión"
+  }
+}
+
+[source,bash]
+----
+# Ejecutar un script que sobreviva al cierre de la terminal
+nohup ./script_largo.sh &
+----
+
+-Inmunidad a SIGHUP:: Cuando una terminal se cierra, envía una señal `SIGHUP` a todos sus procesos hijos. `nohup` intercepta esta señal, permitiendo que el proceso pase a ser adoptado por el proceso `init` (PID 1).
+
+[source,bash]
+----
+# Ejecutar una descarga pesada y poder apagar la sesión
+nohup wget http://archivo.grande.iso &
+----
+
+-Salida por defecto:: Si no redireccionas la salida manualmente, `nohup` crea (o añade a) un archivo llamado `nohup.out` en el directorio actual para guardar el `stdout` y `stderr`.
+
+[source,bash]
+----
+# Si el directorio actual no tiene permisos de escritura,
+# se guardará en $HOME/nohup.out
+nohup python3 entrenamiento_ia.py &
+----
+
+-Redirección personalizada:: Es una buena práctica redirigir la salida a archivos específicos para evitar que `nohup.out` crezca indefinidamente o se mezcle con otros procesos.
+
+[source,bash]
+----
+# Redirigir salida y errores a un log específico
+nohup ./servidor_web > output.log 2>&1 &
+----
+
+-Verificación de ejecución:: Puedes comprobar que el proceso sigue vivo después de cerrar y volver a abrir la terminal usando `ps` o `pgrep`.
+
+[source,bash]
+----
+# Buscar el proceso por nombre
+pgrep -a nombre_del_script
+----
+
+-Combinación con Exit:: Para asegurar que el proceso se desprenda correctamente de la shell actual, algunos usuarios prefieren forzar la salida inmediatamente.
+
+[source,bash]
+----
+# Lanzar y cerrar sesión en una sola línea
+nohup ./proceso_critico.sh & exit
+----
+

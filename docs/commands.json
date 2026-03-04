@@ -114,6 +114,22 @@
     "source_path": "local_users/commands/su.adoc"
   },
   {
+    "description": "Herramienta extremadamente versátil para depurar y explorar redes. Permite crear conexiones, abrir puertos de escucha y transferir datos.",
+    "usage": "nc [OPCIONES] [HOST] [PUERTO]",
+    "options": {
+      "-l": "Modo de escucha (listen) para conexiones entrantes",
+      "-p": "Especificar el puerto local (usado con -l)",
+      "-v": "Modo detallado (verbose)",
+      "-z": "Modo de escaneo (no envía datos)",
+      "-u": "Usar el protocolo UDP en lugar de TCP",
+      "-w": "Tiempo de espera (timeout) para conexiones",
+      "-e": "Ejecutar un programa tras establecer la conexión (no disponible en todas las versiones)"
+    },
+    "name": "nc",
+    "category": "local_network",
+    "source_path": "local_network/commands/nc.adoc"
+  },
+  {
     "description": "Transferir datos desde o hacia un servidor usando distintos protocolos (HTTP, HTTPS, FTP…).",
     "usage": "curl [OPCIONES] [URL]",
     "options": {
@@ -197,6 +213,36 @@
     "source_path": "local_network/commands/tcpdump.adoc"
   },
   {
+    "description": "Herramienta sencilla para realizar búsquedas en el sistema de nombres de dominio (DNS). Convierte nombres de dominio en direcciones IP y viceversa.",
+    "usage": "host [OPCIONES] [NOMBRE_O_IP] [SERVIDOR_DNS]",
+    "options": {
+      "-t": "Especificar el tipo de registro DNS (A, MX, TXT, NS, etc.)",
+      "-a": "Modo 'Any' (muestra todos los registros disponibles)",
+      "-v": "Modo detallado (verbose)",
+      "-l": "Listar todas las máquinas de un dominio (transferencia de zona)",
+      "-W": "Tiempo de espera para una respuesta en segundos",
+      "-r": "Desactivar la recursividad"
+    },
+    "name": "host",
+    "category": "local_network",
+    "source_path": "local_network/commands/host.adoc"
+  },
+  {
+    "description": "Herramienta para crear, mostrar, editar, activar y desactivar conexiones de red, así como para controlar el estado del hardware de red.",
+    "usage": "nmcli [OPCIONES] OBJETO { COMANDO | help }",
+    "options": {
+      "-t": "Salida tabular/concisa (ideal para scripts)",
+      "-p": "Salida legible para humanos (con colores y formato)",
+      "-f": "Especificar campos de salida (columnas)",
+      "-m": "Modo multilínea",
+      "-a": "Preguntar por parámetros faltantes (como contraseñas)",
+      "-w": "Establecer un tiempo de espera para la operación"
+    },
+    "name": "nmcli",
+    "category": "local_network",
+    "source_path": "local_network/commands/nmcli.adoc"
+  },
+  {
     "description": "Mostrar conexiones de red activas, puertos abiertos, rutas y estadísticas de red.",
     "usage": "netstat [OPCIONES]",
     "options": {
@@ -246,6 +292,36 @@
     "source_path": "local_network/commands/ifconfig.adoc"
   },
   {
+    "description": "Herramienta de transferencia de datos multipropósito que conecta dos canales de datos independientes (archivos, sockets, dispositivos serie, tuberías). Es el sucesor avanzado de netcat.",
+    "usage": "socat [OPCIONES] <DIRECCIÓN1> <DIRECCIÓN2>",
+    "options": {
+      "-v": "Escribir los datos transferidos en la salida de error (modo detallado)",
+      "-d": "Imprimir mensajes de diagnóstico (usar -dd para más detalle)",
+      "-u": "Flujo unidireccional (de dirección1 a dirección2)",
+      "-x": "Escribir los datos transferidos en formato hexadecimal",
+      "TCP-LISTEN": "Escuchar en un puerto TCP",
+      "EXEC": "Ejecutar un programa y conectar sus canales de E/S"
+    },
+    "name": "socat",
+    "category": "local_network",
+    "source_path": "local_network/commands/socat.adoc"
+  },
+  {
+    "description": "Muestra la ruta que siguen los paquetes hacia un host y proporciona estadísticas de latencia y pérdida de paquetes para cada salto del camino en tiempo real.",
+    "usage": "mtr [OPCIONES] HOST",
+    "options": {
+      "-r": "Modo reporte (genera una salida estática después de 10 ciclos)",
+      "-c": "Número de ciclos (pings) a enviar",
+      "-g": "Modo gráfico (usando ncurses)",
+      "-i": "Intervalo entre pings en segundos",
+      "-n": "No resolver nombres de dominio (mostrar solo IPs)",
+      "-w": "Modo reporte extendido (nombres de host completos)"
+    },
+    "name": "mtr",
+    "category": "local_network",
+    "source_path": "local_network/commands/mtr.adoc"
+  },
+  {
     "description": "Consultar información de DNS y diagnosticar resolución de nombres de dominio.",
     "usage": "dig [OPCIONES] [DOMINIO]",
     "options": {
@@ -287,6 +363,21 @@
     "name": "ping",
     "category": "local_network",
     "source_path": "local_network/commands/ping.adoc"
+  },
+  {
+    "description": "Herramienta de administración para visualizar y modificar la configuración del hardware de red, incluyendo velocidad, duplex, estadísticas y autonegociación.",
+    "usage": "ethtool [OPCIONES] [INTERFAZ]",
+    "options": {
+      "-i": "Mostrar información del controlador (driver) y firmware",
+      "-S": "Mostrar estadísticas detalladas del hardware",
+      "-p": "Hacer parpadear los LEDs de la tarjeta para identificación física",
+      "-s": "Modificar la configuración de la interfaz",
+      "-k": "Consultar el estado de las funciones de descarga (offload)",
+      "-g": "Consultar los parámetros del anillo RX/TX"
+    },
+    "name": "ethtool",
+    "category": "local_network",
+    "source_path": "local_network/commands/ethtool.adoc"
   },
   {
     "description": "Mostrar y gestionar la tabla ARP para ver las asociaciones entre direcciones IP y MAC en la red local.",
@@ -603,6 +694,19 @@
     "source_path": "local_filesystem/commands/rmdir.adoc"
   },
   {
+    "description": "Fuerza la escritura de los bloques de datos modificados en la memoria caché hacia los discos. Asegura que no se pierdan datos si el sistema se detiene inesperadamente.",
+    "usage": "sync [OPCIONES] [ARCHIVO]...",
+    "options": {
+      "-d": "Sincronizar solo los datos de los archivos, no los metadatos",
+      "-f": "Sincronizar solo el sistema de archivos que contiene el archivo especificado",
+      "--help": "Mostrar ayuda y salir",
+      "--version": "Mostrar información de versión"
+    },
+    "name": "sync",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/sync.adoc"
+  },
+  {
     "description": "Establecer variables de entorno para la sesión actual o procesos hijos.",
     "usage": "export [VAR=VALOR]",
     "options": {
@@ -638,18 +742,6 @@
     "name": "less",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/less.adoc"
-  },
-  {
-    "description": "Mostrar frases aleatorias (fortunes) desde una base de datos local.",
-    "usage": "fortune [OPCIONES]",
-    "options": {
-      "-s": "Mostrar una fortuna aleatoria",
-      "-l": "Mostrar todas las frases disponibles",
-      "-f": "Especificar un fichero de frases personalizado"
-    },
-    "name": "fortune",
-    "category": "local_filesystem",
-    "source_path": "local_filesystem/commands/fortune.adoc"
   },
   {
     "description": "Herramienta para cambiar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.",
@@ -714,6 +806,35 @@
     "name": "mkfifo",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/mkfifo.adoc"
+  },
+  {
+    "description": "Herramienta para calcular y verificar resúmenes de huella digital MD5 (128 bits). Se utiliza principalmente para comprobar la integridad de archivos.",
+    "usage": "md5sum [OPCIONES] [ARCHIVO]...",
+    "options": {
+      "-b": "Leer en modo binario",
+      "-c": "Verificar hashes desde un archivo",
+      "-t": "Leer en modo texto",
+      "--tag": "Crear una salida de estilo BSD",
+      "--status": "No imprimir nada, el código de salida indica el éxito",
+      "--quiet": "No imprimir OK por cada archivo verificado con éxito"
+    },
+    "name": "md5sum",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/md5sum.adoc"
+  },
+  {
+    "description": "Calcula un valor de redundancia cíclica (CRC) y el tamaño en bytes de los archivos para verificar la integridad de los datos.",
+    "usage": "cksum [ARCHIVO]...",
+    "options": {
+      "-algorithm": "Especificar el algoritmo de hash (en versiones modernas)",
+      "-check": "Verificar sumas de comprobación desde un archivo",
+      "-untouched": "No mostrar salida para archivos que pasen la verificación",
+      "-quiet": "No imprimir 'OK' por cada archivo verificado correctamente",
+      "-length": "Interrumpir la suma tras un número determinado de bytes"
+    },
+    "name": "cksum",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/cksum.adoc"
   },
   {
     "description": "Extraer el directorio padre de una ruta completa.",
@@ -871,6 +992,21 @@
     "source_path": "local_filesystem/commands/locate.adoc"
   },
   {
+    "description": "Divide un archivo de entrada en varios archivos de salida de un tamaño fijo (por líneas o por bytes).",
+    "usage": "split [OPCIONES] [ENTRADA] [PREFIJO]",
+    "options": {
+      "-l": "Dividir el archivo según el número de líneas",
+      "-b": "Dividir el archivo según el tamaño en bytes (K, M, G, T)",
+      "-n": "Dividir en un número específico de archivos",
+      "-d": "Usar sufijos numéricos en lugar de alfabéticos",
+      "-a": "Longitud del sufijo (por defecto 2)",
+      "--additional-suffix": "Añadir una extensión personalizada a los archivos generados"
+    },
+    "name": "split",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/split.adoc"
+  },
+  {
     "description": "Extraer secciones de cada línea de un fichero o flujo de datos usando delimitadores o rangos de caracteres.",
     "usage": "cut [OPCIONES] archivo",
     "options": {
@@ -906,6 +1042,20 @@
     "name": "cd",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/cd.adoc"
+  },
+  {
+    "description": "Filtro que permite examinar archivos comprimidos (gzip, zip, etc.) una pantalla a la vez. Funciona de manera idéntica al comando 'less' pero aplicado a archivos comprimidos.",
+    "usage": "zless [ARCHIVO]...",
+    "options": {
+      "-N": "Mostrar números de línea",
+      "-S": "Cortar líneas largas en lugar de ajustarlas",
+      "-i": "Ignorar mayúsculas y minúsculas en las búsquedas",
+      "-m": "Mostrar porcentaje de lectura del archivo",
+      "-p": "Empezar la visualización en la primera coincidencia de un patrón"
+    },
+    "name": "zless",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/zless.adoc"
   },
   {
     "description": "Mover archivos o directorios entre rutas.",
@@ -994,6 +1144,21 @@
     "source_path": "local_filesystem/commands/tr.adoc"
   },
   {
+    "description": "Herramienta de seguridad que sobrescribe los datos de un archivo repetidamente para que sea extremadamente difícil de recuperar, incluso con hardware especializado.",
+    "usage": "shred [OPCIONES] ARCHIVO...",
+    "options": {
+      "-n": "Número de veces que se sobrescriben los datos (por defecto 3)",
+      "-u": "Truncar y eliminar el archivo después de sobrescribirlo",
+      "-z": "Añadir una sobrescritura final con ceros para ocultar el proceso",
+      "-s": "Sobrescribir solo un número determinado de bytes",
+      "-v": "Mostrar el progreso de las iteraciones",
+      "-f": "Cambiar permisos para permitir la escritura si es necesario"
+    },
+    "name": "shred",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/shred.adoc"
+  },
+  {
     "description": "Formatear texto ajustando líneas y párrafos para mejorar legibilidad.",
     "usage": "fmt [OPCIONES] fichero",
     "options": {
@@ -1035,6 +1200,21 @@
     "name": "scp",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/scp.adoc"
+  },
+  {
+    "description": "Compara dos archivos editados u ordenados y muestra las líneas únicas de cada uno y las líneas comunes.",
+    "usage": "comm [OPCIONES] archivo1 archivo2",
+    "options": {
+      "-1": "Suprimir líneas únicas del archivo 1",
+      "-2": "Suprimir líneas únicas del archivo 2",
+      "-3": "Suprimir líneas que aparecen en ambos archivos",
+      "--check-order": "Verificar que la entrada esté correctamente ordenada",
+      "--nocheck-order": "No verificar que la entrada esté ordenada",
+      "--output-delimiter": "Cambiar el separador entre columnas"
+    },
+    "name": "comm",
+    "category": "local_filesystem",
+    "source_path": "local_filesystem/commands/comm.adoc"
   },
   {
     "description": "Crear uno o varios directorios.",
@@ -1169,6 +1349,21 @@
     "name": "find",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/find.adoc"
+  },
+  {
+    "description": "Herramienta de 'Bash Screenshot Information Tool' que detecta automáticamente la distribución, el kernel, el tiempo de actividad, los paquetes instalados y el entorno de escritorio para mostrarlos de forma visualmente atractiva.",
+    "usage": "screenfetch [OPCIONES]",
+    "options": {
+      "-v": "Modo detallado (verbose)",
+      "-n": "No mostrar el logo de la distribución",
+      "-L": "Mostrar solo el logo de la distribución",
+      "-t": "Truncar la salida según el ancho de la terminal",
+      "-s": "Tomar una captura de pantalla automáticamente (requiere escrot)",
+      "-D": "Especificar manualmente la distribución (ej. 'Debian')"
+    },
+    "name": "screenfetch",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/screenfetch.adoc"
   },
   {
     "description": "Gestor de paquetes de bajo nivel para sistemas Debian y derivados. Permite instalar, eliminar y consultar paquetes .deb localmente sin resolver dependencias automáticamente.",
@@ -1342,6 +1537,231 @@
     "source_path": "local_software/commands/dnf.adoc"
   },
   {
+    "description": "Herramienta que transforma cadenas de texto ordinarias en letras grandes compuestas por caracteres ASCII. Soporta múltiples tipografías y ajustes de alineación.",
+    "usage": "figlet [OPCIONES] [TEXTO]",
+    "options": {
+      "-f": "Especificar el tipo de fuente (archivo .flf)",
+      "-c": "Centrar el texto en la salida de la terminal",
+      "-l": "Alinear el texto a la izquierda",
+      "-r": "Alinear el texto a la derecha",
+      "-t": "Ajustar el ancho del banner al tamaño actual de la terminal",
+      "-k": "Utilizar kerning (separar ligeramente las letras)"
+    },
+    "name": "figlet",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/figlet.adoc"
+  },
+  {
+    "description": "Utilidad de búsqueda rápida que localiza líneas que empiezan por una cadena de texto determinada. Por defecto, consulta el diccionario del sistema si no se especifica un archivo.",
+    "usage": "look [OPCIONES] CADENA [ARCHIVO]",
+    "options": {
+      "-f": "Ignorar mayúsculas y minúsculas (case-insensitive)",
+      "-t": "Especificar un carácter de terminación de cadena",
+      "-a": "Usar el diccionario alternativo (en algunos sistemas)",
+      "-d": "Diccionario: solo comparar letras y números (ignorar símbolos)"
+    },
+    "name": "look",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/look.adoc"
+  },
+  {
+    "description": "Una broma clásica de terminal diseñada para corregir el hábito de escribir mal el comando 'ls'. Muestra una animación ASCII de una locomotora que no puede ser interrumpida con Ctrl+C.",
+    "usage": "sl [OPCIONES]",
+    "options": {
+      "-a": "Modo accidente (se escuchan gritos de auxilio)",
+      "-l": "Locomotora pequeña",
+      "-F": "La locomotora vuela (estilo Galaxy Express 999)",
+      "-e": "Permitir la interrupción mediante Ctrl+C",
+      "ls": "El error común que dispara este comando"
+    },
+    "name": "sl",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/sl.adoc"
+  },
+  {
+    "description": "Procesador de lenguaje matemático que permite realizar cálculos aritméticos con precisión definida por el usuario, ideal para scripts de shell.",
+    "usage": "bc [OPCIONES] [ARCHIVO]",
+    "options": {
+      "-l": "Cargar la librería matemática estándar (define la precisión y funciones trigonométricas)",
+      "-q": "Modo silencioso, no muestra el mensaje de bienvenida",
+      "-s": "Modo estándar (POSIX bc)",
+      "-w": "Mostrar advertencias para extensiones de GNU bc",
+      "scale": "Variable interna para definir el número de decimales",
+      "last": "Variable para reutilizar el resultado del último cálculo"
+    },
+    "name": "bc",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/bc.adoc"
+  },
+  {
+    "description": "Programa que selecciona una frase al azar de una colección de archivos de citas. Es ampliamente utilizado en archivos de configuración de shell (.bashrc) para personalizar el inicio de sesión.",
+    "usage": "fortune [OPCIONES]",
+    "options": {
+      "-s": "Mostrar solo frases cortas (menos de 160 caracteres)",
+      "-l": "Mostrar solo frases largas",
+      "-n": "Limitar la longitud de las frases a un número específico de caracteres",
+      "-f": "Listar las bases de datos de citas disponibles",
+      "-e": "Considerar todos los archivos de citas con la misma probabilidad",
+      "-a": "Elegir de todas las bases de datos, incluyendo las ofensivas (si están instaladas)"
+    },
+    "name": "fortune",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/fortune.adoc"
+  },
+  {
+    "description": "Utilidad que transforma un texto de entrada en un mensaje dicho por una vaca en formato ASCII. Es altamente personalizable mediante el uso de diferentes personajes y estados de ánimo.",
+    "usage": "cowsay [OPCIONES] [MENSAJE]",
+    "options": {
+      "-f": "Especificar un archivo de personaje (.cow) diferente",
+      "-l": "Listar todos los personajes disponibles en el sistema",
+      "-e": "Cambiar la apariencia de los ojos (ej. -e '@@')",
+      "-T": "Cambiar la forma de la lengua",
+      "-p": "Modo paranoico",
+      "-g": "Modo codicioso (ojos de signo de dólar)"
+    },
+    "name": "cowsay",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/cowsay.adoc"
+  },
+  {
+    "description": "Una implementación mejorada de figlet que permite el uso de fuentes coloridas, filtros de efectos visuales (como arcoíris) y diversos formatos de exportación (HTML, TCT, etc.).",
+    "usage": "toilet [OPCIONES] [TEXTO]",
+    "options": {
+      "-f": "Especificar la fuente a utilizar",
+      "-F": "Aplicar un filtro de efecto (gay, metal, border)",
+      "-E": "Especificar el formato de salida (html, pbm, tga)",
+      "--gay": "Filtro de arcoíris (alias de -F gay)",
+      "--metal": "Filtro de color metálico (alias de -F metal)",
+      "-w": "Definir el ancho de la salida"
+    },
+    "name": "toilet",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/toilet.adoc"
+  },
+  {
+    "description": "Utilidad interactiva que convierte cantidades entre diferentes sistemas de unidades, maneja escalas métricas y permite realizar cálculos con dimensiones físicas.",
+    "usage": "units [OPCIONES] [DE-UNIDAD] [A-UNIDAD]",
+    "options": {
+      "-q": "Modo silencioso, no muestra mensajes de bienvenida ni avisos",
+      "-v": "Modo detallado, muestra la definición de la unidad y resultados extendidos",
+      "-t": "Modo conciso (terse), solo devuelve el valor numérico del resultado",
+      "-f": "Especificar un archivo de datos de unidades personalizado",
+      "interactivo": "Si no se pasan argumentos, inicia una sesión de preguntas/respuestas"
+    },
+    "name": "units",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/units.adoc"
+  },
+  {
+    "description": "Herramienta ligera y flexible para filtrar, transformar y extraer datos de archivos JSON. Permite manejar estructuras de datos complejas mediante un lenguaje de filtros propio.",
+    "usage": "jq [OPCIONES] 'FILTRO' [ARCHIVO]",
+    "options": {
+      "-r": "Modo 'raw output' (elimina comillas en strings de salida)",
+      "-c": "Salida compacta (todo en una sola línea)",
+      "-C": "Forzar coloreado de la sintaxis",
+      "-S": "Ordenar las llaves de los objetos alfabéticamente",
+      ".": "Filtro básico que formatea y muestra el JSON completo (pretty-print)"
+    },
+    "name": "jq",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/jq.adoc"
+  },
+  {
+    "description": "Utilidad matemática que calcula la factorización de números enteros. Si no se proporciona ningún argumento, lee los números desde la entrada estándar.",
+    "usage": "factor [NÚMERO]...",
+    "options": {
+      "--help": "Mostrar ayuda y salir",
+      "--version": "Mostrar información de versión"
+    },
+    "name": "factor",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/factor.adoc"
+  },
+  {
+    "description": "Herramienta que se inserta en una tubería entre dos procesos para visualizar la velocidad de transferencia, el tiempo transcurrido, el progreso porcentual y el tiempo estimado de finalización.",
+    "usage": "comando1 | pv [OPCIONES] | comando2",
+    "options": {
+      "-p": "Mostrar la barra de progreso",
+      "-t": "Mostrar el tiempo transcurrido",
+      "-e": "Mostrar el tiempo estimado de llegada (ETA)",
+      "-r": "Mostrar la tasa de transferencia (velocidad)",
+      "-b": "Mostrar el total de bytes transferidos",
+      "-W": "Esperar hasta que se transfiera el primer byte antes de mostrar nada",
+      "-L": "Limitar la transferencia a un máximo de bytes por segundo"
+    },
+    "name": "pv",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/pv.adoc"
+  },
+  {
+    "description": "Utilidad que utiliza un multiplexor de terminal (tmux) para crear una cuadrícula de paneles que ejecutan diversos comandos técnicos de forma frenética, imitando las interfaces de usuario ficticias del cine.",
+    "usage": "hollywood [OPCIONES]",
+    "options": {
+      "-d": "Especificar la duración en segundos antes de cerrarse",
+      "-i": "Modo interactivo (permite navegar por los paneles de tmux)",
+      "-s": "Ajustar la velocidad de actualización de los paneles",
+      "ctrl+c": "Detener la simulación y cerrar todos los paneles"
+    },
+    "name": "hollywood",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/hollywood.adoc"
+  },
+  {
+    "description": "Protector de pantalla para terminal que recrea el efecto visual de texto cayendo en cascada, permitiendo personalizar colores y comportamiento.",
+    "usage": "cmatrix [OPCIONES]",
+    "options": {
+      "-a": "Modo asíncrono (desplazamiento más suave)",
+      "-b": "Habilitar caracteres en negrita (bold)",
+      "-C": "Cambiar el color de los caracteres (green, red, blue, white, etc.)",
+      "-u": "Ajustar la velocidad de actualización (0-9)",
+      "-s": "Modo 'Screensaver' (sale al presionar cualquier tecla)",
+      "-x": "Modo X window (utiliza caracteres de estilo Matrix)"
+    },
+    "name": "cmatrix",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/cmatrix.adoc"
+  },
+  {
+    "description": "Utilidad clásica de Unix que genera una representación visual de gran tamaño para cadenas de texto, útil para portadas de scripts o avisos visuales.",
+    "usage": "banner [MENSAJE]",
+    "options": {
+      "mensaje": "Cadena de texto a transformar en banner",
+      "limitacion": "Truncado automático a 10 caracteres en versiones clásicas",
+      "pipe": "Soporta entrada estándar mediante tuberías"
+    },
+    "name": "banner",
+    "category": "local_miscellaneous",
+    "source_path": "local_miscellaneous/commands/banner.adoc"
+  },
+  {
+    "description": "Herramienta de depuración que intercepta y registra las llamadas al sistema que realiza un proceso y las señales que recibe. Es fundamental para entender qué hace un programa sin ver su código fuente.",
+    "usage": "strace [OPCIONES] [COMANDO [ARG]...]",
+    "options": {
+      "-p": "Vincularse a un proceso ya en ejecución mediante su PID",
+      "-e": "Filtrar por tipo de llamada al sistema (ej. -e trace=open,read)",
+      "-o": "Guardar la salida en un archivo en lugar de mostrarla por pantalla",
+      "-c": "Generar un reporte estadístico al finalizar (conteo de llamadas y tiempo)",
+      "-v": "Modo detallado: no abreviar estructuras de datos en la salida",
+      "-f": "Seguir también a los procesos hijos (forks)"
+    },
+    "name": "strace",
+    "category": "local_process",
+    "source_path": "local_process/commands/strace.adoc"
+  },
+  {
+    "description": "Inicia un comando y lo detiene si todavía se está ejecutando después del intervalo de tiempo especificado. Es ideal para evitar que procesos se queden bloqueados indefinidamente.",
+    "usage": "timeout [OPCIONES] DURACIÓN COMANDO [ARG]...",
+    "options": {
+      "-s, --signal": "Especificar la señal a enviar al finalizar el tiempo",
+      "-k, --kill-after": "Forzar el cierre del comando después de un tiempo adicional si no termina",
+      "--foreground": "Ejecutar en primer plano (útil con comandos interactivos)",
+      "--preserve-status": "Devolver el mismo código de salida que el comando original"
+    },
+    "name": "timeout",
+    "category": "local_process",
+    "source_path": "local_process/commands/timeout.adoc"
+  },
+  {
     "description": "Mostrar información sobre procesos en ejecución (Process Status).",
     "usage": "ps [OPCIONES]",
     "options": {
@@ -1358,6 +1778,34 @@
     "source_path": "local_process/commands/ps.adoc"
   },
   {
+    "description": "Permite ajustar la prioridad con la que el kernel de Linux asigna tiempo de CPU a un proceso. Los valores (niceness) van de -20 (máxima prioridad) a 19 (mínima prioridad).",
+    "usage": "nice [OPCIÓN] [COMANDO [ARG]...]",
+    "options": {
+      "-n, --adjustment": "Sumar un valor entero al valor 'nice' por defecto (10 si no se indica)",
+      "--help": "Mostrar ayuda y salir",
+      "--version": "Mostrar información de versión"
+    },
+    "name": "nice",
+    "category": "local_process",
+    "source_path": "local_process/commands/nice.adoc"
+  },
+  {
+    "description": "Muestra los PIDs de los procesos que están accediendo a archivos o sistemas de archivos específicos. También permite cerrar dichos procesos de forma masiva.",
+    "usage": "fuser [OPCIONES] [ARCHIVO/SISTEMA_DE_ARCHIVOS]",
+    "options": {
+      "-m": "Identifica todos los procesos que acceden a archivos en el sistema de archivos montado",
+      "-k": "Matar (kill) procesos que acceden al archivo",
+      "-i": "Pedir confirmación antes de matar un proceso",
+      "-v": "Modo detallado (verbose)",
+      "-u": "Muestra el nombre de usuario del dueño del proceso",
+      "-n": "Especificar el espacio de nombres (file, udp, tcp)",
+      "-a": "Mostrar todos los archivos especificados, incluso si no son accedidos por nadie"
+    },
+    "name": "fuser",
+    "category": "local_process",
+    "source_path": "local_process/commands/fuser.adoc"
+  },
+  {
     "description": "Monitor interactivo de procesos en tiempo real.",
     "usage": "top",
     "options": {
@@ -1370,6 +1818,21 @@
     "name": "top",
     "category": "local_process",
     "source_path": "local_process/commands/top.adoc"
+  },
+  {
+    "description": "Variante de 'kill' que permite buscar y terminar procesos utilizando patrones de texto (expresiones regulares) en lugar de requerir el PID exacto.",
+    "usage": "pkill [OPCIONES] PATRÓN",
+    "options": {
+      "-u": "Matar procesos que pertenecen a un usuario específico",
+      "-f": "Buscar el patrón en la línea de comandos completa, no solo en el nombre",
+      "-9": "Enviar la señal SIGKILL (terminación forzosa)",
+      "-t": "Matar procesos asociados a una terminal específica (TTY)",
+      "-v": "Invertir la selección: matar procesos que NO coincidan con el patrón",
+      "-x": "Coincidencia exacta: el nombre del proceso debe ser idéntico al patrón"
+    },
+    "name": "pkill",
+    "category": "local_process",
+    "source_path": "local_process/commands/pkill.adoc"
   },
   {
     "description": "Monitor de procesos interactivo con interfaz visual mejorada que reemplaza a `top`.",
@@ -1394,6 +1857,31 @@
     "name": "kill",
     "category": "local_process",
     "source_path": "local_process/commands/kill.adoc"
+  },
+  {
+    "description": "Modifica el valor 'nice' de uno o más procesos activos. A diferencia de 'nice', que lanza nuevos procesos, 'renice' actúa sobre los que ya tienen un PID asignado.",
+    "usage": "renice [-n] PRIORIDAD [-p] PID | [-u] USUARIO | [-g] GRUPO",
+    "options": {
+      "-n": "Especificar el nuevo valor de prioridad (absoluto, no incremento)",
+      "-p": "Interpretar los argumentos como IDs de proceso (PID) - opción por defecto",
+      "-u": "Cambiar la prioridad de todos los procesos que pertenecen a un usuario",
+      "-g": "Cambiar la prioridad de todos los procesos que pertenecen a un grupo de procesos",
+      "-L": "Listar las prioridades actuales de los procesos (en algunas versiones)"
+    },
+    "name": "renice",
+    "category": "local_process",
+    "source_path": "local_process/commands/renice.adoc"
+  },
+  {
+    "description": "Permite que un proceso continúe ejecutándose incluso después de que el usuario cierre la sesión o la terminal. Redirige automáticamente la salida a un archivo si no se especifica uno.",
+    "usage": "nohup COMANDO [ARG]... &",
+    "options": {
+      "--help": "Mostrar ayuda y salir",
+      "--version": "Mostrar información de versión"
+    },
+    "name": "nohup",
+    "category": "local_process",
+    "source_path": "local_process/commands/nohup.adoc"
   },
   {
     "description": "Listar archivos abiertos y los procesos que los están utilizando.",
@@ -1652,6 +2140,20 @@
     "source_path": "local_permissions/commands/chown.adoc"
   },
   {
+    "description": "Utilidad para editar el archivo sudoers. Bloquea el archivo para evitar ediciones simultáneas y realiza una comprobación de sintaxis antes de guardar para prevenir errores que bloqueen el acceso administrativo.",
+    "usage": "visudo [OPCIONES]",
+    "options": {
+      "-c": "Modo de comprobación: valida la sintaxis del archivo sin editarlo",
+      "-f": "Especificar un archivo alternativo para editar",
+      "-q": "Modo silencioso, no muestra errores de sintaxis",
+      "-s": "Verificación estricta de la configuración",
+      "-x": "Exportar el archivo en formato JSON (en versiones modernas)"
+    },
+    "name": "visudo",
+    "category": "local_permissions",
+    "source_path": "local_permissions/commands/visudo.adoc"
+  },
+  {
     "description": "Ejecutar comandos con privilegios de superusuario o de otro usuario.",
     "usage": "sudo [OPCIONES] COMANDO",
     "options": {
@@ -1840,6 +2342,22 @@
     "source_path": "local_storage/commands/resize2fs.adoc"
   },
   {
+    "description": "Muestra el consumo actual de espacio en disco y el número de archivos (inodes) de un usuario o grupo, comparándolos con los límites establecidos (soft y hard) en el sistema.",
+    "usage": "quota [OPCIONES] [USUARIO/GRUPO]",
+    "options": {
+      "-u": "Mostrar cuotas para un usuario específico (por defecto)",
+      "-g": "Mostrar cuotas para un grupo específico",
+      "-v": "Modo detallado; muestra cuotas en sistemas de archivos donde no hay uso",
+      "-s": "Formato legible por humanos (MB, GB en lugar de bloques)",
+      "-p": "Modo informativo para depuración de RPC",
+      "-f": "Mostrar cuotas solo para el sistema de archivos especificado",
+      "-q": "Modo conciso; solo muestra información si se han excedido los límites"
+    },
+    "name": "quota",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/quota.adoc"
+  },
+  {
     "description": "Mostrar el uso de espacio en disco de los sistemas de ficheros montados.",
     "usage": "df [OPCIONES] [SISTEMA_DE_FICHEROS]",
     "options": {
@@ -1924,6 +2442,23 @@
     "name": "du",
     "category": "local_storage",
     "source_path": "local_storage/commands/du.adoc"
+  },
+  {
+    "description": "Utilidad para verificar la integridad de un sistema de archivos y reparar errores. Actúa como un front-end para los chequeadores específicos de cada tipo de sistema (e2fsck, xfs_repair, etc.).",
+    "usage": "fsck [OPCIONES] [DISPOSITIVO]",
+    "options": {
+      "-a": "Reparar automáticamente el sistema de archivos sin preguntar (no recomendado)",
+      "-r": "Reparar interactivamente el sistema de archivos (pregunta antes de corregir)",
+      "-y": "Responder 'sí' a todas las preguntas de reparación",
+      "-n": "Modo de solo lectura; asume 'no' a todas las reparaciones (solo informa)",
+      "-f": "Forzar el chequeo incluso si el sistema de archivos parece limpio",
+      "-v": "Modo detallado; muestra estadísticas e información del proceso",
+      "-t": "Especificar el tipo de sistema de archivos a comprobar",
+      "-A": "Comprobar todos los sistemas de archivos listados en /etc/fstab"
+    },
+    "name": "fsck",
+    "category": "local_storage",
+    "source_path": "local_storage/commands/fsck.adoc"
   },
   {
     "description": "Modificar y gestionar grupos de volúmenes en LVM.",

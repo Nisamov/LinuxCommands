@@ -39,6 +39,10 @@ include::system_info/lshw.adoc[]
 include::system_info/lsmod.adoc[]
 include::system_info/lsscsi.adoc[]
 include::system_info/lstopo.adoc[]
+include::system_info/arch.adoc[]
+include::system_info/dmidecode.adoc[]
+include::system_info/lsdev.adoc[]
+include::system_info/screenfetch.adoc[]
 
 == Monitorización
 include::monitoring/dmesg.adoc[]
@@ -49,6 +53,8 @@ include::monitoring/sensors.adoc[]
 include::monitoring/uptime.adoc[]
 include::monitoring/vmstat.adoc[]
 include::monitoring/watch.adoc[]
+include::monitoring/iotop.adoc[]
+include::monitoring/logrotate.adoc[]
 
 === Alias
 include::shell/shells.adoc

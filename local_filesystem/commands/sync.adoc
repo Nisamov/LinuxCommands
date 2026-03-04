@@ -1,0 +1,44 @@
+=== sync
+Sincronizar los datos almacenados en memoria (caché) con el almacenamiento físico.
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Fuerza la escritura de los bloques de datos modificados en la memoria caché hacia los discos. Asegura que no se pierdan datos si el sistema se detiene inesperadamente.",
+  "usage": "sync [OPCIONES] [ARCHIVO]...",
+  "options": {
+    "-d": "Sincronizar solo los datos de los archivos, no los metadatos",
+    "-f": "Sincronizar solo el sistema de archivos que contiene el archivo especificado",
+    "--help": "Mostrar ayuda y salir",
+    "--version": "Mostrar información de versión"
+  }
+}
+
+[source,bash]
+----
+# Sincronizar todos los sistemas de archivos montados
+sync
+----
+
+-f:: `sync -f` Sincronizar un sistema de archivos específico
+
+[source,bash]
+----
+# Forzar la escritura a disco solo para el sistema que contiene un archivo concreto
+sync -f /mnt/usb/datos.tar.gz
+----
+
+-d:: `sync -d` Sincronizar únicamente los datos de los archivos
+
+[source,bash]
+----
+# Sincronizar el contenido sin esperar a que se actualicen metadatos como la hora de acceso
+sync -d /home/usuario/documento.txt
+----
+
+[source,bash]
+----
+# Ejemplo: Uso típico antes de desmontar un dispositivo o apagar el sistema por comando
+sync; sync; reboot
+----
+

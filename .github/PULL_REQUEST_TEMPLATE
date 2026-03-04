@@ -30,7 +30,8 @@ Deje sin marcar "[ ]" las secciones que no han recibido cambios.
 - [ ] host_services/
 - [ ] host_shared_storage/
 - [ ] host_web_server/
-- [ ] linux_fundamentals/
+- [ ] local_linux_fundamentals/
+- [ ] local_miscellaneous/
 - [ ] local_filesystem/
 - [ ] local_group/
 - [ ] local_network/

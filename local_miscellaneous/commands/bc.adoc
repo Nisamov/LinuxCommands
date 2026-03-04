@@ -1,0 +1,74 @@
+=== bc
+Calculadora interactiva y lenguaje de programación de precisión arbitraria.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Procesador de lenguaje matemático que permite realizar cálculos aritméticos con precisión definida por el usuario, ideal para scripts de shell.",
+  "usage": "bc [OPCIONES] [ARCHIVO]",
+  "options": {
+    "-l": "Cargar la librería matemática estándar (define la precisión y funciones trigonométricas)",
+    "-q": "Modo silencioso, no muestra el mensaje de bienvenida",
+    "-s": "Modo estándar (POSIX bc)",
+    "-w": "Mostrar advertencias para extensiones de GNU bc",
+    "scale": "Variable interna para definir el número de decimales",
+    "last": "Variable para reutilizar el resultado del último cálculo"
+  }
+}
+
+[source,bash]
+----
+# Uso básico interactivo (escribir 'quit' para salir)
+bc
+----
+
+-l:: `bc -l` Carga la librería matemática y establece la precisión por defecto.
+
+[source,bash]
+----
+# Realizar un cálculo con funciones (seno de 1)
+echo "s(1)" | bc -l
+----
+
+scale:: `scale=N` Define la cantidad de números decimales permitidos en el resultado.
+
+[source,bash]
+----
+# Calcular una división con 4 decimales
+echo "scale=4; 10 / 3" | bc
+----
+
+last:: `last` o `.` Referencia el último valor calculado en la sesión actual.
+
+[source,bash]
+----
+# Sumar 5 al último resultado obtenido
+10 + 20
+last + 5
+----
+
+-q:: `bc -q` Evita que se imprima la cabecera de copyright al iniciar el comando.
+
+[source,bash]
+----
+# Ejecutar bc de forma limpia en la terminal
+bc -q
+----
+
+Conversión de bases:: `ibase` y `obase` permiten convertir números entre diferentes bases (binario, hex, etc.).
+
+[source,bash]
+----
+# Convertir un número decimal a binario
+echo "obase=2; 25" | bc
+----
+
+Uso en scripts:: Emplear `bc` mediante tuberías para asignar resultados a variables.
+
+[source,bash]
+----
+# Asignar un cálculo complejo a una variable de Bash
+RESULTADO=$(echo "scale=2; 15.5 * 1.21" | bc)
+echo $RESULTADO
+----
+

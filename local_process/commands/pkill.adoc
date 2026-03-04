@@ -1,0 +1,72 @@
+=== pkill
+Enviar señales a procesos basados en su nombre u otros atributos.
+
+:category: local_process
+[.metadata]
+{
+  "description": "Variante de 'kill' que permite buscar y terminar procesos utilizando patrones de texto (expresiones regulares) en lugar de requerir el PID exacto.",
+  "usage": "pkill [OPCIONES] PATRÓN",
+  "options": {
+    "-u": "Matar procesos que pertenecen a un usuario específico",
+    "-f": "Buscar el patrón en la línea de comandos completa, no solo en el nombre",
+    "-9": "Enviar la señal SIGKILL (terminación forzosa)",
+    "-t": "Matar procesos asociados a una terminal específica (TTY)",
+    "-v": "Invertir la selección: matar procesos que NO coincidan con el patrón",
+    "-x": "Coincidencia exacta: el nombre del proceso debe ser idéntico al patrón"
+  }
+}
+
+[source,bash]
+----
+# Terminar todos los procesos llamados "firefox"
+pkill firefox
+----
+
+-Búsqueda por patrón:: No necesitas saber el PID. `pkill` buscará cualquier proceso cuyo nombre contenga la cadena indicada.
+
+[source,bash]
+----
+# Matar procesos que contengan "python" en su nombre
+pkill python
+----
+
+-Filtro por usuario (-u):: Útil para limpiar procesos de un usuario concreto sin afectar al resto del sistema.
+
+[source,bash]
+----
+# Matar todos los procesos del usuario "invitado"
+sudo pkill -u invitado
+----
+
+-Línea de comandos completa (-f):: Por defecto, `pkill` solo mira el nombre del binario. Con `-f` busca también en los argumentos pasados al comando.
+
+[source,bash]
+----
+# Matar un script específico de PHP buscando en su ruta
+pkill -f "cron_limpieza.php"
+----
+
+-Señales específicas:: Al igual que `kill`, puedes definir qué señal enviar al proceso.
+
+[source,bash]
+----
+# Enviar señal de recarga de configuración (SIGHUP) a nginx
+sudo pkill -HUP nginx
+----
+
+-Coincidencia exacta (-x):: Evita "accidentes" asegurando que el nombre del proceso sea idéntico al patrón y no solo una parte.
+
+[source,bash]
+----
+# Matar "ssh" pero NO "sshd"
+pkill -x ssh
+----
+
+-Selección de terminal (-t):: Permite cerrar todos los procesos que se están ejecutando en una terminal física o virtual específica.
+
+[source,bash]
+----
+# Cerrar todo lo que ocurra en la terminal pts/2
+pkill -t pts/2
+----
+

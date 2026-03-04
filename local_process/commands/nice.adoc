@@ -1,0 +1,64 @@
+=== nice
+Ejecutar un programa con una prioridad de planificación modificada.
+
+:category: local_process
+[.metadata]
+{
+  "description": "Permite ajustar la prioridad con la que el kernel de Linux asigna tiempo de CPU a un proceso. Los valores (niceness) van de -20 (máxima prioridad) a 19 (mínima prioridad).",
+  "usage": "nice [OPCIÓN] [COMANDO [ARG]...]",
+  "options": {
+    "-n, --adjustment": "Sumar un valor entero al valor 'nice' por defecto (10 si no se indica)",
+    "--help": "Mostrar ayuda y salir",
+    "--version": "Mostrar información de versión"
+  }
+}
+
+[source,bash]
+----
+# Ejecutar un comando con la prioridad por defecto ajustada (+10)
+nice tar -czf backup.tar.gz /home/usuario
+----
+
+-Ajuste específico:: `-n` Define el valor exacto de incremento de prioridad.
+
+[source,bash]
+----
+# Ejecutar con la prioridad más baja posible (19)
+nice -n 19 ffmpeg -i video.mp4 video.avi
+
+# Ejecutar con prioridad alta (requiere sudo para valores negativos)
+sudo nice -n -10 compilar_kernel.sh
+----
+
+-Concepto de "Nice":: El valor por defecto de un proceso suele ser **0**. 
+- Un valor **positivo** (ser "agradable" o *nice*) cede CPU a otros procesos.
+- Un valor **negativo** (ser "egoísta") reclama más tiempo de CPU.
+
+[source,bash]
+----
+# Comprobar el valor nice de los procesos actuales
+ps -el | grep "nombre_proceso"
+# O dentro de htop, observar la columna 'NI'
+----
+
+-Prioridad y privilegios:: El sistema protege el rendimiento limitando quién puede subir la prioridad.
+
+[source,bash]
+----
+# Un usuario normal solo puede aumentar el valor nice (bajar prioridad)
+nice -n 5 mi_script.sh # OK
+
+# Un usuario normal NO puede bajar el valor nice (subir prioridad)
+nice -n -5 mi_script.sh # Error: Permission denied
+----
+
+-Uso con tuberías:: Puedes aplicar `nice` a todo un flujo de trabajo.
+
+[source,bash]
+----
+# Ejecutar una cadena de comandos con baja prioridad
+nice -n 15 sh -c "cat logs.txt | grep 'ERROR' > reporte.log"
+----
+
+-Relación con renice:: Mientras `nice` se usa al **lanzar** un proceso, para cambiar la prioridad de uno que **ya está en ejecución** se debe usar `renice`.
+

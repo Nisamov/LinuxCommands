@@ -1,0 +1,72 @@
+=== shred
+Sobrescribir archivos para ocultar su contenido y opcionalmente eliminarlos.
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Herramienta de seguridad que sobrescribe los datos de un archivo repetidamente para que sea extremadamente difícil de recuperar, incluso con hardware especializado.",
+  "usage": "shred [OPCIONES] ARCHIVO...",
+  "options": {
+    "-n": "Número de veces que se sobrescriben los datos (por defecto 3)",
+    "-u": "Truncar y eliminar el archivo después de sobrescribirlo",
+    "-z": "Añadir una sobrescritura final con ceros para ocultar el proceso",
+    "-s": "Sobrescribir solo un número determinado de bytes",
+    "-v": "Mostrar el progreso de las iteraciones",
+    "-f": "Cambiar permisos para permitir la escritura si es necesario"
+  }
+}
+
+[source,bash]
+----
+# Sobrescribir un archivo 3 veces (pero no lo borra del disco)
+shred secreto.txt
+----
+
+-n:: `shred -n` Definir el número de iteraciones
+
+[source,bash]
+----
+# Sobrescribir el archivo 10 veces para mayor seguridad
+shred -n 10 datos_sensibles.dat
+----
+
+-u:: `shred -u` Eliminar el archivo tras la sobrescritura
+
+[source,bash]
+----
+# Sobrescribir y borrar definitivamente el archivo
+shred -u pass.txt
+----
+
+-z:: `shred -z` Ocultar el borrado con ceros
+
+[source,bash]
+----
+# Sobrescribir, borrar y rellenar con ceros para que parezca vacío
+shred -uz archivo_confidencial.pdf
+----
+
+-v:: `shred -v` Modo detallado (verbose)
+
+[source,bash]
+----
+# Ver el progreso de cada una de las pasadas de sobrescritura
+shred -v foto.jpg
+----
+
+-s:: `shred -s` Limitar el tamaño del proceso
+
+[source,bash]
+----
+# Sobrescribir solo los primeros 100MB de un dispositivo o archivo
+shred -s 100M /dev/sdb1
+----
+
+-f:: `shred -f` Forzar el cambio de permisos
+
+[source,bash]
+----
+# Cambiar permisos de solo lectura para poder destruir el contenido
+shred -f archivo_protegido.log
+----
+

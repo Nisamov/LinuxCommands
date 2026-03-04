@@ -1,0 +1,45 @@
+=== banner
+Imprimir texto en formato de cartelera de gran tamaño utilizando caracteres ASCII.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Utilidad clásica de Unix que genera una representación visual de gran tamaño para cadenas de texto, útil para portadas de scripts o avisos visuales.",
+  "usage": "banner [MENSAJE]",
+  "options": {
+    "mensaje": "Cadena de texto a transformar en banner",
+    "limitacion": "Truncado automático a 10 caracteres en versiones clásicas",
+    "pipe": "Soporta entrada estándar mediante tuberías"
+  }
+}
+
+[source,bash]
+----
+# Generar un banner simple con una palabra
+banner "HOLA"
+----
+
+mensaje:: `banner "texto"` Genera el cartel visual del texto proporcionado.
+
+[source,bash]
+----
+# Ejemplo de salida para un mensaje corto
+banner "LINUX"
+----
+
+limitacion:: `banner` truncado. Las versiones tradicionales de System V truncan el texto para mantener la legibilidad en terminales estándar.
+
+[source,bash]
+----
+# Texto largo (puede aparecer cortado dependiendo de la implementación)
+banner "REPOSITORIO"
+----
+
+pipe:: `echo "texto" | banner` El comando puede recibir datos desde la salida de otro proceso.
+
+[source,bash]
+----
+# Combinar con otros comandos
+whoami | banner
+----
+

@@ -1,0 +1,63 @@
+=== sl
+Visualizar una locomotora de vapor cruzando la terminal.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Una broma clásica de terminal diseñada para corregir el hábito de escribir mal el comando 'ls'. Muestra una animación ASCII de una locomotora que no puede ser interrumpida con Ctrl+C.",
+  "usage": "sl [OPCIONES]",
+  "options": {
+    "-a": "Modo accidente (se escuchan gritos de auxilio)",
+    "-l": "Locomotora pequeña",
+    "-F": "La locomotora vuela (estilo Galaxy Express 999)",
+    "-e": "Permitir la interrupción mediante Ctrl+C",
+    "ls": "El error común que dispara este comando"
+  }
+}
+
+[source,bash]
+----
+# Ejecutar la animación estándar
+sl
+----
+
+-l:: `sl -l` Muestra una versión más pequeña de la locomotora de vapor.
+
+[source,bash]
+----
+# Locomotora miniatura
+sl -l
+----
+
+-F:: `sl -F` La locomotora no solo cruza la pantalla, sino que se eleva volando hacia la esquina superior.
+
+[source,bash]
+----
+# Locomotora voladora
+sl -F
+----
+
+-a:: `sl -a` Añade un toque dramático a la animación simulando un incidente en el trayecto.
+
+[source,bash]
+----
+# Modo accidente
+sl -a
+----
+
+-e:: `sl -e` Por defecto, `sl` ignora la señal de interrupción para obligarte a ver la animación completa. Esta opción permite cerrarlo.
+
+[source,bash]
+----
+# Ejecutar permitiendo salida rápida
+sl -e
+----
+
+Alias educativo:: Es común configurar un alias para que, al equivocarse, el sistema ejecute automáticamente la animación.
+
+[source,bash]
+----
+# Añadir a ~/.bashrc para aprender a escribir bien 'ls'
+alias sl='/usr/games/sl'
+----
+

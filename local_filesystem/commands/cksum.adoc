@@ -1,0 +1,71 @@
+=== cksum
+Calcular y verificar la suma de comprobación (checksum) CRC y el conteo de bytes de un archivo.
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Calcula un valor de redundancia cíclica (CRC) y el tamaño en bytes de los archivos para verificar la integridad de los datos.",
+  "usage": "cksum [ARCHIVO]...",
+  "options": {
+    "-algorithm": "Especificar el algoritmo de hash (en versiones modernas)",
+    "-check": "Verificar sumas de comprobación desde un archivo",
+    "-untouched": "No mostrar salida para archivos que pasen la verificación",
+    "-quiet": "No imprimir 'OK' por cada archivo verificado correctamente",
+    "-length": "Interrumpir la suma tras un número determinado de bytes"
+  }
+}
+
+[source,bash]
+----
+# Obtener el CRC, tamaño y nombre del archivo
+cksum documento.txt
+----
+
+-CRC:: `cksum` Generar el código de integridad estándar (POSIX)
+
+[source,bash]
+----
+# Comparar la salida entre varios archivos para verificar si son idénticos
+cksum archivo1.zip archivo2.zip
+----
+
+-algorithm:: `--algorithm` Seleccionar un algoritmo específico (ej. sha1, md5, blake2b)
+
+[source,bash]
+----
+# Usar el algoritmo SHA256 en lugar del CRC tradicional (Coreutils 9.0+)
+cksum -a sha256 imagen.iso
+----
+
+-check:: `--check` Verificar la integridad basada en un archivo de sumas previo
+
+[source,bash]
+----
+# Verificar que los archivos listados en un fichero no se hayan corrompido
+cksum -c sumas_verificacion.txt
+----
+
+-untouched:: `--untouched` Filtrar la salida para omitir archivos correctos
+
+[source,bash]
+----
+# Mostrar solo los archivos que han fallado la verificación
+cksum -c sumas.txt --untouched
+----
+
+-quiet:: `--quiet` Modo silencioso para suprimir mensajes de éxito
+
+[source,bash]
+----
+# No mostrar mensajes 'OK', útil para scripts de automatización
+cksum -c --quiet sumas.txt
+----
+
+-length:: `--length` Limitar la cantidad de bytes a procesar
+
+[source,bash]
+----
+# Calcular la suma solo de los primeros 1024 bytes
+cksum --length 1024 archivo_grande.bin
+----
+

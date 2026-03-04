@@ -1,0 +1,73 @@
+=== nc (Netcat)
+Leer y escribir datos a través de conexiones de red usando TCP o UDP.
+
+:category: local_network
+[.metadata]
+{
+  "description": "Herramienta extremadamente versátil para depurar y explorar redes. Permite crear conexiones, abrir puertos de escucha y transferir datos.",
+  "usage": "nc [OPCIONES] [HOST] [PUERTO]",
+  "options": {
+    "-l": "Modo de escucha (listen) para conexiones entrantes",
+    "-p": "Especificar el puerto local (usado con -l)",
+    "-v": "Modo detallado (verbose)",
+    "-z": "Modo de escaneo (no envía datos)",
+    "-u": "Usar el protocolo UDP en lugar de TCP",
+    "-w": "Tiempo de espera (timeout) para conexiones",
+    "-e": "Ejecutar un programa tras establecer la conexión (no disponible en todas las versiones)"
+  }
+}
+
+[source,bash]
+----
+# Conectarse a un puerto específico de un servidor
+nc -v 192.168.1.50 80
+----
+
+Escaneo de Puertos (-z):: Netcat puede verificar rápidamente si uno o varios puertos están abiertos sin establecer una sesión completa.
+
+[source,bash]
+----
+# Escanear los puertos del 20 al 80 en un host
+nc -zv 10.0.0.5 20-80
+----
+
+Chat Básico (Cliente/Servidor):: Es posible establecer una comunicación bidireccional simple entre dos máquinas.
+
+[source,bash]
+----
+# En la máquina SERVIDOR (IP 192.168.1.10):
+nc -l -p 4444
+
+# En la máquina CLIENTE:
+nc 192.168.1.10 4444
+----
+
+
+
+Transferencia de Archivos:: Una de las utilidades más comunes para mover archivos rápidamente entre servidores sin configurar FTP o SSH.
+
+[source,bash]
+----
+# En el receptor (servidor):
+nc -l -p 5555 > archivo_recibido.tar.gz
+
+# En el emisor (cliente):
+nc 192.168.1.10 5555 < archivo_original.tar.gz
+----
+
+Servidor HTTP improvisado:: Puedes servir un archivo HTML simple para pruebas rápidas de conectividad web.
+
+[source,bash]
+----
+# Servir un archivo una sola vez al primer cliente que conecte
+{ echo -e "HTTP/1.1 200 OK\r\n"; cat index.html; } | nc -l -p 8080
+----
+
+Escucha en UDP (-u):: Por defecto Netcat usa TCP, pero con el flag `-u` puedes probar servicios como DNS o DHCP.
+
+[source,bash]
+----
+# Escuchar mensajes entrantes por el puerto 9999 UDP
+nc -lu -p 9999
+----
+

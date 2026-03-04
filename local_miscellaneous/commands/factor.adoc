@@ -1,0 +1,54 @@
+=== factor
+Descomponer números en sus factores primos.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Utilidad matemática que calcula la factorización de números enteros. Si no se proporciona ningún argumento, lee los números desde la entrada estándar.",
+  "usage": "factor [NÚMERO]...",
+  "options": {
+    "--help": "Mostrar ayuda y salir",
+    "--version": "Mostrar información de versión"
+  }
+}
+
+[source,bash]
+----
+# Uso básico con un número
+factor 42
+# Salida: 42: 2 3 7
+----
+
+Factorización múltiple:: Puedes pasar varios números como argumentos para obtener sus factores de una sola vez.
+
+[source,bash]
+----
+# Factorizar varios números a la vez
+factor 10 20 30
+----
+
+Entrada estándar (stdin):: Si se ejecuta sin argumentos, el comando espera a que escribas números. Esto permite procesar listas generadas por otros comandos.
+
+[source,bash]
+----
+# Introducir números manualmente (Ctrl+D para terminar)
+factor
+----
+
+Tuberías (Pipes):: Es muy útil para procesar secuencias numéricas generadas por comandos como `seq`.
+
+[source,bash]
+----
+# Factorizar todos los números del 1 al 10
+seq 10 | factor
+----
+
+Números Primos:: Si el número proporcionado es primo, el comando simplemente devolverá el mismo número, lo que sirve como una forma rápida de verificar la primacidad.
+
+[source,bash]
+----
+# Verificar si 97 es primo
+factor 97
+# Salida: 97: 97
+----
+

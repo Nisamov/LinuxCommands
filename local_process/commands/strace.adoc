@@ -1,0 +1,64 @@
+=== strace
+Rastrear las llamadas al sistema (syscalls) y las señales de un proceso.
+
+:category: local_process
+[.metadata]
+{
+  "description": "Herramienta de depuración que intercepta y registra las llamadas al sistema que realiza un proceso y las señales que recibe. Es fundamental para entender qué hace un programa sin ver su código fuente.",
+  "usage": "strace [OPCIONES] [COMANDO [ARG]...]",
+  "options": {
+    "-p": "Vincularse a un proceso ya en ejecución mediante su PID",
+    "-e": "Filtrar por tipo de llamada al sistema (ej. -e trace=open,read)",
+    "-o": "Guardar la salida en un archivo en lugar de mostrarla por pantalla",
+    "-c": "Generar un reporte estadístico al finalizar (conteo de llamadas y tiempo)",
+    "-v": "Modo detallado: no abreviar estructuras de datos en la salida",
+    "-f": "Seguir también a los procesos hijos (forks)"
+  }
+}
+
+[source,bash]
+----
+# Rastrear la ejecución de un comando básico
+strace ls /etc
+----
+
+-Rastrear proceso activo (-p):: Útil para diagnosticar por qué un servicio o programa parece estar "congelado" o consumiendo recursos sin explicación.
+
+[source,bash]
+----
+# Observar qué está haciendo el proceso 1234 en tiempo real
+sudo strace -p 1234
+----
+
+-Filtrado específico (-e):: Reduce el ruido visual centrándote solo en las acciones que te interesan, como la apertura de archivos o la red.
+
+[source,bash]
+----
+# Ver solo los intentos de apertura de archivos de un comando
+strace -e trace=open,connect curl google.com
+----
+
+-Resumen estadístico (-c):: Al terminar la ejecución, muestra una tabla con cuántas veces se llamó a cada función del sistema y el tiempo total empleado en cada una.
+
+[source,bash]
+----
+# Analizar qué llamadas al sistema ralentizan mi script
+strace -c ./mi_script.py
+----
+
+-Seguir procesos hijos (-f):: Esencial para programas multiproceso o scripts de shell que lanzan otros comandos internamente.
+
+[source,bash]
+----
+# Rastrear un servidor web y todos sus hilos de ejecución
+strace -f -p 8888
+----
+
+-Depuración de archivos faltantes:: Muy usado para descubrir qué archivo de configuración está intentando leer un programa que falla al arrancar.
+
+[source,bash]
+----
+# Buscar errores "No such file or directory" (ENOENT)
+strace php script.php 2>&1 | grep ENOENT
+----
+

@@ -1,0 +1,75 @@
+=== units
+Conversor de unidades de medida y calculadora de expresiones dimensionales.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Utilidad interactiva que convierte cantidades entre diferentes sistemas de unidades, maneja escalas métricas y permite realizar cálculos con dimensiones físicas.",
+  "usage": "units [OPCIONES] [DE-UNIDAD] [A-UNIDAD]",
+  "options": {
+    "-q": "Modo silencioso, no muestra mensajes de bienvenida ni avisos",
+    "-v": "Modo detallado, muestra la definición de la unidad y resultados extendidos",
+    "-t": "Modo conciso (terse), solo devuelve el valor numérico del resultado",
+    "-f": "Especificar un archivo de datos de unidades personalizado",
+    "interactivo": "Si no se pasan argumentos, inicia una sesión de preguntas/respuestas"
+  }
+}
+
+[source,bash]
+----
+# Conversión simple de metros a pies
+units "2 meters" "feet"
+----
+
+-v:: `units -v` Proporciona una explicación detallada de cómo se relacionan las unidades y el factor de conversión aplicado.
+
+[source,bash]
+----
+# Ver detalles de conversión de Gigabytes a Megabytes
+units -v "1GB" "MB"
+----
+
+-t:: `units -t` Ideal para scripts, ya que elimina todo el texto explicativo y devuelve solo el número resultante.
+
+[source,bash]
+----
+# Obtener solo el valor para usar en una variable
+RESULTADO=$(units -t "500 miles" "km")
+echo $RESULTADO
+----
+
+Cálculos compuestos:: `units` permite operar con unidades complejas, como velocidad o consumo, utilizando operadores estándar.
+
+[source,bash]
+----
+# Convertir metros por segundo a kilómetros por hora
+units "10 m/s" "km/h"
+----
+
+Conversión de Temperatura:: A diferencia de otras unidades, las temperaturas requieren una sintaxis específica (`tempC`, `tempF`, `tempK`) debido a que su escala no parte de cero.
+
+[source,bash]
+----
+# Convertir 100 grados Celsius a Fahrenheit
+units "tempC(100)" "tempF"
+----
+
+Modo Interactivo:: Al ejecutar el comando sin argumentos, puedes realizar múltiples consultas sin tener que relanzar el programa.
+
+[source,text]
+----
+$ units
+You have: 1/4 cup
+You want: tablespoons
+        * 4
+        / 0.25
+----
+
+Monedas:: Si la base de datos está actualizada, `units` puede incluso realizar conversiones de divisas basándose en tipos de cambio recientes.
+
+[source,bash]
+----
+# Convertir 50 dólares a euros (requiere db actualizada)
+units "50 dollars" "euros"
+----
+

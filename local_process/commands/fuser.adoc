@@ -1,0 +1,68 @@
+=== fuser
+Identificar procesos que utilizan archivos, directorios o sockets.
+
+:category: local_process
+[.metadata]
+{
+  "description": "Muestra los PIDs de los procesos que están accediendo a archivos o sistemas de archivos específicos. También permite cerrar dichos procesos de forma masiva.",
+  "usage": "fuser [OPCIONES] [ARCHIVO/SISTEMA_DE_ARCHIVOS]",
+  "options": {
+    "-m": "Identifica todos los procesos que acceden a archivos en el sistema de archivos montado",
+    "-k": "Matar (kill) procesos que acceden al archivo",
+    "-i": "Pedir confirmación antes de matar un proceso",
+    "-v": "Modo detallado (verbose)",
+    "-u": "Muestra el nombre de usuario del dueño del proceso",
+    "-n": "Especificar el espacio de nombres (file, udp, tcp)",
+    "-a": "Mostrar todos los archivos especificados, incluso si no son accedidos por nadie"
+  }
+}
+
+[source,bash]
+----
+# Ver qué procesos están utilizando un directorio específico
+fuser -v .
+----
+
+-Identificación de procesos:: El comando devuelve el PID seguido de un código que indica el tipo de acceso: `c` (directorio actual), `e` (ejecutable), `f` (archivo abierto), `m` (archivo mapeado/librería compartida).
+
+[source,bash]
+----
+# Ver quién está usando un archivo concreto y a qué usuario pertenece
+fuser -u /var/log/syslog
+----
+
+-Uso con Sistemas de Archivos (-m):: Ideal para descubrir por qué no puedes desmontar un disco o unidad USB.
+
+[source,bash]
+----
+# Listar procesos que bloquean un punto de montaje
+fuser -v -m /mnt/datos
+----
+
+-Matar procesos (-k):: Envía la señal `SIGKILL` por defecto a todos los procesos identificados.
+
+[source,bash]
+----
+# Cerrar todos los procesos que están usando la partición /dev/sdb1
+fuser -km /dev/sdb1
+
+# Matar procesos con confirmación (más seguro)
+fuser -ki /var/www/html
+----
+
+-Identificar puertos de red:: `fuser` también puede decirte qué proceso tiene ocupado un puerto específico.
+
+[source,bash]
+----
+# Ver qué proceso está escuchando en el puerto 80 TCP
+fuser -v -n tcp 80
+----
+
+-Señales específicas:: Puedes cambiar la señal que envía `-k` usando una bandera adicional.
+
+[source,bash]
+----
+# Enviar SIGTERM (salida limpia) en lugar de SIGKILL
+fuser -k -TERM -i /mi/archivo/bloqueado
+----
+

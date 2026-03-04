@@ -1,0 +1,66 @@
+=== jq
+Procesador de JSON por línea de comandos.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Herramienta ligera y flexible para filtrar, transformar y extraer datos de archivos JSON. Permite manejar estructuras de datos complejas mediante un lenguaje de filtros propio.",
+  "usage": "jq [OPCIONES] 'FILTRO' [ARCHIVO]",
+  "options": {
+    "-r": "Modo 'raw output' (elimina comillas en strings de salida)",
+    "-c": "Salida compacta (todo en una sola línea)",
+    "-C": "Forzar coloreado de la sintaxis",
+    "-S": "Ordenar las llaves de los objetos alfabéticamente",
+    ".": "Filtro básico que formatea y muestra el JSON completo (pretty-print)"
+  }
+}
+
+[source,bash]
+----
+# Formatear un JSON desordenado para que sea legible
+echo '{"usuario":"admin","id":1}' | jq .
+----
+
+Acceso a campos:: Puedes acceder a propiedades específicas usando el punto seguido del nombre de la llave.
+
+[source,bash]
+----
+# Extraer solo el valor de una propiedad
+echo '{"nombre":"Gemini","rol":"AI"}' | jq '.nombre'
+----
+
+Raw Output (-r):: Elimina las comillas dobles de los resultados tipo string, lo cual es vital para pasar datos a variables de Bash.
+
+[source,bash]
+----
+# Obtener el valor limpio para usar en un script
+version=$(jq -r '.version' package.json)
+----
+
+Procesar Arrays:: Usa `[]` para iterar sobre listas o acceder a posiciones específicas.
+
+[source,bash]
+----
+# Obtener el primer elemento de una lista
+echo '["linux", "unix", "bsd"]' | jq '.[0]'
+
+# Extraer una propiedad de todos los objetos en un array
+cat servidores.json | jq '.[].ip'
+----
+
+Tuberías Internas (|):: `jq` permite encadenar filtros dentro del propio comando, igual que en la terminal.
+
+[source,bash]
+----
+# Filtrar y luego seleccionar un sub-campo
+cat repo.json | jq '.usuarios[] | select(.id > 100) | .nombre'
+----
+
+Construcción de nuevos objetos:: Puedes reestructurar el JSON de entrada para generar uno nuevo con el formato que necesites.
+
+[source,bash]
+----
+# Crear un nuevo JSON con campos seleccionados
+cat datos.json | jq '{id_usuario: .id, login: .user}'
+----
+

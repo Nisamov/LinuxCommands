@@ -1,0 +1,45 @@
+=== nmcli
+Interfaz de línea de comandos para el control y estado de NetworkManager.
+
+:category: local_network
+[.metadata]
+{
+  "description": "Herramienta para crear, mostrar, editar, activar y desactivar conexiones de red, así como para controlar el estado del hardware de red.",
+  "usage": "nmcli [OPCIONES] OBJETO { COMANDO | help }",
+  "options": {
+    "-t": "Salida tabular/concisa (ideal para scripts)",
+    "-p": "Salida legible para humanos (con colores y formato)",
+    "-f": "Especificar campos de salida (columnas)",
+    "-m": "Modo multilínea",
+    "-a": "Preguntar por parámetros faltantes (como contraseñas)",
+    "-w": "Establecer un tiempo de espera para la operación"
+  }
+}
+
+[source,bash]
+----
+# Ver el estado general de todas las interfaces de red
+nmcli device status
+----
+
+Gestión de Conexiones:: Permite listar y controlar los perfiles de conexión guardados en el sistema.
+
+[source,bash]
+----
+# Listar todas las conexiones configuradas (activas e inactivas)
+nmcli connection show
+
+# Activar una conexión específica
+nmcli connection up id "Nombre_Conexion"
+
+# Desactivar una conexión
+nmcli connection down id "Wired connection 1"
+----
+
+Configuración de IP Estática:: Es la forma moderna de configurar una IP sin tocar archivos en `/etc/netplan/` o `/etc/network/`.
+
+[source,bash]
+----
+# Crear una nueva conexión Ethernet con IP estática
+nmcli con add type
+

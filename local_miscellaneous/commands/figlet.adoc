@@ -1,0 +1,64 @@
+=== figlet
+Generar banners de texto utilizando caracteres ASCII en diversas fuentes.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Herramienta que transforma cadenas de texto ordinarias en letras grandes compuestas por caracteres ASCII. Soporta múltiples tipografías y ajustes de alineación.",
+  "usage": "figlet [OPCIONES] [TEXTO]",
+  "options": {
+    "-f": "Especificar el tipo de fuente (archivo .flf)",
+    "-c": "Centrar el texto en la salida de la terminal",
+    "-l": "Alinear el texto a la izquierda",
+    "-r": "Alinear el texto a la derecha",
+    "-t": "Ajustar el ancho del banner al tamaño actual de la terminal",
+    "-k": "Utilizar kerning (separar ligeramente las letras)"
+  }
+}
+
+[source,bash]
+----
+# Generar un banner estándar
+figlet "LINUX"
+----
+
+-f:: `figlet -f [fuente]` Cambia la tipografía. Las fuentes suelen residir en `/usr/share/figlet`.
+
+[source,bash]
+----
+# Usar la fuente de estilo 'slant' (inclinada)
+figlet -f slant "DEBIAN"
+----
+
+-c:: `figlet -c` Centra el resultado visualmente respecto al ancho de la ventana de comandos.
+
+[source,bash]
+----
+# Título centrado para un menú de script
+figlet -c "MENU PRINCIPAL"
+----
+
+-t:: `figlet -t` Fuerza al comando a usar todo el ancho disponible de la terminal, evitando que el texto se rompa de forma inesperada.
+
+[source,bash]
+----
+# Banner que ocupa todo el ancho de pantalla
+figlet -t "ADMINISTRACION"
+----
+
+Tuberías (Pipes):: Es común enviar la salida de un comando hacia `figlet` para resaltar información dinámica.
+
+[source,bash]
+----
+# Mostrar el nombre del host en grande
+hostname | figlet
+----
+
+Combinación con colores:: Aunque `figlet` no genera color por sí mismo, se puede combinar con `toilet` o secuencias de escape.
+
+[source,bash]
+----
+# Ejemplo de texto con color (si tienes toilet instalado)
+figlet "EXITO" | toilet --slant -f standard --gay
+----
+

@@ -1,0 +1,64 @@
+=== toilet
+Generar banners de texto ASCII con soporte para color y filtros avanzados.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Una implementación mejorada de figlet que permite el uso de fuentes coloridas, filtros de efectos visuales (como arcoíris) y diversos formatos de exportación (HTML, TCT, etc.).",
+  "usage": "toilet [OPCIONES] [TEXTO]",
+  "options": {
+    "-f": "Especificar la fuente a utilizar",
+    "-F": "Aplicar un filtro de efecto (gay, metal, border)",
+    "-E": "Especificar el formato de salida (html, pbm, tga)",
+    "--gay": "Filtro de arcoíris (alias de -F gay)",
+    "--metal": "Filtro de color metálico (alias de -F metal)",
+    "-w": "Definir el ancho de la salida"
+  }
+}
+
+[source,bash]
+----
+# Generar un banner básico con color arcoíris
+toilet --gay "COLORES"
+----
+
+-F:: `toilet -F [filtro]` Aplica transformaciones visuales al texto. Los filtros más comunes son `gay` (arcoíris) y `metal` (degradado grisáceo).
+
+[source,bash]
+----
+# Texto con efecto de brillo metálico
+toilet -F metal "TITULO"
+----
+
+-f:: `toilet -f [fuente]` Al igual que figlet, permite cambiar la fuente. Soporta tanto archivos `.flf` como `.tlf`.
+
+[source,bash]
+----
+# Usar una fuente de estilo 3D (si está disponible)
+toilet -f 3d "3D TEXT"
+----
+
+--border:: `toilet --border` Rodea el texto generado con un marco decorativo de caracteres ASCII.
+
+[source,bash]
+----
+# Crear un cartel enmarcado
+toilet --border "AVISO"
+----
+
+-E:: `toilet -E [formato]` En lugar de mostrarlo solo en terminal, puede exportar el arte ASCII a formatos compatibles con la web o imágenes.
+
+[source,bash]
+----
+# Generar código HTML para un banner de texto
+toilet -E html "WEB BANNER" > index.html
+----
+
+Tuberías y composición:: Es ideal para resaltar la salida de otros comandos de una forma visualmente llamativa.
+
+[source,bash]
+----
+# Mostrar la fecha actual en formato grande y colorido
+date +%T | toilet -f mono9 --gay
+----
+

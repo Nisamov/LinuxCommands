@@ -54,6 +54,7 @@ La organización del repositorio está pensada para facilitar la navegación y e
 - [local_filesystem](/local_filesystem)
 - [local_group](/local_group)
 - [local_linux_fundamentals](/local_linux_fundamentals)
+- [local_miscellaneous](/local_miscellaneous)
 - [local_network](/local_network)
 - [local_permissions](/local_permissions)
 - [local_process](/local_process)

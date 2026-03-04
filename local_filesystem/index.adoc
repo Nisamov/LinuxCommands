@@ -20,7 +20,6 @@ Este manual está pensado como guía de referencia para:
 * Usuarios técnicos en proceso de aprendizaje
 
 == Comandos
-// Manipulación de ficheros
 include::commands/cp.adoc[]
 include::commands/mv.adoc[]
 include::commands/rm.adoc[]
@@ -30,22 +29,16 @@ include::commands/touch.adoc[]
 include::commands/stat.adoc[]
 include::commands/ln.adoc[]
 include::commands/unlink.adoc[]
-
-// Visualización y contenido
 include::commands/cat.adoc[]
 include::commands/less.adoc[]
 include::commands/more.adoc[]
 include::commands/head.adoc[]
 include::commands/tail.adoc[]
 include::commands/nl.adoc[]
-
-// Búsqueda y filtrado
 include::commands/find.adoc[]
 include::commands/grep.adoc[]
 include::commands/locate.adoc[]
 include::commands/xargs.adoc[]
-
-// Procesamiento de texto
 include::commands/awk.adoc[]
 include::commands/sed.adoc[]
 include::commands/cut.adoc[]
@@ -57,19 +50,19 @@ include::commands/join.adoc[]
 include::commands/fmt.adoc[]
 include::commands/fold.adoc[]
 include::commands/column.adoc[]
-
-// Rutas y nombres
 include::commands/basename.adoc[]
 include::commands/dirname.adoc[]
 include::commands/readlink.adoc[]
 include::commands/realpath.adoc[]
-
-// Compresión y archivos
 include::commands/tar.adoc[]
 include::commands/gzip.adoc[]
 include::commands/bzip2.adoc[]
 include::commands/xz.adoc[]
-
-// Miscelánea
-include::commands/fortune.adoc[]
+include::commands/cksum.adoc[]
+include::commands/comm.adoc[]
+include::commands/md5sum.adoc[]
+include::commands/shred.adoc[]
+include::commands/split.adoc[]
+include::commands/sync.adoc[]
+include::commands/zless.adoc[]
 

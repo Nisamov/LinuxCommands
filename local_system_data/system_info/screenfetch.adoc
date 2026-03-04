@@ -1,0 +1,71 @@
+=== screenfetch
+Generar un resumen de información del sistema junto al logo de la distribución en ASCII.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Herramienta de 'Bash Screenshot Information Tool' que detecta automáticamente la distribución, el kernel, el tiempo de actividad, los paquetes instalados y el entorno de escritorio para mostrarlos de forma visualmente atractiva.",
+  "usage": "screenfetch [OPCIONES]",
+  "options": {
+    "-v": "Modo detallado (verbose)",
+    "-n": "No mostrar el logo de la distribución",
+    "-L": "Mostrar solo el logo de la distribución",
+    "-t": "Truncar la salida según el ancho de la terminal",
+    "-s": "Tomar una captura de pantalla automáticamente (requiere escrot)",
+    "-D": "Especificar manualmente la distribución (ej. 'Debian')"
+  }
+}
+
+[source,bash]
+----
+# Ejecutar el resumen estándar
+screenfetch
+----
+
+-v:: `screenfetch -v` Muestra el proceso de detección de hardware y software mientras se genera el reporte.
+
+[source,bash]
+----
+# Ver qué está detectando el comando
+screenfetch -v
+----
+
+-n:: `screenfetch -n` Elimina el arte ASCII y solo muestra la lista de texto con la información técnica del sistema.
+
+[source,bash]
+----
+# Mostrar solo datos técnicos sin el logo
+screenfetch -n
+----
+
+-L:: `screenfetch -L` La operación inversa: oculta los datos técnicos y solo imprime el logo de la distribución detectada en la terminal.
+
+[source,bash]
+----
+# Imprimir solo el logo ASCII
+screenfetch -L
+----
+
+-D:: `screenfetch -D [nombre]` Permite forzar la visualización del logo de una distribución específica, independientemente de la que estés usando.
+
+[source,bash]
+----
+# Mostrar el logo de Arch Linux en cualquier sistema
+screenfetch -D 'Arch Linux'
+----
+
+Uso en .bashrc:: Es muy común añadirlo al final del archivo de configuración para recibir un reporte visual cada vez que se abre una nueva terminal.
+
+[source,bash]
+----
+# Ejemplo de línea para añadir al final de ~/.bashrc
+screenfetch
+----
+
+Información detectada:: Entre los datos que extrae se encuentran el **Kernel**, el **Uptime**, la **Resolución**, el **DE** (Entorno de Escritorio), el **WM** (Gestor de Ventanas) y el consumo de **RAM**.
+
+[source,bash]
+----
+# screenfetch detecta automáticamente si estás en GNOME, KDE, XFCE, etc.
+----
+
