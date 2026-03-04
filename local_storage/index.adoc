@@ -38,10 +38,12 @@ include::commands/cfdisk.adoc[]
 include::commands/df.adoc[]
 include::commands/du.adoc[]
 include::commands/fdisk.adoc[]
+include::commands/fsck.adoc[]
 include::commands/lsblk.adoc[]
 include::commands/mkfs.adoc[]
 include::commands/partx.adoc[]
 include::commands/nvme-cli.adoc[]
+include::commands/quota.adoc[]
 include::commands/smartctl.adoc[]
 
 == Comandos de montaje y swap

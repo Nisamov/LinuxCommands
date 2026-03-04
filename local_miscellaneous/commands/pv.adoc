@@ -1,0 +1,57 @@
+=== pv
+Monitorear el progreso de los datos a través de una tubería (pipe).
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Herramienta que se inserta en una tubería entre dos procesos para visualizar la velocidad de transferencia, el tiempo transcurrido, el progreso porcentual y el tiempo estimado de finalización.",
+  "usage": "comando1 | pv [OPCIONES] | comando2",
+  "options": {
+    "-p": "Mostrar la barra de progreso",
+    "-t": "Mostrar el tiempo transcurrido",
+    "-e": "Mostrar el tiempo estimado de llegada (ETA)",
+    "-r": "Mostrar la tasa de transferencia (velocidad)",
+    "-b": "Mostrar el total de bytes transferidos",
+    "-W": "Esperar hasta que se transfiera el primer byte antes de mostrar nada",
+    "-L": "Limitar la transferencia a un máximo de bytes por segundo"
+  }
+}
+
+[source,bash]
+----
+# Uso básico: Visualizar el progreso de la lectura de un archivo
+pv archivo.iso > /dev/null
+----
+
+Monitoreo de tuberías:: `pv` actúa como un "pasacables". Los datos entran por un lado y salen por el otro sin alterarse, pero informando del flujo.
+
+[source,bash]
+----
+# Ver a qué velocidad se comprime un archivo grande
+cat archivo_gigante.log | pv | gzip > archivo.log.gz
+----
+
+Barra de progreso con tamaño conocido:: Si `pv` puede determinar el tamaño del archivo (o se lo indicas con `-s`), mostrará una barra de porcentaje y el tiempo estimado (ETA).
+
+[source,bash]
+----
+# Copiar un disco entero viendo cuánto falta
+dd if=/dev/sdb | pv -s 2G | dd of=/dev/sdc
+----
+
+Limitador de velocidad (-L):: Además de mirar, `pv` puede actuar como un regulador para no saturar el disco o la red.
+
+[source,bash]
+----
+# Leer un archivo a una velocidad máxima de 1MB por segundo
+pv -L 1m pelicula.mp4 | mplayer -
+----
+
+Visualización múltiple:: Puedes usar varios `pv` en una sola línea de comandos para ver cómo cambia la velocidad en diferentes etapas del proceso.
+
+[source,bash]
+----
+# Ver velocidad de lectura vs velocidad después de compresión
+pv original.txt | gzip | pv > comprimido.gz
+----
+

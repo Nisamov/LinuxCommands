@@ -1,0 +1,66 @@
+=== mtr
+Herramienta de diagnóstico de red que combina ping y traceroute.
+
+:category: local_network
+[.metadata]
+{
+  "description": "Muestra la ruta que siguen los paquetes hacia un host y proporciona estadísticas de latencia y pérdida de paquetes para cada salto del camino en tiempo real.",
+  "usage": "mtr [OPCIONES] HOST",
+  "options": {
+    "-r": "Modo reporte (genera una salida estática después de 10 ciclos)",
+    "-c": "Número de ciclos (pings) a enviar",
+    "-g": "Modo gráfico (usando ncurses)",
+    "-i": "Intervalo entre pings en segundos",
+    "-n": "No resolver nombres de dominio (mostrar solo IPs)",
+    "-w": "Modo reporte extendido (nombres de host completos)"
+  }
+}
+
+[source,bash]
+----
+# Iniciar mtr en modo interactivo hacia un dominio
+mtr google.com
+----
+
+Análisis en Tiempo Real:: Por defecto, `mtr` actualiza las estadísticas constantemente. Permite observar picos de latencia o pérdida de paquetes en saltos específicos de la red mientras ocurren.
+
+[source,bash]
+----
+# Ejecutar mtr mostrando solo direcciones IP (más rápido)
+mtr -n kernel.org
+----
+
+Modo Reporte (-r):: Ideal para enviar resultados por correo o documentar problemas de red. Ejecuta un número determinado de ciclos y muestra el resumen final.
+
+[source,bash]
+----
+# Generar un informe tras 10 envíos
+mtr -r -c 10 8.8.8.8
+----
+
+Intervalo de prueba (-i):: Permite aumentar la frecuencia de los paquetes para detectar micro-cortes o problemas intermitentes de forma más agresiva.
+
+[source,bash]
+----
+# Enviar un paquete cada 0.2 segundos
+mtr -i 0.2 1.1.1.1
+----
+
+
+
+TCP y UDP en lugar de ICMP:: Si un firewall bloquea los pings (ICMP), puedes usar `mtr` con paquetes TCP o UDP para intentar "saltar" las restricciones.
+
+[source,bash]
+----
+# Usar paquetes TCP en el puerto 80 para el trazado
+mtr --tcp -P 80 google.com
+----
+
+Salida en formato CSV o JSON:: Útil si necesitas procesar los datos de diagnóstico con otras herramientas o scripts (como `jq`).
+
+[source,bash]
+----
+# Exportar el reporte en formato JSON
+mtr -r -c 5 --json 8.8.8.8
+----
+

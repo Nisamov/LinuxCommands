@@ -1,0 +1,73 @@
+=== cmatrix
+Simulador de la pantalla de "lluvia de datos" de la película The Matrix.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Protector de pantalla para terminal que recrea el efecto visual de texto cayendo en cascada, permitiendo personalizar colores y comportamiento.",
+  "usage": "cmatrix [OPCIONES]",
+  "options": {
+    "-a": "Modo asíncrono (desplazamiento más suave)",
+    "-b": "Habilitar caracteres en negrita (bold)",
+    "-C": "Cambiar el color de los caracteres (green, red, blue, white, etc.)",
+    "-u": "Ajustar la velocidad de actualización (0-9)",
+    "-s": "Modo 'Screensaver' (sale al presionar cualquier tecla)",
+    "-x": "Modo X window (utiliza caracteres de estilo Matrix)"
+  }
+}
+
+[source,bash]
+----
+# Iniciar el efecto estándar
+cmatrix
+----
+
+-a:: `cmatrix -a` Activa el desplazamiento asíncrono, lo que genera un efecto visual más fluido y moderno.
+
+[source,bash]
+----
+# Ejecutar con scroll fluido
+cmatrix -a
+----
+
+-C:: `cmatrix -C [color]` Cambia el color clásico verde por otro de la lista soportada.
+
+[source,bash]
+----
+# Cambiar el color de la lluvia a azul
+cmatrix -C blue
+----
+
+-b:: `cmatrix -b` Activa el uso de negritas aleatorias, lo que da un efecto de profundidad al simular que unos caracteres brillan más que otros.
+
+[source,bash]
+----
+# Efecto con brillos aleatorios
+cmatrix -b
+----
+
+-u:: `cmatrix -u [0-9]` Controla la velocidad de la caída. Un número menor aumenta la velocidad (por defecto es 4).
+
+[source,bash]
+----
+# Cascada de datos a alta velocidad
+cmatrix -u 2
+----
+
+-s:: `cmatrix -s` Ideal para dejarlo puesto de fondo; el programa se cerrará automáticamente en cuanto se detecte actividad en el teclado.
+
+[source,bash]
+----
+# Modo protector de pantalla
+cmatrix -s
+----
+
+Comandos interactivos:: Mientras `cmatrix` se está ejecutando, puedes presionar ciertas teclas para cambiar el efecto en tiempo real.
+
+[source,text]
+----
+Teclas rápidas:
+1-9: Cambia la velocidad
+! @ # $ %: Cambia el color
+----
+

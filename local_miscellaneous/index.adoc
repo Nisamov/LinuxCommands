@@ -1,0 +1,34 @@
+= Red Local
+:toc:
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:sectnums:
+:pdf-page-size: A4
+:pdf-page-margin: [2cm, 2cm, 2cm, 2cm]
+:description: LinuxCommands es un repositorio creado para servir como guía y apoyo a usuarios o administradores de sistemas Linux
+:url-repo: https://github.com/Nisamov/LinuxCommands
+:doctype: article
+:lang: es
+:author: Andrés Ruslan Abadías Otal
+
+== Introducción
+Este readme contiene comandos generales que no han logrado ser clasificados en el resto de secciones.
+
+== Commands
+include::commands/banner.adoc[]
+include::commands/bc.adoc[]
+include::commands/cmatrix.adoc[]
+include::commands/cowsay.adoc[]
+include::commands/factor.adoc[]
+include::commands/figlet.adoc[]
+include::commands/fortune.adoc[]
+include::commands/hollywood.adoc[]
+include::commands/jq.adoc[]
+include::commands/look.adoc[]
+include::commands/pv.adoc[]
+include::commands/sl.adoc[]
+include::commands/tmux.adoc[]
+include::commands/toilet.adoc[]
+include::commands/units.adoc[]
+

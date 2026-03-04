@@ -1,0 +1,72 @@
+=== comm
+Comparar dos archivos ordenados línea por línea.
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Compara dos archivos editados u ordenados y muestra las líneas únicas de cada uno y las líneas comunes.",
+  "usage": "comm [OPCIONES] archivo1 archivo2",
+  "options": {
+    "-1": "Suprimir líneas únicas del archivo 1",
+    "-2": "Suprimir líneas únicas del archivo 2",
+    "-3": "Suprimir líneas que aparecen en ambos archivos",
+    "--check-order": "Verificar que la entrada esté correctamente ordenada",
+    "--nocheck-order": "No verificar que la entrada esté ordenada",
+    "--output-delimiter": "Cambiar el separador entre columnas"
+  }
+}
+
+[source,bash]
+----
+# Comparar dos archivos (salida por defecto: 3 columnas)
+comm lista1.txt lista2.txt
+----
+
+-1:: `comm -1` Ocultar líneas exclusivas del primer fichero
+
+[source,bash]
+----
+# Mostrar solo líneas del archivo 2 y las comunes
+comm -1 archivo1.txt archivo2.txt
+----
+
+-2:: `comm -2` Ocultar líneas exclusivas del segundo fichero
+
+[source,bash]
+----
+# Mostrar solo líneas del archivo 1 y las comunes
+comm -2 archivo1.txt archivo2.txt
+----
+
+-3:: `comm -3` Ocultar líneas que están en ambos ficheros
+
+[source,bash]
+----
+# Mostrar solo las diferencias (lo que no es común)
+comm -3 archivo1.txt archivo2.txt
+----
+
+-12:: `comm -12` Mostrar solo las líneas comunes
+
+[source,bash]
+----
+# Útil para encontrar intersecciones entre dos listas
+comm -12 lista_a.txt lista_b.txt
+----
+
+-23:: `comm -23` Mostrar líneas exclusivas del archivo 1
+
+[source,bash]
+----
+# Útil para ver qué elementos se han borrado en la lista 2
+comm -23 lista_vieja.txt lista_nueva.txt
+----
+
+--output-delimiter:: `comm --output-delimiter=STR` Definir un nuevo separador
+
+[source,bash]
+----
+# Usar una flecha como separador de columnas
+comm --output-delimiter=" --> " archivo1.txt archivo2.txt
+----
+

@@ -1,0 +1,82 @@
+=== fsck
+Comprobar y reparar sistemas de archivos de Linux.
+
+:category: local_storage
+[.metadata]
+{
+  "description": "Utilidad para verificar la integridad de un sistema de archivos y reparar errores. Actúa como un front-end para los chequeadores específicos de cada tipo de sistema (e2fsck, xfs_repair, etc.).",
+  "usage": "fsck [OPCIONES] [DISPOSITIVO]",
+  "options": {
+    "-a": "Reparar automáticamente el sistema de archivos sin preguntar (no recomendado)",
+    "-r": "Reparar interactivamente el sistema de archivos (pregunta antes de corregir)",
+    "-y": "Responder 'sí' a todas las preguntas de reparación",
+    "-n": "Modo de solo lectura; asume 'no' a todas las reparaciones (solo informa)",
+    "-f": "Forzar el chequeo incluso si el sistema de archivos parece limpio",
+    "-v": "Modo detallado; muestra estadísticas e información del proceso",
+    "-t": "Especificar el tipo de sistema de archivos a comprobar",
+    "-A": "Comprobar todos los sistemas de archivos listados en /etc/fstab"
+  }
+}
+
+[source,bash]
+----
+# Comprobar un dispositivo específico (debe estar desmontado)
+sudo fsck /dev/sdb1
+----
+
+-device:: `fsck /dev/dispositivo` Realizar un chequeo básico en una partición concreta
+
+[source,bash]
+----
+# Verificar la integridad de la partición sda2
+sudo fsck /dev/sda2
+----
+
+-y:: `fsck -y` Intentar reparar automáticamente todos los errores detectados
+
+[source,bash]
+----
+# Reparar errores en sdb1 respondiendo 'sí' de forma automática
+sudo fsck -y /dev/sdb1
+----
+
+-f:: `fsck -f` Forzar la verificación aunque el sistema de archivos esté marcado como "clean"
+
+[source,bash]
+----
+# Obligar al sistema a realizar un escaneo profundo de la partición
+sudo fsck -f /dev/sdc1
+----
+
+-t:: `fsck -t` Especificar manualmente el tipo de sistema de ficheros
+
+[source,bash]
+----
+# Comprobar específicamente una partición con formato ext4
+sudo fsck -t ext4 /dev/sdb1
+----
+
+-n:: `fsck -n` Realizar un chequeo de seguridad sin aplicar cambios físicos
+
+[source,bash]
+----
+# Simular la reparación para ver qué errores existen sin tocar el disco
+sudo fsck -n /dev/sda1
+----
+
+-A:: `fsck -A` Chequear todos los dispositivos configurados en el sistema
+
+[source,bash]
+----
+# Verificar la salud de todos los discos montables definidos en fstab
+sudo fsck -A
+----
+
+-v:: `fsck -v` Mostrar el progreso detallado y estadísticas finales
+
+[source,bash]
+----
+# Ver el informe completo durante el proceso de verificación
+sudo fsck -v /dev/sdb1
+----
+

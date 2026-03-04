@@ -1,0 +1,62 @@
+=== hollywood
+Simular una consola de "hacker" de película con múltiples paneles dinámicos.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Utilidad que utiliza un multiplexor de terminal (tmux) para crear una cuadrícula de paneles que ejecutan diversos comandos técnicos de forma frenética, imitando las interfaces de usuario ficticias del cine.",
+  "usage": "hollywood [OPCIONES]",
+  "options": {
+    "-d": "Especificar la duración en segundos antes de cerrarse",
+    "-i": "Modo interactivo (permite navegar por los paneles de tmux)",
+    "-s": "Ajustar la velocidad de actualización de los paneles",
+    "ctrl+c": "Detener la simulación y cerrar todos los paneles"
+  }
+}
+
+[source,bash]
+----
+# Iniciar la experiencia completa de "hacker"
+hollywood
+----
+
+Funcionamiento:: El comando detecta el tamaño de tu terminal y lanza automáticamente instancias de `ccze`, `htop`, `speedometer`, `mplayer` y otros para rellenar el espacio.
+
+[source,bash]
+----
+# Para mejores resultados, maximiza la ventana de la terminal antes de ejecutarlo
+hollywood
+----
+
+-d:: `hollywood -d [segundos]` Ejecuta la animación durante un tiempo determinado y luego limpia la pantalla automáticamente.
+
+[source,bash]
+----
+# Ejecutar una demo de 30 segundos
+hollywood -d 30
+----
+
+Dependencias:: `hollywood` no es un binario único, sino un script que requiere que otros paquetes estén instalados para verse correctamente (tmux, cmatrix, bmon, etc.).
+
+[source,bash]
+----
+# En Debian/Ubuntu se instala con:
+sudo apt install hollywood
+----
+
+Audio:: Si el sistema tiene configurado un reproductor de audio por consola, `hollywood` intentará reproducir una banda sonora de suspenso mientras se ejecuta.
+
+[source,bash]
+----
+# Detener solo la música (si se está ejecutando en segundo plano)
+killall mplayer
+----
+
+Modo interactivo:: Aunque está diseñado para ser puramente visual, al basarse en `tmux`, puedes intentar interactuar con las sub-ventanas si conoces los atajos de teclado del multiplexor.
+
+[source,bash]
+----
+# Salir de la simulación de forma segura
+Ctrl + C
+----
+

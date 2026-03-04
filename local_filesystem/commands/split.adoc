@@ -1,0 +1,72 @@
+=== split
+Dividir un archivo en piezas o fragmentos más pequeños.
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Divide un archivo de entrada en varios archivos de salida de un tamaño fijo (por líneas o por bytes).",
+  "usage": "split [OPCIONES] [ENTRADA] [PREFIJO]",
+  "options": {
+    "-l": "Dividir el archivo según el número de líneas",
+    "-b": "Dividir el archivo según el tamaño en bytes (K, M, G, T)",
+    "-n": "Dividir en un número específico de archivos",
+    "-d": "Usar sufijos numéricos en lugar de alfabéticos",
+    "-a": "Longitud del sufijo (por defecto 2)",
+    "--additional-suffix": "Añadir una extensión personalizada a los archivos generados"
+  }
+}
+
+[source,bash]
+----
+# Dividir un archivo en partes de 1000 líneas (por defecto)
+split archivo_grande.log
+----
+
+-l:: `split -l` Especificar el número de líneas por fragmento
+
+[source,bash]
+----
+# Crear archivos de 500 líneas cada uno
+split -l 500 lista.txt
+----
+
+-b:: `split -b` Especificar el tamaño exacto en bytes
+
+[source,bash]
+----
+# Dividir un archivo en partes de 100 Megabytes
+split -b 100M pelicula.mkv parte_
+----
+
+-d:: `split -d` Usar sufijos numéricos (00, 01, 02...)
+
+[source,bash]
+----
+# Generar fragmentos con números en lugar de letras (parte_00, parte_01...)
+split -d backup.tar.gz parte_
+----
+
+-a:: `split -a` Cambiar la longitud del sufijo
+
+[source,bash]
+----
+# Usar sufijos de 4 dígitos para procesos que generan muchos archivos
+split -a 4 -d log_sistema.txt fragmento_
+----
+
+--additional-suffix:: Añadir una extensión a los archivos de salida
+
+[source,bash]
+----
+# Mantener la extensión .txt en todas las partes resultantes
+split -l 100 datos.txt parte_ --additional-suffix=.txt
+----
+
+-n:: `split -n` Dividir en un número total de archivos
+
+[source,bash]
+----
+# Dividir el archivo exactamente en 5 partes iguales independientemente del tamaño
+split -n 5 datos.dat
+----
+

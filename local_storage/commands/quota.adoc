@@ -1,0 +1,73 @@
+=== quota
+Visualizar el uso del disco y los límites de cuota impuestos a usuarios o grupos.
+
+:category: local_storage
+[.metadata]
+{
+  "description": "Muestra el consumo actual de espacio en disco y el número de archivos (inodes) de un usuario o grupo, comparándolos con los límites establecidos (soft y hard) en el sistema.",
+  "usage": "quota [OPCIONES] [USUARIO/GRUPO]",
+  "options": {
+    "-u": "Mostrar cuotas para un usuario específico (por defecto)",
+    "-g": "Mostrar cuotas para un grupo específico",
+    "-v": "Modo detallado; muestra cuotas en sistemas de archivos donde no hay uso",
+    "-s": "Formato legible por humanos (MB, GB en lugar de bloques)",
+    "-p": "Modo informativo para depuración de RPC",
+    "-f": "Mostrar cuotas solo para el sistema de archivos especificado",
+    "-q": "Modo conciso; solo muestra información si se han excedido los límites"
+  }
+}
+
+[source,bash]
+----
+# Ver mi propio consumo y límites de cuota
+quota -s
+----
+
+-u:: `quota -u usuario` Consultar los límites de un usuario concreto
+
+[source,bash]
+----
+# Ver el estado de cuota del usuario 'alumno'
+sudo quota -u alumno
+----
+
+-g:: `quota -g grupo` Consultar los límites aplicados a un grupo de trabajo
+
+[source,bash]
+----
+# Ver el espacio consumido por el grupo 'developers'
+sudo quota -g developers
+----
+
+-v:: `quota -v` Listar todos los puntos de montaje con cuota activa, incluso si están vacíos
+
+[source,bash]
+----
+# Ver informe detallado de todas las particiones con cuotas
+quota -vs
+----
+
+-s:: `quota -s` Presentar los datos en unidades fáciles de leer
+
+[source,bash]
+----
+# Mostrar el uso en GB y MB en lugar de bloques de 1K
+quota -s
+----
+
+-q:: `quota -q` Mostrar información únicamente si el usuario ha superado su límite
+
+[source,bash]
+----
+# Comprobar rápidamente si hay excesos de cuota (salida limpia si todo está OK)
+quota -q
+----
+
+-f:: `quota -f` Filtrar la consulta por un sistema de archivos específico
+
+[source,bash]
+----
+# Ver la cuota únicamente en la partición /home
+quota -f /home
+----
+

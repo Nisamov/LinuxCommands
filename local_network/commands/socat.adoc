@@ -1,0 +1,69 @@
+=== socat
+Establecer dos flujos de datos bidireccionales y transferir datos entre ellos.
+
+:category: local_network
+[.metadata]
+{
+  "description": "Herramienta de transferencia de datos multipropósito que conecta dos canales de datos independientes (archivos, sockets, dispositivos serie, tuberías). Es el sucesor avanzado de netcat.",
+  "usage": "socat [OPCIONES] <DIRECCIÓN1> <DIRECCIÓN2>",
+  "options": {
+    "-v": "Escribir los datos transferidos en la salida de error (modo detallado)",
+    "-d": "Imprimir mensajes de diagnóstico (usar -dd para más detalle)",
+    "-u": "Flujo unidireccional (de dirección1 a dirección2)",
+    "-x": "Escribir los datos transferidos en formato hexadecimal",
+    "TCP-LISTEN": "Escuchar en un puerto TCP",
+    "EXEC": "Ejecutar un programa y conectar sus canales de E/S"
+  }
+}
+
+[source,bash]
+----
+# Reenviar un puerto local a otro servidor (Port Forwarding)
+socat TCP-LISTEN:8080,fork TCP:192.168.1.50:80
+----
+
+
+
+Terminal Interactiva a TCP:: Útil para depurar servicios de red de forma manual, similar a un telnet mejorado.
+
+[source,bash]
+----
+# Conectarse a un servidor web y usar la terminal (STDIO) para enviar comandos
+socat - TCP:www.google.com:80
+----
+
+Transferencia de Archivos:: Permite enviar un archivo a través de la red de forma rápida.
+
+[source,bash]
+----
+# Lado receptor:
+socat TCP-LISTEN:1234,creat,openmode=0644 OPEN:archivo_recibido.txt,create
+
+# Lado emisor:
+socat FILE:archivo_origen.txt TCP:192.168.1.10:1234
+----
+
+Túnel SSL (Cifrado):: A diferencia de `nc`, `socat` puede manejar certificados SSL para asegurar la comunicación.
+
+[source,bash]
+----
+# Crear un servidor que escuche mediante SSL (requiere certificado .pem)
+socat OPENSSL-LISTEN:4443,reuseaddr,cert=cert.pem,verify=0 STDOUT
+----
+
+Puertos Serie Virtuales:: Puede conectar dos terminales virtuales o un puerto serie físico a una red.
+
+[source,bash]
+----
+# Crear un par de terminales virtuales (PTY) conectadas entre sí
+socat -d -d PTY,link=/tmp/vcom1,raw PTY,link=/tmp/vcom2,raw
+----
+
+Shell Remota (Uso con precaución):: Permite exponer una terminal a través de la red (equivalente al flag `-e` de netcat).
+
+[source,bash]
+----
+# Exponer un shell Bash en el puerto 4444
+socat TCP-LISTEN:4444,reuseaddr,fork EXEC:/bin/bash
+----
+

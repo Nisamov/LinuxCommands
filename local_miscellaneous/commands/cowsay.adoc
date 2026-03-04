@@ -1,0 +1,64 @@
+=== cowsay
+Generar una imagen de una vaca (u otros animales) en arte ASCII con un bocadillo de texto.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Utilidad que transforma un texto de entrada en un mensaje dicho por una vaca en formato ASCII. Es altamente personalizable mediante el uso de diferentes personajes y estados de ánimo.",
+  "usage": "cowsay [OPCIONES] [MENSAJE]",
+  "options": {
+    "-f": "Especificar un archivo de personaje (.cow) diferente",
+    "-l": "Listar todos los personajes disponibles en el sistema",
+    "-e": "Cambiar la apariencia de los ojos (ej. -e '@@')",
+    "-T": "Cambiar la forma de la lengua",
+    "-p": "Modo paranoico",
+    "-g": "Modo codicioso (ojos de signo de dólar)"
+  }
+}
+
+[source,bash]
+----
+# Uso básico con mensaje directo
+cowsay "Hola, bienvenido al repositorio"
+----
+
+-f:: `cowsay -f [personaje]` Permite cambiar la vaca por otros animales o personajes como dragones, pingüinos o esqueletos.
+
+[source,bash]
+----
+# Usar un dragón en lugar de una vaca
+cowsay -f dragon "¡Cuidado con el fuego!"
+----
+
+-l:: `cowsay -l` Muestra la lista de todas las plantillas de arte ASCII disponibles en `/usr/share/cowsay/cows/`.
+
+[source,bash]
+----
+# Listar personajes instalados
+cowsay -l
+----
+
+-e:: `cowsay -e [caracteres]` Personaliza los ojos de la vaca para darle una expresión específica.
+
+[source,bash]
+----
+# Vaca con ojos de "X" (estilo muerto/aturdido)
+cowsay -e "XX" "Ouch..."
+----
+
+Tuberías (Pipes):: `cowsay` es famoso por combinarse con `fortune` para mostrar frases aleatorias cada vez que se abre la terminal.
+
+[source,bash]
+----
+# Mostrar una frase aleatoria dicha por la vaca
+fortune | cowsay
+----
+
+Modos predefinidos:: El comando incluye modificadores rápidos para estados de ánimo: `-p` (paranoico), `-g` (codicioso), `-d` (muerto), `-s` (colocado).
+
+[source,bash]
+----
+# Vaca en modo codicioso
+cowsay -g "Necesito más RAM"
+----
+

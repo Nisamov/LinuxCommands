@@ -1,0 +1,55 @@
+=== zless
+Visualizar el contenido de archivos comprimidos sin descomprimirlos.
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Filtro que permite examinar archivos comprimidos (gzip, zip, etc.) una pantalla a la vez. Funciona de manera idéntica al comando 'less' pero aplicado a archivos comprimidos.",
+  "usage": "zless [ARCHIVO]...",
+  "options": {
+    "-N": "Mostrar números de línea",
+    "-S": "Cortar líneas largas en lugar de ajustarlas",
+    "-i": "Ignorar mayúsculas y minúsculas en las búsquedas",
+    "-m": "Mostrar porcentaje de lectura del archivo",
+    "-p": "Empezar la visualización en la primera coincidencia de un patrón"
+  }
+}
+
+[source,bash]
+----
+# Leer un archivo comprimido .gz
+zless logs_servidor.gz
+----
+
+-N:: `zless -N` Activar numeración de líneas
+
+[source,bash]
+----
+# Ver el contenido con números de línea para facilitar la referencia
+zless -N historial.log.gz
+----
+
+-S:: `zless -S` Desactivar el ajuste de línea (Line Wrapping)
+
+[source,bash]
+----
+# Ver líneas muy largas de forma horizontal (usar flechas para desplazar)
+zless -S trazas_depuracion.gz
+----
+
+-i:: `zless -i` Búsquedas insensibles a mayúsculas
+
+[source,bash]
+----
+# Buscar términos sin distinguir entre mayúsculas y minúsculas
+zless -i reporte_seguridad.gz
+----
+
+-p:: `zless -p` Saltar directamente a una palabra
+
+[source,bash]
+----
+# Abrir el archivo directamente donde aparezca el término 'ERROR'
+zless -p "ERROR" sistema_backup.gz
+----
+

@@ -1,0 +1,67 @@
+=== host
+Utilidad de consulta DNS para resolución de nombres y direcciones IP.
+
+:category: local_network
+[.metadata]
+{
+  "description": "Herramienta sencilla para realizar búsquedas en el sistema de nombres de dominio (DNS). Convierte nombres de dominio en direcciones IP y viceversa.",
+  "usage": "host [OPCIONES] [NOMBRE_O_IP] [SERVIDOR_DNS]",
+  "options": {
+    "-t": "Especificar el tipo de registro DNS (A, MX, TXT, NS, etc.)",
+    "-a": "Modo 'Any' (muestra todos los registros disponibles)",
+    "-v": "Modo detallado (verbose)",
+    "-l": "Listar todas las máquinas de un dominio (transferencia de zona)",
+    "-W": "Tiempo de espera para una respuesta en segundos",
+    "-r": "Desactivar la recursividad"
+  }
+}
+
+[source,bash]
+----
+# Resolución básica de un dominio a IP
+host google.com
+----
+
+Resolución Inversa:: Si proporcionas una dirección IP, `host` buscará automáticamente el nombre de dominio asociado (registro PTR).
+
+[source,bash]
+----
+# Buscar el dominio asociado a una IP
+host 8.8.8.8
+----
+
+Especificar Tipo de Registro (-t):: Permite filtrar la consulta para obtener solo la información necesaria, como servidores de correo (MX) o servidores de nombres (NS).
+
+[source,bash]
+----
+# Consultar los servidores de correo de un dominio
+host -t MX debian.org
+
+# Consultar registros de texto (útil para verificar SPF o DKIM)
+host -t TXT github.com
+----
+
+Usar un Servidor DNS específico:: Puedes forzar la consulta a un servidor concreto (como los de Google o Cloudflare) en lugar de usar los configurados en el sistema.
+
+[source,bash]
+----
+# Consultar a través del servidor DNS 1.1.1.1
+host kernel.org 1.1.1.1
+----
+
+Modo Detallado (-v):: Muestra la respuesta completa del servidor DNS, incluyendo el tiempo de vida (TTL) y los encabezados de la consulta, similar a la salida de `dig`.
+
+[source,bash]
+----
+# Ver todos los detalles técnicos de la consulta
+host -v google.com
+----
+
+Modo "Todo" (-a):: Equivale a realizar una consulta de tipo `ANY`, trayendo toda la información pública disponible del dominio.
+
+[source,bash]
+----
+# Mostrar absolutamente todos los registros DNS del dominio
+host -a microsoft.com
+----
+

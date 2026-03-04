@@ -1,0 +1,54 @@
+=== look
+Buscar líneas que comienzan con una cadena específica en archivos ordenados.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Utilidad de búsqueda rápida que localiza líneas que empiezan por una cadena de texto determinada. Por defecto, consulta el diccionario del sistema si no se especifica un archivo.",
+  "usage": "look [OPCIONES] CADENA [ARCHIVO]",
+  "options": {
+    "-f": "Ignorar mayúsculas y minúsculas (case-insensitive)",
+    "-t": "Especificar un carácter de terminación de cadena",
+    "-a": "Usar el diccionario alternativo (en algunos sistemas)",
+    "-d": "Diccionario: solo comparar letras y números (ignorar símbolos)"
+  }
+}
+
+[source,bash]
+----
+# Buscar palabras en el diccionario del sistema que empiecen por "linux"
+look linux
+----
+
+Búsqueda en el Diccionario:: Si no especificas un archivo, `look` busca en `/usr/share/dict/words`. Es ideal para verificar la ortografía o completar palabras desde la terminal.
+
+[source,bash]
+----
+# Encontrar palabras que empiecen por "arch"
+look arch
+----
+
+Uso con Archivos Propios:: Puedes usarlo sobre cualquier archivo de texto, siempre y cuando esté **ordenado alfabéticamente**.
+
+[source,bash]
+----
+# Buscar un usuario en un archivo de registros ordenado
+look "admin" lista_usuarios.txt
+----
+
+Ignorar Mayúsculas (-f):: Permite realizar búsquedas sin que importe si el texto está en mayúsculas o minúsculas.
+
+[source,bash]
+----
+# Buscar "error" sin importar si aparece como "Error" o "ERROR"
+look -f "error" logs_ordenados.log
+----
+
+Carácter de Terminación (-t):: Útil cuando quieres buscar una coincidencia exacta hasta un separador específico.
+
+[source,bash]
+----
+# Buscar líneas que empiecen exactamente por "ID" seguido de un ":"
+look -t ":" "ID" datos.csv
+----
+

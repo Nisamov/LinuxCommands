@@ -1,0 +1,63 @@
+=== visudo
+Editar de forma segura el archivo de configuración de privilegios de sudo (/etc/sudoers).
+
+:category: local_permissions
+[.metadata]
+{
+  "description": "Utilidad para editar el archivo sudoers. Bloquea el archivo para evitar ediciones simultáneas y realiza una comprobación de sintaxis antes de guardar para prevenir errores que bloqueen el acceso administrativo.",
+  "usage": "visudo [OPCIONES]",
+  "options": {
+    "-c": "Modo de comprobación: valida la sintaxis del archivo sin editarlo",
+    "-f": "Especificar un archivo alternativo para editar",
+    "-q": "Modo silencioso, no muestra errores de sintaxis",
+    "-s": "Verificación estricta de la configuración",
+    "-x": "Exportar el archivo en formato JSON (en versiones modernas)"
+  }
+}
+
+[source,bash]
+----
+# Editar el archivo /etc/sudoers con el editor por defecto
+sudo visudo
+
+# Verificar si el archivo sudoers actual tiene errores de sintaxis
+sudo visudo -c
+
+# Editar un archivo de configuración específico en sudoers.d
+sudo visudo -f /etc/sudoers.d/usuarios_web
+----
+
+-c:: `visudo -c` Comprueba la integridad del archivo. Muy útil después de hacer cambios manuales o mediante scripts.
+
+[source,bash]
+----
+# Validar sintaxis y mostrar resultado
+sudo visudo -c
+# Salida: /etc/sudoers: parsed OK
+----
+
+-f:: `visudo -f [archivo]` Permite editar archivos adicionales de configuración de sudo, manteniendo la protección de bloqueo y validación.
+
+[source,bash]
+----
+# Editar un archivo de permisos específicos para un grupo
+sudo visudo -f /etc/sudoers.d/developers
+----
+
+Seguridad de Edición:: Si cometes un error de sintaxis, `visudo` te detendrá al intentar salir, preguntándote qué hacer antes de corromper el acceso al sistema.
+
+[source,bash]
+----
+# Ejemplo de mensaje de error de visudo:
+# >>> /etc/sudoers: syntax error near line 25 <<<
+# What now? (e=edit, x=exit without saving, Q=quit and save changes)
+----
+
+Editor Variable:: Puedes cambiar el editor que usa `visudo` (como `nano` o `vim`) mediante variables de entorno.
+
+[source,bash]
+----
+# Usar nano específicamente para esta sesión de edición
+sudo EDITOR=nano visudo
+----
+

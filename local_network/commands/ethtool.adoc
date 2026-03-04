@@ -1,0 +1,64 @@
+=== ethtool
+Consultar y configurar parámetros de tarjetas de red (NIC) y sus controladores.
+
+:category: local_network
+[.metadata]
+{
+  "description": "Herramienta de administración para visualizar y modificar la configuración del hardware de red, incluyendo velocidad, duplex, estadísticas y autonegociación.",
+  "usage": "ethtool [OPCIONES] [INTERFAZ]",
+  "options": {
+    "-i": "Mostrar información del controlador (driver) y firmware",
+    "-S": "Mostrar estadísticas detalladas del hardware",
+    "-p": "Hacer parpadear los LEDs de la tarjeta para identificación física",
+    "-s": "Modificar la configuración de la interfaz",
+    "-k": "Consultar el estado de las funciones de descarga (offload)",
+    "-g": "Consultar los parámetros del anillo RX/TX"
+  }
+}
+
+[source,bash]
+----
+# Ver la configuración básica de una interfaz (velocidad, enlace, etc.)
+ethtool eth0
+----
+
+Información del Driver (-i):: Permite conocer qué controlador está usando la tarjeta, la versión del firmware y el bus PCI al que está conectada.
+
+[source,bash]
+----
+# Consultar driver y versión de firmware
+ethtool -i wlan0
+----
+
+Estadísticas de Hardware (-S):: Muestra contadores detallados que no aparecen con `ifconfig` o `ip`, como errores de colisión interna, paquetes descartados por el hardware o problemas de flujo.
+
+[source,bash]
+----
+# Ver estadísticas de errores y tráfico detallado
+ethtool -S enp3s0
+----
+
+Identificación Física (-p):: Muy útil en servidores con muchos puertos para identificar físicamente cuál es el cable que corresponde a la interfaz lógica.
+
+[source,bash]
+----
+# Hacer que el LED de la tarjeta parpadee durante 10 segundos
+ethtool -p eth1 10
+----
+
+Modificar parámetros (-s):: Permite forzar velocidades o modos de duplex si la autonegociación falla.
+
+[source,bash]
+----
+# Forzar la tarjeta a 100Mb/s Full Duplex sin autonegociación
+ethtool -s eth0 speed 100 duplex full autoneg off
+----
+
+Funciones Offload (-k):: Muestra qué tareas está realizando el hardware de la tarjeta en lugar de la CPU (como el cálculo de checksums o segmentación TCP).
+
+[source,bash]
+----
+# Consultar qué funciones de descarga están activas
+ethtool -k eth0
+----
+

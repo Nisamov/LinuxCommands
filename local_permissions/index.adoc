@@ -27,6 +27,7 @@ include::commands/chmod.adoc[]
 include::commands/chown.adoc[]
 include::commands/sudo.adoc[]
 include::commands/umask.adoc[]
+include::commands/visudo.adoc[]
 
 == Listas de Acceso
 include::access_control_lists/acls.adoc[]

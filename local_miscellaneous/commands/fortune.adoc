@@ -1,0 +1,72 @@
+=== fortune
+Mostrar frases aleatorias de una base de datos de citas y epigramas.
+
+:category: local_miscellaneous
+[.metadata]
+{
+  "description": "Programa que selecciona una frase al azar de una colección de archivos de citas. Es ampliamente utilizado en archivos de configuración de shell (.bashrc) para personalizar el inicio de sesión.",
+  "usage": "fortune [OPCIONES]",
+  "options": {
+    "-s": "Mostrar solo frases cortas (menos de 160 caracteres)",
+    "-l": "Mostrar solo frases largas",
+    "-n": "Limitar la longitud de las frases a un número específico de caracteres",
+    "-f": "Listar las bases de datos de citas disponibles",
+    "-e": "Considerar todos los archivos de citas con la misma probabilidad",
+    "-a": "Elegir de todas las bases de datos, incluyendo las ofensivas (si están instaladas)"
+  }
+}
+
+[source,bash]
+----
+# Mostrar una cita aleatoria
+fortune
+----
+
+-s:: `fortune -s` Filtra la salida para mostrar únicamente epigramas o frases cortas, ideales para notificaciones rápidas.
+
+[source,bash]
+----
+# Cita corta para un mensaje de bienvenida
+fortune -s
+----
+
+-f:: `fortune -f` Muestra las categorías o archivos de origen que el comando utiliza para extraer las frases.
+
+[source,bash]
+----
+# Listar archivos de citas instalados
+fortune -f
+----
+
+Selección específica:: Se puede forzar a `fortune` a elegir una temática específica pasando el nombre de la base de datos como argumento.
+
+[source,bash]
+----
+# Mostrar una frase específicamente sobre informática (si existe la db 'computers')
+fortune computers
+----
+
+Combinación con cowsay:: Es la combinación más común en el ecosistema Linux para dar "personalidad" a la terminal.
+
+[source,bash]
+----
+# Una vaca que dice una frase aleatoria
+fortune | cowsay
+----
+
+Uso en .bashrc:: Para que aparezca una frase cada vez que abres una terminal, se añade al final del archivo de configuración.
+
+[source,bash]
+----
+# Ejemplo de línea a añadir en ~/.bashrc
+[[ $- == *i* ]] && fortune | cowsay -f tux
+----
+
+-n:: `fortune -n [longitud]` Permite establecer un límite máximo de caracteres para la selección de la frase.
+
+[source,bash]
+----
+# Mostrar una frase que no supere los 50 caracteres
+fortune -n 50
+----
+

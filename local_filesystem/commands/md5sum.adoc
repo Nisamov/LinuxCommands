@@ -1,0 +1,70 @@
+=== md5sum
+Calcular y verificar hashes MD5.
+
+:category: local_filesystem
+[.metadata]
+{
+  "description": "Herramienta para calcular y verificar resúmenes de huella digital MD5 (128 bits). Se utiliza principalmente para comprobar la integridad de archivos.",
+  "usage": "md5sum [OPCIONES] [ARCHIVO]...",
+  "options": {
+    "-b": "Leer en modo binario",
+    "-c": "Verificar hashes desde un archivo",
+    "-t": "Leer en modo texto",
+    "--tag": "Crear una salida de estilo BSD",
+    "--status": "No imprimir nada, el código de salida indica el éxito",
+    "--quiet": "No imprimir OK por cada archivo verificado con éxito"
+  }
+}
+
+[source,bash]
+----
+# Generar el hash MD5 de un archivo
+md5sum imagen.iso
+----
+
+-b:: `md5sum -b` Leer archivos en modo binario
+
+[source,bash]
+----
+# Generar hash indicando que es un archivo binario (marcado con *)
+md5sum -b ejecutable.bin
+----
+
+-c:: `md5sum -c` Verificar integridad desde un archivo de hashes
+
+[source,bash]
+----
+# Comprobar si los archivos coinciden con sus hashes almacenados
+md5sum -c sumas.md5
+----
+
+--tag:: `md5sum --tag` Formato de salida estilo BSD
+
+[source,bash]
+----
+# Generar una salida más legible que identifica el algoritmo
+md5sum --tag archivo.zip
+----
+
+--status:: `md5sum --status` Modo silencioso para scripts
+
+[source,bash]
+----
+# Verificar sin salida de texto; se comprueba con 'echo $?'
+md5sum -c --status sumas.md5
+----
+
+--quiet:: `md5sum --quiet` Omitir mensajes de éxito
+
+[source,bash]
+----
+# Mostrar solo los archivos que fallan la verificación o tienen errores
+md5sum -c --quiet sumas.md5
+----
+
+[source,bash]
+----
+# Ejemplo: Redirigir salida a un archivo para verificación posterior
+md5sum *.txt > sumas.md5
+----
+

@@ -1,0 +1,54 @@
+=== timeout
+Ejecutar un comando durante un tiempo limitado; si se supera, se termina automáticamente.
+
+:category: local_process
+[.metadata]
+{
+  "description": "Inicia un comando y lo detiene si todavía se está ejecutando después del intervalo de tiempo especificado. Es ideal para evitar que procesos se queden bloqueados indefinidamente.",
+  "usage": "timeout [OPCIONES] DURACIÓN COMANDO [ARG]...",
+  "options": {
+    "-s, --signal": "Especificar la señal a enviar al finalizar el tiempo",
+    "-k, --kill-after": "Forzar el cierre del comando después de un tiempo adicional si no termina",
+    "--foreground": "Ejecutar en primer plano (útil con comandos interactivos)",
+    "--preserve-status": "Devolver el mismo código de salida que el comando original"
+  }
+}
+
+[source,bash]
+----
+# Ejecutar un comando durante 5 segundos
+timeout 5s ping -c 10 8.8.8.8
+----
+
+-k:: `timeout -k` Forzar el cierre del comando después de un tiempo adicional si no termina
+
+[source,bash]
+----
+# Matar el comando después de 5s, forzando su terminación a los 7s si no finaliza
+timeout -k 7s 5s ping -c 10 8.8.8.8
+----
+
+-s:: `timeout -s` Especificar la señal a enviar al finalizar el tiempo
+
+[source,bash]
+----
+# Terminar el comando enviando SIGTERM (por defecto)
+timeout -s TERM 5s ping -c 10 8.8.8.8
+----
+
+--foreground:: `timeout --foreground` Ejecutar en primer plano (útil con comandos que manejan terminal interactiva)
+
+[source,bash]
+----
+# Mantener interacción con el comando en primer plano
+timeout --foreground 10s top
+----
+
+--preserve-status:: `timeout --preserve-status` Devuelve el código de salida del proceso incluso si se agota el tiempo
+
+[source,bash]
+----
+# Obtener el código de error real del comando ejecutado
+timeout --preserve-status 5s ./mi_script.sh
+----
+

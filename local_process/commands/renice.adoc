@@ -1,0 +1,66 @@
+=== renice
+Alterar la prioridad de planificación de procesos que ya están en ejecución.
+
+:category: local_process
+[.metadata]
+{
+  "description": "Modifica el valor 'nice' de uno o más procesos activos. A diferencia de 'nice', que lanza nuevos procesos, 'renice' actúa sobre los que ya tienen un PID asignado.",
+  "usage": "renice [-n] PRIORIDAD [-p] PID | [-u] USUARIO | [-g] GRUPO",
+  "options": {
+    "-n": "Especificar el nuevo valor de prioridad (absoluto, no incremento)",
+    "-p": "Interpretar los argumentos como IDs de proceso (PID) - opción por defecto",
+    "-u": "Cambiar la prioridad de todos los procesos que pertenecen a un usuario",
+    "-g": "Cambiar la prioridad de todos los procesos que pertenecen a un grupo de procesos",
+    "-L": "Listar las prioridades actuales de los procesos (en algunas versiones)"
+  }
+}
+
+[source,bash]
+----
+# Cambiar la prioridad del proceso 1234 a un valor de 10
+renice -n 10 -p 1234
+----
+
+-Prioridad absoluta:: A diferencia de `nice`, donde el valor se suma al actual, `renice` establece el valor exacto indicado.
+
+[source,bash]
+----
+# Forzar al proceso 4567 a la máxima prioridad (requiere sudo)
+sudo renice -n -20 -p 4567
+----
+
+-Afectar a un usuario completo (-u):: Útil para limitar el impacto de todos los procesos de un usuario que está consumiendo demasiados recursos.
+
+[source,bash]
+----
+# Bajar la prioridad de todos los procesos del usuario 'invitado'
+sudo renice -n 15 -u invitado
+----
+
+-Identificación por grupo (-g):: Permite actuar sobre un conjunto de procesos relacionados (Process Group ID).
+
+[source,bash]
+----
+# Cambiar prioridad a todo un grupo de procesos
+sudo renice -n 5 -g 1001
+----
+
+-Privilegios de modificación:: El kernel protege la estabilidad del sistema restringiendo quién puede "ser egoísta" con la CPU.
+
+[source,bash]
+----
+# Un usuario normal puede subir el valor nice (bajar su propia prioridad)
+renice -n 10 -p 1234
+
+# Solo el superusuario puede bajar el valor nice (subir prioridad)
+sudo renice -n -5 -p 1234
+----
+
+-Confirmación de salida:: El comando siempre informa del valor anterior y del nuevo valor establecido para confirmar el cambio.
+
+[source,bash]
+----
+# Salida típica de renice:
+# 1234 (process ID) old priority 0, new priority 10
+----
+
