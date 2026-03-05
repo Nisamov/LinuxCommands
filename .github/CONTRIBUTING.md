@@ -10,7 +10,8 @@ El repositorio sigue un estándar fijo de documentación para mantener el orden 
 2. Realizar cambios o crear contenido siguiendo la estructura del repositorio:
     - [Ejemplo de premodelo en Markdown (.md)](.github/templates/markdown.md)
     - [Ejemplo de premodelo en Documento Ascii tipo Index (.adoc)](.github/templates/asciidocument_index.adoc)
-    - [Ejemplo de premodelo en Documento Ascii para Comandos (.adoc)](.github/templates/asciidocument_command.adoc)
+    - [Ejemplo de premodelo en Documento Ascii tipo Comandos (.adoc)](.github/templates/asciidocument_command.adoc)
+    - [Ejemplo de premodelo en Documento Ascii tipo Documentos (.adoc)](.github/templates/asciidocument_docs.adoc)
     - [Formato y significado en nombres de directorios](STRUCTURE.md)
 3. Abrir pull request y rellenar las casillas indicadas.
 4. Solicitar revisión del pull request.

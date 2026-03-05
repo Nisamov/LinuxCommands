@@ -1,0 +1,60 @@
+=== Título teoría
+
+==== Subtitulo
+
+===== Apartado
+Descripción **contenido relevante**.
+
+**Características principales:**
+* Ejemplo.
+* Ejemplo2.
+* Ejemplo3.
+
+===== Apartado2
+Descripción **contenido relevante2**.
+
+[cols="1,2,2,3", options="header"]
+|===
+| Ejemplo1 | Ejemplo2 | Ejemplo3 | Ejemplo4
+
+|Ejemplo1
+|Ejemplo2
+|Ejemplo3
+|Ejemplo4
+
+|Ejemplo1
+|Ejemplo2
+|Ejemplo3
+|Ejemplo4
+
+|Ejemplo1
+|Ejemplo2
+|Ejemplo3
+|Ejemplo4
+
+|Ejemplo1
+|Ejemplo2
+|Ejemplo3
+|Ejemplo4
+
+|Ejemplo1
+|Ejemplo2
+|Ejemplo3
+|Ejemplo4
+
+|Ejemplo1
+|Ejemplo2
+|Ejemplo3
+|Ejemplo4
+
+|Ejemplo1
+|Ejemplo2
+|Ejemplo3
+|Ejemplo4
+
+|Ejemplo1
+|Ejemplo2
+|Ejemplo3
+|Ejemplo4
+|===
+

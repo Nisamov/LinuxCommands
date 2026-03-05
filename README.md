@@ -1,4 +1,27 @@
-![Cartel Principal](.github/media/sheyald.png)
+<p align="center">
+  <img src=".github/media/sheyald.png"></a>
+</p>
+<!--Iconos de acceso directo de:
+- Wikipedia: https://es.wikipedia.org/wiki/LinuxCommands
+- Wikidot: http://linuxcommands.wikidot.com/
+- Github Pages: https://nisamov.github.io/LinuxCommands/
+-->
+<p align="center">
+  <a href="https://es.wikipedia.org/wiki/LinuxCommands" title="Wikipedia">
+    <img src="https://cdn-icons-png.flaticon.com/512/48/48927.png" width="28">
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="http://linuxcommands.wikidot.com/" title="Wikidot">
+    <img src="https://cdn-icons-png.flaticon.com/512/262/262031.png" width="28">
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://nisamov.github.io/LinuxCommands/" title="GitHub Pages">
+    <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="28">
+  </a>
+</p>
+<p align="center">
+  <small><b>Wikipedia</b> &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp; <b>Wikidot</b> &nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; <b>Git Pages</b></small>
+</p>
 
 ---
 <p align="center">
@@ -76,7 +99,8 @@ La organización del repositorio está pensada para facilitar la navegación y e
 El repositorio sigue un estándar fijo de documentación para mantener el orden y permitir una correcta indexación a la hora de generar PDFs.
 - [Ejemplo de premodelo en Markdown (.md)](.github/templates/markdown.md)
 - [Ejemplo de premodelo en Documento Ascii tipo Index (.adoc)](.github/templates/asciidocument_index.adoc)
-- [Ejemplo de premodelo en Documento Ascii para Comandos (.adoc)](.github/templates/asciidocument_command.adoc)
+- [Ejemplo de premodelo en Documento Ascii tipo Comandos (.adoc)](.github/templates/asciidocument_command.adoc)
+- [Ejemplo de premodelo en Documento Ascii tipo Documentos (.adoc)](.github/templates/asciidocument_docs.adoc)
 - [Formato y significado en nombres de directorios](STRUCTURE.md)
 
 Más información en [CONTRIBUTING](.github/CONTRIBUTING.md).
