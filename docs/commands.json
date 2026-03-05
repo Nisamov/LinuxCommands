@@ -1,5 +1,24 @@
 [
   {
+    "description": "Muestra información sobre los usuarios que tienen una sesión abierta, sus terminales y el tiempo de conexión.",
+    "usage": "who [OPCIÓN]... [ARCHIVO | ARG1 ARG2]",
+    "options": {
+      "-a": "Imprimir toda la información disponible (equivale a -b -d --login -p -r -t -T -u)",
+      "-b": "Mostrar la hora del último arranque del sistema",
+      "-d": "Mostrar los procesos que han muerto (dead)",
+      "-H": "Imprimir una línea de cabecera con los nombres de las columnas",
+      "-l": "Mostrar solo las terminales donde se espera un inicio de sesión (login)",
+      "-m": "Mostrar solo el host y el usuario asociado a la entrada estándar (stdin)",
+      "-q": "Modo recuento: muestra solo los nombres de usuario y el total",
+      "-r": "Mostrar el nivel de ejecución (run-level) actual",
+      "-u": "Listar los usuarios conectados con su tiempo de inactividad",
+      "-T": "Añadir el estado de escritura del usuario (+, - o ?)"
+    },
+    "name": "who",
+    "category": "local_users",
+    "source_path": "local_users/commands/who.adoc"
+  },
+  {
     "description": "Eliminar cuentas de usuario y opcionalmente sus archivos y configuraciones",
     "usage": "deluser [OPCIONES] USUARIO",
     "options": {
@@ -23,6 +42,39 @@
     "name": "passwd",
     "category": "local_users",
     "source_path": "local_users/commands/passwd.adoc"
+  },
+  {
+    "description": "Escribe un mensaje en las terminales de todos los usuarios que tengan sesiones abiertas.",
+    "usage": "wall [OPCIÓN] [MENSAJE | ARCHIVO]",
+    "options": {
+      "-n": "Suprimir el encabezado (banner) del mensaje",
+      "-t": "Establecer un tiempo de espera (timeout) para la escritura en segundos",
+      "-g": "Enviar el mensaje solo a los miembros de un grupo específico",
+      "-V": "Mostrar información de la versión y finalizar",
+      "-h": "Mostrar la ayuda y finalizar"
+    },
+    "name": "wall",
+    "category": "local_users",
+    "source_path": "local_users/commands/wall.adoc"
+  },
+  {
+    "description": "Muestra una lista de los últimos inicios de sesión, reinicios del sistema y cierres de sesión.",
+    "usage": "last [OPCIONES]... [USUARIO o TTY]...",
+    "options": {
+      "-a": "Colocar el nombre del host en la última columna",
+      "-d": "Traducir la dirección IP en un nombre de host",
+      "-f": "Utilizar un archivo específico en lugar de /var/log/wtmp",
+      "-i": "Mostrar la dirección IP del host remoto en lugar del nombre",
+      "-n": "Limitar el número de líneas a mostrar",
+      "-R": "No mostrar el campo del nombre del host",
+      "-t": "Mostrar el estado de los inicios de sesión en una fecha específica (YYYYMMDDHHMMSS)",
+      "-F": "Imprimir los tiempos completos de inicio y cierre de sesión",
+      "-x": "Mostrar entradas de apagado del sistema y cambios de nivel de ejecución",
+      "--help": "Mostrar la ayuda y finalizar"
+    },
+    "name": "last",
+    "category": "local_users",
+    "source_path": "local_users/commands/last.adoc"
   },
   {
     "description": "Modificar la información personal asociada a una cuenta de usuario",
@@ -49,6 +101,23 @@
     "name": "chsh",
     "category": "local_users",
     "source_path": "local_users/commands/chsh.adoc"
+  },
+  {
+    "description": "Muestra un resumen de los usuarios conectados, desde qué terminal, su tiempo de actividad y el proceso actual.",
+    "usage": "w [OPCIÓN]... [USUARIO]",
+    "options": {
+      "-h": "No imprimir la cabecera (uptime y nombres de columnas)",
+      "-u": "Ignorar el nombre de usuario al determinar el tiempo de CPU",
+      "-s": "Formato corto: omite el tiempo de login y las estadísticas de CPU",
+      "-f": "Alternar la visualización del campo 'FROM' (remoto)",
+      "-i": "Mostrar la dirección IP en lugar del nombre de host",
+      "-o": "Formato antiguo: imprime espacios en blanco para tiempos de inactividad cortos",
+      "-p": "Imprimir la dirección de la terminal (tty) completa",
+      "-V": "Mostrar información de la versión y finalizar"
+    },
+    "name": "w",
+    "category": "local_users",
+    "source_path": "local_users/commands/w.adoc"
   },
   {
     "description": "Crear cuentas de usuario de bajo nivel mediante opciones explícitas (no interactivo).",
@@ -83,6 +152,25 @@
     "name": "chage",
     "category": "local_users",
     "source_path": "local_users/commands/chage.adoc"
+  },
+  {
+    "description": "Muestra información de identidad de usuario y grupo (UID, GID y grupos secundarios).",
+    "usage": "id [OPCIÓN]... [USUARIO]",
+    "options": {
+      "-a": "Ignorado; para compatibilidad con otras versiones",
+      "-Z": "Imprimir únicamente el contexto de seguridad del proceso (SELinux)",
+      "-g": "Imprimir únicamente el GID efectivo",
+      "-G": "Imprimir todos los IDs de grupo (GIDs)",
+      "-n": "Imprimir el nombre en lugar del número (requiere -u, -g o -G)",
+      "-r": "Mostrar el ID real en lugar del ID efectivo (requiere -u, -g o -G)",
+      "-u": "Imprimir únicamente el UID efectivo",
+      "-z": "Delimitar las salidas con caracteres nulos en lugar de espacios",
+      "--help": "Mostrar la ayuda y finalizar",
+      "--version": "Mostrar información de la versión y finalizar"
+    },
+    "name": "id",
+    "category": "local_users",
+    "source_path": "local_users/commands/id.adoc"
   },
   {
     "description": "Crear y gestionar cuentas de usuario de forma interactiva",
