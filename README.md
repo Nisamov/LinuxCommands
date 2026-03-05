@@ -1,11 +1,7 @@
 <p align="center">
   <img src=".github/media/sheyald.png"></a>
 </p>
-<!--Iconos de acceso directo de:
-- Wikipedia: https://es.wikipedia.org/wiki/LinuxCommands
-- Wikidot: http://linuxcommands.wikidot.com/
-- Github Pages: https://nisamov.github.io/LinuxCommands/
--->
+
 <p align="center">
   <a href="https://es.wikipedia.org/wiki/LinuxCommands" title="Wikipedia">
     <img src="https://cdn-icons-png.flaticon.com/512/48/48927.png" width="28">
