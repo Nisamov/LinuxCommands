@@ -1,0 +1,66 @@
+=== w
+Mostrar quién está conectado y qué está haciendo en el sistema.
+
+:category: local_users
+[.metadata]
+{
+  "description": "Muestra un resumen de los usuarios conectados, desde qué terminal, su tiempo de actividad y el proceso actual.",
+  "usage": "w [OPCIÓN]... [USUARIO]",
+  "options": {
+    "-h": "No imprimir la cabecera (uptime y nombres de columnas)",
+    "-u": "Ignorar el nombre de usuario al determinar el tiempo de CPU",
+    "-s": "Formato corto: omite el tiempo de login y las estadísticas de CPU",
+    "-f": "Alternar la visualización del campo 'FROM' (remoto)",
+    "-i": "Mostrar la dirección IP en lugar del nombre de host",
+    "-o": "Formato antiguo: imprime espacios en blanco para tiempos de inactividad cortos",
+    "-p": "Imprimir la dirección de la terminal (tty) completa",
+    "-V": "Mostrar información de la versión y finalizar"
+  }
+}
+
+[source,bash]
+----
+# Ver todos los usuarios conectados y su actividad actual
+w
+----
+
+-h:: `w -h` Omitir la cabecera informativa
+
+[source,bash]
+----
+# Útil para procesar la salida en scripts sin los títulos
+w -h
+----
+
+-s:: `w -s` Formato corto (simplificado)
+
+[source,bash]
+----
+# Ver usuarios sin detalles de JCPU, PCPU ni tiempo de login
+w -s
+----
+
+-f:: `w -f` Ocultar el origen de la conexión
+
+[source,bash]
+----
+# Quitar la columna que indica desde dónde se conectan (IP/Host)
+w -f
+----
+
+-i:: `w -i` Mostrar IPs en lugar de nombres de host
+
+[source,bash]
+----
+# Ver la dirección IP numérica de los usuarios remotos
+w -i
+----
+
+[USUARIO]:: `w [USUARIO]` Consultar un usuario específico
+
+[source,bash]
+----
+# Ver únicamente la actividad del usuario 'alumno'
+w alumno
+----
+

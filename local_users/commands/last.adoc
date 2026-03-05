@@ -1,0 +1,84 @@
+=== last
+Mostrar el historial de los últimos usuarios que iniciaron sesión en el sistema.
+
+:category: local_users
+[.metadata]
+{
+  "description": "Muestra una lista de los últimos inicios de sesión, reinicios del sistema y cierres de sesión.",
+  "usage": "last [OPCIONES]... [USUARIO o TTY]...",
+  "options": {
+    "-a": "Colocar el nombre del host en la última columna",
+    "-d": "Traducir la dirección IP en un nombre de host",
+    "-f": "Utilizar un archivo específico en lugar de /var/log/wtmp",
+    "-i": "Mostrar la dirección IP del host remoto en lugar del nombre",
+    "-n": "Limitar el número de líneas a mostrar",
+    "-R": "No mostrar el campo del nombre del host",
+    "-t": "Mostrar el estado de los inicios de sesión en una fecha específica (YYYYMMDDHHMMSS)",
+    "-F": "Imprimir los tiempos completos de inicio y cierre de sesión",
+    "-x": "Mostrar entradas de apagado del sistema y cambios de nivel de ejecución",
+    "--help": "Mostrar la ayuda y finalizar"
+  }
+}
+
+[source,bash]
+----
+# Listar todos los inicios de sesión recientes, desde el más nuevo al más antiguo
+last
+----
+
+-n:: `last -n [NÚMERO]` Limitar la salida a una cantidad de líneas
+
+[source,bash]
+----
+# Ver únicamente los últimos 5 inicios de sesión
+last -n 5
+----
+
+-i:: `last -i` Mostrar direcciones IP
+
+[source,bash]
+----
+# Ver el historial incluyendo las direcciones IP de origen
+last -i
+----
+
+-x:: `last -x` Mostrar reinicios y apagados (reboot/shutdown)
+
+[source,bash]
+----
+# Ver cuándo se reinició o apagó el sistema recientemente
+last -x
+----
+
+[USUARIO]:: `last [USUARIO]` Filtrar por un usuario específico
+
+[source,bash]
+----
+# Ver el historial de conexiones únicamente del usuario 'root'
+last root
+----
+
+-f:: `last -f [ARCHIVO]` Leer un log antiguo o específico
+
+[source,bash]
+----
+# Consultar el archivo de log rotado 'wtmp.1'
+last -f /var/log/wtmp.1
+----
+
+-F:: `last -F` Mostrar fechas y horas completas
+
+[source,bash]
+----
+# Ver el historial con detalle de segundos y año completo
+last -F
+----
+
+--since / --until:: `last --since [TIEMPO]` Filtrar por rango de tiempo
+
+[source,bash]
+----
+# Ver quién inició sesión desde ayer
+last --since yesterday
+----
+

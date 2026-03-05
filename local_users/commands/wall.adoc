@@ -1,0 +1,55 @@
+=== wall
+Enviar un mensaje a todos los usuarios conectados al sistema.
+
+:category: local_users
+[.metadata]
+{
+  "description": "Escribe un mensaje en las terminales de todos los usuarios que tengan sesiones abiertas.",
+  "usage": "wall [OPCIÓN] [MENSAJE | ARCHIVO]",
+  "options": {
+    "-n": "Suprimir el encabezado (banner) del mensaje",
+    "-t": "Establecer un tiempo de espera (timeout) para la escritura en segundos",
+    "-g": "Enviar el mensaje solo a los miembros de un grupo específico",
+    "-V": "Mostrar información de la versión y finalizar",
+    "-h": "Mostrar la ayuda y finalizar"
+  }
+}
+
+[source,bash]
+----
+# Enviar un aviso rápido a todos los usuarios
+wall "El sistema se reiniciará en 5 minutos por mantenimiento."
+----
+
+-n:: `wall -n` Enviar mensaje sin cabecera
+
+[source,bash]
+----
+# Enviar el texto limpio, omitiendo el aviso de quién lo envía y la hora
+wall -n "Mensaje directo sin metadatos"
+----
+
+-t:: `wall -t [SEGUNDOS]` Limitar el tiempo de intento
+
+[source,bash]
+----
+# Intentar escribir en las terminales durante máximo 5 segundos
+wall -t 5 "Aviso urgente de red"
+----
+
+[ARCHIVO]:: `wall [ARCHIVO]` Enviar el contenido de un archivo
+
+[source,bash]
+----
+# Útil para enviar comunicados largos guardados en un .txt
+wall /root/avisos/mantenimiento.txt
+----
+
+Entrada estándar:: `echo "..." | wall` Usar tuberías (pipes)
+
+[source,bash]
+----
+# Integrar con otros comandos para enviar alertas automáticas
+echo "Carga del sistema crítica" | wall
+----
+

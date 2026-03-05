@@ -1,0 +1,84 @@
+=== id
+Imprimir por consola GIDs y UIDs del usuario actual o de uno específico.
+
+:category: local_users
+[.metadata]
+{
+  "description": "Muestra información de identidad de usuario y grupo (UID, GID y grupos secundarios).",
+  "usage": "id [OPCIÓN]... [USUARIO]",
+  "options": {
+    "-a": "Ignorado; para compatibilidad con otras versiones",
+    "-Z": "Imprimir únicamente el contexto de seguridad del proceso (SELinux)",
+    "-g": "Imprimir únicamente el GID efectivo",
+    "-G": "Imprimir todos los IDs de grupo (GIDs)",
+    "-n": "Imprimir el nombre en lugar del número (requiere -u, -g o -G)",
+    "-r": "Mostrar el ID real en lugar del ID efectivo (requiere -u, -g o -G)",
+    "-u": "Imprimir únicamente el UID efectivo",
+    "-z": "Delimitar las salidas con caracteres nulos en lugar de espacios",
+    "--help": "Mostrar la ayuda y finalizar",
+    "--version": "Mostrar información de la versión y finalizar"
+  }
+}
+
+[source,bash]
+----
+# Mostrar información completa del usuario actual (uid, gid, grupos)
+id
+----
+
+-u:: `id -u` Mostrar solo el Identificador de Usuario (UID)
+
+[source,bash]
+----
+# Obtener solo el número de UID del usuario actual
+id -u
+----
+
+-un:: `id -un` Mostrar el nombre de usuario (en lugar del número)
+
+[source,bash]
+----
+# Obtener el nombre del usuario logueado
+id -un
+----
+
+-g:: `id -g` Mostrar solo el Identificador de Grupo (GID) principal
+
+[source,bash]
+----
+# Obtener el GID efectivo principal
+id -g
+----
+
+-G:: `id -G` Mostrar todos los grupos a los que pertenece el usuario
+
+[source,bash]
+----
+# Listar todos los GIDs (primario y secundarios)
+id -G
+----
+
+-Gn:: `id -Gn` Mostrar nombres de todos los grupos
+
+[source,bash]
+----
+# Ver los nombres de todos los grupos del usuario actual
+id -Gn
+----
+
+-r:: `id -ru` Mostrar el UID real (frente al efectivo)
+
+[source,bash]
+----
+# Útil cuando se ejecutan scripts con permisos elevados (sudo) para saber quién es el usuario original
+id -ru
+----
+
+[USUARIO]:: `id [USUARIO]` Consultar información de otro usuario
+
+[source,bash]
+----
+# Consultar el UID y GIDs de un usuario específico (ej. root)
+id root
+----
+

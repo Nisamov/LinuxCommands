@@ -1,0 +1,76 @@
+=== who
+Mostrar quién ha iniciado sesión en el sistema en este momento.
+
+:category: local_users
+[.metadata]
+{
+  "description": "Muestra información sobre los usuarios que tienen una sesión abierta, sus terminales y el tiempo de conexión.",
+  "usage": "who [OPCIÓN]... [ARCHIVO | ARG1 ARG2]",
+  "options": {
+    "-a": "Imprimir toda la información disponible (equivale a -b -d --login -p -r -t -T -u)",
+    "-b": "Mostrar la hora del último arranque del sistema",
+    "-d": "Mostrar los procesos que han muerto (dead)",
+    "-H": "Imprimir una línea de cabecera con los nombres de las columnas",
+    "-l": "Mostrar solo las terminales donde se espera un inicio de sesión (login)",
+    "-m": "Mostrar solo el host y el usuario asociado a la entrada estándar (stdin)",
+    "-q": "Modo recuento: muestra solo los nombres de usuario y el total",
+    "-r": "Mostrar el nivel de ejecución (run-level) actual",
+    "-u": "Listar los usuarios conectados con su tiempo de inactividad",
+    "-T": "Añadir el estado de escritura del usuario (+, - o ?)"
+  }
+}
+
+[source,bash]
+----
+# Listado simple de usuarios, terminales y fecha de acceso
+who
+----
+
+-H:: `who -H` Mostrar cabeceras de columna
+
+[source,bash]
+----
+# Identificar qué significa cada columna (NAME, LINE, TIME, COMMENT)
+who -H
+----
+
+-a:: `who -a` Información detallada y completa
+
+[source,bash]
+----
+# Ver todo: niveles de ejecución, procesos muertos, arranque, etc.
+who -a
+----
+
+-q:: `who -q` Recuento rápido de usuarios
+
+[source,bash]
+----
+# Ver solo los nombres y cuántos usuarios hay conectados ahora mismo
+who -q
+----
+
+-b:: `who -b` Último inicio del sistema
+
+[source,bash]
+----
+# Saber exactamente cuándo se encendió el servidor (system boot)
+who -b
+----
+
+-m:: `who -m` Información de mi propia sesión
+
+[source,bash]
+----
+# Equivalente a 'who am i'; muestra los datos de la terminal actual
+who -m
+----
+
+-u:: `who -u` Mostrar tiempo de inactividad (idle)
+
+[source,bash]
+----
+# Ver cuánto tiempo lleva cada usuario sin interactuar con su terminal
+who -u
+----
+
