@@ -10,11 +10,11 @@
   <a href="https://es.wikipedia.org/wiki/LinuxCommands" title="Wikipedia">
     <img src="https://cdn-icons-png.flaticon.com/512/48/48927.png" width="28">
   </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href="http://linuxcommands.wikidot.com/" title="Wikidot">
     <img src="https://cdn-icons-png.flaticon.com/512/262/262031.png" width="28">
   </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://nisamov.github.io/LinuxCommands/" title="GitHub Pages">
     <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="28">
   </a>
