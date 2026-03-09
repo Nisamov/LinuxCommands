@@ -19,7 +19,6 @@ DST_ROOT.mkdir(parents=True, exist_ok=True)
 # Mapeo de códigos de idioma para Google Translator
 LANG_MAP = {
     'en': 'en',      # Inglés
-    'fr': 'fr',      # Francés
     'de': 'de',      # Alemán
     'es': 'es',      # Español
     'ru': 'ru',      # Ruso

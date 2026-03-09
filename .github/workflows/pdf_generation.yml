@@ -275,7 +275,6 @@ jobs:
           echo "Creando releases separados por idioma..."
           ESPImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_ESP.png"
           ENGImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_ENG.png"
-          FRImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_FR.png"
           DEImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_DE.png"
           RUImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_RU.png"
           ZHImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_ZH.png"
@@ -325,15 +324,6 @@ jobs:
             gh release create ENG $ENG_FILES \
               --title "🔵 PDF DOCUMENTATION 📕" \
               --notes "![Documentación Inglés]($ENGImg)"
-          fi
-          
-          # Crear release para Francés
-          FR_FILES=$(ls pdf/FR_*.pdf 2>/dev/null | tr '\n' ' ')
-          if [ -n "$FR_FILES" ]; then
-            echo "Archivos FR: $FR_FILES"
-            gh release create FR $FR_FILES \
-              --title "🔵 PDF DOCUMENTATION 📕" \
-              --notes "![Documentación Francés]($FRImg)"
           fi
 
           # Crear release para Alemán
