@@ -1,0 +1,406 @@
+= SNMP + Prometheus + Grafana + Alertmanager
+:author: Andres Ruslan Abadías Otal, Jacinto Barris Vilor
+:doctype: article
+:toc: left
+:toclevels: 3
+:sectnums:
+
+* Laboratorio de Monitorización: (3 VMs · 2 targets SNMP · Red 192.168.56.0/24)
+
+== Objetivo
+
+Levantar un *stack de monitorización* que recoja métricas SNMP de *2 targets Linux* y genere una *alerta automática* cuando uno de los targets deje de responder.
+
+== Topología y direccionamiento
+
+[cols="1,3"]
+|===
+|Campo |Valor
+
+|VM-MON (Ubuntu)
+|192.168.56.10 — Prometheus + snmp_exporter + Grafana + Alertmanager
+
+|VM-T1 (Ubuntu)
+|192.168.56.11 — snmpd (agent)
+
+|VM-T2 (Ubuntu)
+|192.168.56.12 — snmpd (agent)
+
+|Red
+|192.168.56.0/24 (misma red para las 3 VMs)
+|===
+
+== Entregables (mínimos)
+
+*Informe (PDF/DOCX)*  
+IPs, pasos, comprobaciones y respuestas a preguntas.
+
+*Evidencia Prometheus*  
+Captura de pantalla de */targets* con T1 y T2 en estado *UP*.
+
+*Evidencia métricas*  
+Captura de *1 panel (tráfico o estado)* por target.
+
+*Evidencia alerta*  
+Alerta *SNMPTargetDown* disparada al parar `snmpd` en un target.
+
+*Archivos de configuración*
+
+[source]
+----
+/etc/prometheus/prometheus.yml
+/etc/prometheus/rules.yml
+/etc/snmp/snmpd.conf
+----
+
+(de ambos targets)
+
+== Regla de evidencias
+
+== Targets (VM-T1 y VM-T2): SNMPv2c (laboratorio)
+
+=== Instalación
+
+En cada target ejecutar:
+
+[source,bash]
+----
+sudo apt update
+sudo apt install -y snmpd
+----
+
+=== Configuración
+
+Editar el archivo:
+
+[source,bash]
+----
+sudo nano /etc/snmp/snmpd.conf
+----
+
+Configuración mínima recomendada:
+
+[source,conf]
+----
+agentAddress udp:161
+rocommunity public 192.168.56.0/24
+sysLocation "Aula"
+sysContact "grupo@local"
+----
+
+=== Reinicio del servicio
+
+[source,bash]
+----
+sudo systemctl restart snmpd
+sudo systemctl enable snmpd
+----
+
+=== Firewall (opcional si usas UFW)
+
+[source,bash]
+----
+sudo ufw allow from 192.168.56.0/24 to any port 161 proto udp
+----
+
+== VM-MON: stack de monitorización
+
+=== Nota importante
+
+El flujo correcto es:
+
+----
+Prometheus → /snmp → snmp_exporter → (SNMP) → targets
+----
+
+Por ello:
+
+* El *job SNMP* en Prometheus apunta a `127.0.0.1:9116`
+* El *target real* se pasa como parámetro.
+
+== Instalar Prometheus y dependencias
+
+[source,bash]
+----
+sudo apt update
+sudo apt install -y prometheus snmp curl
+----
+
+== Configurar módulos SNMP para snmp_exporter
+
+Archivo:
+
+[source]
+----
+/etc/prometheus/snmp.yml
+----
+
+Crear el archivo:
+
+[source,bash]
+----
+sudo tee /etc/prometheus/snmp.yml >/dev/null <<'YAML'
+modules:
+  if_mib:
+    walk:
+      - 1.3.6.1.2.1.1
+      - 1.3.6.1.2.1.2
+    version: 2
+    auth:
+      community: public
+YAML
+----
+
+== Instalar snmp_exporter (binario) + servicio
+
+[source,bash]
+----
+cd /tmp
+VER="0.27.0"
+wget -q https://github.com/prometheus/snmp_exporter/releases/download/v${VER}/snmp_exporter-${VER}.linux-amd64.tar.gz
+tar -xzf snmp_exporter-${VER}.linux-amd64.tar.gz
+
+sudo mv snmp_exporter-${VER}.linux-amd64/snmp_exporter /usr/local/bin/
+sudo mkdir -p /etc/snmp_exporter
+sudo cp /etc/prometheus/snmp.yml /etc/snmp_exporter/snmp.yml
+----
+
+=== Crear servicio systemd
+
+[source,bash]
+----
+sudo tee /etc/systemd/system/snmp_exporter.service >/dev/null <<'UNIT'
+[Unit]
+Description=Prometheus SNMP Exporter
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=prometheus
+Group=prometheus
+ExecStart=/usr/local/bin/snmp_exporter --config.file=/etc/snmp_exporter/snmp.yml
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+----
+
+=== Activar servicio
+
+[source,bash]
+----
+sudo systemctl daemon-reload
+sudo systemctl enable --now snmp_exporter
+sudo systemctl status snmp_exporter --no-pager
+----
+
+=== Verificar métricas
+
+[source,bash]
+----
+curl -s http://localhost:9116/metrics | head
+----
+
+== Prometheus: scrape de SNMP vía snmp_exporter
+
+Editar:
+
+[source]
+----
+/etc/prometheus/prometheus.yml
+----
+
+Añadir:
+
+[source,yaml]
+----
+scrape_configs:
+  - job_name: "snmp"
+    metrics_path: /snmp
+    params:
+      module: [if_mib]
+    static_configs:
+      - targets:
+          - 192.168.56.11
+          - 192.168.56.12
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9116
+----
+
+Reiniciar Prometheus:
+
+[source,bash]
+----
+sudo systemctl restart prometheus
+----
+
+== Alertmanager + regla de alerta
+
+Instalar:
+
+[source,bash]
+----
+sudo apt install -y alertmanager
+----
+
+=== Reglas de Prometheus
+
+[source]
+----
+/etc/prometheus/rules.yml
+----
+
+[source,bash]
+----
+sudo tee /etc/prometheus/rules.yml >/dev/null <<'YAML'
+groups:
+- name: snmp-alerts
+  rules:
+  - alert: SNMPTargetDown
+    expr: up{job="snmp"} == 0
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Target SNMP caído"
+      description: "No responde SNMP: {{ $labels.instance }}"
+YAML
+----
+
+=== Cargar reglas en Prometheus
+
+Editar:
+
+[source]
+----
+/etc/prometheus/prometheus.yml
+----
+
+[source,yaml]
+----
+rule_files:
+  - /etc/prometheus/rules.yml
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ["127.0.0.1:9093"]
+----
+
+Reiniciar servicios:
+
+[source,bash]
+----
+sudo systemctl restart prometheus
+sudo systemctl restart alertmanager
+----
+
+== Grafana (OSS) + datasource Prometheus
+
+=== Instalación
+
+[source,bash]
+----
+sudo apt install -y apt-transport-https software-properties-common wget
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+
+echo "deb https://packages.grafana.com/oss/deb stable main" | \
+sudo tee /etc/apt/sources.list.d/grafana.list
+
+sudo apt update
+sudo apt install -y grafana
+sudo systemctl enable --now grafana-server
+----
+
+=== Acceso
+
+----
+http://192.168.56.10:3000
+----
+
+Credenciales iniciales:
+
+----
+admin / admin
+----
+
+=== Configurar datasource
+
+Prometheus URL:
+
+----
+http://localhost:9090
+----
+
+== Verificación
+
+=== Prometheus
+
+Acceder a:
+
+----
+http://192.168.56.10:9090
+----
+
+Ruta:
+
+----
+Status → Targets
+----
+
+Debe aparecer:
+
+* job `snmp`
+* targets `192.168.56.11` y `192.168.56.12`
+* estado `UP`
+
+=== Grafana
+
+Crear un panel sencillo por target.
+
+Ejemplos de consultas:
+
+Estado del target:
+
+[source]
+----
+up{job="snmp"}
+----
+
+Tráfico de interfaz:
+
+[source]
+----
+rate(ifInOctets{job="snmp"}[1m])
+rate(ifOutOctets{job="snmp"}[1m])
+----
+
+=== Prueba de alerta
+
+En VM-T1 ejecutar:
+
+[source,bash]
+----
+sudo systemctl stop snmpd
+----
+
+Esperar aproximadamente *30 segundos*.
+
+Verificar alerta en:
+
+----
+Prometheus -> Alerts
+----
+
+o
+
+----
+http://192.168.56.10:9093
+----
+

@@ -1,0 +1,217 @@
+= Alertmanager + Telegram Bot
+:author: Andres Ruslan Abadías Otal, Jacinto Barris Vilor
+:doctype: article
+:toc: left
+:toclevels: 3
+:sectnums:
+
+Este documento describe cómo configurar *Alertmanager* para enviar alertas a un *bot de Telegram* utilizando un chat privado.
+
+== Obtener el token del bot
+
+Crear el bot utilizando el usuario oficial de Telegram:
+
+----
+@BotFather
+----
+
+Pasos:
+1. Iniciar conversación con *@BotFather*.
+2. Ejecutar el comando:
+
+[source]
+----
+/newbot
+----
+
+Sigue las instrucciones y asigna:
+   * Nombre del bot
+   * Username del bot
+
+BotFather devolverá un *BOT_TOKEN* similar a:
+
+[source]
+----
+123456789:AAHxxxxxxxxxxxxxxxxxxxxxxxx
+----
+
+Guarda este valor, ya que será necesario para la configuración de Alertmanager.
+
+== Obtener el CHAT_ID del chat privado
+
+Para que el bot pueda enviarte mensajes, primero debes iniciar una conversación con él.
+
+=== Paso 1: enviar un mensaje al bot
+
+1. Abre tu bot en Telegram.
+2. Envíale un mensaje, por ejemplo:
+
+----
+hola
+----
+
+=== Paso 2: consultar las actualizaciones del bot
+
+En la máquina *VM-MON* ejecutar:
+
+[source,bash]
+----
+curl -s "https://api.telegram.org/bot<BOT_TOKEN>/getUpdates"
+----
+
+En la salida aparecerá una estructura JSON similar a:
+
+[source,json]
+----
+"chat":{"id":123456789, ...}
+----
+
+El valor numérico corresponde al:
+
+----
+CHAT_ID
+----
+
+Guarda este número, ya que será necesario para la configuración.
+
+== Guardar el token en un fichero (recomendado)
+
+Para evitar almacenar credenciales directamente en archivos de configuración se recomienda guardar el token en un fichero protegido.
+
+[source,bash]
+----
+sudo install -d -m 0750 /etc/alertmanager/secrets
+
+echo "<BOT_TOKEN>" | sudo tee /etc/alertmanager/secrets/telegram_token >/dev/null
+
+sudo chmod 640 /etc/alertmanager/secrets/telegram_token
+sudo chown root:alertmanager /etc/alertmanager/secrets/telegram_token
+----
+
+Esto crea el archivo:
+
+----
+/etc/alertmanager/secrets/telegram_token
+----
+
+con permisos restringidos.
+
+== Configurar Alertmanager
+
+Editar o reemplazar el archivo:
+
+----
+/etc/alertmanager/alertmanager.yml
+----
+
+Configuración de ejemplo (reemplazar `<CHAT_ID>` por el valor obtenido anteriormente):
+
+[source,yaml]
+----
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: telegram
+
+receivers:
+  - name: telegram
+    telegram_configs:
+      - api_url: https://api.telegram.org
+        bot_token_file: /etc/alertmanager/secrets/telegram_token
+        chat_id: <CHAT_ID>
+        send_resolved: true
+        message: |
+          {{ if eq .Status "firing" }} ALERTA{{ else }} RESUELTA{{ end }}
+          {{ range .Alerts }}
+          • {{ .Labels.alertname }} ({{ .Labels.severity }})
+          • Instancia: {{ .Labels.instance }}
+          • Descripción: {{ .Annotations.description }}
+          {{ end }}
+----
+
+Explicación básica:
+
+* `bot_token_file` permite leer el token desde un archivo seguro.
+* `chat_id` identifica el chat privado donde se enviarán las alertas.
+* `send_resolved` envía una notificación cuando la alerta se resuelve.
+* `message` define el formato del mensaje enviado.
+
+== Verificar que Prometheus apunta a Alertmanager
+
+En el archivo:
+
+----
+/etc/prometheus/prometheus.yml
+----
+
+Debe existir la siguiente configuración:
+
+[source,yaml]
+----
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ["127.0.0.1:9093"]
+----
+
+Esto indica que *Prometheus* enviará las alertas al *Alertmanager local*.
+
+== Reiniciar servicios
+
+Aplicar los cambios reiniciando los servicios:
+
+[source,bash]
+----
+sudo systemctl restart alertmanager
+sudo systemctl restart prometheus
+sudo systemctl status alertmanager --no-pager
+----
+
+Verificar que el servicio se encuentre en estado:
+
+----
+active (running)
+----
+
+== Pruebas de funcionamiento
+
+=== Simular target SNMP caído
+
+En uno de los targets ejecutar:
+
+[source,bash]
+----
+sudo systemctl stop snmpd
+----
+
+Esperar aproximadamente 30–60 segundos
+
+Se debería recibir una alerta en Telegram.
+
+Para restaurar el servicio:
+
+[source,bash]
+----
+sudo systemctl start snmpd
+----
+
+=== Simular interfaz de red caída
+
+[source,bash]
+----
+sudo ip link set enp0s3 down
+sudo ip link set enp0s3 up
+----
+
+Estas acciones pueden generar eventos observables en el sistema de monitorización.
+
+== Diagnóstico en caso de fallo
+
+Si las alertas no llegan a Telegram, revisar los logs de Alertmanager:
+
+[source,bash]
+----
+sudo journalctl -u alertmanager -n 120 --no-pager
+----
+
