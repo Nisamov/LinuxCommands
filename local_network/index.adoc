@@ -55,8 +55,3 @@ include::iptables/iptables.adoc[]
 == SNMP
 include::snmp/theory/theory.adoc[]
 
-== Comandos SNMP
-include::snmp/commands/snmpwalk.adoc[]
-include::snmp/commands/snmpbulkwalk.adoc[]
-include::snmp/commands/snmpget.adoc[]
-
