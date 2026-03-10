@@ -529,7 +529,7 @@
     },
     "name": "snmpget",
     "category": "local_network",
-    "source_path": "local_network/snmp/commands/snmpget.adoc"
+    "source_path": "host_services/snmp/commands/snmpget.adoc"
   },
   {
     "description": "Herramienta SNMP que utiliza la operación GETBULK (SNMPv2c/v3) para recorrer grandes tablas de forma más eficiente que snmpwalk.",
@@ -546,7 +546,7 @@
     },
     "name": "snmpbulkwalk",
     "category": "local_network",
-    "source_path": "local_network/snmp/commands/snmpbulkwalk.adoc"
+    "source_path": "host_services/snmp/commands/snmpbulkwalk.adoc"
   },
   {
     "description": "Herramienta SNMP para recorrer y consultar de forma secuencial un árbol MIB en un dispositivo de red.",
@@ -565,7 +565,7 @@
     },
     "name": "snmpwalk",
     "category": "local_network",
-    "source_path": "local_network/snmp/commands/snmpwalk.adoc"
+    "source_path": "host_services/snmp/commands/snmpwalk.adoc"
   },
   {
     "description": "Convertir la codificación de caracteres de archivos o flujos de texto.",
