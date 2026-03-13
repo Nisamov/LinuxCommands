@@ -202,6 +202,33 @@
     "source_path": "local_users/commands/su.adoc"
   },
   {
+    "description": "Herramienta para configurar interfaces de red, direcciones IP, rutas y DNS mediante abstracción YAML.",
+    "usage": "sudo netplan [COMANDO]",
+    "options": {
+      "try": "Probar configuración con autorreversión en caso de error",
+      "apply": "Aplicar la configuración de forma persistente",
+      "generate": "Traducir los archivos YAML al formato del renderer (networkd/NetworkManager)",
+      "ip-a": "Comando para identificar nombres de interfaces (enp0s3, eth0, etc.)"
+    },
+    "name": "netplan",
+    "category": "local_network",
+    "source_path": "local_network/local_network/commands/netplan.adoc"
+  },
+  {
+    "description": "Gestión de interfaces, rutas y DNS tanto de forma volátil como persistente mediante archivos de configuración y comandos de sistema.",
+    "usage": "ip [OPCIONES] OBJETO | ifup/ifdown [INTERFAZ]",
+    "options": {
+      "ip-addr": "Gestionar direcciones IP en interfaces",
+      "ip-route": "Configurar rutas y puertas de enlace",
+      "ifupdown": "Levantar o bajar interfaces definidas en /etc/network/interfaces",
+      "dig": "Consultar registros DNS",
+      "dhclient": "Interactuar con el servidor DHCP"
+    },
+    "name": "network",
+    "category": "local_network",
+    "source_path": "local_network/local_network/commands/network.adoc"
+  },
+  {
     "description": "Herramienta extremadamente versátil para depurar y explorar redes. Permite crear conexiones, abrir puertos de escucha y transferir datos.",
     "usage": "nc [OPCIONES] [HOST] [PUERTO]",
     "options": {
