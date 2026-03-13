@@ -1,0 +1,8 @@
+Samba con ldap backend
+
+samba pude usarse con un backend ldap para proporcionar autentcacion en un dominiosmimilar a active directory
+- integracio con clientes windows
+- puede actuar como un controlador de dominio (DC)
+requiere configurar smb.conf y vincularlo a openladp
+
+(Pendiente de desarrollar)

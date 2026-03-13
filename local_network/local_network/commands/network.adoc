@@ -1,0 +1,89 @@
+=== Network-Config
+Configuración de red temporal (iproute2) y persistente (ifupdown) en sistemas Linux/Debian.
+
+:category: local_network
+[.metadata]
+{
+  "description": "Gestión de interfaces, rutas y DNS tanto de forma volátil como persistente mediante archivos de configuración y comandos de sistema.",
+  "usage": "ip [OPCIONES] OBJETO | ifup/ifdown [INTERFAZ]",
+  "options": {
+    "ip-addr": "Gestionar direcciones IP en interfaces",
+    "ip-route": "Configurar rutas y puertas de enlace",
+    "ifupdown": "Levantar o bajar interfaces definidas en /etc/network/interfaces",
+    "dig": "Consultar registros DNS",
+    "dhclient": "Interactuar con el servidor DHCP"
+  }
+}
+
+[source,bash]
+----
+# Ver estado actual de todas las interfaces
+ip addr show
+----
+
+-temporal:: `ip addr` Configuración volátil (no sobrevive al reinicio)
+
+[source,bash]
+----
+# Añadir IP temporal
+sudo ip addr add 192.168.1.50/24 dev enp0s3
+# Añadir puerta de enlace (Gateway)
+sudo ip route add default via 192.168.1.1
+----
+
+-persistente:: `/etc/network/interfaces` Configuración en Debian/Ubuntu Antiguo
+
+[source,text]
+----
+# Editar el fichero para cambios permanentes
+auto enp0s3
+iface enp0s3 inet static
+    address 192.168.1.50
+    netmask 255.255.255.0
+    gateway 192.168.1.1
+----
+
+-dhcp:: `inet dhcp` Configuración automática mediante servidor DHCP
+
+[source,text]
+----
+# Configuración en /etc/network/interfaces
+auto enp0s3
+iface enp0s3 inet dhcp
+----
+
+-dns:: `resolv.conf` Configuración de resolutores de nombres
+
+[source,bash]
+----
+# Editar /etc/resolv.conf (temporal si hay gestores de red)
+nameserver 8.8.8.8
+nameserver 1.1.1.1
+----
+
+-gestion:: `ifup` / `ifdown` Activar o desactivar interfaces persistentes
+
+[source,bash]
+----
+# Reiniciar una interfaz para aplicar cambios de /etc/network/interfaces
+sudo ifdown enp0s3 && sudo ifup enp0s3
+----
+
+-diagnostico:: `dig` & `dhclient` Herramientas de análisis
+
+[source,bash]
+----
+# Consultar DNS para un dominio
+dig google.com
+# Forzar solicitud DHCP y ver trazas en tiempo real
+sudo dhclient -d -nw enp0s3
+----
+
+-leases:: `dhcpd.leases` Ver concesiones en el servidor
+
+[source,bash]
+----
+# Consultar IPs entregadas a clientes (en el servidor DHCP)
+cat /var/lib/dhcp/dhcpd.leases
+----
+

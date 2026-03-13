@@ -6,6 +6,7 @@
 :sectnums:
 
 Este documento describe cómo configurar *Alertmanager* para enviar alertas a un *bot de Telegram* utilizando un chat privado.
+* Maquina usada: Ubuntu Desktop - 22.04
 
 == Obtener el token del bot
 

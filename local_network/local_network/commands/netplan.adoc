@@ -1,0 +1,83 @@
+=== Netplan
+Configuración declarativa de red mediante archivos YAML en Ubuntu.
+
+:category: local_network
+[.metadata]
+{
+  "description": "Herramienta para configurar interfaces de red, direcciones IP, rutas y DNS mediante abstracción YAML.",
+  "usage": "sudo netplan [COMANDO]",
+  "options": {
+    "try": "Probar configuración con autorreversión en caso de error",
+    "apply": "Aplicar la configuración de forma persistente",
+    "generate": "Traducir los archivos YAML al formato del renderer (networkd/NetworkManager)",
+    "ip-a": "Comando para identificar nombres de interfaces (enp0s3, eth0, etc.)"
+  }
+}
+
+[source,bash]
+----
+# Aplicar los cambios realizados en los ficheros .yaml
+sudo netplan apply
+----
+
+try:: `netplan try` Probar configuración de forma segura
+
+[source,bash]
+----
+# Aplica cambios y espera confirmación (si no se confirma en 120s, revierte)
+sudo netplan try
+----
+
+apply:: `netplan apply` Aplicar configuración definitivamente
+
+[source,bash]
+----
+# Forzar la aplicación de los archivos situados en /etc/netplan/
+sudo netplan apply
+----
+
+-estatica:: `addresses: [IP/MASK]` Configurar IP fija
+
+[source,yaml]
+----
+# Ejemplo de configuración estática en /etc/netplan/01-config.yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s3:
+      dhcp4: no
+      addresses: [192.168.1.50/24]
+      gateway4: 192.168.1.1
+----
+
+-dhcp:: `dhcp4: true` Configuración dinámica
+
+[source,yaml]
+----
+# Configuración para obtener IP automáticamente por DHCP
+network:
+  version: 2
+  ethernets:
+    enp0s8:
+      dhcp4: true
+----
+
+-dns:: `nameservers:` Configurar servidores DNS
+
+[source,yaml]
+----
+# Definir servidores de resolución de nombres
+      nameservers:
+        addresses: [8.8.8.8, 1.1.1.1]
+----
+
+-indentacion:: `YAML Rules` Reglas críticas de formato
+
+[source,text]
+----
+# 1. Usar siempre 2 espacios por nivel (jerarquía)
+# 2. No utilizar tabuladores (causan error de sintaxis)
+# 3. Los dos puntos ':' van seguidos de un espacio
+----
+

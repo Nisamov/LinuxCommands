@@ -1,1 +1,6 @@
-null
+LDAP son las siglas de lightwight directory access protocol
+Implementaciones principales:
+- Active directory(Nombre usado por microsoft como almacen centralizado de informacion de uno de sus dominios de administracion)
+- OpenLDAP(Implementaciond e codigo abierto del protocolo ldap)
+
+(Pendiente de desarrollar)
