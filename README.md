@@ -64,7 +64,6 @@ LinuxCommands nació como una recopilación de apuntes personales para organizar
 La organización del repositorio está pensada para facilitar la navegación y el crecimiento progresivo del contenido:
 
 <!-- AUTO-GENERATED-INDEX:START -->
-- [host_automation](/host_automation)
 - [host_services](/host_services)
 - [host_shared_storage](/host_shared_storage)
 - [host_web_services](/host_web_services)
