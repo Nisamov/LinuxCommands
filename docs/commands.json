@@ -1,5 +1,33 @@
 [
   {
+    "description": "Interfaz para la gestión de reglas de iptables diseñada para ser fácil de usar y configurar mediante comandos simples.",
+    "usage": "ufw [OPCIONES] COMANDO [REGLA]",
+    "options": {
+      "enable": "Activa el firewall y lo configura para iniciar en el arranque",
+      "disable": "Desactiva el firewall",
+      "status": "Muestra el estado del firewall y las reglas activas",
+      "allow": "Añade una regla para permitir el tráfico",
+      "deny": "Añade una regla para denegar el tráfico",
+      "reset": "Restaura el firewall a su estado inicial"
+    },
+    "name": "ufw",
+    "category": "local_security",
+    "source_path": "local_security/ufw/commands/ufw.adoc"
+  },
+  {
+    "description": "Interfaz simplificada para iptables que permite gestionar reglas de red, puertos y políticas de acceso de forma intuitiva.",
+    "usage": "ufw [OPCIONES] COMANDO [REGLA]",
+    "options": {
+      "status": "Muestra el estado actual y las reglas activas",
+      "enable/disable": "Activa o desactiva el cortafuegos",
+      "allow/deny": "Permite o deniega el tráfico según el puerto, servicio o IP",
+      "default": "Configura la política por defecto para el tráfico entrante/saliente"
+    },
+    "name": "ufw",
+    "category": "local_security",
+    "source_path": "local_security/network_security/firewall_ufw/commands/ufw.adoc"
+  },
+  {
     "description": "Muestra información sobre los usuarios que tienen una sesión abierta, sus terminales y el tiempo de conexión.",
     "usage": "who [OPCIÓN]... [ARCHIVO | ARG1 ARG2]",
     "options": {
@@ -2287,6 +2315,87 @@
     "source_path": "local_permissions/commands/sudo.adoc"
   },
   {
+    "description": "Permite la descarga de varios archivos simultáneamente utilizando caracteres comodín (wildcards).",
+    "usage": "mget MÁSCARA",
+    "options": {
+      "*": "Comodín para representar cualquier cadena de caracteres",
+      "?": "Comodín para representar un solo carácter"
+    },
+    "name": "mget",
+    "category": "host_shared_storage",
+    "source_path": "host_shared_storage/commands/mget.adoc"
+  },
+  {
+    "description": "Servidor FTP ligero y seguro para sistemas Linux, diseñado para evitar vulnerabilidades de seguridad comunes.",
+    "usage": "vsftpd [ARCHIVO_CONFIG]",
+    "options": {
+      "/etc/vsftpd.conf": "Archivo de configuración principal",
+      "listen=YES": "Opción para que el servidor escuche peticiones IPv4",
+      "anonymous_enable": "Permitir o denegar acceso a usuarios anónimos"
+    },
+    "name": "vsftpd",
+    "category": "host_shared_storage",
+    "source_path": "host_shared_storage/commands/vsftpd.adoc"
+  },
+  {
+    "description": "Permite subir varios archivos locales al servidor de una sola vez utilizando patrones de búsqueda.",
+    "usage": "mput MÁSCARA",
+    "options": {
+      "*": "Sube todos los archivos que coincidan con el patrón",
+      "prompt": "Evita tener que confirmar la subida de cada archivo individual"
+    },
+    "name": "mput",
+    "category": "host_shared_storage",
+    "source_path": "host_shared_storage/commands/mput.adoc"
+  },
+  {
+    "description": "Comando utilizado dentro de una sesión interactiva de FTP para subir un archivo desde el equipo local al servidor remoto.",
+    "usage": "put ARCHIVO_LOCAL [ARCHIVO_REMOTO]",
+    "options": {
+      "put": "Sube el archivo al directorio actual del servidor",
+      "put local remoto": "Sube el archivo y le asigna un nombre distinto en el servidor"
+    },
+    "name": "put",
+    "category": "host_shared_storage",
+    "source_path": "host_shared_storage/commands/put.adoc"
+  },
+  {
+    "description": "Protocolo de transferencia de archivos que utiliza SSH para cifrar la sesión, ofreciendo una alternativa segura al FTP tradicional.",
+    "usage": "sftp [OPCIONES] [USUARIO@]HOST",
+    "options": {
+      "-P": "Puerto personalizado de SSH",
+      "-C": "Habilitar compresión",
+      "-r": "Operación recursiva (para directorios)"
+    },
+    "name": "sftp",
+    "category": "host_shared_storage",
+    "source_path": "host_shared_storage/commands/sftp.adoc"
+  },
+  {
+    "description": "Comando utilizado dentro de una sesión interactiva de FTP para descargar un único archivo desde el servidor remoto al equipo local.",
+    "usage": "get ARCHIVO_REMOTO [ARCHIVO_LOCAL]",
+    "options": {
+      "get": "Descarga el archivo manteniendo el nombre original",
+      "get archivo nuevo": "Descarga el archivo y lo renombra en el destino local"
+    },
+    "name": "get",
+    "category": "host_shared_storage",
+    "source_path": "host_shared_storage/commands/get.adoc"
+  },
+  {
+    "description": "Interfaz de línea de comandos para transferir archivos entre un host local y un servidor remoto a través del protocolo FTP.",
+    "usage": "ftp [OPCIONES] [HOST]",
+    "options": {
+      "-p": "Usar modo pasivo para la transferencia de datos",
+      "-i": "Desactivar el prompting interactivo durante transferencias múltiples",
+      "-n": "Restringir el inicio de sesión automático al conectar",
+      "-v": "Mostrar todas las respuestas del servidor remoto (modo verbose)"
+    },
+    "name": "ftp",
+    "category": "host_shared_storage",
+    "source_path": "host_shared_storage/commands/ftp.adoc"
+  },
+  {
     "description": "Sincronización de archivos y directorios, local o remota, con soporte para compresión y exclusión de archivos.",
     "usage": "rsync [OPCIONES] origen/ destino/",
     "options": {
@@ -3037,10 +3146,12 @@
     "source_path": "local_group/commands/groupadd.adoc"
   },
   {
-    "description": "Cambiar temporalmente el grupo primario de un usuario en la sesión actual de Linux.",
-    "usage": "newgrp [grupo]",
+    "description": "Permite a un usuario cambiar su grupo primario actual a otro grupo del que sea miembro. Los nuevos archivos creados tras el comando pertenecerán a este nuevo grupo.",
+    "usage": "newgrp [GRUPO]",
     "options": {
-      "...": "Seccion en desarrollo"
+      "[grupo]": "Nombre del grupo al que se desea cambiar",
+      "-": "Simula un inicio de sesión completo (reinicializa el entorno)",
+      "exit": "Comando para finalizar la sesión del nuevo grupo y volver al anterior"
     },
     "name": "newgrp",
     "category": "local_group",
