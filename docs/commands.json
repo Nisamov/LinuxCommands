@@ -2726,21 +2726,6 @@
     "source_path": "local_filesystem/commands/tree.adoc"
   },
   {
-    "description": "Interfaz para la gestión de reglas de iptables diseñada para ser fácil de usar y configurar mediante comandos simples.",
-    "usage": "ufw [OPCIONES] COMANDO [REGLA]",
-    "options": {
-      "enable": "Activa el firewall y lo configura para iniciar en el arranque",
-      "disable": "Desactiva el firewall",
-      "status": "Muestra el estado del firewall y las reglas activas",
-      "allow": "Añade una regla para permitir el tráfico",
-      "deny": "Añade una regla para denegar el tráfico",
-      "reset": "Restaura el firewall a su estado inicial"
-    },
-    "name": "ufw",
-    "category": "local_security",
-    "source_path": "local_security/ufw/commands/ufw.adoc"
-  },
-  {
     "description": "Interfaz simplificada para iptables que permite gestionar reglas de red, puertos y políticas de acceso de forma intuitiva.",
     "usage": "ufw [OPCIONES] COMANDO [REGLA]",
     "options": {
