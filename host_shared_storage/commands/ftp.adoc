@@ -1,0 +1,31 @@
+=== ftp
+Cliente para el protocolo de transferencia de ficheros (File Transfer Protocol).
+
+:category: host_shared_storage
+[.metadata]
+{
+  "description": "Interfaz de línea de comandos para transferir archivos entre un host local y un servidor remoto a través del protocolo FTP.",
+  "usage": "ftp [OPCIONES] [HOST]",
+  "options": {
+    "-p": "Usar modo pasivo para la transferencia de datos",
+    "-i": "Desactivar el prompting interactivo durante transferencias múltiples",
+    "-n": "Restringir el inicio de sesión automático al conectar",
+    "-v": "Mostrar todas las respuestas del servidor remoto (modo verbose)"
+  }
+}
+
+[source,bash]
+----
+# Conectar a un servidor remoto
+ftp 192.168.1.50
+----
+
+-p:: `ftp -p` Activar el modo pasivo (necesario detrás de firewalls/NAT)
+
+[source,bash]
+----
+# Conectar usando modo pasivo por defecto
+ftp -p ftp.ejemplo.com
+----
+
+

@@ -1,0 +1,67 @@
+=== ufw
+Uncomplicated Firewall - Herramienta de gestión de cortafuegos simplificada.
+
+:category: local_security
+[.metadata]
+{
+  "description": "Interfaz para la gestión de reglas de iptables diseñada para ser fácil de usar y configurar mediante comandos simples.",
+  "usage": "ufw [OPCIONES] COMANDO [REGLA]",
+  "options": {
+    "enable": "Activa el firewall y lo configura para iniciar en el arranque",
+    "disable": "Desactiva el firewall",
+    "status": "Muestra el estado del firewall y las reglas activas",
+    "allow": "Añade una regla para permitir el tráfico",
+    "deny": "Añade una regla para denegar el tráfico",
+    "reset": "Restaura el firewall a su estado inicial"
+  }
+}
+
+[source,bash]
+----
+# Ver el estado actual del firewall
+ufw status
+----
+
+status numbered:: `ufw status numbered` Muestra las reglas con un índice numérico para facilitar su borrado
+
+[source,bash]
+----
+# Listar reglas numeradas
+ufw status numbered
+----
+
+allow:: `ufw allow [puerto/servicio]` Permite el tráfico entrante
+
+[source,bash]
+----
+# Permitir tráfico SSH (puerto 22)
+ufw allow 22
+
+# Permitir tráfico HTTP por nombre de servicio
+ufw allow http
+----
+
+deny:: `ufw deny [puerto/servicio]` Deniega el tráfico de forma explícita
+
+[source,bash]
+----
+# Bloquear el puerto 80 (HTTP)
+ufw deny 80
+----
+
+delete:: `ufw delete [número]` Elimina una regla específica usando su número de índice
+
+[source,bash]
+----
+# Eliminar la regla número 2
+ufw delete 2
+----
+
+default:: `ufw default [policy] [direction]` Establece la política por defecto
+
+[source,bash]
+----
+# Denegar todas las conexiones entrantes por defecto
+ufw default deny incoming
+----
+

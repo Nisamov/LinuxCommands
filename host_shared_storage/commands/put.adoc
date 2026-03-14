@@ -1,0 +1,28 @@
+=== put
+Comando interno de FTP para la subida de archivos individuales.
+
+:category: host_shared_storage
+[.metadata]
+{
+  "description": "Comando utilizado dentro de una sesión interactiva de FTP para subir un archivo desde el equipo local al servidor remoto.",
+  "usage": "put ARCHIVO_LOCAL [ARCHIVO_REMOTO]",
+  "options": {
+    "put": "Sube el archivo al directorio actual del servidor",
+    "put local remoto": "Sube el archivo y le asigna un nombre distinto en el servidor"
+  }
+}
+
+[source,bash]
+----
+# Subir el archivo local 'web.html'
+put web.html
+----
+
+Renombrado:: `put local remoto` Sube y renombra el archivo en el destino
+
+[source,bash]
+----
+# Sube 'foto.jpg' y lo guarda como 'perfil.jpg' en el servidor
+put foto.jpg perfil.jpg
+----
+

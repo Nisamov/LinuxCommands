@@ -1,0 +1,29 @@
+=== vsftpd
+Very Secure FTP Daemon.
+
+:category: host_shared_storage
+[.metadata]
+{
+  "description": "Servidor FTP ligero y seguro para sistemas Linux, diseñado para evitar vulnerabilidades de seguridad comunes.",
+  "usage": "vsftpd [ARCHIVO_CONFIG]",
+  "options": {
+    "/etc/vsftpd.conf": "Archivo de configuración principal",
+    "listen=YES": "Opción para que el servidor escuche peticiones IPv4",
+    "anonymous_enable": "Permitir o denegar acceso a usuarios anónimos"
+  }
+}
+
+[source,bash]
+----
+# Lanzar el demonio manualmente con una configuración específica
+vsftpd /etc/vsftpd.conf
+----
+
+Estado:: `systemctl status vsftpd` Comprobar si el servidor está corriendo
+
+[source,bash]
+----
+# Verificar el estado del servicio en el sistema
+systemctl status vsftpd
+----
+

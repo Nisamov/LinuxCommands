@@ -1,0 +1,28 @@
+=== mput
+Comando interno de FTP para la subida múltiple de archivos.
+
+:category: host_shared_storage
+[.metadata]
+{
+  "description": "Permite subir varios archivos locales al servidor de una sola vez utilizando patrones de búsqueda.",
+  "usage": "mput MÁSCARA",
+  "options": {
+    "*": "Sube todos los archivos que coincidan con el patrón",
+    "prompt": "Evita tener que confirmar la subida de cada archivo individual"
+  }
+}
+
+[source,bash]
+----
+# Subir todos los archivos que empiecen por 'informe'
+mput informe*
+----
+
+Combinación:: `mput` con directorios
+
+[source,bash]
+----
+# Subir todos los archivos de la carpeta local actual al servidor
+mput *
+----
+
