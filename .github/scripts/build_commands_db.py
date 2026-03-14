@@ -3,7 +3,7 @@ import json
 import re
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_PATH = os.path.abspath(os.path.join(SCRIPT_DIR, '..', '..'))
-IGNORE_DIRS = {'.git', '.github', 'docs', 'linux_fundamentals', 'host_web_server', 'templates', 'styles'}
+IGNORE_DIRS = {'.git', '.github', 'docs'}
 def robust_json_clean(json_str):
     json_str = re.sub(r'//.*', '', json_str)
     json_str = " ".join(json_str.splitlines())

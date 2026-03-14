@@ -1,59 +1,56 @@
 === newgrp
-El comando `newgrp` permite cambiar temporalmente el grupo primario de un usuario en la sesión actual de Linux. Es útil para trabajar con archivos o directorios bajo permisos de otro grupo sin cerrar sesión.
+Cambia el GID real del usuario actual durante una sesión de login.
 
 :category: local_group
 [.metadata]
 {
-  "description": "Cambiar temporalmente el grupo primario de un usuario en la sesión actual de Linux.",
-  "usage": "newgrp [grupo]",
+  "description": "Permite a un usuario cambiar su grupo primario actual a otro grupo del que sea miembro. Los nuevos archivos creados tras el comando pertenecerán a este nuevo grupo.",
+  "usage": "newgrp [GRUPO]",
   "options": {
-    "...": "Seccion en desarrollo"
+    "[grupo]": "Nombre del grupo al que se desea cambiar",
+    "-": "Simula un inicio de sesión completo (reinicializa el entorno)",
+    "exit": "Comando para finalizar la sesión del nuevo grupo y volver al anterior"
   }
 }
 
--Cambiar al grupo primario de otro grupo::
-
 [source,bash]
 ----
-# Cambiar temporalmente al grupo "developers"
+# Cambiar el grupo primario actual a 'developers'
 newgrp developers
-# Después de ejecutar este comando, los archivos creados pertenecerán al grupo "developers"
 ----
 
--Verificar grupo actual::
+-:: `newgrp - [grupo]` Reinicializar el entorno de usuario al cambiar de grupo
 
 [source,bash]
 ----
-# Mostrar el grupo primario actual
+# Cambiar de grupo como si fuera un nuevo inicio de sesión (limpia variables)
+newgrp - developers
+----
+
+Verificación:: Uso de `id` para confirmar el cambio de GID
+
+[source,bash]
+----
+# Verificar qué grupo primario está activo actualmente
 id -gn
-# También se puede usar 'groups' para ver todos los grupos del usuario
 ----
 
--Salir del grupo temporal::
-
-[source,bash]
-----
-# Para volver al grupo primario original, cerrar la sesión de shell o usar 'exit'
-exit
-----
-
--Usos prácticos::
+Uso práctico:: Creación de archivos con el nuevo grupo
 
 [source,bash]
 ----
-# Trabajar con permisos de grupo en colaboración
-# Crear archivos en un directorio compartido de un grupo específico
+# Al cambiar de grupo, los archivos creados heredan el nuevo GID
 newgrp projectteam
-touch archivo_compartido.txt
-ls -l
-# El archivo pertenecerá al grupo "projectteam"
+touch informe_compartido.txt
+ls -l informe_compartido.txt
+# El grupo del archivo será 'projectteam'
 ----
 
--Help:: Mostrar ayuda en pantalla
+Finalización:: Volver al grupo original
 
 [source,bash]
 ----
-# newgrp --help
-# Muestra las opciones disponibles y la sintaxis de uso
+# El comando newgrp abre una sub-shell; para salir, se usa exit
+exit
 ----
 
