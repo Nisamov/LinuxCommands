@@ -1,0 +1,28 @@
+=== get
+Comando interno de FTP para la descarga de archivos individuales.
+
+:category: host_shared_storage
+[.metadata]
+{
+  "description": "Comando utilizado dentro de una sesión interactiva de FTP para descargar un único archivo desde el servidor remoto al equipo local.",
+  "usage": "get ARCHIVO_REMOTO [ARCHIVO_LOCAL]",
+  "options": {
+    "get": "Descarga el archivo manteniendo el nombre original",
+    "get archivo nuevo": "Descarga el archivo y lo renombra en el destino local"
+  }
+}
+
+[source,bash]
+----
+# Descargar un archivo llamado datos.csv
+get datos.csv
+----
+
+Renombrado:: `get remoto local` Descarga y cambia el nombre en un solo paso
+
+[source,bash]
+----
+# Descarga 'config.php' del servidor pero lo guarda como 'config_backup.php'
+get config.php config_backup.php
+----
+

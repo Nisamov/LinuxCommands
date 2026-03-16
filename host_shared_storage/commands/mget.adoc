@@ -1,0 +1,29 @@
+=== mget
+Comando interno de FTP para la descarga múltiple de archivos.
+
+:category: host_shared_storage
+[.metadata]
+{
+  "description": "Permite la descarga de varios archivos simultáneamente utilizando caracteres comodín (wildcards).",
+  "usage": "mget MÁSCARA",
+  "options": {
+    "*": "Comodín para representar cualquier cadena de caracteres",
+    "?": "Comodín para representar un solo carácter"
+  }
+}
+
+[source,bash]
+----
+# Descargar todos los archivos con extensión .jpg
+mget *.jpg
+----
+
+prompt:: `prompt` Desactivar la confirmación interactiva para mget
+
+[source,bash]
+----
+# Escribir 'prompt' antes de mget para que no pida confirmación (S/n) por cada archivo
+prompt
+mget *.txt
+----
+

@@ -1,0 +1,37 @@
+=== sftp
+Cliente de transferencia de archivos segura sobre SSH.
+
+:category: host_shared_storage
+[.metadata]
+{
+  "description": "Protocolo de transferencia de archivos que utiliza SSH para cifrar la sesión, ofreciendo una alternativa segura al FTP tradicional.",
+  "usage": "sftp [OPCIONES] [USUARIO@]HOST",
+  "options": {
+    "-P": "Puerto personalizado de SSH",
+    "-C": "Habilitar compresión",
+    "-r": "Operación recursiva (para directorios)"
+  }
+}
+
+[source,bash]
+----
+# Iniciar conexión segura con un servidor
+sftp usuario@192.168.1.10
+----
+
+-P:: `sftp -P` Conexión a través de un puerto no estándar
+
+[source,bash]
+----
+# Conectar a un servidor que usa el puerto 443 para SSH
+sftp -P 443 usuario@servidor.es
+----
+
+-r:: `sftp -r` Subida o descarga de carpetas completas
+
+[source,bash]
+----
+# Descargar la carpeta 'imagenes' y todo su contenido
+get -r imagenes
+----
+

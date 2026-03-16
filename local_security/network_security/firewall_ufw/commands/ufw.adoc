@@ -1,0 +1,96 @@
+=== ufw
+Herramienta de gestión de cortafuegos (Uncomplicated Firewall) para sistemas Linux.
+
+:category: local_security
+[.metadata]
+{
+  "description": "Interfaz simplificada para iptables que permite gestionar reglas de red, puertos y políticas de acceso de forma intuitiva.",
+  "usage": "ufw [OPCIONES] COMANDO [REGLA]",
+  "options": {
+    "status": "Muestra el estado actual y las reglas activas",
+    "enable/disable": "Activa o desactiva el cortafuegos",
+    "allow/deny": "Permite o deniega el tráfico según el puerto, servicio o IP",
+    "default": "Configura la política por defecto para el tráfico entrante/saliente"
+  }
+}
+
+[source,bash]
+----
+# Ver estado del cortafuegos y listar reglas activas
+ufw status
+----
+
+status numbered:: `ufw status numbered` Listar normas de forma numerada para facilitar su gestión
+
+[source,bash]
+----
+# Listar normas con su índice correspondiente
+ufw status numbered
+----
+
+delete:: `ufw delete <numero>` Eliminar una regla específica mediante su número de índice
+
+[source,bash]
+----
+# Eliminar la regla número 3 (obtenida con status numbered)
+ufw delete 3
+----
+
+enable/disable:: `ufw enable` / `ufw disable` Habilitar o deshabilitar el programa
+
+[source,bash]
+----
+# Activar el firewall para que se inicie con el sistema
+ufw enable
+
+# Desactivar el firewall completamente
+ufw disable
+----
+
+reset:: `ufw reset` Restablecer el programa a su configuración de fábrica
+
+[source,bash]
+----
+# Eliminar todas las reglas y volver a la configuración inicial
+ufw reset
+----
+
+default:: `ufw default [policy] [direction]` Configura la política por defecto para conexiones que no coincidan con ninguna regla
+
+[source,bash]
+----
+# Denegar o permitir conexiones entrantes por defecto
+ufw default deny incoming
+ufw default allow incoming
+
+# Denegar o permitir conexiones salientes por defecto
+ufw default deny outgoing
+ufw default allow outgoing
+----
+
+allow (puertos/servicios):: `ufw allow` Permite conexiones entrantes basadas en puertos, protocolos o nombres de servicio
+
+[source,bash]
+----
+# Permite conexiones por puerto numérico, alias de servicio o protocolo específico
+ufw allow 80
+ufw allow http
+ufw allow 80/tcp
+
+# Permite conexiones en un rango de puertos
+ufw allow 1000-2000
+----
+
+allow from (IPs/Redes):: `ufw allow from` Permite tráfico desde orígenes específicos con mayor granularidad
+
+[source,bash]
+----
+# Permitir todo el tráfico desde una IP o rango CIDR
+ufw allow from 10.0.0.30
+ufw allow from 10.0.0.0/24
+
+# Permitir tráfico a una IP específica, puerto y protocolo concreto
+ufw allow from 10.0.0.30 to any port 22
+ufw allow from 10.0.0.30 to any port 22 proto tcp
+----
+
