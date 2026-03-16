@@ -73,23 +73,38 @@ jobs:
 
       - name: Create Multi-Releases
         run: |
-          # Usamos EN en lugar de ENG para que coincida con la carpeta del artefacto pdf-en
-          LANGS="JA KO ZH RU PT DE EN"
-          
-          declare -A TITLES=( ["JA"]="Japonés 🇯🇵" ["KO"]="Coreano 🇰🇷" ["ZH"]="Chino 🇨🇳" ["RU"]="Ruso 🇷🇺" ["PT"]="Portugués 🇵🇹" ["DE"]="Alemán 🇩🇪" ["EN"]="Inglés 🇬🇧" ["ESP"]="Español 🇪🇸" )
-
+          # Lista de idiomas
+          LANGS="JA KO ZH RU PT DE EN FR"
+          declare -A TITLES=( 
+            ["JA"]="日本語のドキュメント 🇯🇵" 
+            ["KO"]="한국어 문서 🇰🇷" 
+            ["ZH"]="中文文档 🇨🇳" 
+            ["RU"]="Документация на русском 🇷🇺" 
+            ["PT"]="Documentação em Português 🇵🇹" 
+            ["DE"]="Deutsche Dokumentation 🇩🇪" 
+            ["EN"]="English Documentation 🇬🇧" 
+            ["FR"]="Documentation Française 🇫🇷"
+            ["ESP"]="Documentación en Español 🇪🇸" 
+          )
+          declare -A IMGS=(
+            ["JA"]="released_JA.png" ["KO"]="released_KO.png" ["ZH"]="released_ZH.png"
+            ["RU"]="released_RU.png" ["PT"]="released_PT.png" ["DE"]="released_DE.png"
+            ["EN"]="released_ENG.png" ["FR"]="released_FR.png" ["ESP"]="released_ESP.png"
+          )
+          IMG_BASE="https://raw.githubusercontent.com/${{ github.repository }}/master/.github/media"
           for L in $LANGS; do
-            # Buscamos en la carpeta correspondiente al idioma en minúsculas
             FILES=$(find "all_pdfs/pdf-${L,,}" -name "*.pdf" 2>/dev/null)
             if [ -n "$FILES" ]; then
-              gh release create "$L" $FILES --title "🔵 DOCUMENTACIÓN ${TITLES[$L]}" --notes "Contenido traducido automáticamente."
+              NOTES="![Header]($IMG_BASE/${IMGS[$L]})\n\n## ${TITLES[$L]}\n\nContenido traducido automáticamente."
+              gh release create "$L" $FILES --title "🔵 ${TITLES[$L]}" --notes "$NOTES"
               sleep 5
             fi
           done
 
           ESP_FILES=$(find all_pdfs/pdf-es -name "*.pdf")
           if [ -n "$ESP_FILES" ]; then
-            gh release create "ESP" $ESP_FILES --title "🔴 DOCUMENTACIÓN ${TITLES[ESP]}" --notes "Manuales originales en español."
+            NOTES="![Header]($IMG_BASE/${IMGS[ESP]})\n\n## ${TITLES[ESP]}\n\nManuales originales creados para la comunidad."
+            gh release create "ESP" $ESP_FILES --title "🔵 ${TITLES[ESP]}" --notes "$NOTES"
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

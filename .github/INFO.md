@@ -25,18 +25,17 @@ El repositorio se creó oficialmente el `25/11/2023` a las `10:42`, marcando el 
 7. **19/01/2026** – Comienza la incorporación de múltiples idiomas, alcanzando más de 5 idiomas disponibles.
 8. **08/02/2026** – Se implementa una subpágina de búsqueda que permite indexar el repositorio y consultar comandos de manera rápida y eficiente.
 9. **03/03/2026** - Se crea la página wikidot para albergar la explicación e historia del repositorio.
+10. **16/03/2026** - Se cambia el formato de traducción de lineal a multithreading, ahorrando hasta 5 horas de espera.
 
 Los idiomas disponibles son:  
-   - Español, Inglés, Alemán, Ruso, Chino, Japonés y Coreano.
-<!--Previamente era posible obtener la traducción del francés y portugués-->
-<!--Debido al tiempo que tardaba en traducir todos los ficheros, se ha visto la necesidad de reducir varios idiomas-->
-<!--En caso de aumentar el tiempo de espera, se eliminarán los idiomas en este orden: Coreano,Alemán, Japonés, Ruso, Chino-->
-<!--Si tras la eliminación d las traducciones no es óptima para realizarse en github, se buscarán alternativas para su traducción y posibilidad de descargar desde la nube-->
+   - Español, Inglés, Francés, Portugués, Alemán, Ruso, Chino, Japonés y Coreano.
 ---
 
 ## Apoyo Escolar
 
 Durante los estudios de grado medio, los documentos fueron compartidos entre compañeros, sirviendo como material de apoyo que facilitó el aprendizaje y ayudó a muchos a aprobar sus asignaturas.
+
+Al pasar a grado superior, el conocimiento acumulado fué reorganizado, creando un modelo referente en estructura y contenido.
 
 ---
 

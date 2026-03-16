@@ -9,7 +9,8 @@ from deep_translator import GoogleTranslator
 
 LANG_MAP = {
     'en': 'en', 'de': 'de', 'es': 'es', 'ru': 'ru',
-    'zh': 'zh-CN', 'ko': 'ko', 'ja': 'ja', 'pt': 'pt'
+    'zh': 'zh-CN', 'ko': 'ko', 'ja': 'ja', 'pt': 'pt',
+    'fr': 'fr'
 }
 
 # Patrones que no deben traducirse (directivas de AsciiDoc)
