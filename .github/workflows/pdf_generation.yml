@@ -11,7 +11,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Español incluido en la matriz para generar su PDF paralelamente
         lang: [en, de, pt, ru, zh, ko, ja, es]
     
     steps:
@@ -27,24 +26,24 @@ jobs:
       - name: Process Language
         run: |
           mkdir -p pdf_outputs
+          # Definimos el código de idioma en mayúsculas usando Bash normal
+          LANG_UPPER=$(echo "${{ matrix.lang }}" | tr '[:lower:]' '[:upper:]')
+          
           MODULES="local_fundamentals local_filesystem local_group local_network local_permissions local_scripts local_security local_services local_software local_storage local_system_data local_users"
           
           for MOD in $MODULES; do
             if [ -d "$MOD" ]; then
-              # Preparar carpeta temporal con recursos (imágenes, etc)
               mkdir -p "tmp_${{ matrix.lang }}/$MOD"
               cp -r "$MOD/"* "tmp_${{ matrix.lang }}/$MOD/"
               
-              # Traducir (Si es 'es', el script solo copiará)
               python3 .github/scripts/translate_adoc.py "$MOD" "tmp_${{ matrix.lang }}/$MOD" ${{ matrix.lang }}
               
-              # Configurar CJK si es necesario
               EXTRA=""
               [[ "${{ matrix.lang }}" =~ ^(zh|ko|ja)$ ]] && EXTRA="-a scripts=cjk -a lang=${{ matrix.lang }}"
               
               asciidoctor-pdf "tmp_${{ matrix.lang }}/$MOD/index.adoc" \
                 -a pdf-theme=default -a pdf-fontsdir=/usr/share/fonts $EXTRA \
-                -o "pdf_outputs/${{ matrix.lang^^ }}_${MOD}.pdf"
+                -o "pdf_outputs/${LANG_UPPER}_${MOD}.pdf"
             fi
           done
 
@@ -67,7 +66,6 @@ jobs:
 
       - name: Delete Old Data
         run: |
-          # Borrar todos los releases y tags previos
           RELEASES=$(gh release list --limit 100 | cut -f 1)
           for r in $RELEASES; do gh release delete "$r" -y --cleanup-tag || true; done
         env:
@@ -75,23 +73,23 @@ jobs:
 
       - name: Create Multi-Releases
         run: |
-          # Lista de idiomas traducidos (excluyendo español para el final)
-          LANGS="JA KO ZH RU PT DE ENG"
+          # Usamos EN en lugar de ENG para que coincida con la carpeta del artefacto pdf-en
+          LANGS="JA KO ZH RU PT DE EN"
           
-          # Mapeo de títulos
-          declare -A TITLES=( ["JA"]="Japonés 🇯🇵" ["KO"]="Coreano 🇰🇷" ["ZH"]="Chino 🇨🇳" ["RU"]="Ruso 🇷🇺" ["PT"]="Portugués 🇵🇹" ["DE"]="Alemán 🇩🇪" ["ENG"]="Inglés 🇬🇧" ["ESP"]="Español 🇪🇸" )
+          declare -A TITLES=( ["JA"]="Japonés 🇯🇵" ["KO"]="Coreano 🇰🇷" ["ZH"]="Chino 🇨🇳" ["RU"]="Ruso 🇷🇺" ["PT"]="Portugués 🇵🇹" ["DE"]="Alemán 🇩🇪" ["EN"]="Inglés 🇬🇧" ["ESP"]="Español 🇪🇸" )
 
-          # 1. Crear releases traducidos primero
           for L in $LANGS; do
-            FILES=$(find all_pdfs/pdf-${L,,} -name "*.pdf" 2>/dev/null)
+            # Buscamos en la carpeta correspondiente al idioma en minúsculas
+            FILES=$(find "all_pdfs/pdf-${L,,}" -name "*.pdf" 2>/dev/null)
             if [ -n "$FILES" ]; then
               gh release create "$L" $FILES --title "🔵 DOCUMENTACIÓN ${TITLES[$L]}" --notes "Contenido traducido automáticamente."
-              sleep 2 # Pausa para asegurar orden en el timeline de GH
+              sleep 5
             fi
           done
 
-          # 2. Crear release de ESPAÑOL al final (Será el primero en verse)
           ESP_FILES=$(find all_pdfs/pdf-es -name "*.pdf")
-          gh release create "ESP" $ESP_FILES --title "🔴 DOCUMENTACIÓN ${TITLES[ESP]}" --notes "Manuales originales en español."
+          if [ -n "$ESP_FILES" ]; then
+            gh release create "ESP" $ESP_FILES --title "🔴 DOCUMENTACIÓN ${TITLES[ESP]}" --notes "Manuales originales en español."
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
