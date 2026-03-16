@@ -1,347 +1,97 @@
 name: Generación de Documentación PDF Multilingüe
 
-# El proceso puede tardar entre 3 y 4 horas
-# Segun el repositorio crezca, esta cifra irá en aumento.
-# Es posible ejecutar este script manualmente, pero no se recomienda debido al tiempo que toma.
-
 on:
   schedule:
-    - cron: '0 0 * * 1' # Ejecutar semanalmente unicamente los lunes
+    - cron: '0 0 * * 1'
   workflow_dispatch:
 
 jobs:
-  build-pdfs:
+  build:
     runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: false
+      matrix:
+        # Español incluido en la matriz para generar su PDF paralelamente
+        lang: [en, de, pt, ru, zh, ko, ja, es]
+    
     steps:
-      - name: Checkout del repositorio
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Configurar Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2'
-          bundler-cache: true
-
-      - name: Instalar fuentes CJK y otras dependencias
+      - name: Setup Env
         run: |
           sudo apt-get update
-          # Instalar fuentes CJK (Chino, Japonés, Coreano)
-          sudo apt-get install -y fonts-noto-cjk fonts-noto-cjk-extra
-          # Instalar fuentes extra para mejor soporte
-          sudo apt-get install -y fonts-noto fonts-noto-extra fonts-dejavu fonts-liberation
-          # Verificar instalación
-          fc-list | grep -i "noto\|cjk\|japanese\|chinese\|korean" | head -20
+          sudo apt-get install -y fonts-noto-cjk fonts-noto-extra
+          pip install deep-translator
+          gem install asciidoctor-pdf asciidoctor-pdf-cjk rouge
 
-      - name: Instalar Asciidoctor PDF y dependencias
+      - name: Process Language
         run: |
-          gem install asciidoctor-pdf --no-document
-          gem install rouge --no-document
-          gem install prawn --no-document
-          gem install prawn-svg --no-document
-          gem install prawn-icon --no-document
-          # Instalar tema personalizado para CJK
-          gem install asciidoctor-pdf-cjk --no-document
-
-      - name: Instalar GitHub CLI
-        run: sudo apt-get install -y gh
-
-      - name: Configurar Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Instalar librería de traducción
-        run: pip install deep-translator
-
-      - name: Crear directorios temporales y de PDFs
-        run: |
-          mkdir -p tmp_en tmp_de tmp_pt tmp_ru tmp_zh tmp_ko tmp_ja pdf
-          # Limpiar directorios previos
-          rm -rf tmp_en/* tmp_de/* tmp_pt/* tmp_ru/* tmp_zh/* tmp_ko/* tmp_ja/* pdf/*
-
-      - name: Listar y borrar tags
-        run: |
-          TAGS=$(git tag)
-          if [ -z "$TAGS" ]; then
-            echo "No hay tags que borrar."
-          else
-            echo "Borrando tags locales..."
-            git tag -d $TAGS || true
-            echo "Borrando tags remotos..."
-            for TAG in $TAGS; do
-              git push origin :refs/tags/$TAG || true
-            done
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-      - name: Borrar releases existentes
-        run: |
-          set -e
-          REPO="${{ github.repository }}"
-          PAGE=1
-          while true; do
-            IDS=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-              "https://api.github.com/repos/$REPO/releases?per_page=100&page=$PAGE" | jq -r '.[].id')
-            [ -z "$IDS" ] && break
-            for ID in $IDS; do
-              [ -z "$ID" ] && continue
-              curl -s -X DELETE -H "Authorization: Bearer $GITHUB_TOKEN" \
-                "https://api.github.com/repos/$REPO/releases/$ID" || true
-            done
-            PAGE=$((PAGE + 1))
-          done
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Configurar Git
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
-      - name: Eliminar todos los tags locales
-        run: |
-          git tag -l | xargs -r git tag -d
-
-      - name: Eliminar todos los tags remotos
-        run: |
-          git tag -l | xargs -r -n 1 git push origin :refs/tags/
-
-      - name: Crear tema simple para CJK (opcional)
-        run: |
-          cat > default-cjk.yml << 'EOF'
-          extends: default
-          font:
-            catalog:
-              Noto Sans:
-                normal: /usr/share/fonts/truetype/noto/NotoSans-Regular.ttf
-                bold: /usr/share/fonts/truetype/noto/NotoSans-Bold.ttf
-                italic: /usr/share/fonts/truetype/noto/NotoSans-Italic.ttf
-                bold_italic: /usr/share/fonts/truetype/noto/NotoSans-BoldItalic.ttf
-            fallback:
-              - Noto Sans
-          EOF
-
-      - name: Generar PDFs ESP, ENG, DE, RU, ZH, KO y JA
-        run: |
-          set -e
-          ASCIIDOCTOR=$(which asciidoctor-pdf)
-          
-          # Lista específica de módulos a procesar
+          mkdir -p pdf_outputs
           MODULES="local_fundamentals local_filesystem local_group local_network local_permissions local_scripts local_security local_services local_software local_storage local_system_data local_users"
-          for MODULE in $MODULES; do
-            if [ -d "$MODULE" ] && [ -f "$MODULE/index.adoc" ]; then
-              echo "=== Procesando módulo: $MODULE ==="
+          
+          for MOD in $MODULES; do
+            if [ -d "$MOD" ]; then
+              # Preparar carpeta temporal con recursos (imágenes, etc)
+              mkdir -p "tmp_${{ matrix.lang }}/$MOD"
+              cp -r "$MOD/"* "tmp_${{ matrix.lang }}/$MOD/"
               
-              # Español (original)
-              echo "Generando PDF Español..."
-              "$ASCIIDOCTOR" "$MODULE/index.adoc" \
-                -a pdf-theme=default \
-                -a pdf-fontsdir=/usr/share/fonts \
-                -o "pdf/ESP_${MODULE}.pdf"
+              # Traducir (Si es 'es', el script solo copiará)
+              python3 .github/scripts/translate_adoc.py "$MOD" "tmp_${{ matrix.lang }}/$MOD" ${{ matrix.lang }}
               
-              # Inglés
-              echo "Traduciendo a inglés..."
-              TMP_EN="tmp_en/$MODULE"
-              mkdir -p "$TMP_EN"
-              cp -r "$MODULE/"* "$TMP_EN/" 2>/dev/null || true
-              python3 .github/scripts/translate_adoc.py "$MODULE" "$TMP_EN" en
+              # Configurar CJK si es necesario
+              EXTRA=""
+              [[ "${{ matrix.lang }}" =~ ^(zh|ko|ja)$ ]] && EXTRA="-a scripts=cjk -a lang=${{ matrix.lang }}"
               
-              if [ -f "$TMP_EN/index.adoc" ]; then
-                echo "Generando PDF Inglés..."
-                "$ASCIIDOCTOR" "$TMP_EN/index.adoc" \
-                  -a pdf-theme=default \
-                  -a pdf-fontsdir=/usr/share/fonts \
-                  -o "pdf/ENG_${MODULE}.pdf"
-              else
-                echo "ERROR: No se pudo traducir $MODULE a inglés"
-              fi
-              
-              # Alemán
-              echo "Traduciendo a alemán..."
-              TMP_DE="tmp_de/$MODULE"
-              mkdir -p "$TMP_DE"
-              cp -r "$MODULE/"* "$TMP_DE/" 2>/dev/null || true
-              python3 .github/scripts/translate_adoc.py "$MODULE" "$TMP_DE" de
-              
-              if [ -f "$TMP_DE/index.adoc" ]; then
-                echo "Generando PDF Alemán..."
-                "$ASCIIDOCTOR" "$TMP_DE/index.adoc" \
-                  -a pdf-theme=default \
-                  -a pdf-fontsdir=/usr/share/fonts \
-                  -o "pdf/DE_${MODULE}.pdf"
-              else
-                echo "ERROR: No se pudo traducir $MODULE a alemán"
-              fi
-              
-              # Portugués
-              echo "Traduciendo a portugués..."
-              TMP_PT="tmp_pt/$MODULE"
-              mkdir -p "$TMP_PT"
-              cp -r "$MODULE/"* "$TMP_PT/" 2>/dev/null || true
-              python3 .github/scripts/translate_adoc.py "$MODULE" "$TMP_PT" pt
-              
-              if [ -f "$TMP_PT/index.adoc" ]; then
-                echo "Generando PDF Portugués..."
-                "$ASCIIDOCTOR" "$TMP_PT/index.adoc" \
-                  -a pdf-theme=default \
-                  -a pdf-fontsdir=/usr/share/fonts \
-                  -o "pdf/PT_${MODULE}.pdf"
-              else
-                echo "ERROR: No se pudo traducir $MODULE a portugués"
-              fi
-              
-              # Ruso
-              echo "Traduciendo a ruso..."
-              TMP_RU="tmp_ru/$MODULE"
-              mkdir -p "$TMP_RU"
-              cp -r "$MODULE/"* "$TMP_RU/" 2>/dev/null || true
-              python3 .github/scripts/translate_adoc.py "$MODULE" "$TMP_RU" ru
-              
-              if [ -f "$TMP_RU/index.adoc" ]; then
-                echo "Generando PDF Ruso..."
-                "$ASCIIDOCTOR" "$TMP_RU/index.adoc" \
-                  -a pdf-theme=default \
-                  -a pdf-fontsdir=/usr/share/fonts \
-                  -o "pdf/RU_${MODULE}.pdf"
-              else
-                echo "ERROR: No se pudo traducir $MODULE a ruso"
-              fi
-              
-              # Chino (con tema por defecto y fuentes CJK)
-              echo "Traduciendo a chino..."
-              TMP_ZH="tmp_zh/$MODULE"
-              mkdir -p "$TMP_ZH"
-              cp -r "$MODULE/"* "$TMP_ZH/" 2>/dev/null || true
-              python3 .github/scripts/translate_adoc.py "$MODULE" "$TMP_ZH" zh
-              
-              if [ -f "$TMP_ZH/index.adoc" ]; then
-                echo "Generando PDF Chino con tema por defecto..."
-                "$ASCIIDOCTOR" "$TMP_ZH/index.adoc" \
-                  -a pdf-theme=default \
-                  -a pdf-fontsdir=/usr/share/fonts \
-                  -a scripts=cjk \
-                  -a lang=zh \
-                  -o "pdf/ZH_${MODULE}.pdf"
-              else
-                echo "ERROR: No se pudo traducir $MODULE a chino"
-              fi
-              
-              # Coreano (con tema por defecto y fuentes CJK)
-              echo "Traduciendo a coreano..."
-              TMP_KO="tmp_ko/$MODULE"
-              mkdir -p "$TMP_KO"
-              cp -r "$MODULE/"* "$TMP_KO/" 2>/dev/null || true
-              python3 .github/scripts/translate_adoc.py "$MODULE" "$TMP_KO" ko
-              
-              if [ -f "$TMP_KO/index.adoc" ]; then
-                echo "Generando PDF Coreano con tema por defecto..."
-                "$ASCIIDOCTOR" "$TMP_KO/index.adoc" \
-                  -a pdf-theme=default \
-                  -a pdf-fontsdir=/usr/share/fonts \
-                  -a scripts=cjk \
-                  -a lang=ko \
-                  -o "pdf/KO_${MODULE}.pdf"
-              else
-                echo "ERROR: No se pudo traducir $MODULE a coreano"
-              fi
-              
-              # Japonés (con tema por defecto y fuentes CJK)
-              echo "Traduciendo a japonés..."
-              TMP_JA="tmp_ja/$MODULE"
-              mkdir -p "$TMP_JA"
-              cp -r "$MODULE/"* "$TMP_JA/" 2>/dev/null || true
-              python3 .github/scripts/translate_adoc.py "$MODULE" "$TMP_JA" ja
-              
-              if [ -f "$TMP_JA/index.adoc" ]; then
-                echo "Generando PDF Japonés con tema por defecto..."
-                "$ASCIIDOCTOR" "$TMP_JA/index.adoc" \
-                  -a pdf-theme=default \
-                  -a pdf-fontsdir=/usr/share/fonts \
-                  -a scripts=cjk \
-                  -a lang=ja \
-                  -o "pdf/JA_${MODULE}.pdf"
-              else
-                echo "ERROR: No se pudo traducir $MODULE a japonés"
-              fi
-            else
-              echo "Saltando $MODULE - no es un módulo válido"
+              asciidoctor-pdf "tmp_${{ matrix.lang }}/$MOD/index.adoc" \
+                -a pdf-theme=default -a pdf-fontsdir=/usr/share/fonts $EXTRA \
+                -o "pdf_outputs/${{ matrix.lang^^ }}_${MOD}.pdf"
             fi
           done
 
-      - name: Crear releases por idioma
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdf-${{ matrix.lang }}
+          path: pdf_outputs/*.pdf
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all_pdfs
+
+      - name: Delete Old Data
         run: |
-          echo "Creando releases separados por idioma..."
-          ESPImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_ESP.png"
-          ENGImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_ENG.png"
-          DEImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_DE.png"
-          RUImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_RU.png"
-          ZHImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_ZH.png"
-          KOImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_KO.png"
-          JAImg="https://raw.githubusercontent.com/${{ github.repository }}/main/.github/media/released_JA.png"
+          # Borrar todos los releases y tags previos
+          RELEASES=$(gh release list --limit 100 | cut -f 1)
+          for r in $RELEASES; do gh release delete "$r" -y --cleanup-tag || true; done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-          # Crear release para Japonés
-          JA_FILES=$(ls pdf/JA_*.pdf 2>/dev/null | tr '\n' ' ')
-          if [ -n "$JA_FILES" ]; then
-            echo "Archivos JA: $JA_FILES"
-            gh release create JA $JA_FILES \
-              --title "🔵 PDF ドキュメント 📕" \
-              --notes "![Documentación Japonés]($JAImg)"
-          fi
+      - name: Create Multi-Releases
+        run: |
+          # Lista de idiomas traducidos (excluyendo español para el final)
+          LANGS="JA KO ZH RU PT DE ENG"
           
-          # Crear release para Coreano
-          KO_FILES=$(ls pdf/KO_*.pdf 2>/dev/null | tr '\n' ' ')
-          if [ -n "$KO_FILES" ]; then
-            echo "Archivos KO: $KO_FILES"
-            gh release create KO $KO_FILES \
-              --title "🔵 PDF 문서 📕" \
-              --notes "![Documentación Coreano]($KOImg)"
-          fi
-          
-          # Crear release para Chino
-          ZH_FILES=$(ls pdf/ZH_*.pdf 2>/dev/null | tr '\n' ' ')
-          if [ -n "$ZH_FILES" ]; then
-            echo "Archivos ZH: $ZH_FILES"
-            gh release create ZH $ZH_FILES \
-              --title "🔵 PDF 文档 📕" \
-              --notes "![Documentación Chino]($ZHImg)"
-          fi
-          
-          # Crear release para Ruso
-          RU_FILES=$(ls pdf/RU_*.pdf 2>/dev/null | tr '\n' ' ')
-          if [ -n "$RU_FILES" ]; then
-            echo "Archivos RU: $RU_FILES"
-            gh release create RU $RU_FILES \
-              --title "🔵 PDF ДОКУМЕНТАЦИЯ 📕" \
-              --notes "![Documentación Ruso]($RUImg)"
-          fi
-          
-          # Crear release para Inglés
-          ENG_FILES=$(ls pdf/ENG_*.pdf 2>/dev/null | tr '\n' ' ')
-          if [ -n "$ENG_FILES" ]; then
-            echo "Archivos ENG: $ENG_FILES"
-            gh release create ENG $ENG_FILES \
-              --title "🔵 PDF DOCUMENTATION 📕" \
-              --notes "![Documentación Inglés]($ENGImg)"
-          fi
+          # Mapeo de títulos
+          declare -A TITLES=( ["JA"]="Japonés 🇯🇵" ["KO"]="Coreano 🇰🇷" ["ZH"]="Chino 🇨🇳" ["RU"]="Ruso 🇷🇺" ["PT"]="Portugués 🇵🇹" ["DE"]="Alemán 🇩🇪" ["ENG"]="Inglés 🇬🇧" ["ESP"]="Español 🇪🇸" )
 
-          # Crear release para Alemán
-          DE_FILES=$(ls pdf/DE_*.pdf 2>/dev/null | tr '\n' ' ')
-          if [ -n "$DE_FILES" ]; then
-            echo "Archivos DE: $DE_FILES"
-            gh release create DE $DE_FILES \
-              --title "🔵 PDF DOKUMENTATION 📕" \
-              --notes "![Documentación Alemán]($DEImg)"
-          fi
+          # 1. Crear releases traducidos primero
+          for L in $LANGS; do
+            FILES=$(find all_pdfs/pdf-${L,,} -name "*.pdf" 2>/dev/null)
+            if [ -n "$FILES" ]; then
+              gh release create "$L" $FILES --title "🔵 DOCUMENTACIÓN ${TITLES[$L]}" --notes "Contenido traducido automáticamente."
+              sleep 2 # Pausa para asegurar orden en el timeline de GH
+            fi
+          done
 
-          # Crear release para Español
-          ESP_FILES=$(ls pdf/ESP_*.pdf 2>/dev/null | tr '\n' ' ')
-          if [ -n "$ESP_FILES" ]; then
-            echo "Archivos ESP: $ESP_FILES"
-            gh release create ESP $ESP_FILES \
-              --title "🔵 DOCUMENTACIÓN PDF 📕" \
-              --notes "![Documentación Español]($ESPImg)"
-          fi
+          # 2. Crear release de ESPAÑOL al final (Será el primero en verse)
+          ESP_FILES=$(find all_pdfs/pdf-es -name "*.pdf")
+          gh release create "ESP" $ESP_FILES --title "🔴 DOCUMENTACIÓN ${TITLES[ESP]}" --notes "Manuales originales en español."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
