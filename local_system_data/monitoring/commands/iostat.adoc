@@ -1,0 +1,45 @@
+=== iostat
+Informa sobre las estadísticas de carga de la CPU y de entrada/salida de dispositivos.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Herramienta (del paquete sysstat) diseñada para monitorizar el uso del almacenamiento y detectar cuellos de botella mediante el análisis del tiempo de actividad de los discos.",
+  "usage": "iostat [OPCIONES] [INTERVALO] [RECUENTO]",
+  "options": {
+    "-c": "Muestra solo el informe de utilización de la CPU",
+    "-d": "Muestra solo el informe de utilización de los dispositivos de disco",
+    "-h": "Formato amigable para humanos (unidades legibles)",
+    "-k": "Muestra estadísticas en kilobytes por segundo",
+    "-m": "Muestra estadísticas en megabytes por segundo",
+    "-x": "Muestra estadísticas extendidas (latencia, tiempos de espera, etc.)",
+    "-p": "Muestra estadísticas para dispositivos específicos y sus particiones"
+  }
+}
+
+[source,bash]
+----
+# Informe básico de CPU y discos
+iostat
+----
+
+extended:: `-x`. Proporciona métricas avanzadas cruciales para administradores, como `%util` (porcentaje de tiempo que el disco estuvo ocupado) y `await` (tiempo promedio de espera).
+
+[source,bash]
+----
+# Diagnosticar cuellos de botella con métricas extendidas
+iostat -x 1
+----
+
+device_filter:: `-p [DISCO]` o `-d`. Permite centrar la atención en una unidad de almacenamiento específica en lugar de listar todos los dispositivos del sistema.
+
+[source,bash]
+----
+# Ver solo el rendimiento del disco principal (sda)
+iostat -p sda 2
+----
+
+# Ver estadísticas en megabytes para facilitar la lectura de transferencia
+iostat -m
+----
+

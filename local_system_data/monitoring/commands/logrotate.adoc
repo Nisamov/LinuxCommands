@@ -1,0 +1,66 @@
+=== logrotate
+Administra la rotación, compresión y eliminación automática de archivos de log.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad diseñada para simplificar la administración de sistemas que generan una gran cantidad de archivos de registro, permitiendo su manejo automático según tamaño, edad o intervalos de tiempo.",
+  "usage": "logrotate [OPCIONES] <archivo_configuracion>",
+  "options": {
+    "-f": "Fuerza la rotación de los archivos incluso si no parece necesaria",
+    "-d": "Modo depuración (debug): no modifica los archivos, solo muestra qué haría",
+    "-s": "Especifica un archivo de estado (state file) personalizado",
+    "-v": "Modo verboso: muestra información detallada durante el proceso",
+    "-m": "Comando para enviar logs por correo (mail command)"
+  }
+}
+
+[source,bash]
+----
+# Ejecución estándar usando la configuración principal del sistema
+logrotate /etc/logrotate.conf
+----
+
+debug:: `-d` o `--debug`. Es la opción más segura para probar nuevas configuraciones. Lee los archivos y simula la rotación sin alterar los logs reales en el disco.
+
+[source,bash]
+----
+# Probar una configuración sin realizar cambios reales
+logrotate -d /etc/logrotate.d/apache2
+----
+
+force:: `-f` o `--force`. Ignora las reglas de tiempo o tamaño y obliga a realizar la rotación de inmediato. Útil tras recuperar espacio en disco o cambiar políticas.
+
+[source,bash]
+----
+# Forzar la rotación manual de todos los logs
+logrotate -f /etc/logrotate.conf
+----
+
+state:: `-s [ARCHIVO]`. Permite definir dónde se guarda el registro de cuándo se rotó cada archivo por última vez. Útil si ejecutas logrotate como un usuario sin permisos en `/var/lib/logrotate`.
+
+[source,bash]
+----
+# Usar un archivo de estado local
+logrotate -s ~/my_logrotate.state my_config.conf
+----
+
+verbose:: `-v` o `--verbose`. Proporciona una explicación paso a paso de por qué un archivo se rota o se ignora basándose en las directivas de configuración.
+
+[source,bash]
+----
+# Ver detalles técnicos del proceso de rotación
+logrotate -v /etc/logrotate.conf
+----
+
+# Ejemplo de una directiva típica en un archivo de configuración:
+# /var/log/syslog {
+#     daily
+#     rotate 7
+#     compress
+#     delaycompress
+#     missingok
+#     notifempty
+# }
+----
+

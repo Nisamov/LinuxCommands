@@ -1,0 +1,76 @@
+=== ldd
+Muestra las dependencias de bibliotecas compartidas de un ejecutable o biblioteca.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad que imprime las bibliotecas compartidas (LSOs) requeridas por cada programa o biblioteca compartida especificada en la línea de comandos.",
+  "usage": "ldd [OPCIONES] [ARCHIVO]",
+  "options": {
+    "verbose": "Muestra información detallada, incluyendo la versión de los símbolos",
+    "unused": "Imprime las bibliotecas que no se utilizan directamente",
+    "data-relocs": "Informa sobre las relocalizaciones de datos que faltan",
+    "function-relocs": "Informa sobre los objetos de datos y funciones que faltan",
+    "security": "Advertencia sobre la ejecución de binarios no confiables"
+  }
+}
+
+[source,bash]
+----
+# Mostrar las bibliotecas dinámicas estándar usadas por un binario
+ldd /bin/ls
+----
+
+verbose:: `-v` o `--verbose`. Despliega toda la información, incluyendo por ejemplo las versiones de los símbolos que requiere el binario de cada biblioteca.
+
+[source,bash]
+----
+# Mostrar dependencias con información de versiones detallada
+ldd -v /bin/ls
+----
+
+unused:: `-u` o `--unused`. Lista las bibliotecas que, aunque están vinculadas al binario, no son llamadas directamente por el código durante su ejecución.
+
+[source,bash]
+----
+# Identificar bibliotecas vinculadas innecesarias
+ldd -u /usr/bin/grep
+----
+
+data-relocs:: `-d` o `--data-relocs`. Realiza relocalizaciones y reporta cualquier objeto de datos que falte (útil para depuración de enlaces).
+
+[source,bash]
+----
+# Verificar integridad de relocalización de datos
+ldd -d /usr/bin/ssh
+----
+
+function-relocs:: `-r` o `--function-relocs`. Realiza relocalizaciones tanto para objetos de datos como para funciones, reportando cualquier objeto o función omitida.
+
+[source,bash]
+----
+# Comprobar todas las relocalizaciones (datos y funciones)
+ldd -r /usr/bin/curl
+----
+
+ayuda_version:: `--help` y `--version`. Opciones estándar para obtener soporte sobre el uso de la herramienta y la versión de la glibc instalada.
+
+[source,bash]
+----
+# Consultar versión y ayuda
+ldd --version
+ldd --help
+----
+
+security:: Advertencia de ejecución. `ldd` puede intentar ejecutar el binario en ciertas condiciones para obtener la información. Para archivos no confiables, es mejor usar el cargador dinámico directamente.
+
+[source,bash]
+----
+# Alternativa segura para binarios desconocidos
+LD_TRACE_LOADED_OBJECTS=1 ./binario_sospechoso
+----
+
+# Analizar una biblioteca compartida (.so) directamente
+ldd /lib/x86_64-linux-gnu/libc.so.6
+----
+

@@ -1,0 +1,67 @@
+=== glxinfo
+Muestra información sobre la implementación de OpenGL y la extensión GLX.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad que detalla las capacidades del servidor X y la tarjeta gráfica, incluyendo versiones de OpenGL, renderizado directo (aceleración hardware) y extensiones disponibles.",
+  "usage": "glxinfo [OPCIONES]",
+  "options": {
+    "-B": "Muestra un resumen corto (detalles de la GPU y versiones de OpenGL)",
+    "-L": "Muestra solo las extensiones de OpenGL y GLX",
+    "-V": "Muestra información detallada de los visuales de GLX",
+    "-s": "Muestra información sobre la pantalla (display) seleccionada",
+    "-i": "Fuerza el uso de una interfaz indirecta para el renderizado"
+  }
+}
+
+[source,bash]
+----
+# Obtener el volcado completo de capacidades gráficas
+glxinfo
+----
+
+summary:: `-B` o `--brief`. Es la opción más práctica para comprobar rápidamente si los drivers están bien instalados, mostrando el fabricante de la GPU y la versión de OpenGL soportada.
+
+[source,bash]
+----
+# Ver resumen del hardware gráfico y soporte de drivers
+glxinfo -B
+----
+
+direct_rendering:: Una de las líneas más importantes en la salida es "direct rendering". Si el valor es `Yes`, la aceleración por hardware está activa; si es `No`, el sistema está usando emulación por software (CPU).
+
+[source,bash]
+----
+# Comprobar específicamente si la aceleración hardware está activa
+glxinfo | grep "direct rendering"
+----
+
+extensions:: `-L`. Lista las extensiones específicas que soporta el driver. Es vital para desarrolladores que necesitan saber si funciones avanzadas de sombreado o texturizado están disponibles.
+
+[source,bash]
+----
+# Listar todas las extensiones de OpenGL soportadas
+glxinfo -L
+----
+
+vendor_info:: Permite identificar qué driver se está utilizando realmente (Mesa, NVIDIA, AMD).
+
+[source,bash]
+----
+# Identificar el fabricante y el renderizador de OpenGL
+glxinfo | grep -E "OpenGL vendor|OpenGL renderer"
+----
+
+visuals:: `-V`. Muestra una tabla con los "visuals" disponibles, detallando la profundidad de color, buffers de profundidad (Z-buffer) y antialiasing soportado para cada configuración.
+
+[source,bash]
+----
+# Ver detalles técnicos de los modos visuales de GLX
+glxinfo -V
+----
+
+# Filtrar para conocer la versión de sombreadores (Shading Language)
+glxinfo | grep "OpenGL core profile shading language version"
+----
+

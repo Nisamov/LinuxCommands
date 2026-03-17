@@ -1,0 +1,77 @@
+=== xrandr
+Configura pantallas, resoluciones, rotación y salidas de video en caliente.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad de línea de comandos para interactuar con la extensión RandR del servidor X. Permite configurar monitores externos, cambiar la resolución, rotar la imagen y gestionar múltiples pantallas sin reiniciar el servidor gráfico.",
+  "usage": "xrandr [OPCIONES]",
+  "options": {
+    "-q": "Muestra el estado actual del sistema (monitores conectados y modos)",
+    "--output": "Selecciona la salida de video a configurar (e.g., HDMI-1, eDP-1)",
+    "--mode": "Establece la resolución para la salida seleccionada",
+    "--rate": "Establece la frecuencia de refresco (Hz)",
+    "--rotate": "Rota la pantalla (normal, left, right, inverted)",
+    "--left-of / --right-of": "Posiciona un monitor respecto a otro",
+    "--primary": "Define el monitor principal del sistema",
+    "--off": "Apaga la salida de video seleccionada",
+    "--auto": "Configura la salida a su resolución preferida automáticamente"
+  }
+}
+
+[source,bash]
+----
+# Listar monitores conectados y resoluciones soportadas
+xrandr -q
+----
+
+resolution:: Para cambiar la resolución de un monitor específico, se combina `--output` con `--mode`. Es la forma más común de ajustar una pantalla externa.
+
+[source,bash]
+----
+# Cambiar la resolución del monitor HDMI a 1920x1080
+xrandr --output HDMI-1 --mode 1920x1080
+----
+
+multi_monitor:: `xrandr` permite crear un escritorio extendido posicionando las pantallas físicamente. Las opciones `--left-of`, `--right-of`, `--above` y `--below` son las más utilizadas.
+
+[source,bash]
+----
+# Configurar un monitor externo a la derecha del monitor de la laptop
+xrandr --output eDP-1 --primary --auto --output HDMI-1 --auto --right-of eDP-1
+----
+
+rotation:: Ideal para programadores o usuarios con monitores en vertical. Se puede rotar la salida hacia la izquierda (`left`) o derecha (`right`).
+
+[source,bash]
+----
+# Rotar el monitor secundario a modo vertical
+xrandr --output DP-1 --rotate left
+----
+
+dual_mirror:: Si necesitas proyectar la misma imagen en dos pantallas (modo espejo), simplemente configura ambas con el mismo modo sin especificar posiciones relativas.
+
+[source,bash]
+----
+# Duplicar la pantalla de la laptop en el proyector
+xrandr --output eDP-1 --mode 1024x768 --output VGA-1 --mode 1024x768
+----
+
+brightness:: Aunque es una emulación por software (no cambia el brillo real del panel), permite ajustar la intensidad de los colores mediante el parámetro `--brightness` (valores de 0 a 1).
+
+[source,bash]
+----
+# Reducir el "brillo" visual al 70% en una pantalla específica
+xrandr --output HDMI-1 --brightness 0.7
+----
+
+# Apagar un monitor que no se está usando
+xrandr --output HDMI-2 --off
+----
+
+# Añadir una resolución personalizada (paso 1 de 2: crear el modo)
+# (Se suele obtener la cadena con el comando 'cvt')
+xrandr --newmode "1920x1080_60.00"  173.00  1920 2048 2248 2576  1080 1083 1088 1120 -hsync +vsync
+xrandr --addmode HDMI-1 1920x1080_60.00
+----
+

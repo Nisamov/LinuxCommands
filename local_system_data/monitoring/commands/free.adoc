@@ -1,0 +1,54 @@
+=== free
+Muestra la cantidad de memoria libre y usada en el sistema.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad que resume el estado de la memoria RAM física y la memoria de intercambio (swap), detallando el uso de buffers y caché por parte del kernel.",
+  "usage": "free [OPCIONES]",
+  "options": {
+    "-b": "Muestra la salida en bytes",
+    "-k": "Muestra la salida en kilobytes (por defecto)",
+    "-m": "Muestra la salida en megabytes",
+    "-g": "Muestra la salida en gigabytes",
+    "-h": "Formato legible por humanos (ajusta unidades automáticamente)",
+    "-t": "Muestra una línea de total (RAM + Swap)",
+    "-s": "Actualiza la salida cada N segundos de forma continua",
+    "-c": "Termina después de mostrar la salida N veces"
+  }
+}
+
+[source,bash]
+----
+# Ver el estado de la memoria en formato legible (MB/GB)
+free -h
+----
+
+human_readable:: `-h` o `--human`. Es la opción más utilizada, ya que selecciona automáticamente la unidad (M, G, T) más adecuada para facilitar la lectura.
+
+[source,bash]
+----
+# Ejemplo de salida clara para el usuario
+free -h
+----
+
+total_line:: `-t` o `--total`. Añade una fila al final que suma los valores de la memoria física y la de intercambio.
+
+[source,bash]
+----
+# Ver el total de recursos de memoria combinados
+free -ht
+----
+
+continuous:: `-s [SEGUNDOS]`. Convierte a `free` en un monitor en tiempo real que refresca la pantalla según el intervalo definido.
+
+[source,bash]
+----
+# Monitorizar la memoria cada 5 segundos
+free -h -s 5
+----
+
+# Mostrar estadísticas de memoria detallando la caché y buffers
+free -w
+----
+

@@ -1,0 +1,58 @@
+=== xdpyinfo
+Utilidad de información para el servidor X.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Muestra información detallada sobre un servidor X, incluyendo capacidades de la pantalla, extensiones disponibles, resoluciones soportadas y parámetros visuales.",
+  "usage": "xdpyinfo [OPCIONES]",
+  "options": {
+    "-display": "Especifica el servidor X que se desea consultar (ej. :0)",
+    "-queryExtensions": "Muestra información detallada sobre las extensiones del servidor",
+    "-ext": "Muestra información sobre una extensión específica",
+    "-version": "Muestra la versión de la utilidad"
+  }
+}
+
+[source,bash]
+----
+# Mostrar toda la información del servidor X actual
+xdpyinfo
+----
+
+screen_resolution:: Una de las utilidades más comunes es verificar la resolución actual y la densidad de píxeles (DPI). Esto es vital para configurar correctamente el escalado de fuentes.
+
+[source,bash]
+----
+# Filtrar para ver la resolución y las dimensiones físicas
+xdpyinfo | grep -A 2 "dimensions"
+----
+
+extensions:: Permite listar todas las extensiones que el servidor X tiene cargadas (como RANDR, GLX, RENDER o XInput), lo cual es crucial para la compatibilidad de aplicaciones gráficas.
+
+[source,bash]
+----
+# Ver cuántas y qué extensiones están presentes
+xdpyinfo | grep "number of extensions" -A 20
+----
+
+visuals:: Detalla los tipos de "visuals" (modos de color) que soporta el servidor, como TrueColor o DirectColor, y la profundidad de bits (ej. 24 bits).
+
+[source,bash]
+----
+# Consultar la profundidad de color predeterminada
+xdpyinfo | grep "depth of root window"
+----
+
+multi_display:: En entornos con varios monitores o servidores remotos, puedes especificar cuál consultar sin necesidad de estar físicamente en esa sesión.
+
+[source,bash]
+----
+# Consultar la información del servidor X en la pantalla :1
+xdpyinfo -display :1
+----
+
+# Obtener información sobre una extensión específica (ej. NV-CONTROL)
+xdpyinfo -ext NV-CONTROL
+----
+

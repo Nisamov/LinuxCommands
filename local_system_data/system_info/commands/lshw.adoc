@@ -1,0 +1,69 @@
+=== lshw
+Genera un informe detallado de la configuración de hardware del sistema.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad que extrae información detallada de la configuración de hardware de la máquina a partir de diversos archivos /proc, el árbol DMI y otros orígenes.",
+  "usage": "sudo lshw [OPCIONES]",
+  "options": {
+    "-short": "Muestra un índice compacto del hardware (árbol de dispositivos)",
+    "-html": "Genera el informe de hardware en formato HTML",
+    "-xml": "Exporta la configuración en formato XML para análisis automatizado",
+    "-json": "Genera la salida en formato JSON",
+    "-class": "Filtra el hardware por clase específica (bus, cpu, memory, display, network, storage)",
+    "-C": "Alias abreviado para la opción -class",
+    "-sanitize": "Elimina información sensible como números de serie o direcciones IP"
+  }
+}
+
+[source,bash]
+----
+# Ejecución estándar (requiere privilegios para ver todos los detalles)
+sudo lshw
+----
+
+short:: `-short`. Genera un listado resumido que muestra la ruta del hardware, la clase, la descripción y el estado del dispositivo de forma tabular.
+
+[source,bash]
+----
+# Ver un resumen rápido de todos los componentes
+sudo lshw -short
+----
+
+class:: `-class [CATEGORÍA]` o `-C [CATEGORÍA]`. Permite aislar componentes específicos para no saturar la terminal con información innecesaria.
+
+[source,bash]
+----
+# Mostrar solo la información de los adaptadores de red
+sudo lshw -C network
+----
+
+html_xml_json:: `-html`, `-xml`, `-json`. Formatea la salida para ser visualizada en navegadores o procesada por software externo. Muy útil para auditorías de servidores.
+
+[source,bash]
+----
+# Exportar el inventario de hardware a un archivo HTML
+sudo lshw -html > hardware_report.html
+----
+
+sanitize:: `-sanitize`. Útil cuando se necesita compartir el volcado de hardware en foros o con soporte técnico sin revelar identificadores únicos del equipo.
+
+[source,bash]
+----
+# Generar informe seguro sin números de serie
+sudo lshw -sanitize -short
+----
+
+businfo:: `-businfo`. Muestra información detallada sobre los buses (PCI, USB, SCSI, etc.) y cómo están conectados los dispositivos físicamente.
+
+[source,bash]
+----
+# Ver direcciones de bus de los dispositivos
+sudo lshw -businfo
+----
+
+# Identificar el firmware y versión de la BIOS/UEFI
+sudo lshw -C system
+----
+

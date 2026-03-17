@@ -1,0 +1,51 @@
+=== time
+Determina cuánto tiempo tarda en ejecutarse un comando y resume el uso de recursos.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad que ejecuta un programa especificado y, al finalizar, informa sobre el tiempo real transcurrido, el tiempo de CPU del usuario y el tiempo de CPU del sistema.",
+  "usage": "time [OPCIONES] COMANDO [ARGUMENTOS]",
+  "options": {
+    "-p": "Muestra la salida en el formato de portabilidad POSIX estándar",
+    "-v": "Muestra un informe detallado (verbose) de todos los recursos del sistema",
+    "-o": "Escribe el resultado del tiempo en un archivo en lugar de stderr",
+    "-a": "Añade la salida al archivo especificado (junto con -o) en lugar de sobrescribir"
+  }
+}
+
+[source,bash]
+----
+# Medir el tiempo que tarda en listar un directorio grande
+time ls -R /usr
+----
+
+posix_format:: `-p`. Genera una salida simplificada y estandarizada que muestra `real`, `user` y `sys` en líneas separadas. Es la opción ideal para scripts que necesitan procesar estos valores.
+
+[source,bash]
+----
+# Obtener tiempos en formato compatible POSIX
+time -p sleep 2
+----
+
+verbose:: `-v` o `--verbose`. Proporciona una gran cantidad de datos adicionales, como el uso máximo de memoria (RSS), cambios de contexto, interrupciones y fallos de página.
+
+[source,bash]
+----
+# Obtener un informe exhaustivo de recursos consumidos por un proceso
+/usr/bin/time -v compilacion_compleja.sh
+----
+
+output_file:: `-o [ARCHIVO]`. Permite desviar las estadísticas de tiempo a un archivo de texto, evitando que se mezclen con la salida real del comando ejecutado.
+
+[source,bash]
+----
+# Guardar las estadísticas de tiempo en un log
+time -o rendimiento.log grep -r "patron" /var/log
+----
+
+# Diferencia importante:
+# 'time' (incorporado en el shell como bash) suele ser más simple.
+# '/usr/bin/time' (binario independiente) suele ofrecer la opción -v (verbose).
+----
+

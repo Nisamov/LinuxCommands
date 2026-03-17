@@ -1,0 +1,74 @@
+=== vmstat
+Informa sobre estadísticas de procesos, memoria, paginación, E/S de bloques, trampas y actividad de la CPU.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Herramienta que resume la utilización de los recursos del sistema. El primer informe muestra promedios desde el último arranque; los siguientes informes son sobre el intervalo especificado.",
+  "usage": "vmstat [OPCIONES] [INTERVALO] [RECUENTO]",
+  "options": {
+    "-a": "Muestra memoria activa e inactiva (en lugar de buffer y caché)",
+    "-f": "Muestra el número de bifurcaciones (forks) desde el arranque",
+    "-m": "Muestra la utilización de la memoria slab (caché del kernel)",
+    "-s": "Muestra una tabla con varios contadores de eventos y estadísticas",
+    "-d": "Muestra estadísticas detalladas de lectura/escritura de discos",
+    "-p": "Muestra estadísticas detalladas de una partición específica",
+    "-S": "Define la unidad de medida (k, K, m, M) para la salida",
+    "-w": "Salida ancha (wide) para mejorar la legibilidad en pantallas grandes"
+  }
+}
+
+[source,bash]
+----
+# Ejecución básica (un solo informe con promedios históricos)
+vmstat
+----
+
+active_inactive:: `-a` o `--active`. Reemplaza las columnas de `buff` y `cache` por `inact` y `active`, permitiendo ver cuánta memoria está realmente en uso frente a la que podría liberarse.
+
+[source,bash]
+----
+# Ver memoria activa vs. inactiva
+vmstat -a
+----
+
+stats_table:: `-s` o `--stats`. En lugar de una línea de columnas, muestra un listado vertical exhaustivo de contadores, incluyendo cambios de contexto, interrupciones y tiempo de CPU.
+
+[source,bash]
+----
+# Ver el resumen de contadores del sistema
+vmstat -s
+----
+
+disk_stats:: `-d` o `--disk`. Proporciona un desglose de operaciones de lectura/escritura, sectores leídos y tiempo dedicado a E/S por cada dispositivo de disco.
+
+[source,bash]
+----
+# Consultar el rendimiento de los discos
+vmstat -d
+----
+
+partition_stats:: `-p [DISPOSITIVO]`. Similar a la opción de disco, pero enfocada en una partición específica para analizar el tráfico en un punto de montaje concreto.
+
+[source,bash]
+----
+# Ver estadísticas de la partición principal
+vmstat -p /dev/sda1
+----
+
+wide_mode:: `-w` o `--wide`. Ajusta el ancho de las columnas para evitar que los valores grandes se amontonen, facilitando la lectura en sistemas con mucha RAM o alta carga.
+
+[source,bash]
+----
+# Monitorización en tiempo real con formato ancho
+vmstat -w 2 5
+----
+
+# Monitorizar cada 1 segundo, 10 veces, mostrando unidades en Megabytes
+vmstat -S M 1 10
+----
+
+# Ver estadísticas de la caché de objetos del kernel (slab)
+sudo vmstat -m
+----
+

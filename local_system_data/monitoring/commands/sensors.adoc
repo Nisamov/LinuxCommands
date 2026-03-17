@@ -1,0 +1,55 @@
+=== sensors
+Muestra las lecturas actuales de los sensores de hardware (temperatura, voltaje, ventiladores).
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad que informa sobre el estado de salud del hardware mediante la lectura de sensores en la placa base, CPU y otros chips compatibles.",
+  "usage": "sensors [OPCIONES]",
+  "options": {
+    "-c": "Especifica un archivo de configuración personalizado",
+    "-f": "Muestra las temperaturas en grados Fahrenheit",
+    "-u": "Muestra los datos en formato 'raw' (sin procesar/unidades brutas)",
+    "-j": "Genera la salida en formato JSON",
+    "-v": "Muestra la versión de la utilidad"
+  }
+}
+
+[source,bash]
+----
+# Ver el estado actual de todos los sensores detectados
+sensors
+----
+
+fahrenheit:: `-f`. Cambia la escala de temperatura predeterminada (Celsius) a Fahrenheit para usuarios que prefieran este sistema de medida.
+
+[source,bash]
+----
+# Consultar temperaturas en grados Fahrenheit
+sensors -f
+----
+
+json_output:: `-j`. Ideal para scripts de monitoreo modernos o para enviar datos a dashboards, devolviendo una estructura de datos estandarizada.
+
+[source,bash]
+----
+# Exportar datos de sensores a formato JSON
+sensors -j
+----
+
+raw_data:: `-u`. Útil para programadores que necesitan los valores exactos registrados por el bus I2C sin el redondeo o las etiquetas de formato habituales.
+
+[source,bash]
+----
+# Ver valores brutos de los sensores
+sensors -u
+----
+
+# Detectar y configurar sensores (ejecutar una sola vez tras instalar)
+sudo sensors-detect
+----
+
+# Monitorizar continuamente la temperatura cada segundo
+watch -n 1 sensors
+----
+

@@ -1,0 +1,81 @@
+=== ExifTool
+Lectura y manipulación de metadatos en archivos multimedia.
+
+:category: local_security
+[.metadata]
+{
+  "description": "Herramienta de análisis forense para extraer metadatos de imágenes, vídeos y documentos.",
+  "usage": "exiftool [OPCIONES] ARCHIVO",
+  "options": {
+    "-all": "Mostrar todos los metadatos disponibles",
+    "-gps": "Filtrar únicamente información de geolocalización",
+    "-T": "Formato de salida en tabla (tabulado)",
+    "-json": "Exportar resultados en formato JSON",
+    "-delete_all": "Eliminar todos los metadatos de un archivo",
+    "-common": "Mostrar solo las etiquetas más comunes",
+    "-overwrite_original": "Realizar cambios sin crear copia de seguridad"
+  }
+}
+
+[source,bash]
+----
+# Leer todos los metadatos de una imagen
+exiftool imagen.jpg
+----
+
+-all:: `exiftool -a -u -g1` Mostrar absolutamente todos los metadatos (incluyendo duplicados y no reconocidos) organizados por grupos.
+
+[source,bash]
+----
+# Análisis exhaustivo organizado por grupos
+exiftool -a -u -g1 evidencia.jpg
+----
+
+-gps:: `exiftool -gps*` Extraer información específica de geolocalización.
+
+[source,bash]
+----
+# Obtener coordenadas GPS y visualizarlas en formato decimal
+exiftool -gpslatitude -gpslongitude -c "%.6f" foto.png
+----
+
+-json:: `exiftool -json` Exportar los metadatos a un archivo JSON para procesamiento posterior.
+
+[source,bash]
+----
+# Generar reporte JSON de un directorio completo
+exiftool -json ./evidencias/ > reporte_forense.json
+----
+
+-delete_all:: `exiftool -all=` Eliminar todos los metadatos (limpieza de archivos).
+
+[source,bash]
+----
+# Eliminar metadatos para anonimizar un documento antes de compartirlo
+exiftool -all= documento_confidencial.pdf
+----
+
+-T:: `exiftool -T` Salida compacta en forma de tabla.
+
+[source,bash]
+----
+# Listar nombre de archivo y modelo de cámara de todas las fotos
+exiftool -T -filename -model ./fotos/
+----
+
+-time:: `exiftool -time:all` Extraer todas las marcas de tiempo relacionadas con el archivo.
+
+[source,bash]
+----
+# Comparar fechas de creación, modificación y captura
+exiftool -time:all -s archivo.mp4
+----
+
+-thumbnail:: `exiftool -ThumbnailImage -b` Extraer la miniatura incrustada en el archivo.
+
+[source,bash]
+----
+# Recuperar la miniatura original (útil si la imagen principal fue editada)
+exiftool -ThumbnailImage -b imagen_editada.jpg > miniatura_recuperada.jpg
+----
+

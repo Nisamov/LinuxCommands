@@ -1,0 +1,66 @@
+=== dmesg
+Examina o controla el buffer de mensajes del anillo del kernel.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Permite leer los mensajes emitidos por el kernel durante el arranque y el funcionamiento del sistema, especialmente útiles para depurar fallos de drivers y hardware.",
+  "usage": "dmesg [OPCIONES]",
+  "options": {
+    "-C": "Limpia el buffer de mensajes del kernel",
+    "-c": "Lee y luego limpia el buffer de mensajes",
+    "-H": "Habilita la salida amigable (colores y paginación)",
+    "-L": "Colorea los mensajes de salida",
+    "-T": "Muestra marcas de tiempo legibles (human-readable)",
+    "-w": "Espera por nuevos mensajes (modo seguimiento en tiempo real)",
+    "-n": "Establece el nivel de log para enviar mensajes a la consola",
+    "-l": "Filtra la salida por nivel de log (info, warn, err, crit, etc.)"
+  }
+}
+
+[source,bash]
+----
+# Leer todos los mensajes del kernel (salida estándar)
+dmesg
+----
+
+human_readable:: `-T` o `--ctime`. Por defecto, dmesg usa segundos desde el arranque. Esta opción convierte esos valores en fechas y horas reales.
+
+[source,bash]
+----
+# Ver mensajes con fecha y hora exacta
+dmesg -T
+----
+
+follow:: `-w` o `--follow`. Mantiene el comando abierto y muestra los mensajes nuevos a medida que ocurren (muy útil al conectar hardware USB).
+
+[source,bash]
+----
+# Monitorizar mensajes del kernel en tiempo real
+dmesg -w
+----
+
+level_filter:: `-l [NIVEL]`. Filtra la salida para mostrar solo errores, advertencias o información específica, evitando el ruido de otros mensajes.
+
+[source,bash]
+----
+# Mostrar solo errores y mensajes críticos
+dmesg -l err,crit
+----
+
+color_output:: `-H` o `--human`. Aplica colores para diferenciar los distintos niveles de log y utiliza un paginador (como `less`) automáticamente.
+
+[source,bash]
+----
+# Inspección visual cómoda del historial de mensajes
+dmesg -H
+----
+
+# Buscar específicamente errores relacionados con el bus USB
+dmesg | grep -i usb
+----
+
+# Limpiar el buffer de mensajes (requiere privilegios)
+sudo dmesg -C
+----
+

@@ -1,0 +1,48 @@
+=== yes
+Imprime repetidamente una cadena hasta que se detiene el proceso.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad que genera una salida continua de una cadena de texto (por defecto 'y'). Se utiliza principalmente para automatizar comandos interactivos que requieren confirmación.",
+  "usage": "yes [CADENA]",
+  "options": {
+    "--help": "Muestra la ayuda de uso del comando",
+    "--version": "Muestra la información de la versión"
+  }
+}
+
+[source,bash]
+----
+# Generar una secuencia infinita de 'y'
+yes
+----
+
+automation:: Su uso principal es mediante tuberías (`|`) para responder afirmativamente a todas las preguntas de un script o instalador que no tenga una bandera de "fuerza" (como `-y`).
+
+[source,bash]
+----
+# Aceptar automáticamente todas las preguntas de un comando interactivo
+yes | comando_que_pide_confirmacion
+----
+
+custom_string:: Si se le pasa un argumento, `yes` repetirá esa cadena en lugar de la letra 'y'. Esto es útil para automatizar respuestas negativas o comandos específicos.
+
+[source,bash]
+----
+# Responder 'no' a todas las confirmaciones
+yes no | rm -i *.txt
+----
+
+stress_test:: Debido a que genera una gran cantidad de salida de texto muy rápido, a veces se usa (con precaución) para generar carga de CPU en un núcleo o para probar la velocidad de tuberías.
+
+[source,bash]
+----
+# Generar carga de CPU redirigiendo la salida al vacío
+yes > /dev/null
+----
+
+# Crear un archivo gigante rápidamente con la palabra 'data' (CUIDADO con el espacio en disco)
+yes "datos de prueba" | head -n 1000000 > archivo_grande.txt
+----
+

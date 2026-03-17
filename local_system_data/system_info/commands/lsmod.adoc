@@ -1,0 +1,55 @@
+=== lsmod
+Muestra el estado de los módulos en el Kernel de Linux.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Programa que lee el contenido del archivo /proc/modules para mostrar qué módulos del kernel están cargados actualmente, su tamaño y qué otros módulos los están utilizando.",
+  "usage": "lsmod",
+  "options": {
+    "salida": "Muestra columnas: Module (nombre), Size (memoria), Used by (referencias)",
+    "proceso": "No acepta opciones de filtrado propias; se suele combinar con grep",
+    "equivalencia": "Es funcionalmente equivalente a realizar un 'cat /proc/modules'"
+  }
+}
+
+[source,bash]
+----
+# Listar todos los módulos cargados en el kernel
+lsmod
+----
+
+salida:: La tabla resultante muestra tres campos clave: 
+1. **Module**: El nombre del módulo.
+2. **Size**: Memoria utilizada en bytes.
+3. **Used by**: Número de instancias en uso y una lista de otros módulos que dependen de él.
+
+[source,bash]
+----
+# Ejemplo de salida (fragmento)
+# Module                  Size  Used by
+# kvm_intel             315392  0
+# kvm                   847872  1 kvm_intel
+# snd_hda_intel          53248  3
+----
+
+filtrado:: Dado que `lsmod` no tiene opciones internas para buscar módulos específicos, se utiliza el pipe (`|`) con `grep` para localizar controladores de hardware o servicios.
+
+[source,bash]
+----
+# Comprobar si el módulo de video (nvidia/amdgpu) está cargado
+lsmod | grep video
+----
+
+dependencias:: La columna "Used by" es crucial. Si un módulo está siendo usado por otro, no podrá ser descargado con `rmmod` hasta que sus dependientes sean removidos primero.
+
+[source,bash]
+----
+# Ver qué módulos dependen del stack de sonido
+lsmod | grep snd
+----
+
+# Comparar la salida con el archivo directo del sistema
+cat /proc/modules
+----
+

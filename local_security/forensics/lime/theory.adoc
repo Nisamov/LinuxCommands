@@ -1,0 +1,69 @@
+=== Fundamentos Conceptuales
+
+LiME (Linux Memory Extractor) es un Loadable Kernel Module (LKM) de alta fidelidad diseñado para la adquisición volátil de memoria RAM en sistemas Linux y dispositivos basados en Android. 
+Su propósito fundamental es proporcionar un método de extracción que minimice la alteración del estado del sistema (footprint), garantizando la integridad de los artefactos digitales para su posterior análisis forense.
+
+==== Naturaleza Operativa
+
+A diferencia de las herramientas que operan en el espacio de usuario (user-space), LiME reside en el espacio del kernel (kernel-space). Esta ubicación técnica le permite eludir las protecciones de memoria y las posibles manipulaciones realizadas por rootkits o malware que intenten ocultar su presencia a las APIs estándar del sistema.
+
+==== Principios de Diseño Forense
+
+1. Minimización de Alteración: Al operar como LKM, reduce la cantidad de páginas de memoria del sistema que deben ser modificadas para realizar la extracción.
+2. Fidelidad Atómica: Busca capturar un "instante" de la memoria con la mayor coherencia posible.
+3. Simplicidad de Despliegue: Diseñado para ser cargado, ejecutar la tarea y ser descargado sin necesidad de reiniciar el host.
+
+=== Modelo de Adquisición
+
+LiME implementa un mecanismo de copia directa de las regiones de memoria física hacia un destino definido:
+
+==== Métodos de Exfiltración
+
+* Persistencia Local: Escritura directa en el sistema de archivos (ej. disco externo montado).
+* Transmisión por Red: Envío de datos a través de sockets TCP, ideal para evitar escribir en los discos del host investigado y prevenir la sobreescritura de evidencia borrada.
+
+=== Teoría de Formatos de Volcado
+
+LiME ofrece tres paradigmas de estructuración de los datos extraídos:
+
+==== Taxonomía de Formatos
+
+1. Raw (Crudo): Concatenación lineal de todos los segmentos de memoria RAM. No incluye metadatos de las regiones, lo que puede dificultar el análisis si existen "huecos" en el direccionamiento físico.
+2. Padded (Rellenado): Similar al formato Raw, pero rellena los espacios no direccionables con ceros. Esto mantiene la correlación exacta entre el desplazamiento del archivo y la dirección física de la RAM.
+3. LiME (Propietario): El formato recomendado. Incluye una cabecera (header) para cada rango de memoria extraído, facilitando a herramientas como Volatility la reconstrucción del mapa de memoria sin ambigüedades.
+
+=== Modelo de Implementación Técnica
+
+==== Ciclo de Vida del Módulo
+
+El flujo operativo de LiME sigue una secuencia lineal obligatoria:
+
+1. Compilación Contextual: Debido a la naturaleza de los LKMs, LiME debe compilarse contra las cabeceras específicas del kernel (linux-headers) del sistema objetivo para asegurar la compatibilidad binaria.
+2. Inyección (insmod): Carga del módulo en el kernel pasando parámetros de configuración (ruta y formato).
+3. Ejecución de Adquisición: El proceso de volcado comienza inmediatamente tras la carga exitosa.
+4. Extracción (rmmod): Descarga del módulo para devolver el sistema a su estado operativo original.
+
+=== Teoría de Integración en el Stack Forense
+
+==== Interoperabilidad con Analizadores
+
+El volcado generado por LiME no es el fin, sino el insumo para el análisis de artefactos:
+
+* Identificación de Procesos: Recuperación de estructuras task_struct para listar procesos ocultos.
+* Extracción de Secretos: Localización de claves criptográficas, contraseñas en texto plano y tokens de sesión.
+* Análisis de Conexiones: Recuperación de estructuras de red para identificar conexiones C2 (Command and Control).
+
+=== Limitaciones Teóricas y Desafíos
+
+==== Compromisos del Análisis en Vivo
+
+* Memory Smearing (Difuminado): Dado que el sistema sigue operativo durante el volcado, algunas páginas de memoria pueden cambiar antes de ser copiadas, resultando en inconsistencias menores.
+* Dependencia del Kernel: La necesidad de compilación previa requiere que el investigador tenga acceso a las herramientas de desarrollo o posea un módulo pre-compilado para la versión exacta del kernel.
+
+=== Principios de Seguridad y Ética Forense
+
+==== Postulados de Integridad
+
+1. Preservación de la Evidencia: El uso de transmisiones por red (TCP) es preferido para mantener la integridad de los sistemas de archivos locales.
+2. Cadena de Custodia: El volcado debe ser procesado inmediatamente con funciones hash (SHA-256) para asegurar que la evidencia no sea alterada post-adquisición.
+

@@ -1,0 +1,50 @@
+=== dmidecode
+Extrae información del hardware directamente desde la tabla DMI (SMBIOS).
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Herramienta que vuelca el contenido de la tabla Desktop Management Interface (DMI) en un formato legible, permitiendo conocer detalles del hardware sin abrir el equipo.",
+  "usage": "dmidecode [OPCIONES]",
+  "options": {
+    "type": "Permite filtrar por tipo de componente (BIOS, procesador, memoria, etc.)",
+    "string": "Extrae un valor específico de una palabra clave del sistema",
+    "privilegios": "Requiere acceso a /dev/mem, por lo que suele ejecutarse con sudo"
+  }
+}
+
+[source,bash]
+----
+# Listar toda la información de hardware (salida extensa)
+sudo dmidecode
+----
+
+type:: `-t [TIPO]` Filtra la salida por categorías numéricas o palabras clave (ej. BIOS, system, baseboard, chassis, processor, memory, slot).
+
+[source,bash]
+----
+# Obtener información específica sobre la memoria RAM
+sudo dmidecode -t memory
+----
+
+string:: `-s [KEYWORD]` Devuelve únicamente el valor de una cadena específica, ideal para automatización y scripts.
+
+[source,bash]
+----
+# Obtener el número de serie del equipo
+sudo dmidecode -s system-serial-number
+----
+
+privilegios:: `sudo` es obligatorio. Dado que el comando lee estructuras de datos del kernel que representan el hardware físico, un usuario normal no tiene permisos de lectura.
+
+[source,bash]
+----
+# Error típico por falta de permisos
+dmidecode
+# > /dev/mem: Permission denied
+----
+
+# Identificar el modelo de la placa base (Motherboard)
+sudo dmidecode -t baseboard
+----
+

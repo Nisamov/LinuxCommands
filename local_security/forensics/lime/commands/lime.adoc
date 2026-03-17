@@ -1,0 +1,76 @@
+=== LiME
+Adquisición de memoria volátil (RAM) mediante módulos del kernel.
+
+:category: local_security
+[.metadata]
+{
+  "description": "Loadable Kernel Module (LKM) para la extracción forense de memoria física en sistemas Linux.",
+  "usage": "sudo insmod lime.ko \"path=<destino> format=<formato> [timeout=<ms>]\"",
+  "options": {
+    "path": "Ruta del archivo de salida o dirección de red (tcp:<puerto>)",
+    "format": "Formato del volcado: lime, padded o raw",
+    "timeout": "Tiempo máximo de espera para la adquisición de regiones de memoria",
+    "dio": "Habilitar/deshabilitar Direct I/O (1 o 0)",
+    "localhost": "Restringir la escucha de red a la interfaz local (1 o 0)"
+  }
+}
+
+[source,bash]
+----
+# Compilar el módulo para el kernel actual
+git clone https://github.com/504ensicsLabs/LiME.git
+cd LiME/src
+make
+----
+
+path:: `path=` Definir el destino del volcado de memoria
+
+[source,bash]
+----
+# Realizar el volcado en un archivo local
+sudo insmod lime.ko "path=/mnt/usb_forense/ram_dump.lime format=lime"
+----
+
+format:: `format=` Especificar la estructura del archivo resultante
+
+[source,bash]
+----
+# Volcado en formato padded (rellenado con ceros en zonas no direccionables)
+sudo insmod lime.ko "path=memoria_padded.bin format=padded"
+----
+
+tcp:: `path=tcp:<puerto>` Exfiltrar memoria a través de la red
+
+[source,bash]
+----
+# En el host objetivo (escuchando en el puerto 4444)
+sudo insmod lime.ko "path=tcp:4444 format=lime"
+
+# En la máquina del investigador (recibiendo los datos)
+nc <IP_OBJETIVO> 4444 > memoria_red.lime
+----
+
+rmmod:: `sudo rmmod lime` Descargar el módulo tras la adquisición
+
+[source,bash]
+----
+# Finalizar la operación y liberar el módulo del kernel
+sudo rmmod lime
+----
+
+timeout:: `timeout=` Controlar el tiempo de espera para regiones lentas
+
+[source,bash]
+----
+# Ignorar timeouts para forzar la lectura de regiones de memoria difíciles
+sudo insmod lime.ko "path=dump.lime format=lime timeout=0"
+----
+
+dio:: `dio=` Configurar el uso de Direct I/O
+
+[source,bash]
+----
+# Deshabilitar Direct I/O si hay problemas de compatibilidad con el sistema de archivos
+sudo insmod lime.ko "path=dump.lime format=lime dio=0"
+----
+

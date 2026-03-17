@@ -1,0 +1,67 @@
+=== dstat
+Herramienta versátil para estadísticas de recursos del sistema en tiempo real.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad que combina las capacidades de vmstat, iostat, netstat e ifstat en una sola vista, permitiendo monitorizar CPU, discos, red y memoria de forma simultánea.",
+  "usage": "dstat [OPCIONES] [INTERVALO] [RECUENTO]",
+  "options": {
+    "-c": "Muestra estadísticas de la CPU (usuario, sistema, espera, inactivo)",
+    "-d": "Muestra estadísticas de disco (lectura, escritura)",
+    "-n": "Muestra estadísticas de red (recibido, enviado)",
+    "-m": "Muestra estadísticas de memoria (usada, libre, buffer, caché)",
+    "-g": "Muestra estadísticas de paginación (page in, page out)",
+    "-y": "Muestra estadísticas del sistema (interrupciones, cambios de contexto)",
+    "--top-cpu": "Muestra el proceso que más CPU consume actualmente",
+    "--top-mem": "Muestra el proceso que más memoria consume actualmente",
+    "--output": "Escribe los resultados en un archivo CSV para análisis posterior"
+  }
+}
+
+[source,bash]
+----
+# Ejecución básica (muestra CPU, disco, red, paginación y sistema)
+dstat
+----
+
+procesos_top:: `--top-cpu`, `--top-mem`, `--top-io`. Estas opciones añaden columnas dinámicas que identifican al "culpable" del consumo de recursos en cada intervalo.
+
+[source,bash]
+----
+# Ver estadísticas generales junto con el proceso que más CPU consume
+dstat -c --top-cpu
+----
+
+csv_export:: `--output [ARCHIVO.csv]`. Permite registrar las métricas en un formato legible por hojas de cálculo, ideal para diagnósticos prolongados o informes de rendimiento.
+
+[source,bash]
+----
+# Guardar métricas de red y memoria en un archivo CSV cada 5 segundos
+dstat -nm --output reporte_recursos.csv 5
+----
+
+combinaciones:: `dstat` permite agrupar múltiples banderas para crear un panel de control personalizado en la terminal según la necesidad del administrador.
+
+[source,bash]
+----
+# Monitorizar CPU, procesos en espera y latencia de disco detallada
+dstat -cy d --disk-util
+----
+
+plugins:: `--list`. `dstat` es extensible y soporta plugins para monitorizar servicios específicos como MySQL, Redis, o la temperatura del sistema.
+
+[source,bash]
+----
+# Ver todos los plugins disponibles en el sistema
+dstat --list
+----
+
+# Monitorizar el sistema con un intervalo de 2 segundos y terminar tras 10 muestras
+dstat 2 10
+----
+
+# Ver estadísticas de red por interfaz específica
+dstat -N eth0,wlan0
+----
+

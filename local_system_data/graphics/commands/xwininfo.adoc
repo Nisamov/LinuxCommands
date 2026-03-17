@@ -1,0 +1,61 @@
+=== xwininfo
+Utilidad de información de ventanas para X.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Herramienta interactiva que permite obtener detalles sobre las propiedades de una ventana específica, como su ID, geometría, profundidad de color y atributos del gestor de ventanas.",
+  "usage": "xwininfo [OPCIONES]",
+  "options": {
+    "-id": "Especifica el ID de la ventana directamente en lugar de seleccionarla con el ratón",
+    "-name": "Busca la ventana por su título (Property WM_NAME)",
+    "-root": "Obtiene información sobre la ventana raíz (el escritorio completo)",
+    "-children": "Muestra la jerarquía de ventanas hijas",
+    "-all": "Muestra toda la información técnica disponible de la ventana",
+    "-stats": "Muestra estadísticas de geometría (opción por defecto)"
+  }
+}
+
+[source,bash]
+----
+# Al ejecutarlo solo, el cursor cambiará a una cruz (+)
+# Haz clic en cualquier ventana para ver su información
+xwininfo
+----
+
+geometry:: Proporciona el ancho, alto y la posición (coordenadas X e Y) relativa a la pantalla. Es extremadamente útil para configurar scripts de automatización o archivos de configuración de gestores de ventanas (WM).
+
+[source,bash]
+----
+# Obtener coordenadas y tamaño de una ventana específica
+xwininfo | grep -e "Width" -e "Height" -e "Absolute"
+----
+
+window_id:: Cada ventana en el servidor X tiene un identificador hexadecimal único. Este ID es necesario para usar otros comandos como `xkill -id` o `xdotool`.
+
+[source,bash]
+----
+# La primera línea de la salida estándar suele ser el ID:
+# xwininfo: Window id: 0x3c00007 "Terminal"
+----
+
+tree_hierarchy:: `-children` o `-tree`. Permite ver si una aplicación es una ventana única o si está compuesta por múltiples sub-ventanas (común en aplicaciones Java o Toolkits antiguos).
+
+[source,bash]
+----
+# Ver la estructura interna de una ventana compleja
+xwininfo -children
+----
+
+automation:: Si conoces el nombre de la ventana, puedes evitar el modo interactivo (el clic) y obtener la información directamente, ideal para scripts.
+
+[source,bash]
+----
+# Consultar datos de la ventana de Firefox sin hacer clic
+xwininfo -name "Mozilla Firefox"
+----
+
+# Obtener información sobre el escritorio completo (Root Window)
+xwininfo -root
+----
+

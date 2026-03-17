@@ -1,0 +1,64 @@
+=== lscpu
+Muestra información detallada sobre la arquitectura de la CPU.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Extrae información de la arquitectura de la CPU de sysfs y /proc/cpuinfo, presentando detalles sobre núcleos, hilos, sockets, nodos NUMA y cachés.",
+  "usage": "lscpu [OPCIONES]",
+  "options": {
+    "-a": "Muestra información de todas las CPUs (activas e inactivas)",
+    "-b": "Limita la salida a CPUs activas (online)",
+    "-c": "Limita la salida a CPUs inactivas (offline)",
+    "-e": "Muestra la información en un formato de columnas legible",
+    "-p": "Genera una salida analizable por scripts (parseable)",
+    "-J": "Muestra la salida en formato JSON"
+  }
+}
+
+[source,bash]
+----
+# Visualizar resumen general de la arquitectura de la CPU
+lscpu
+----
+
+extended:: `-e` o `--extended[=COLUMNAS]`. Muestra la información de la CPU en un formato de tabla. Si no se especifican columnas, imprime un conjunto predeterminado.
+
+[source,bash]
+----
+# Listar núcleos y sus cachés de forma tabular
+lscpu -e
+----
+
+parseable:: `-p` o `--parse[=COLUMNAS]`. Optimiza la salida para ser procesada por otros comandos o scripts, separando los elementos por comas.
+
+[source,bash]
+----
+# Generar salida compatible con herramientas de procesamiento de datos
+lscpu -p
+----
+
+json:: `-J` o `--json`. Estructura toda la información de la arquitectura en formato JSON, ideal para integraciones con APIs o aplicaciones web.
+
+[source,bash]
+----
+# Obtener datos de la CPU en formato JSON
+lscpu -J
+----
+
+all_online_offline:: `-a` (all), `-b` (online), `-c` (offline). Permite filtrar la visualización según el estado de energía o disponibilidad de los núcleos.
+
+[source,bash]
+----
+# Mostrar solo las CPUs que están actualmente activas
+lscpu -b
+----
+
+# Ver solo información específica de las cachés L1, L2 y L3
+lscpu -C
+----
+
+# Mostrar información sobre el modo de operación (32-bit, 64-bit)
+lscpu | grep "op-mode"
+----
+

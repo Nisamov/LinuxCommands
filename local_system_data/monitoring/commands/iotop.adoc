@@ -1,0 +1,45 @@
+=== iotop
+Monitor interactivo de la utilización de E/S de disco por procesos.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Interfaz similar a 'top' pero enfocada exclusivamente en el tráfico de disco, mostrando qué procesos o hilos están realizando lecturas y escrituras en tiempo real.",
+  "usage": "sudo iotop [OPCIONES]",
+  "options": {
+    "-o": "Muestra solo procesos o hilos que están realizando E/S activamente",
+    "-b": "Modo batch (no interactivo), útil para registro en archivos",
+    "-n": "Establece el número de iteraciones antes de salir",
+    "-d": "Establece el intervalo entre actualizaciones en segundos",
+    "-p": "Monitoriza solo un PID específico",
+    "-u": "Monitoriza solo los procesos de un usuario específico",
+    "-P": "Muestra solo procesos (omite los hilos/threads)"
+  }
+}
+
+[source,bash]
+----
+# Ejecutar el monitor interactivo (requiere sudo o privilegios de root)
+sudo iotop
+----
+
+only_active:: `-o` o `--only`. Limita la vista para ocultar procesos inactivos, facilitando la identificación inmediata de quién está saturando el disco.
+
+[source,bash]
+----
+# Identificar rápidamente quién está usando el disco ahora mismo
+sudo iotop -o
+----
+
+batch_mode:: `-b`. Ideal para recolectar datos de uso de disco en segundo plano y guardarlos para un análisis posterior.
+
+[source,bash]
+----
+# Guardar un log de la actividad de disco durante 10 segundos
+sudo iotop -b -n 10 > registro_disco.log
+----
+
+# Mostrar el uso de disco acumulado desde que se inició iotop
+sudo iotop -a
+----
+

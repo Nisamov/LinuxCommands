@@ -1,0 +1,46 @@
+=== arch
+Muestra la arquitectura del procesador del sistema de forma simplificada.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad de GNU que imprime la arquitectura de hardware de la máquina actual (equivalente a ejecutar 'uname -m').",
+  "usage": "arch",
+  "options": {
+    "salida": "Retorna cadenas como x86_64, i686, armv7l, o aarch64",
+    "compatibilidad": "Disponible en sistemas operativos tipo Unix/Linux como parte de coreutils",
+    "ayuda": "Muestra información de versión y ayuda básica"
+  }
+}
+
+[source,bash]
+----
+# Consultar la arquitectura del sistema actual
+arch
+----
+
+salida:: `x86_64` Es el valor más común en sistemas modernos de 64 bits. Indica que el hardware y el kernel soportan instrucciones de 64 bits.
+
+[source,bash]
+----
+# Ejemplo de salida típica en un PC moderno
+arch
+# > x86_64
+----
+
+compatibilidad:: `arch` vs `uname -m`. Aunque `arch` es más breve, se considera una herramienta heredada; `uname -m` es el estándar POSIX preferido.
+
+[source,bash]
+----
+# Comparación de comandos equivalentes
+arch && uname -m
+----
+
+ayuda:: `arch --help` Muestra la sintaxis básica y las opciones de versión del comando.
+
+[source,bash]
+----
+# Ver detalles de la versión y licencia
+arch --version
+----
+

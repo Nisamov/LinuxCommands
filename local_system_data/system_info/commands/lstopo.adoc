@@ -1,0 +1,63 @@
+=== lstopo
+Muestra la topología de hardware del sistema (procesadores, memoria, cachés).
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad de Portable Hardware Locality (hwloc) que genera una representación gráfica o textual de la jerarquía de hardware, incluyendo nodos NUMA, sockets, cachés y núcleos.",
+  "usage": "lstopo [OPCIONES] [ARCHIVO_SALIDA]",
+  "options": {
+    "-v": "Muestra información extremadamente detallada (verbose)",
+    "-p": "Muestra los índices lógicos/físicos de las unidades de procesamiento",
+    "-s": "Muestra información simplificada (resumen)",
+    "--no-io": "Oculta los dispositivos de E/S (PCI, NICs, etc.) para simplificar el gráfico",
+    "--of": "Especifica el formato de salida (console, txt, pdf, svg, png, fig)"
+  }
+}
+
+[source,bash]
+----
+# Abrir una ventana gráfica con la topología del sistema
+lstopo
+----
+
+output_formats:: `lstopo archivo.[ext]`. Si se especifica una extensión, el comando exporta la topología a ese formato. Ideal para documentación de servidores.
+
+[source,bash]
+----
+# Exportar la arquitectura del servidor a un PDF
+lstopo servidor_topo.pdf
+----
+
+text_mode:: `--of console` o `--of txt`. Permite visualizar la jerarquía en texto ASCII directamente en la terminal, útil cuando no hay entorno gráfico (X11).
+
+[source,bash]
+----
+# Ver la jerarquía en la terminal (formato ASCII)
+lstopo-no-graphics --of console
+----
+
+io_devices:: `--no-io` o `--io`. Por defecto, lstopo muestra puentes PCI y dispositivos conectados. Estas opciones permiten filtrar o forzar su aparición.
+
+[source,bash]
+----
+# Ver la topología ignorando dispositivos PCI
+lstopo --no-io
+----
+
+logical_vs_physical:: `-p` o `--physical`. Alterna entre mostrar los índices lógicos del sistema operativo o los índices físicos reales del hardware.
+
+[source,bash]
+----
+# Mostrar índices físicos de los núcleos y sockets
+lstopo -p
+----
+
+# Mostrar solo el número de unidades de procesamiento (PUs)
+lstopo --only pu
+----
+
+# Ignorar las cachés en la representación visual
+lstopo --no-caches
+----
+

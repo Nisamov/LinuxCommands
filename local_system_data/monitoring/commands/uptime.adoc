@@ -1,0 +1,45 @@
+=== uptime
+Informa cuánto tiempo ha estado el sistema encendido y la carga media actual.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Proporciona una línea con la hora actual, el tiempo total de funcionamiento, el número de usuarios conectados y la media de carga del sistema (load average).",
+  "usage": "uptime [OPCIONES]",
+  "options": {
+    "-p": "Muestra el tiempo de actividad en un formato amigable (pretty)",
+    "-s": "Muestra la fecha y hora exacta desde que el sistema arrancó",
+    "-V": "Muestra la información de la versión"
+  }
+}
+
+[source,bash]
+----
+# Mostrar información básica de tiempo y carga
+uptime
+----
+
+pretty:: `-p`. Simplifica la salida para mostrar únicamente cuánto tiempo ha estado activo el equipo, eliminando los datos de carga y usuarios.
+
+[source,bash]
+----
+# Ejemplo de salida: up 2 weeks, 3 days, 1 hour, 45 minutes
+uptime -p
+----
+
+since:: `-s`. Recupera del sistema el momento exacto del último arranque (boot), formateado como fecha y hora.
+
+[source,bash]
+----
+# Consultar cuándo se encendió el servidor por última vez
+uptime -s
+----
+
+load_average:: La salida estándar muestra tres valores al final (1, 5 y 15 minutos). Representan la demanda de CPU; un valor superior al número de núcleos indica saturación.
+
+[source,bash]
+----
+# Ver solo la carga media filtrando con awk
+uptime | awk -F'load average:' '{ print $2 }'
+----
+

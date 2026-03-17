@@ -1,0 +1,49 @@
+=== hostname
+Muestra o establece el nombre de host (nombre de red) del sistema actual.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad para visualizar el nombre asignado al equipo en la red o modificarlo de forma temporal/permanente según la configuración del sistema.",
+  "usage": "hostname [OPCIONES] [NUEVO_NOMBRE]",
+  "options": {
+    "fqdn": "Muestra el nombre de dominio completo (Fully Qualified Domain Name)",
+    "ip_address": "Muestra las direcciones IP asociadas al nombre de host",
+    "permanent": "En sistemas modernos, se prefiere 'hostnamectl' para cambios persistentes"
+  }
+}
+
+[source,bash]
+----
+# Consultar el nombre de host actual
+hostname
+----
+
+fqdn:: `-f` o `--fqdn`. Resuelve el nombre de host a través de DNS o el archivo /etc/hosts para mostrar el dominio completo.
+
+[source,bash]
+----
+# Ejemplo: mi-servidor.mi-dominio.com
+hostname -f
+----
+
+ip_address:: `-I` o `--all-ip-addresses`. Muestra todas las direcciones de red configuradas en las interfaces de red (excluyendo el loopback).
+
+[source,bash]
+----
+# Ver las IPs del equipo rápidamente
+hostname -I
+----
+
+permanent:: `hostname [NOMBRE]`. Cambia el nombre de forma inmediata, pero no sobrevive a un reinicio a menos que se editen los archivos de configuración o se use `hostnamectl`.
+
+[source,bash]
+----
+# Cambiar el nombre del host (requiere privilegios)
+sudo hostname nuevo-nombre-equipo
+----
+
+# Mostrar el alias corto del host
+hostname -s
+----
+

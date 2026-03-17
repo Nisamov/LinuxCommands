@@ -1,0 +1,32 @@
+=== Fundamentos Conceptuales
+
+ExifTool es una biblioteca y aplicación de línea de comandos diseñada para la lectura, escritura y manipulación de metadatos en una vasta gama de formatos de archivos (imágenes, audio, video y documentos). 
+En el contexto forense, su importancia radica en la capacidad de extraer "evidencia digital invisible" que reside dentro de los archivos sin alterar el contenido principal.
+
+==== Arquitectura de Metadatos
+
+ExifTool organiza la información en grupos de etiquetas (tags), permitiendo acceder a diferentes capas de datos:
+
+1. EXIF (Exchangeable Image File Format): Datos técnicos de la captura (modelo de cámara, apertura, coordenadas GPS).
+2. IPTC (International Press Telecommunications Council): Información de autoría, copyright y descripciones.
+3. XMP (Extensible Metadata Platform): Formato basado en XML de Adobe para metadatos extensibles.
+4. System: Atributos del sistema de archivos (fechas de creación, modificación y permisos).
+
+==== Paradigma de Integridad Forense
+
+ExifTool sigue un principio de "escritura segura" donde, al modificar metadatos, crea una copia del archivo original para prevenir la corrupción de datos. En análisis forense, se utiliza principalmente en modo de lectura exhaustiva para reconstruir líneas de tiempo o geolocalizar eventos mediante las etiquetas GPS.
+
+==== Principios de Diseño
+
+1. Universalidad: Soporte para miles de etiquetas y cientos de formatos.
+2. Granularidad: Capacidad de extraer datos binarios incrustados (como miniaturas/thumbnails).
+3. Flexibilidad de Salida: Generación de reportes en formatos procesables como JSON, XML o CSV.
+
+=== Modelo de Análisis
+
+ExifTool permite identificar inconsistencias que sugieren manipulación de archivos:
+
+* Discrepancia de Fechas: Cuando la fecha de creación del archivo en el sistema es anterior a la fecha de captura de la imagen.
+* Software de Edición: Identificación de rastros dejados por programas como Adobe Photoshop o GIMP.
+* Datos de Ubicación: Extracción de coordenadas que permiten situar el dispositivo en un punto geográfico exacto al momento de generar el archivo.
+

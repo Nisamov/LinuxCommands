@@ -1,0 +1,75 @@
+=== date
+Muestra o establece la fecha y la hora del sistema.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad para visualizar la fecha y hora actual en diversos formatos, realizar cálculos de tiempo y configurar el reloj del sistema (requiere privilegios).",
+  "usage": "date [OPCIONES] [+FORMATO]",
+  "options": {
+    "-u": "Muestra o establece la hora en formato UTC (Universal Time Coordinated)",
+    "-d": "Muestra la hora descrita por una cadena de texto en lugar de la actual",
+    "-r": "Muestra la última fecha de modificación de un archivo",
+    "-I": "Muestra la fecha en formato ISO 8601",
+    "-s": "Establece la fecha y hora del sistema (requiere sudo)",
+    "format": "Usa una cadena que comienza con '+' para definir la salida"
+  }
+}
+
+[source,bash]
+----
+# Mostrar la fecha y hora actual en formato estándar
+date
+----
+
+custom_format:: `+` seguido de especificadores. Permite extraer partes exactas de la fecha. Los más comunes son `%Y` (año), `%m` (mes), `%d` (día), `%H` (hora) y `%M` (minuto).
+
+[source,bash]
+----
+# Generar una marca de tiempo para un backup (ej: 2026-03-17_17-40)
+date "+%Y-%m-%d_%H-%M"
+----
+
+display_string:: `-d` o `--date`. Es extremadamente potente para calcular fechas relativas o ver cómo caerá un día específico sin cambiar el reloj del sistema.
+
+[source,bash]
+----
+# Saber qué día será dentro de 90 días
+date -d "+90 days"
+
+# Consultar la fecha del próximo viernes
+date -d "next friday"
+----
+
+iso_format:: `-I` o `--iso-8601`. Genera una salida estandarizada ideal para nombres de archivos o registros de bases de datos, evitando ambigüedades entre regiones.
+
+[source,bash]
+----
+# Salida en formato AAAA-MM-DD
+date -I
+----
+
+file_reference:: `-r` o `--reference`. En lugar de la hora actual, extrae la marca de tiempo de la última vez que se modificó un archivo específico.
+
+[source,bash]
+----
+# Ver cuándo se modificó por última vez el log del sistema
+date -r /var/log/syslog
+----
+
+set_time:: `-s` o `--set`. Permite ajustar manualmente la hora del sistema. Nota: En sistemas modernos esto suele ser gestionado automáticamente por servicios como NTP o systemd-timesyncd.
+
+[source,bash]
+----
+# Establecer una fecha específica (requiere privilegios)
+sudo date -s "2026-03-17 17:45:00"
+----
+
+# Mostrar la hora actual en formato Unix (segundos desde 1970-01-01)
+date +%s
+----
+
+# Ver la hora actual en Londres (cambiando la variable de entorno TZ)
+TZ='Europe/London' date
+----
+

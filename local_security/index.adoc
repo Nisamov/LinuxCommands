@@ -43,3 +43,7 @@ include::network_security/kerberos/theory.adoc[]
 == Auditoría local
 include::local_audit/lynis/lynis.adoc[]
 
+== Analisis forense
+include::forensics/lime/theory.adoc[]
+include::forensics/exiftool/theory.adoc[]
+

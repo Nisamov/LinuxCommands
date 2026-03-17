@@ -1,0 +1,61 @@
+=== lsdev
+Muestra información sobre los dispositivos de hardware instalados y sus recursos.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Recopila datos de los archivos /proc/interrupts, /proc/ioports y /proc/dma para proporcionar una vista coherente de los recursos utilizados por los dispositivos.",
+  "usage": "lsdev",
+  "options": {
+    "-h": "Muestra una breve ayuda sobre el uso del comando",
+    "-V": "Muestra la versión actual del programa lsdev",
+    "salida": "Genera una tabla con columnas para DMA, IRQ y puertos de E/S (I/O Ports)"
+  }
+}
+
+[source,bash]
+----
+# Listar todos los dispositivos y sus recursos asignados
+lsdev
+----
+
+salida:: El comando organiza la información en tres columnas principales: DMA, IRQ e I/O Ports. Esto permite identificar conflictos de recursos o simplemente verificar qué interrupción usa cada periférico.
+
+[source,bash]
+----
+# Ejemplo de salida típica (resumen de recursos)
+# Device            DMA   IRQ  I/O Ports
+# ----------------------------------------
+# rtc                         0070-0071
+# keyboard                 1  0060-0060 0064-0064
+# timer                    0  0040-0043
+----
+
+dma:: Muestra los canales de "Direct Memory Access" que están siendo utilizados por dispositivos específicos (como tarjetas de sonido antiguas o unidades de disquete).
+
+[source,bash]
+----
+# Ver qué dispositivos están usando canales DMA
+lsdev | grep -v "  " | awk '$2 != "" {print $0}'
+----
+
+irq:: Lista las líneas de solicitud de interrupción (Interrupt Request). Es fundamental para diagnosticar por qué un hardware no responde o causa latencia.
+
+[source,bash]
+----
+# Filtrar solo dispositivos que tienen una IRQ asignada
+lsdev | awk '$3 != "" {print $0}'
+----
+
+io_ports:: Muestra el rango de direcciones de memoria de entrada/salida asignadas a cada controlador de dispositivo.
+
+[source,bash]
+----
+# Buscar el rango de puertos de un dispositivo específico (ej. pci)
+lsdev | grep "pci"
+----
+
+# Comparar la salida de lsdev con el archivo de interrupciones del kernel
+cat /proc/interrupts
+----
+

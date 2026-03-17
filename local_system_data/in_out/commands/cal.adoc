@@ -1,0 +1,68 @@
+=== cal
+Muestra un calendario sencillo en la terminal.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad estándar de los sistemas Unix-like que genera un calendario gregoriano formateado. Por defecto, muestra el mes actual.",
+  "usage": "cal [OPCIONES] [[[DIA] MES] AÑO]",
+  "options": {
+    "-1": "Muestra solo el mes actual (comportamiento por defecto)",
+    "-3": "Muestra el mes anterior, el actual y el siguiente",
+    "-y": "Muestra el calendario completo del año actual",
+    "-m": "Muestra el calendario con el lunes como primer día de la semana",
+    "-j": "Muestra días julianos (días numerados del 1 al 365)",
+    "-v": "Muestra la versión del programa"
+  }
+}
+
+[source,bash]
+----
+# Mostrar el mes actual
+cal
+----
+
+three_months:: `-3`. Proporciona una vista rápida del trimestre actual, situando el mes en curso en el centro para ofrecer contexto temporal inmediato.
+
+[source,bash]
+----
+# Ver el mes pasado, el actual y el próximo
+cal -3
+----
+
+year_view:: `-y` o `--year`. Genera la matriz completa de los 12 meses del año en curso. También permite especificar un año concreto.
+
+[source,bash]
+----
+# Mostrar todo el calendario del año 2026
+cal -y 2026
+----
+
+monday_start:: `-m` o `--monday`. Por defecto, muchas implementaciones de `cal` inician la semana en domingo. Esta opción fuerza el inicio en lunes siguiendo el estándar ISO.
+
+[source,bash]
+----
+# Ver el mes actual con la semana empezando el lunes
+cal -m
+----
+
+julian:: `-j` o `--julian`. Útil para cálculos de ingeniería o programación donde se necesita saber el número de día relativo al inicio del año (1-365).
+
+[source,bash]
+----
+# Ver el calendario con días numerados del 1 al 366
+cal -j
+----
+
+specific_date:: `cal [MES] [AÑO]`. Permite consultar cualquier fecha histórica o futura. El mes puede indicarse con número (1-12) o nombre.
+
+[source,bash]
+----
+# Ver el calendario de octubre de 1492
+cal 10 1492
+----
+
+# Resaltar el día actual en la salida (si no lo hace por defecto)
+cal --color=always
+----
+

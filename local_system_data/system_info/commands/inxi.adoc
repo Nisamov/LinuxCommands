@@ -1,0 +1,63 @@
+=== inxi
+Script de información del sistema de gran alcance para consola y el IRC.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Herramienta CLI que muestra información detallada sobre el hardware (CPU, RAM, GPU, Discos), el kernel, el entorno de escritorio y los repositorios.",
+  "usage": "inxi [OPCIONES]",
+  "options": {
+    "-b": "Muestra un resumen básico (CPU, kernel, uptime, RAM)",
+    "-f": "Informe completo de hardware y configuración de software",
+    "-extra": "Incrementa el nivel de detalle mediante verbosidad (x, xx, xxx)",
+    "-w": "Muestra información meteorológica local",
+    "-G": "Detalla la tarjeta gráfica, driver y resolución"
+  }
+}
+
+[source,bash]
+----
+# Obtener un resumen básico del sistema
+inxi
+----
+
+basic:: `-b` o `--basic`. Proporciona una visión general rápida que incluye el modelo de CPU, Kernel, Memoria y almacenamiento.
+
+[source,bash]
+----
+# Resumen informativo estándar
+inxi -b
+----
+
+full:: `-F` o `--full`. Genera una salida detallada que abarca desde la placa base hasta la configuración de audio, red y particiones.
+
+[source,bash]
+----
+# Informe completo (Full) de hardware y sistema operativo
+inxi -F
+----
+
+extra:: `-xxx`. Modificador de verbosidad que se añade a otras banderas para mostrar números de serie, UUIDs o frecuencias específicas.
+
+[source,bash]
+----
+# Ver información detallada de la CPU con máxima verbosidad
+inxi -Cxxx
+----
+
+weather:: `-W [LOCALIZACIÓN]`. Consulta datos meteorológicos basados en la ubicación especificada o detectada.
+
+[source,bash]
+----
+# Mostrar información del clima
+inxi -W
+----
+
+graphics:: `-G` o `--graphics`. Muestra detalles específicos de la GPU, servidor X (o Wayland), drivers y monitores conectados.
+
+[source,bash]
+----
+# Ver solo información de la tarjeta gráfica y monitores
+inxi -G
+----
+

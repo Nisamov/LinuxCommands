@@ -1,0 +1,69 @@
+=== watch
+Ejecuta un programa periódicamente, mostrando la salida a pantalla completa.
+
+:category: local_system_data
+[.metadata]
+{
+  "description": "Utilidad que permite ejecutar un comando a intervalos regulares, permitiendo observar los cambios en su salida de forma dinámica sin limpiar la terminal manualmente.",
+  "usage": "watch [OPCIONES] [COMANDO]",
+  "options": {
+    "-n": "Establece el intervalo de actualización en segundos (por defecto 2)",
+    "-d": "Resalta las diferencias entre las actualizaciones sucesivas",
+    "-t": "Omite la cabecera que muestra el intervalo, el comando y la hora actual",
+    "-e": "Detiene la ejecución si el comando devuelve un error (exit non-zero)",
+    "-g": "Finaliza cuando la salida del comando cambia",
+    "-x": "Pasa el comando a 'exec' en lugar de 'sh -c' (útil para caracteres especiales)",
+    "-c": "Interpreta y muestra secuencias de escape de color ANSI"
+  }
+}
+
+[source,bash]
+----
+# Monitorizar el contenido de un directorio cada 2 segundos
+watch ls -l
+----
+
+interval:: `-n` o `--interval [SEGUNDOS]`. Define la frecuencia con la que se repite el comando. Soporta decimales para actualizaciones más rápidas.
+
+[source,bash]
+----
+# Monitorizar el uso de red cada medio segundo
+watch -n 0.5 ifconfig eth0
+----
+
+differences:: `-d` o `--differences[=cumulative]`. Resalta visualmente los caracteres o valores que han cambiado desde la última ejecución. Con 'cumulative', los cambios se van acumulando.
+
+[source,bash]
+----
+# Ver qué valores de memoria están cambiando activamente
+watch -d free -m
+----
+
+no_title:: `-t` o `--no-title`. Elimina la barra superior que indica el tiempo de refresco y el nombre del comando, dejando más espacio para la salida útil.
+
+[source,bash]
+----
+# Ejecución limpia solo con la salida del comando
+watch -t sensors
+----
+
+color:: `-c` o `--color`. Permite que los comandos que generan salida con colores (como `ls --color` o `dstat`) se visualicen correctamente dentro de la interfaz de watch.
+
+[source,bash]
+----
+# Monitorizar procesos con colores habilitados
+watch -c htop --export-graph
+----
+
+exit_on_change:: `-g` o `--chgexit`. Muy útil en scripts para esperar a que un estado cambie (por ejemplo, que un archivo aparezca o un servicio responda) y luego continuar.
+
+[source,bash]
+----
+# Esperar hasta que un archivo de log cambie de tamaño y salir
+watch -g "ls -l /var/log/syslog"
+----
+
+# Monitorizar el estado de las conexiones de red filtrando por ESTABLISHED
+watch -n 1 "ss -tunap | grep ESTABLISHED"
+----
+
