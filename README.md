@@ -2,22 +2,28 @@
   <img src=".github/media/sheyald.png"></a>
 </p>
 
-<p align="center">
-  <a href="https://es.wikipedia.org/wiki/LinuxCommands" title="Wikipedia">
-    <img src="https://cdn-icons-png.flaticon.com/512/48/48927.png" width="28">
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="http://linuxcommands.wikidot.com/" title="Wikidot">
-    <img src="https://cdn-icons-png.flaticon.com/512/262/262031.png" width="28">
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://nisamov.github.io/LinuxCommands/" title="GitHub Pages">
-    <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="28">
-  </a>
-</p>
-<p align="center">
-  <small><b>Wikipedia</b> &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp; <b>Wikidot</b> &nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; <b>Git Pages</b></small>
-</p>
+<table align="center" style="border-collapse: collapse; border: none;">
+  <tr align="center">
+    <td style="padding: 0 15px;">
+      <a href="https://es.wikipedia.org/wiki/LinuxCommands" title="Wikipedia"><img src="https://cdn-icons-png.flaticon.com/512/48/48927.png" width="28"></a>
+    </td>
+    <td style="padding: 0 15px;">
+      <a href="http://linuxcommands.wikidot.com/" title="Wikidot"><img src="https://cdn-icons-png.flaticon.com/512/262/262031.png" width="28"></a>
+    </td>
+    <td style="padding: 0 15px;">
+      <a href="https://nisamov.github.io/LinuxCommands/" title="GitHub Pages"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="28"></a>
+    </td>
+    <td style="padding: 0 15px;">
+      <a href="https://github.com/nisamov/LinuxCommands/blob/main/docs/commands.json" title="JSON Database"><img src=".github/media/json.png" width="28" alt="JSON"></a>
+    </td>
+  </tr>
+  <tr align="center">
+    <td><small><b>Wikipedia</b></small></td>
+    <td><small><b>Wikidot</b></small></td>
+    <td><small><b>Git Pages</b></small></td>
+    <td><small><b>JSON DB</b></small></td>
+  </tr>
+</table>
 
 ---
 <p align="center">
