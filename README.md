@@ -26,25 +26,6 @@
 </table>
 
 ---
-<p align="center">
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/ESP">Español</a>
-  &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/ENG">English</a>
-  &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/DE">Deutsch</a>
-  &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/FR">Français</a>
-  &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/PT">Português</a>
-  &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/RU">Русский</a>
-  &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/ZH">中文</a>
-  &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/KO">한국어</a>
-  &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/JA">日本語</a>
-</p>
 
 # LinuxCommands
 [![Last commit](https://img.shields.io/github/last-commit/Nisamov/LinuxCommands?style=flat-square&color=000000&labelColor=ffffff&label=ultima-actualizacion)](https://github.com/Nisamov/LinuxCommands/commits)[![License](https://img.shields.io/github/license/Nisamov/LinuxCommands?style=flat-square&color=000000&labelColor=ffffff&label=licencia)](LICENSE)[![Visits](https://img.shields.io/endpoint?url=https://hits.dwyl.com/Nisamov/LinuxCommands.json&style=flat-square&color=000000&labelColor=ffffff&label=visitas)](https://github.com/Nisamov/LinuxCommands)
