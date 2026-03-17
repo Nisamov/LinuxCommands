@@ -51,6 +51,18 @@
     "source_path": "local_software/commands/apt.adoc"
   },
   {
+    "description": "Utilidad de GNU que imprime la arquitectura de hardware de la máquina actual (equivalente a ejecutar 'uname -m').",
+    "usage": "arch",
+    "options": {
+      "salida": "Retorna cadenas como x86_64, i686, armv7l, o aarch64",
+      "compatibilidad": "Disponible en sistemas operativos tipo Unix/Linux como parte de coreutils",
+      "ayuda": "Muestra información de versión y ayuda básica"
+    },
+    "name": "arch",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/commands/arch.adoc"
+  },
+  {
     "description": "Mostrar y gestionar la tabla ARP para ver las asociaciones entre direcciones IP y MAC en la red local.",
     "usage": "arp [OPCIONES]",
     "options": {
@@ -148,6 +160,21 @@
     "name": "bzip2",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/bzip2.adoc"
+  },
+  {
+    "description": "Utilidad estándar de los sistemas Unix-like que genera un calendario gregoriano formateado. Por defecto, muestra el mes actual.",
+    "usage": "cal [OPCIONES] [[[DIA] MES] AÑO]",
+    "options": {
+      "-1": "Muestra solo el mes actual (comportamiento por defecto)",
+      "-3": "Muestra el mes anterior, el actual y el siguiente",
+      "-y": "Muestra el calendario completo del año actual",
+      "-m": "Muestra el calendario con el lunes como primer día de la semana",
+      "-j": "Muestra días julianos (días numerados del 1 al 365)",
+      "-v": "Muestra la versión del programa"
+    },
+    "name": "cal",
+    "category": "local_system_data",
+    "source_path": "local_system_data/in_out/commands/cal.adoc"
   },
   {
     "description": "Herramienta para concatenar y mostrar el contenido de ficheros.",
@@ -408,6 +435,21 @@
     "source_path": "local_filesystem/commands/cut.adoc"
   },
   {
+    "description": "Utilidad para visualizar la fecha y hora actual en diversos formatos, realizar cálculos de tiempo y configurar el reloj del sistema (requiere privilegios).",
+    "usage": "date [OPCIONES] [+FORMATO]",
+    "options": {
+      "-u": "Muestra o establece la hora en formato UTC (Universal Time Coordinated)",
+      "-d": "Muestra la hora descrita por una cadena de texto en lugar de la actual",
+      "-r": "Muestra la última fecha de modificación de un archivo",
+      "-I": "Muestra la fecha en formato ISO 8601",
+      "-s": "Establece la fecha y hora del sistema (requiere sudo)",
+      "format": "Usa una cadena que comienza con '+' para definir la salida"
+    },
+    "name": "date",
+    "category": "local_system_data",
+    "source_path": "local_system_data/in_out/commands/date.adoc"
+  },
+  {
     "description": "Conversión y copia de archivos a bajo nivel, útil para crear imágenes de disco, clonar dispositivos, generar archivos de prueba y realizar copias de seguridad.",
     "usage": "dd [OPCIONES]",
     "options": {
@@ -490,6 +532,35 @@
     "source_path": "local_filesystem/commands/dirname.adoc"
   },
   {
+    "description": "Permite leer los mensajes emitidos por el kernel durante el arranque y el funcionamiento del sistema, especialmente útiles para depurar fallos de drivers y hardware.",
+    "usage": "dmesg [OPCIONES]",
+    "options": {
+      "-C": "Limpia el buffer de mensajes del kernel",
+      "-c": "Lee y luego limpia el buffer de mensajes",
+      "-H": "Habilita la salida amigable (colores y paginación)",
+      "-L": "Colorea los mensajes de salida",
+      "-T": "Muestra marcas de tiempo legibles (human-readable)",
+      "-w": "Espera por nuevos mensajes (modo seguimiento en tiempo real)",
+      "-n": "Establece el nivel de log para enviar mensajes a la consola",
+      "-l": "Filtra la salida por nivel de log (info, warn, err, crit, etc.)"
+    },
+    "name": "dmesg",
+    "category": "local_system_data",
+    "source_path": "local_system_data/monitoring/commands/dmesg.adoc"
+  },
+  {
+    "description": "Herramienta que vuelca el contenido de la tabla Desktop Management Interface (DMI) en un formato legible, permitiendo conocer detalles del hardware sin abrir el equipo.",
+    "usage": "dmidecode [OPCIONES]",
+    "options": {
+      "type": "Permite filtrar por tipo de componente (BIOS, procesador, memoria, etc.)",
+      "string": "Extrae un valor específico de una palabra clave del sistema",
+      "privilegios": "Requiere acceso a /dev/mem, por lo que suele ejecutarse con sudo"
+    },
+    "name": "dmidecode",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/commands/dmidecode.adoc"
+  },
+  {
     "description": "Gestionar paquetes en sistemas Red Hat, Fedora, Rocky Linux y derivados.",
     "usage": "dnf [OPCIONES] PAQUETE",
     "options": {
@@ -526,6 +597,24 @@
     "name": "dpkg",
     "category": "local_software",
     "source_path": "local_software/commands/dpkg.adoc"
+  },
+  {
+    "description": "Utilidad que combina las capacidades de vmstat, iostat, netstat e ifstat en una sola vista, permitiendo monitorizar CPU, discos, red y memoria de forma simultánea.",
+    "usage": "dstat [OPCIONES] [INTERVALO] [RECUENTO]",
+    "options": {
+      "-c": "Muestra estadísticas de la CPU (usuario, sistema, espera, inactivo)",
+      "-d": "Muestra estadísticas de disco (lectura, escritura)",
+      "-n": "Muestra estadísticas de red (recibido, enviado)",
+      "-m": "Muestra estadísticas de memoria (usada, libre, buffer, caché)",
+      "-g": "Muestra estadísticas de paginación (page in, page out)",
+      "-y": "Muestra estadísticas del sistema (interrupciones, cambios de contexto)",
+      "--top-cpu": "Muestra el proceso que más CPU consume actualmente",
+      "--top-mem": "Muestra el proceso que más memoria consume actualmente",
+      "--output": "Escribe los resultados en un archivo CSV para análisis posterior"
+    },
+    "name": "dstat",
+    "category": "local_system_data",
+    "source_path": "local_system_data/monitoring/commands/dstat.adoc"
   },
   {
     "description": "Mostrar el uso de espacio en disco de archivos y directorios.",
@@ -567,6 +656,22 @@
     "name": "ethtool",
     "category": "local_network",
     "source_path": "local_network/commands/ethtool.adoc"
+  },
+  {
+    "description": "Herramienta de análisis forense para extraer metadatos de imágenes, vídeos y documentos.",
+    "usage": "exiftool [OPCIONES] ARCHIVO",
+    "options": {
+      "-all": "Mostrar todos los metadatos disponibles",
+      "-gps": "Filtrar únicamente información de geolocalización",
+      "-T": "Formato de salida en tabla (tabulado)",
+      "-json": "Exportar resultados en formato JSON",
+      "-delete_all": "Eliminar todos los metadatos de un archivo",
+      "-common": "Mostrar solo las etiquetas más comunes",
+      "-overwrite_original": "Realizar cambios sin crear copia de seguridad"
+    },
+    "name": "exiftool",
+    "category": "local_security",
+    "source_path": "local_security/forensics/exiftool/commands/exiftool.adoc"
   },
   {
     "description": "Establecer variables de entorno para la sesión actual o procesos hijos.",
@@ -708,6 +813,23 @@
     "source_path": "local_miscellaneous/commands/fortune.adoc"
   },
   {
+    "description": "Utilidad que resume el estado de la memoria RAM física y la memoria de intercambio (swap), detallando el uso de buffers y caché por parte del kernel.",
+    "usage": "free [OPCIONES]",
+    "options": {
+      "-b": "Muestra la salida en bytes",
+      "-k": "Muestra la salida en kilobytes (por defecto)",
+      "-m": "Muestra la salida en megabytes",
+      "-g": "Muestra la salida en gigabytes",
+      "-h": "Formato legible por humanos (ajusta unidades automáticamente)",
+      "-t": "Muestra una línea de total (RAM + Swap)",
+      "-s": "Actualiza la salida cada N segundos de forma continua",
+      "-c": "Termina después de mostrar la salida N veces"
+    },
+    "name": "free",
+    "category": "local_system_data",
+    "source_path": "local_system_data/monitoring/commands/free.adoc"
+  },
+  {
     "description": "Utilidad para verificar la integridad de un sistema de archivos y reparar errores. Actúa como un front-end para los chequeadores específicos de cada tipo de sistema (e2fsck, xfs_repair, etc.).",
     "usage": "fsck [OPCIONES] [DISPOSITIVO]",
     "options": {
@@ -789,6 +911,20 @@
     "name": "getfacl",
     "category": "local_permissions",
     "source_path": "local_permissions/access_control_lists/commands/getfacl.adoc"
+  },
+  {
+    "description": "Utilidad que detalla las capacidades del servidor X y la tarjeta gráfica, incluyendo versiones de OpenGL, renderizado directo (aceleración hardware) y extensiones disponibles.",
+    "usage": "glxinfo [OPCIONES]",
+    "options": {
+      "-B": "Muestra un resumen corto (detalles de la GPU y versiones de OpenGL)",
+      "-L": "Muestra solo las extensiones de OpenGL y GLX",
+      "-V": "Muestra información detallada de los visuales de GLX",
+      "-s": "Muestra información sobre la pantalla (display) seleccionada",
+      "-i": "Fuerza el uso de una interfaz indirecta para el renderizado"
+    },
+    "name": "glxinfo",
+    "category": "local_system_data",
+    "source_path": "local_system_data/graphics/commands/glxinfo.adoc"
   },
   {
     "description": "Administrar grupos de usuarios en Linux, incluyendo asignación de administradores, gestión de contraseñas y membresía.",
@@ -930,6 +1066,18 @@
     "source_path": "local_network/commands/host.adoc"
   },
   {
+    "description": "Utilidad para visualizar el nombre asignado al equipo en la red o modificarlo de forma temporal/permanente según la configuración del sistema.",
+    "usage": "hostname [OPCIONES] [NUEVO_NOMBRE]",
+    "options": {
+      "fqdn": "Muestra el nombre de dominio completo (Fully Qualified Domain Name)",
+      "ip_address": "Muestra las direcciones IP asociadas al nombre de host",
+      "permanent": "En sistemas modernos, se prefiere 'hostnamectl' para cambios persistentes"
+    },
+    "name": "hostname",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/commands/hostname.adoc"
+  },
+  {
     "description": "Monitor de procesos interactivo con interfaz visual mejorada que reemplaza a `top`.",
     "usage": "htop [OPCIONES]",
     "options": {
@@ -1008,6 +1156,52 @@
     "name": "initctl",
     "category": "local_services",
     "source_path": "local_services/commands/initctl.adoc"
+  },
+  {
+    "description": "Herramienta CLI que muestra información detallada sobre el hardware (CPU, RAM, GPU, Discos), el kernel, el entorno de escritorio y los repositorios.",
+    "usage": "inxi [OPCIONES]",
+    "options": {
+      "-b": "Muestra un resumen básico (CPU, kernel, uptime, RAM)",
+      "-f": "Informe completo de hardware y configuración de software",
+      "-extra": "Incrementa el nivel de detalle mediante verbosidad (x, xx, xxx)",
+      "-w": "Muestra información meteorológica local",
+      "-G": "Detalla la tarjeta gráfica, driver y resolución"
+    },
+    "name": "inxi",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/commands/inxi.adoc"
+  },
+  {
+    "description": "Herramienta (del paquete sysstat) diseñada para monitorizar el uso del almacenamiento y detectar cuellos de botella mediante el análisis del tiempo de actividad de los discos.",
+    "usage": "iostat [OPCIONES] [INTERVALO] [RECUENTO]",
+    "options": {
+      "-c": "Muestra solo el informe de utilización de la CPU",
+      "-d": "Muestra solo el informe de utilización de los dispositivos de disco",
+      "-h": "Formato amigable para humanos (unidades legibles)",
+      "-k": "Muestra estadísticas en kilobytes por segundo",
+      "-m": "Muestra estadísticas en megabytes por segundo",
+      "-x": "Muestra estadísticas extendidas (latencia, tiempos de espera, etc.)",
+      "-p": "Muestra estadísticas para dispositivos específicos y sus particiones"
+    },
+    "name": "iostat",
+    "category": "local_system_data",
+    "source_path": "local_system_data/monitoring/commands/iostat.adoc"
+  },
+  {
+    "description": "Interfaz similar a 'top' pero enfocada exclusivamente en el tráfico de disco, mostrando qué procesos o hilos están realizando lecturas y escrituras en tiempo real.",
+    "usage": "sudo iotop [OPCIONES]",
+    "options": {
+      "-o": "Muestra solo procesos o hilos que están realizando E/S activamente",
+      "-b": "Modo batch (no interactivo), útil para registro en archivos",
+      "-n": "Establece el número de iteraciones antes de salir",
+      "-d": "Establece el intervalo entre actualizaciones en segundos",
+      "-p": "Monitoriza solo un PID específico",
+      "-u": "Monitoriza solo los procesos de un usuario específico",
+      "-P": "Muestra solo procesos (omite los hilos/threads)"
+    },
+    "name": "iotop",
+    "category": "local_system_data",
+    "source_path": "local_system_data/monitoring/commands/iotop.adoc"
   },
   {
     "description": "Consultar y configurar interfaces de red, rutas, direcciones y vecinos en Linux (reemplazo moderno de ifconfig y arp).",
@@ -1114,6 +1308,20 @@
     "source_path": "local_users/commands/last.adoc"
   },
   {
+    "description": "Utilidad que imprime las bibliotecas compartidas (LSOs) requeridas por cada programa o biblioteca compartida especificada en la línea de comandos.",
+    "usage": "ldd [OPCIONES] [ARCHIVO]",
+    "options": {
+      "verbose": "Muestra información detallada, incluyendo la versión de los símbolos",
+      "unused": "Imprime las bibliotecas que no se utilizan directamente",
+      "data-relocs": "Informa sobre las relocalizaciones de datos que faltan",
+      "function-relocs": "Informa sobre los objetos de datos y funciones que faltan",
+      "security": "Advertencia sobre la ejecución de binarios no confiables"
+    },
+    "name": "ldd",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/commands/ldd.adoc"
+  },
+  {
     "description": "Ver ficheros de texto paginados en la terminal.",
     "usage": "less [OPCIONES] fichero",
     "options": {
@@ -1125,6 +1333,20 @@
     "name": "less",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/less.adoc"
+  },
+  {
+    "description": "Loadable Kernel Module (LKM) para la extracción forense de memoria física en sistemas Linux.",
+    "usage": "sudo insmod lime.ko \"path=<destino> format=<formato> [timeout=<ms>]\"",
+    "options": {
+      "path": "Ruta del archivo de salida o dirección de red (tcp:<puerto>)",
+      "format": "Formato del volcado: lime, padded o raw",
+      "timeout": "Tiempo máximo de espera para la adquisición de regiones de memoria",
+      "dio": "Habilitar/deshabilitar Direct I/O (1 o 0)",
+      "localhost": "Restringir la escucha de red a la interfaz local (1 o 0)"
+    },
+    "name": "lime",
+    "category": "local_security",
+    "source_path": "local_security/forensics/lime/commands/lime.adoc"
   },
   {
     "description": "Crear enlaces duros y simbólicos.",
@@ -1154,6 +1376,20 @@
     "name": "locate",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/locate.adoc"
+  },
+  {
+    "description": "Utilidad diseñada para simplificar la administración de sistemas que generan una gran cantidad de archivos de registro, permitiendo su manejo automático según tamaño, edad o intervalos de tiempo.",
+    "usage": "logrotate [OPCIONES] <archivo_configuracion>",
+    "options": {
+      "-f": "Fuerza la rotación de los archivos incluso si no parece necesaria",
+      "-d": "Modo depuración (debug): no modifica los archivos, solo muestra qué haría",
+      "-s": "Especifica un archivo de estado (state file) personalizado",
+      "-v": "Modo verboso: muestra información detallada durante el proceso",
+      "-m": "Comando para enviar logs por correo (mail command)"
+    },
+    "name": "logrotate",
+    "category": "local_system_data",
+    "source_path": "local_system_data/monitoring/commands/logrotate.adoc"
   },
   {
     "description": "Utilidad de búsqueda rápida que localiza líneas que empiezan por una cadena de texto determinada. Por defecto, consulta el diccionario del sistema si no se especifica un archivo.",
@@ -1245,6 +1481,61 @@
     "source_path": "local_storage/commands/lsblk.adoc"
   },
   {
+    "description": "Extrae información de la arquitectura de la CPU de sysfs y /proc/cpuinfo, presentando detalles sobre núcleos, hilos, sockets, nodos NUMA y cachés.",
+    "usage": "lscpu [OPCIONES]",
+    "options": {
+      "-a": "Muestra información de todas las CPUs (activas e inactivas)",
+      "-b": "Limita la salida a CPUs activas (online)",
+      "-c": "Limita la salida a CPUs inactivas (offline)",
+      "-e": "Muestra la información en un formato de columnas legible",
+      "-p": "Genera una salida analizable por scripts (parseable)",
+      "-J": "Muestra la salida en formato JSON"
+    },
+    "name": "lscpu",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/commands/lscpu.adoc"
+  },
+  {
+    "description": "Recopila datos de los archivos /proc/interrupts, /proc/ioports y /proc/dma para proporcionar una vista coherente de los recursos utilizados por los dispositivos.",
+    "usage": "lsdev",
+    "options": {
+      "-h": "Muestra una breve ayuda sobre el uso del comando",
+      "-V": "Muestra la versión actual del programa lsdev",
+      "salida": "Genera una tabla con columnas para DMA, IRQ y puertos de E/S (I/O Ports)"
+    },
+    "name": "lsdev",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/commands/lsdev.adoc"
+  },
+  {
+    "description": "Utilidad que extrae información detallada de la configuración de hardware de la máquina a partir de diversos archivos /proc, el árbol DMI y otros orígenes.",
+    "usage": "sudo lshw [OPCIONES]",
+    "options": {
+      "-short": "Muestra un índice compacto del hardware (árbol de dispositivos)",
+      "-html": "Genera el informe de hardware en formato HTML",
+      "-xml": "Exporta la configuración en formato XML para análisis automatizado",
+      "-json": "Genera la salida en formato JSON",
+      "-class": "Filtra el hardware por clase específica (bus, cpu, memory, display, network, storage)",
+      "-C": "Alias abreviado para la opción -class",
+      "-sanitize": "Elimina información sensible como números de serie o direcciones IP"
+    },
+    "name": "lshw",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/commands/lshw.adoc"
+  },
+  {
+    "description": "Programa que lee el contenido del archivo /proc/modules para mostrar qué módulos del kernel están cargados actualmente, su tamaño y qué otros módulos los están utilizando.",
+    "usage": "lsmod",
+    "options": {
+      "salida": "Muestra columnas: Module (nombre), Size (memoria), Used by (referencias)",
+      "proceso": "No acepta opciones de filtrado propias; se suele combinar con grep",
+      "equivalencia": "Es funcionalmente equivalente a realizar un 'cat /proc/modules'"
+    },
+    "name": "lsmod",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/commands/lsmod.adoc"
+  },
+  {
     "description": "Listar archivos abiertos y los procesos que los están utilizando.",
     "usage": "lsof [OPCIONES]",
     "options": {
@@ -1275,6 +1566,32 @@
     "name": "lspci",
     "category": "hardware_bus",
     "source_path": "local_storage/commands/lspci.adoc"
+  },
+  {
+    "description": "Programa que lee el contenido del archivo /proc/modules para mostrar qué módulos del kernel están cargados actualmente, su tamaño y qué otros módulos los están utilizando.",
+    "usage": "lsmod",
+    "options": {
+      "salida": "Muestra columnas: Module (nombre), Size (memoria), Used by (referencias)",
+      "proceso": "No acepta opciones de filtrado propias; se suele combinar con grep",
+      "equivalencia": "Es funcionalmente equivalente a realizar un 'cat /proc/modules'"
+    },
+    "name": "lsscsi",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/commands/lsscsi.adoc"
+  },
+  {
+    "description": "Utilidad de Portable Hardware Locality (hwloc) que genera una representación gráfica o textual de la jerarquía de hardware, incluyendo nodos NUMA, sockets, cachés y núcleos.",
+    "usage": "lstopo [OPCIONES] [ARCHIVO_SALIDA]",
+    "options": {
+      "-v": "Muestra información extremadamente detallada (verbose)",
+      "-p": "Muestra los índices lógicos/físicos de las unidades de procesamiento",
+      "-s": "Muestra información simplificada (resumen)",
+      "--no-io": "Oculta los dispositivos de E/S (PCI, NICs, etc.) para simplificar el gráfico",
+      "--of": "Especifica el formato de salida (console, txt, pdf, svg, png, fig)"
+    },
+    "name": "lstopo",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/commands/lstopo.adoc"
   },
   {
     "description": "Muestra información sobre los buses USB y los dispositivos conectados a ellos.",
@@ -2202,6 +2519,21 @@
     "source_path": "local_filesystem/commands/scp.adoc"
   },
   {
+    "description": "Herramienta de 'Bash Screenshot Information Tool' que detecta automáticamente la distribución, el kernel, el tiempo de actividad, los paquetes instalados y el entorno de escritorio para mostrarlos de forma visualmente atractiva.",
+    "usage": "screenfetch [OPCIONES]",
+    "options": {
+      "-v": "Modo detallado (verbose)",
+      "-n": "No mostrar el logo de la distribución",
+      "-L": "Mostrar solo el logo de la distribución",
+      "-t": "Truncar la salida según el ancho de la terminal",
+      "-s": "Tomar una captura de pantalla automáticamente (requiere escrot)",
+      "-D": "Especificar manualmente la distribución (ej. 'Debian')"
+    },
+    "name": "screenfetch",
+    "category": "local_system_data",
+    "source_path": "local_system_data/system_info/commands/screenfetch.adoc"
+  },
+  {
     "description": "Editor de flujo de texto para filtrar y transformar texto línea a línea.",
     "usage": "sed [OPCIONES] PATRON FICHERO",
     "options": {
@@ -2214,6 +2546,20 @@
     "name": "sed",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/sed.adoc"
+  },
+  {
+    "description": "Utilidad que informa sobre el estado de salud del hardware mediante la lectura de sensores en la placa base, CPU y otros chips compatibles.",
+    "usage": "sensors [OPCIONES]",
+    "options": {
+      "-c": "Especifica un archivo de configuración personalizado",
+      "-f": "Muestra las temperaturas en grados Fahrenheit",
+      "-u": "Muestra los datos en formato 'raw' (sin procesar/unidades brutas)",
+      "-j": "Genera la salida en formato JSON",
+      "-v": "Muestra la versión de la utilidad"
+    },
+    "name": "sensors",
+    "category": "local_system_data",
+    "source_path": "local_system_data/monitoring/commands/sensors.adoc"
   },
   {
     "description": "Gestionar servicios y trabajos (jobs) en sistemas con SysVinit (Ubuntu 9.10-14.10, RHEL 6).",
@@ -2627,6 +2973,34 @@
     "source_path": "local_network/commands/tcpdump.adoc"
   },
   {
+    "description": "Utilidad para visualizar la fecha y hora actual en diversos formatos, realizar cálculos de tiempo y configurar el reloj del sistema (requiere privilegios).",
+    "usage": "date [OPCIONES] [+FORMATO]",
+    "options": {
+      "-u": "Muestra o establece la hora en formato UTC (Universal Time Coordinated)",
+      "-d": "Muestra la hora descrita por una cadena de texto en lugar de la actual",
+      "-r": "Muestra la última fecha de modificación de un archivo",
+      "-I": "Muestra la fecha en formato ISO 8601",
+      "-s": "Establece la fecha y hora del sistema (requiere sudo)",
+      "format": "Usa una cadena que comienza con '+' para definir la salida"
+    },
+    "name": "tee",
+    "category": "local_system_data",
+    "source_path": "local_system_data/in_out/commands/tee.adoc"
+  },
+  {
+    "description": "Utilidad que ejecuta un programa especificado y, al finalizar, informa sobre el tiempo real transcurrido, el tiempo de CPU del usuario y el tiempo de CPU del sistema.",
+    "usage": "time [OPCIONES] COMANDO [ARGUMENTOS]",
+    "options": {
+      "-p": "Muestra la salida en el formato de portabilidad POSIX estándar",
+      "-v": "Muestra un informe detallado (verbose) de todos los recursos del sistema",
+      "-o": "Escribe el resultado del tiempo en un archivo en lugar de stderr",
+      "-a": "Añade la salida al archivo especificado (junto con -o) en lugar de sobrescribir"
+    },
+    "name": "time",
+    "category": "local_system_data",
+    "source_path": "local_system_data/in_out/commands/time.adoc"
+  },
+  {
     "description": "Inicia un comando y lo detiene si todavía se está ejecutando después del intervalo de tiempo especificado. Es ideal para evitar que procesos se queden bloqueados indefinidamente.",
     "usage": "timeout [OPCIONES] DURACIÓN COMANDO [ARG]...",
     "options": {
@@ -2820,6 +3194,18 @@
     "source_path": "local_filesystem/commands/updatedb.adoc"
   },
   {
+    "description": "Proporciona una línea con la hora actual, el tiempo total de funcionamiento, el número de usuarios conectados y la media de carga del sistema (load average).",
+    "usage": "uptime [OPCIONES]",
+    "options": {
+      "-p": "Muestra el tiempo de actividad en un formato amigable (pretty)",
+      "-s": "Muestra la fecha y hora exacta desde que el sistema arrancó",
+      "-V": "Muestra la información de la versión"
+    },
+    "name": "uptime",
+    "category": "local_system_data",
+    "source_path": "local_system_data/monitoring/commands/uptime.adoc"
+  },
+  {
     "description": "Crear cuentas de usuario de bajo nivel mediante opciones explícitas (no interactivo).",
     "usage": "useradd [OPCIONES] USUARIO",
     "options": {
@@ -2962,6 +3348,23 @@
     "source_path": "local_permissions/commands/visudo.adoc"
   },
   {
+    "description": "Herramienta que resume la utilización de los recursos del sistema. El primer informe muestra promedios desde el último arranque; los siguientes informes son sobre el intervalo especificado.",
+    "usage": "vmstat [OPCIONES] [INTERVALO] [RECUENTO]",
+    "options": {
+      "-a": "Muestra memoria activa e inactiva (en lugar de buffer y caché)",
+      "-f": "Muestra el número de bifurcaciones (forks) desde el arranque",
+      "-m": "Muestra la utilización de la memoria slab (caché del kernel)",
+      "-s": "Muestra una tabla con varios contadores de eventos y estadísticas",
+      "-d": "Muestra estadísticas detalladas de lectura/escritura de discos",
+      "-p": "Muestra estadísticas detalladas de una partición específica",
+      "-S": "Define la unidad de medida (k, K, m, M) para la salida",
+      "-w": "Salida ancha (wide) para mejorar la legibilidad en pantallas grandes"
+    },
+    "name": "vmstat",
+    "category": "local_system_data",
+    "source_path": "local_system_data/monitoring/commands/vmstat.adoc"
+  },
+  {
     "description": "Servidor FTP ligero y seguro para sistemas Linux, diseñado para evitar vulnerabilidades de seguridad comunes.",
     "usage": "vsftpd [ARCHIVO_CONFIG]",
     "options": {
@@ -3003,6 +3406,22 @@
     "name": "wall",
     "category": "local_users",
     "source_path": "local_users/commands/wall.adoc"
+  },
+  {
+    "description": "Utilidad que permite ejecutar un comando a intervalos regulares, permitiendo observar los cambios en su salida de forma dinámica sin limpiar la terminal manualmente.",
+    "usage": "watch [OPCIONES] [COMANDO]",
+    "options": {
+      "-n": "Establece el intervalo de actualización en segundos (por defecto 2)",
+      "-d": "Resalta las diferencias entre las actualizaciones sucesivas",
+      "-t": "Omite la cabecera que muestra el intervalo, el comando y la hora actual",
+      "-e": "Detiene la ejecución si el comando devuelve un error (exit non-zero)",
+      "-g": "Finaliza cuando la salida del comando cambia",
+      "-x": "Pasa el comando a 'exec' en lugar de 'sh -c' (útil para caracteres especiales)",
+      "-c": "Interpreta y muestra secuencias de escape de color ANSI"
+    },
+    "name": "watch",
+    "category": "local_system_data",
+    "source_path": "local_system_data/monitoring/commands/watch.adoc"
   },
   {
     "description": "Contar líneas, palabras y bytes de uno o varios ficheros.",
@@ -3085,6 +3504,52 @@
     "source_path": "local_filesystem/commands/xargs.adoc"
   },
   {
+    "description": "Muestra información detallada sobre un servidor X, incluyendo capacidades de la pantalla, extensiones disponibles, resoluciones soportadas y parámetros visuales.",
+    "usage": "xdpyinfo [OPCIONES]",
+    "options": {
+      "-display": "Especifica el servidor X que se desea consultar (ej. :0)",
+      "-queryExtensions": "Muestra información detallada sobre las extensiones del servidor",
+      "-ext": "Muestra información sobre una extensión específica",
+      "-version": "Muestra la versión de la utilidad"
+    },
+    "name": "xdpyinfo",
+    "category": "local_system_data",
+    "source_path": "local_system_data/graphics/commands/xdpyinfo.adoc"
+  },
+  {
+    "description": "Utilidad de línea de comandos para interactuar con la extensión RandR del servidor X. Permite configurar monitores externos, cambiar la resolución, rotar la imagen y gestionar múltiples pantallas sin reiniciar el servidor gráfico.",
+    "usage": "xrandr [OPCIONES]",
+    "options": {
+      "-q": "Muestra el estado actual del sistema (monitores conectados y modos)",
+      "--output": "Selecciona la salida de video a configurar (e.g., HDMI-1, eDP-1)",
+      "--mode": "Establece la resolución para la salida seleccionada",
+      "--rate": "Establece la frecuencia de refresco (Hz)",
+      "--rotate": "Rota la pantalla (normal, left, right, inverted)",
+      "--left-of / --right-of": "Posiciona un monitor respecto a otro",
+      "--primary": "Define el monitor principal del sistema",
+      "--off": "Apaga la salida de video seleccionada",
+      "--auto": "Configura la salida a su resolución preferida automáticamente"
+    },
+    "name": "xrandr",
+    "category": "local_system_data",
+    "source_path": "local_system_data/graphics/commands/xrandr.adoc"
+  },
+  {
+    "description": "Herramienta interactiva que permite obtener detalles sobre las propiedades de una ventana específica, como su ID, geometría, profundidad de color y atributos del gestor de ventanas.",
+    "usage": "xwininfo [OPCIONES]",
+    "options": {
+      "-id": "Especifica el ID de la ventana directamente en lugar de seleccionarla con el ratón",
+      "-name": "Busca la ventana por su título (Property WM_NAME)",
+      "-root": "Obtiene información sobre la ventana raíz (el escritorio completo)",
+      "-children": "Muestra la jerarquía de ventanas hijas",
+      "-all": "Muestra toda la información técnica disponible de la ventana",
+      "-stats": "Muestra estadísticas de geometría (opción por defecto)"
+    },
+    "name": "xwininfo",
+    "category": "local_system_data",
+    "source_path": "local_system_data/graphics/commands/xwininfo.adoc"
+  },
+  {
     "description": "Comprimir y descomprimir archivos usando el algoritmo LZMA/LZMA2.",
     "usage": "xz [OPCIONES] FICHERO",
     "options": {
@@ -3099,6 +3564,17 @@
     "name": "xz",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/xz.adoc"
+  },
+  {
+    "description": "Utilidad que genera una salida continua de una cadena de texto (por defecto 'y'). Se utiliza principalmente para automatizar comandos interactivos que requieren confirmación.",
+    "usage": "yes [CADENA]",
+    "options": {
+      "--help": "Muestra la ayuda de uso del comando",
+      "--version": "Muestra la información de la versión"
+    },
+    "name": "yes",
+    "category": "local_system_data",
+    "source_path": "local_system_data/in_out/commands/yes.adoc"
   },
   {
     "description": "Gestor de paquetes de bajo nivel para sistemas Red Hat y derivados. Permite instalar, eliminar y consultar paquetes .rpm localmente sin resolver dependencias automáticamente.",
