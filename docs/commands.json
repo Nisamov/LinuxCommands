@@ -2637,6 +2637,24 @@
     "source_path": "local_miscellaneous/commands/sl.adoc"
   },
   {
+    "description": "Exportar bases de datos LDAP a formato LDIF para backup o análisis.",
+    "usage": "slapcat [OPCIONES]",
+    "options": {
+      "-n": "Seleccionar base de datos por número",
+      "-b": "Especificar el DN base a exportar",
+      "-l": "Guardar salida en un archivo",
+      "-o": "Opciones adicionales",
+      "-d": "Modo debug",
+      "-c": "Continuar en caso de errores",
+      "-v": "Modo verbose",
+      "-F": "Especificar directorio de configuración",
+      "--help": "Mostrar ayuda en pantalla"
+    },
+    "name": "slapcat",
+    "category": "host_shared_storage",
+    "source_path": "host_shared_storage/ldap_server/commands/slapcat.adoc"
+  },
+  {
     "description": "Herramienta para monitorizar el estado de salud de discos duros y SSD mediante S.M.A.R.T.",
     "usage": "smartctl [OPCIONES] DISPOSITIVO",
     "options": {
