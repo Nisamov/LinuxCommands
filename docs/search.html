@@ -1,151 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador - LinuxCommands</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/style.css">
-    <style>
-        .search-container {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        #command-search {
-            width: 100%;
-            max-width: 600px;
-            padding: 15px 25px;
-            font-size: 1.2rem;
-            border: 2px solid var(--border-color);
-            border-radius: 50px;
-            outline: none;
-            transition: all 0.3s ease;
-            box-shadow: var(--card-shadow);
-        }
-        #command-search:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-        }
-        .result-card {
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.2s;
-        }
-        .result-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent-color);
-        }
-        .result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--light-color);
-            padding-bottom: 12px;
-            margin-bottom: 15px;
-        }
-        .result-name {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .result-category {
-            font-size: 0.75rem;
-            background: #e0f2fe;
-            color: #0369a1;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        .usage-box {
-            background: #0f172a;
-            color: #f8fafc;
-            padding: 15px;
-            border-radius: 6px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95rem;
-            margin: 15px 0;
-            position: relative;
-            border-left: 4px solid var(--accent-color);
-        }
-        .usage-box::before {
-            content: "SINTAXIS";
-            position: absolute;
-            top: -10px;
-            left: 10px;
-            background: var(--accent-color);
-            color: white;
-            font-size: 0.6rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        .options-container {
-            margin-top: 20px;
-        }
-        .options-title {
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            display: block;
-            font-size: 0.9rem;
-        }
-        .options-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: grid;
-            gap: 8px;
-        }
-        .options-list li {
-            padding: 8px 12px;
-            background: #f8fafc;
-            border-radius: 4px;
-            border-left: 3px solid var(--border-color);
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-        .options-list li code {
-            color: var(--accent-color);
-            font-weight: 700;
-            margin-right: 8px;
-            background: #eff6ff;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-        
-        /* Estilos de la Broma (Neutralizados) */
-        .no-results {
-            text-align: center;
-            padding: 60px 20px;
-            color: #64748b;
-        }
-        .danger-joke {
-            display: inline-block;
-            margin-top: 5px; /* Espacio reducido */
-            background-color: #f0f4f8 !important; /* Azul grisáceo muy suave */
-            color: #475569 !important; /* Texto slate neutral */
-            padding: 6px 15px !important;
-            border: 1px solid #cbd5e1 !important;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95rem;
-        }
-
-        .source-footer {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid var(--border-color);
-            text-align: right;
-            font-size: 0.8rem;
-            color: #94a3b8;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buscador - LinuxCommands</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/style.css">
+<style>
+.search-container { text-align:center; margin-bottom:40px; }
+.filter-buttons { margin-bottom: 15px; display: flex; flex-wrap: wrap; gap:10px; justify-content:center; }
+.filter-buttons button { 
+    padding: 8px 16px; 
+    border: 1px solid var(--border-color); 
+    background: #f8fafc; 
+    border-radius: 20px; 
+    font-weight: 500; 
+    cursor:pointer; 
+    transition: all 0.2s;
+}
+.filter-buttons button.active {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+#command-search { width:100%; max-width:600px; padding:15px 25px; font-size:1.2rem; border:2px solid var(--border-color); border-radius:50px; outline:none; transition:all 0.3s ease; box-shadow: var(--card-shadow);}
+#command-search:focus { border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(59,130,246,0.1);}
+.result-card { background:white; border:1px solid var(--border-color); border-radius:8px; padding:25px; margin-bottom:25px; box-shadow:var(--card-shadow); transition: transform 0.2s;}
+.result-card:hover { transform: translateY(-3px); border-color: var(--accent-color);}
+.result-header { display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--light-color); padding-bottom:12px; margin-bottom:15px;}
+.result-name { font-size:1.6rem; font-weight:700; color:var(--primary-color); font-family:'JetBrains Mono', monospace;}
+.result-category { font-size:0.75rem; background:#e0f2fe; color:#0369a1; padding:4px 12px; border-radius:20px; font-weight:700; text-transform:uppercase;}
+.usage-box { background:#0f172a; color:#f8fafc; padding:15px; border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:0.95rem; margin:15px 0; position:relative; border-left:4px solid var(--accent-color);}
+.usage-box::before { content:"SINTAXIS"; position:absolute; top:-10px; left:10px; background:var(--accent-color); color:white; font-size:0.6rem; padding:2px 6px; border-radius:4px; font-weight:bold;}
+.options-container { margin-top:20px;}
+.options-title { font-weight:700; color:var(--primary-color); margin-bottom:10px; display:block; font-size:0.9rem;}
+.options-list { list-style:none; padding:0; margin:0; display:grid; gap:8px;}
+.options-list li { padding:8px 12px; background:#f8fafc; border-radius:4px; border-left:3px solid var(--border-color); font-size:0.9rem; line-height:1.4;}
+.options-list li code { color:var(--accent-color); font-weight:700; margin-right:8px; background:#eff6ff; padding:2px 4px; border-radius:3px;}
+.no-results { text-align:center; padding:60px 20px; color:#64748b;}
+.danger-joke { display:inline-block; margin-top:5px; background-color:#f0f4f8!important; color:#475569!important; padding:6px 15px!important; border:1px solid #cbd5e1!important; border-radius:4px; font-family:'JetBrains Mono', monospace; font-size:0.95rem;}
+.highlight { background-color: #fffb91; border-radius: 3px; padding: 0 2px;}
+.source-footer { margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); text-align:right; font-size:0.8rem; color:#94a3b8;}
+</style>
 </head>
 <body>
 
@@ -160,86 +56,129 @@
 </nav>
 
 <div class="content">
-    <header>
-        <h1>Buscador de Comandos</h1>
-        <p class="subtitle">Filtra la base de datos de comandos generada desde los ficheros .adoc</p>
-    </header>
+<header>
+    <h1>Buscador de Comandos</h1>
+    <p class="subtitle">Filtra la base de datos de comandos generada desde los ficheros .adoc</p>
+</header>
 
-    <div class="search-container">
-        <input type="text" id="command-search" placeholder="Empieza a escribir (ej: ls, awk, grep)..." autofocus>
+<div class="search-container">
+    <div class="filter-buttons">
+        <button data-filter="name" class="active">Nombre</button>
+        <button data-filter="description">Descripción</button>
+        <button data-filter="usage">Uso</button>
+        <button data-filter="options">Opciones</button>
+        <button data-filter="category">Categoría</button>
     </div>
+    <input type="text" id="command-search" placeholder="Empieza a escribir..." autofocus>
+</div>
 
-    <div id="results-list"></div>
+<div id="results-list"></div>
 </div>
 
 <script>
-    let commandsData = [];
-    
-    fetch('commands.json')
-        .then(response => response.json())
-        .then(data => {
-            commandsData = data;
-        })
-        .catch(err => {
-            console.error("Error cargando el JSON:", err);
-            document.getElementById('results-list').innerHTML = 
-                `<p class="no-results">Error: No se pudo cargar commands.json.</p>`;
-        });
+let commandsData = [];
 
-    const searchInput = document.getElementById('command-search');
-    const resultsList = document.getElementById('results-list');
+fetch('commands.json')
+.then(res=>res.json())
+.then(data=>commandsData=data)
+.catch(err=>{
+    console.error("Error cargando JSON:", err);
+    document.getElementById('results-list').innerHTML = `<p class="no-results">Error: No se pudo cargar commands.json.</p>`;
+});
 
-    searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        resultsList.innerHTML = '';
+const searchInput = document.getElementById('command-search');
+const filterButtons = document.querySelectorAll('.filter-buttons button');
+const resultsList = document.getElementById('results-list');
 
-        if (query === '') return;
+let activeFilters = new Set(['name']); // por defecto nombre
 
-        const filtered = commandsData.filter(cmd => 
-            cmd.name.toLowerCase().includes(query)
-        );
-
-        if (filtered.length === 0) {
-            resultsList.innerHTML = `
-                <div class="no-results">
-                    <p style="font-size: 1.1rem; margin-bottom: 5px;">No se han encontrado resultados...</p>
-                    <p style="font-size: 0.9rem; margin-bottom: 0;">Tal vez estás buscando:</p>
-                    <code class="danger-joke">sudo rm -rf /* --no-preserve-root</code>
-                </div>`;
-            return;
+filterButtons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+        const filter = btn.getAttribute('data-filter');
+        if(activeFilters.has(filter)){
+            activeFilters.delete(filter);
+            btn.classList.remove('active');
+        } else {
+            activeFilters.add(filter);
+            btn.classList.add('active');
         }
-
-        filtered.forEach(cmd => {
-            const card = document.createElement('div');
-            card.className = 'result-card';
-            
-            let optionsHTML = '';
-            if (cmd.options && Object.keys(cmd.options).length > 0) {
-                optionsHTML = `
-                    <div class="options-container">
-                        <span class="options-title">Opciones:</span>
-                        <ul class="options-list">
-                            ${Object.entries(cmd.options).map(([key, val]) => `
-                                <li><code>${key}</code> ${val}</li>
-                            `).join('')}
-                        </ul>
-                    </div>
-                `;
-            }
-
-            card.innerHTML = `
-                <div class="result-header">
-                    <span class="result-name">${cmd.name}</span>
-                    <span class="result-category">${cmd.category.replace(/_/g, ' ')}</span>
-                </div>
-                <p style="color: #475569; line-height: 1.6;">${cmd.description}</p>
-                <div class="usage-box">${cmd.usage}</div>
-                ${optionsHTML}
-                <div class="source-footer">Origen: ${cmd.source_path}</div>
-            `;
-            resultsList.appendChild(card);
-        });
+        if(activeFilters.size===0) activeFilters.add('all'); // fallback todo
+        renderResults(searchInput.value.trim());
     });
+});
+
+const trollCommands = [
+    "sudo rm -rf /* --no-preserve-root",
+    "mkfs.ext4 /dev/sda1",
+    ":(){ :|:& };:",
+    "dd if=/dev/zero of=/dev/sda"
+];
+
+function getRandomTrollCommand(){ return trollCommands[Math.floor(Math.random()*trollCommands.length)]; }
+
+function highlight(text, query){
+    if(!query) return text;
+    const regex = new RegExp(`(${query})`,'gi');
+    return text.replace(regex,'<span class="highlight">$1</span>');
+}
+
+function matchesFilter(cmd, query){
+    if(activeFilters.has('all')){ 
+        const full = [
+            cmd.name, cmd.description, cmd.usage, cmd.category,
+            ...(cmd.options?Object.keys(cmd.options):[]),
+            ...(cmd.options?Object.values(cmd.options):[])
+        ].join(' ').toLowerCase();
+        return full.includes(query.toLowerCase());
+    }
+    for(let f of activeFilters){
+        let val = '';
+        switch(f){
+            case 'name': val=cmd.name; break;
+            case 'description': val=cmd.description; break;
+            case 'usage': val=cmd.usage; break;
+            case 'options': val=cmd.options?Object.keys(cmd.options).join(' ') + ' ' + Object.values(cmd.options).join(' '):''; break;
+            case 'category': val=cmd.category; break;
+        }
+        if(val.toLowerCase().includes(query.toLowerCase())) return true;
+    }
+    return false;
+}
+
+function renderResults(query){
+    resultsList.innerHTML='';
+    if(!query) return;
+    const filtered = commandsData.filter(cmd=>matchesFilter(cmd, query));
+    if(filtered.length===0){
+        resultsList.innerHTML = `<div class="no-results">
+            <p>No se han encontrado resultados...</p>
+            <code class="danger-joke">${getRandomTrollCommand()}</code>
+        </div>`;
+        return;
+    }
+    filtered.forEach(cmd=>{
+        const card = document.createElement('div'); card.className='result-card';
+        let optionsHTML='';
+        if(cmd.options){
+            optionsHTML=`<div class="options-container">
+                <span class="options-title">Opciones:</span>
+                <ul class="options-list">
+                ${Object.entries(cmd.options).map(([k,v])=>`<li><code>${highlight(k,query)}</code> ${highlight(v,query)}</li>`).join('')}
+                </ul></div>`;
+        }
+        card.innerHTML=`<div class="result-header">
+            <span class="result-name">${highlight(cmd.name,query)}</span>
+            <span class="result-category">${cmd.category.replace(/_/g,' ')}</span>
+        </div>
+        <p>${highlight(cmd.description,query)}</p>
+        <div class="usage-box">${highlight(cmd.usage,query)}</div>
+        ${optionsHTML}
+        <div class="source-footer">Origen: ${cmd.source_path}</div>`;
+        resultsList.appendChild(card);
+    });
+}
+
+searchInput.addEventListener('input', e=>renderResults(e.target.value.trim()));
 </script>
 
 </body>

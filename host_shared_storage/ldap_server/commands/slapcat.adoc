@@ -1,0 +1,93 @@
+=== slapcat
+Permite exportar el contenido de una base de datos LDAP a formato LDIF. Es comúnmente utilizado para realizar copias de seguridad o inspeccionar los datos almacenados en un servidor OpenLDAP.
+
+:category: host_shared_storage
+[.metadata]
+{
+  "description": "Exportar bases de datos LDAP a formato LDIF para backup o análisis.",
+  "usage": "slapcat [OPCIONES]",
+  "options": {
+    "-n": "Seleccionar base de datos por número",
+    "-b": "Especificar el DN base a exportar",
+    "-l": "Guardar salida en un archivo",
+    "-o": "Opciones adicionales",
+    "-d": "Modo debug",
+    "-c": "Continuar en caso de errores",
+    "-v": "Modo verbose",
+    "-F": "Especificar directorio de configuración",
+    "--help": "Mostrar ayuda en pantalla"
+  }
+}
+
+-Seleccionar base de datos:: `-n`
+
+[source,bash]
+----
+# Exportar la base de datos número 1
+slapcat -n 1
+----
+
+-Especificar DN base:: `-b`
+
+[source,bash]
+----
+# Exportar únicamente una rama específica del directorio LDAP
+slapcat -b "dc=example,dc=com"
+----
+
+-Guardar salida en archivo:: `-l`
+
+[source,bash]
+----
+# Exportar la base de datos a un archivo LDIF
+slapcat -l backup.ldif
+----
+
+-Opciones adicionales:: `-o`
+
+[source,bash]
+----
+# Ejecutar slapcat con opciones adicionales
+slapcat -o ldif-wrap=no
+----
+
+-Modo debug:: `-d`
+
+[source,bash]
+----
+# Ejecutar slapcat en modo debug
+slapcat -d 1
+----
+
+-Continuar en caso de errores:: `-c`
+
+[source,bash]
+----
+# Continuar exportación aunque existan errores
+slapcat -c -l backup.ldif
+----
+
+-Modo verbose:: `-v`
+
+[source,bash]
+----
+# Mostrar información detallada durante la ejecución
+slapcat -v
+----
+
+-Especificar directorio de configuración:: `-F`
+
+[source,bash]
+----
+# Usar un directorio de configuración específico
+slapcat -F /etc/ldap/slapd.d
+----
+
+--help:: Mostrar ayuda en pantalla
+
+[source,bash]
+----
+# slapcat --help
+# Muestra todas las opciones disponibles y la sintaxis de uso
+----
+
