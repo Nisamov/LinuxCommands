@@ -1,0 +1,46 @@
+=== hashcat
+Herramienta avanzada de recuperación de contraseñas basada en GPU.
+
+:category: local_security
+[.metadata]
+{
+  "description": "El crackeador de hashes más rápido del mundo, con soporte para múltiples algoritmos y aceleración por hardware (OpenCL/CUDA).",
+  "usage": "hashcat [opciones] hash [diccionario|máscara]",
+  "options": {
+    "modos_ataque": "-a 0 (Diccionario), -a 3 (Brute-force), -a 6 (Combinación)",
+    "tipos_hash": "-m 0 (MD5), -m 100 (SHA1), -m 1800 (SHA512/Unix), -m 2500 (WPA2)",
+    "rendimiento": "-O (Optimizar kernel), -w 3 (Perfil de carga alta)",
+    "ayuda": "--help para listar los cientos de algoritmos soportados"
+  }
+}
+
+[source,bash]
+----
+# Ataque de diccionario (Modo 0) contra un hash MD5 (Modo 1000)
+hashcat -a 0 -m 1000 hashes.txt diccionario.txt
+----
+
+modos_ataque:: Define la técnica: `0` es directo (wordlist), `3` es máscara (fuerza bruta personalizada) y `6` combina diccionario con máscara.
+
+[source,bash]
+----
+# Ataque de fuerza bruta (máscara) para 8 dígitos numéricos
+hashcat -a 3 -m 0 hash.txt ?d?d?d?d?d?d?d?d
+----
+
+tipos_hash:: El flag `-m` indica el algoritmo. Es vital identificarlo correctamente antes de empezar para no desperdiciar ciclos de computación.
+
+[source,bash]
+----
+# Identificar códigos de hash comunes
+hashcat --help | grep -i "sha256"
+----
+
+rendimiento:: El flag `-w` (Workload profile) ajusta el impacto en el sistema. `3` o `4` usan casi toda la GPU, haciendo que el sistema responda lento.
+
+[source,bash]
+----
+# Ejecutar con carga de trabajo optimizada para cracks largos
+hashcat -m 1800 shadow_hashes.txt -a 0 rockyou.txt -w 3
+----
+

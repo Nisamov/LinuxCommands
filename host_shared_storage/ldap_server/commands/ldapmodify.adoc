@@ -1,0 +1,41 @@
+=== ldapmodify
+Modifica o elimina atributos de entradas existentes en el árbol LDAP.
+
+:category: host_shared_storage
+[.metadata]
+{
+  "description": "Permite alterar el contenido del directorio mediante instrucciones de cambio (add, replace, delete) en formato LDIF.",
+  "usage": "ldapmodify [opciones] -f cambios.ldif",
+  "options": {
+    "operacion": "-a (Añadir nuevas entradas, igual que ldapadd)",
+    "conexion": "-H (Servidor), -x (Auth simple)",
+    "seguridad": "-Z (Iniciar TLS), -D (Usuario con permisos)",
+    "archivo": "-f (Archivo con las directivas de modificación)"
+  }
+}
+
+[source,bash]
+----
+# Cambiar el apellido (sn) de un usuario
+ldapmodify -x -D "cn=admin,dc=com" -W -f cambio.ldif
+----
+
+operacion:: A diferencia de `ldapadd`, `ldapmodify` requiere que el LDIF especifique el tipo de cambio (`changetype: modify`).
+
+[source,bash]
+----
+# Ejemplo de archivo de modificación
+# dn: uid=jdoe,ou=users,dc=com
+# changetype: modify
+# replace: mail
+# mail: nuevo_correo@ejemplo.com
+----
+
+seguridad:: En entornos de producción, es obligatorio usar `-Z` para asegurar que la contraseña y los datos viajen cifrados.
+
+[source,bash]
+----
+# Modificación segura usando StartTLS
+ldapmodify -Z -x -H ldap://servidor.com -D "cn=admin,dc=com" -W -f mod.ldif
+----
+

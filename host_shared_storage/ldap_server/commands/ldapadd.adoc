@@ -1,0 +1,42 @@
+=== ldapadd
+Inserta nuevas entradas en el directorio LDAP desde un archivo LDIF.
+
+:category: host_shared_storage
+[.metadata]
+{
+  "description": "Variante de ldapmodify que está configurada por defecto para añadir nuevas entradas.",
+  "usage": "ldapadd [opciones] -f archivo.ldif",
+  "options": {
+    "archivo": "-f (Ruta al archivo LDIF con los datos)",
+    "identidad": "-x (Simple auth), -D (Bind DN), -W (Contraseña)",
+    "control": "-c (Continuar en caso de error), -n (Simulación/Dry-run)",
+    "servidor": "-H (URI del servidor LDAP)"
+  }
+}
+
+[source,bash]
+----
+# Añadir un nuevo usuario desde un archivo .ldif
+ldapadd -x -D "cn=admin,dc=ejemplo,dc=com" -W -f nuevo_usuario.ldif
+----
+
+archivo:: El archivo LDIF debe estar correctamente formateado, empezando con el `dn:` de la nueva entrada.
+
+[source,bash]
+----
+# Ejemplo de contenido de nuevo_usuario.ldif
+# dn: uid=jdoe,ou=users,dc=ejemplo,dc=com
+# objectClass: inetOrgPerson
+# cn: John Doe
+# sn: Doe
+# uid: jdoe
+----
+
+control:: Si estás cargando un archivo masivo, el flag `-c` evita que el proceso se detenga si una entrada ya existe o tiene errores.
+
+[source,bash]
+----
+# Carga masiva ignorando errores de duplicados
+ldapadd -x -D "cn=admin,dc=com" -W -c -f backup_usuarios.ldif
+----
+

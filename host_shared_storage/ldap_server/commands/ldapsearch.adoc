@@ -1,0 +1,46 @@
+=== ldapsearch
+Herramienta de shell para abrir una conexión a un servidor LDAP y realizar búsquedas.
+
+:category: host_shared_storage
+[.metadata]
+{
+  "description": "Lleva a cabo una búsqueda LDAP basada en filtros específicos y devuelve los resultados en formato LDIF.",
+  "usage": "ldapsearch [opciones] [filtro]",
+  "options": {
+    "conexion": "-x (Simple auth), -H (URI del servidor), -b (Base DN)",
+    "autenticacion": "-D (Bind DN), -W (Pedir contraseña), -w (Contraseña en texto)",
+    "salida": "-LLL (Formato LDIF limpio), -A (Solo atributos, sin valores)",
+    "filtros": "Soporta operadores lógicos como (&), (|) y (!)"
+  }
+}
+
+[source,bash]
+----
+# Búsqueda simple de todos los objetos en una base específica
+ldapsearch -x -b "dc=ejemplo,dc=com" -H ldap://localhost
+----
+
+conexion:: El parámetro `-b` define el punto de partida en el árbol del directorio (Base DN). Sin esto, la búsqueda suele fallar.
+
+[source,bash]
+----
+# Buscar un usuario específico por su UID
+ldapsearch -x -H ldaps://ldap.server.com -b "ou=users,dc=empresa,dc=es" "(uid=usuario1)"
+----
+
+autenticacion:: Para realizar búsquedas que requieren permisos, se usa `-D` para identificarse como un usuario con privilegios (como el admin).
+
+[source,bash]
+----
+# Autenticarse como administrador para buscar
+ldapsearch -x -D "cn=admin,dc=ejemplo,dc=com" -W -b "dc=ejemplo,dc=com"
+----
+
+salida:: El flag `-LLL` elimina comentarios y metadatos innecesarios de la respuesta, ideal para procesar la salida con scripts.
+
+[source,bash]
+----
+# Listar solo los correos electrónicos de los usuarios
+ldapsearch -x -LLL -b "dc=com" "(objectClass=person)" mail
+----
+

@@ -1,0 +1,41 @@
+=== slappasswd
+Genera valores de contraseña hash para usar en configuraciones LDAP.
+
+:category: host_shared_storage
+[.metadata]
+{
+  "description": "Herramienta de utilidad para crear hashes de contraseñas compatibles con 'userPassword' en slapd.",
+  "usage": "slappasswd [opciones]",
+  "options": {
+    "esquema": "-s (Contraseña en texto plano), -h (Algoritmo: {SSHA}, {SHA}, {SMD5})",
+    "verificacion": "-u (Muestra solo el hash, sin etiquetas)",
+    "entrada": "-T (Leer contraseña de un archivo)",
+    "ayuda": "--help para ver algoritmos de cifrado disponibles"
+  }
+}
+
+[source,bash]
+----
+# Generar un hash SSHA (por defecto) de forma interactiva
+slappasswd
+# New password: 
+# Re-enter new password: 
+# {SSHA}yUv6...
+----
+
+esquema:: Permite elegir algoritmos más robustos. Se recomienda `{SSHA}` (Salted SHA) sobre MD5 o SHA simple.
+
+[source,bash]
+----
+# Generar un hash usando el algoritmo SHA-512
+slappasswd -h "{SHA512}" -s "mi_password_secreta"
+----
+
+entrada:: El flag `-s` es útil para scripts, pero deja la contraseña en el historial de bash. Es más seguro usar la forma interactiva.
+
+[source,bash]
+----
+# Uso rápido (Cuidado: queda en el historial de comandos)
+slappasswd -s "12345"
+----
+

@@ -1,0 +1,54 @@
+=== httrack
+Crea copias locales (mirrors) de sitios web completos.
+
+:category: host_web_services
+[.metadata]
+{
+  "description": "Permite descargar un sitio World Wide Web de Internet a un directorio local, construyendo recursivamente todos los directorios y descargando HTML, imágenes y otros archivos.",
+  "usage": "httrack [URL] [-O ruta_de_salida] [opciones]",
+  "options": {
+    "recursividad": "-rN (Nivel de profundidad, ej. -r3)",
+    "filtros": "+*.com/* -*.gif (Incluir/Excluir tipos de archivo o dominios)",
+    "limites": "-A25000 (Límite de velocidad en bytes/s), -%cN (Número de conexiones simultáneas)",
+    "interfaz": "-W (Usa modo interactivo paso a paso)"
+  }
+}
+
+[source,bash]
+----
+# Clonar un sitio web completo en el directorio actual
+httrack "http://www.ejemplo.com"
+----
+
+recursividad:: Por defecto, HTTrack sigue los enlaces de forma profunda. Puedes limitar qué tan "lejos" llega desde la página inicial con el flag `-r`.
+
+[source,bash]
+----
+# Clonar un sitio limitando la profundidad a 2 niveles
+httrack "http://www.ejemplo.com" -r2
+----
+
+filtros:: Es muy útil para evitar descargar archivos pesados como videos o imágenes si solo te interesa el código fuente o el texto.
+
+[source,bash]
+----
+# Clonar un sitio excluyendo todos los archivos .zip y .pdf
+httrack "http://www.ejemplo.com" "-*.zip" "-*.pdf"
+----
+
+limites:: Para no saturar el ancho de banda del servidor (y evitar ser bloqueado), se recomienda limitar la velocidad y el número de conexiones.
+
+[source,bash]
+----
+# Clonar un sitio con un máximo de 5 conexiones simultáneas
+httrack "http://www.ejemplo.com" -%c5
+----
+
+interfaz:: Si prefieres no recordar todos los flags, el modo "Wizard" te guiará preguntando el nombre del proyecto y las opciones.
+
+[source,bash]
+----
+# Iniciar el asistente interactivo
+httrack -W
+----
+
