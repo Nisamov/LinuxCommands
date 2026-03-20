@@ -1026,6 +1026,19 @@
     "source_path": "local_filesystem/commands/gzip.adoc"
   },
   {
+    "description": "El crackeador de hashes más rápido del mundo, con soporte para múltiples algoritmos y aceleración por hardware (OpenCL/CUDA).",
+    "usage": "hashcat [opciones] hash [diccionario|máscara]",
+    "options": {
+      "modos_ataque": "-a 0 (Diccionario), -a 3 (Brute-force), -a 6 (Combinación)",
+      "tipos_hash": "-m 0 (MD5), -m 100 (SHA1), -m 1800 (SHA512/Unix), -m 2500 (WPA2)",
+      "rendimiento": "-O (Optimizar kernel), -w 3 (Perfil de carga alta)",
+      "ayuda": "--help para listar los cientos de algoritmos soportados"
+    },
+    "name": "hashcat",
+    "category": "local_security",
+    "source_path": "local_security/commands/hashcat.adoc"
+  },
+  {
     "description": "Mostrar las primeras líneas de uno o varios ficheros.",
     "usage": "head [OPCIONES] fichero(s)",
     "options": {
@@ -1089,6 +1102,19 @@
     "name": "htop",
     "category": "local_process",
     "source_path": "local_process/commands/htop.adoc"
+  },
+  {
+    "description": "Permite descargar un sitio World Wide Web de Internet a un directorio local, construyendo recursivamente todos los directorios y descargando HTML, imágenes y otros archivos.",
+    "usage": "httrack [URL] [-O ruta_de_salida] [opciones]",
+    "options": {
+      "recursividad": "-rN (Nivel de profundidad, ej. -r3)",
+      "filtros": "+*.com/* -*.gif (Incluir/Excluir tipos de archivo o dominios)",
+      "limites": "-A25000 (Límite de velocidad en bytes/s), -%cN (Número de conexiones simultáneas)",
+      "interfaz": "-W (Usa modo interactivo paso a paso)"
+    },
+    "name": "httrack",
+    "category": "host_web_services",
+    "source_path": "host_web_services/commands/httrack.adoc"
   },
   {
     "description": "Convertir la codificación de caracteres de archivos o flujos de texto.",
@@ -1306,6 +1332,45 @@
     "name": "last",
     "category": "local_users",
     "source_path": "local_users/commands/last.adoc"
+  },
+  {
+    "description": "Variante de ldapmodify que está configurada por defecto para añadir nuevas entradas.",
+    "usage": "ldapadd [opciones] -f archivo.ldif",
+    "options": {
+      "archivo": "-f (Ruta al archivo LDIF con los datos)",
+      "identidad": "-x (Simple auth), -D (Bind DN), -W (Contraseña)",
+      "control": "-c (Continuar en caso de error), -n (Simulación/Dry-run)",
+      "servidor": "-H (URI del servidor LDAP)"
+    },
+    "name": "ldapadd",
+    "category": "host_shared_storage",
+    "source_path": "host_shared_storage/ldap_server/commands/ldapadd.adoc"
+  },
+  {
+    "description": "Permite alterar el contenido del directorio mediante instrucciones de cambio (add, replace, delete) en formato LDIF.",
+    "usage": "ldapmodify [opciones] -f cambios.ldif",
+    "options": {
+      "operacion": "-a (Añadir nuevas entradas, igual que ldapadd)",
+      "conexion": "-H (Servidor), -x (Auth simple)",
+      "seguridad": "-Z (Iniciar TLS), -D (Usuario con permisos)",
+      "archivo": "-f (Archivo con las directivas de modificación)"
+    },
+    "name": "ldapmodify",
+    "category": "host_shared_storage",
+    "source_path": "host_shared_storage/ldap_server/commands/ldapmodify.adoc"
+  },
+  {
+    "description": "Lleva a cabo una búsqueda LDAP basada en filtros específicos y devuelve los resultados en formato LDIF.",
+    "usage": "ldapsearch [opciones] [filtro]",
+    "options": {
+      "conexion": "-x (Simple auth), -H (URI del servidor), -b (Base DN)",
+      "autenticacion": "-D (Bind DN), -W (Pedir contraseña), -w (Contraseña en texto)",
+      "salida": "-LLL (Formato LDIF limpio), -A (Solo atributos, sin valores)",
+      "filtros": "Soporta operadores lógicos como (&), (|) y (!)"
+    },
+    "name": "ldapsearch",
+    "category": "host_shared_storage",
+    "source_path": "host_shared_storage/ldap_server/commands/ldapsearch.adoc"
   },
   {
     "description": "Utilidad que imprime las bibliotecas compartidas (LSOs) requeridas por cada programa o biblioteca compartida especificada en la línea de comandos.",
@@ -2653,6 +2718,19 @@
     "name": "slapcat",
     "category": "host_shared_storage",
     "source_path": "host_shared_storage/ldap_server/commands/slapcat.adoc"
+  },
+  {
+    "description": "Herramienta de utilidad para crear hashes de contraseñas compatibles con 'userPassword' en slapd.",
+    "usage": "slappasswd [opciones]",
+    "options": {
+      "esquema": "-s (Contraseña en texto plano), -h (Algoritmo: {SSHA}, {SHA}, {SMD5})",
+      "verificacion": "-u (Muestra solo el hash, sin etiquetas)",
+      "entrada": "-T (Leer contraseña de un archivo)",
+      "ayuda": "--help para ver algoritmos de cifrado disponibles"
+    },
+    "name": "slappasswd",
+    "category": "host_shared_storage",
+    "source_path": "host_shared_storage/ldap_server/commands/slappasswd.adoc"
   },
   {
     "description": "Herramienta para monitorizar el estado de salud de discos duros y SSD mediante S.M.A.R.T.",
