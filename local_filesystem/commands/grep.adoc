@@ -1,117 +1,128 @@
 === grep
-Buscar cadenas de texto en ficheros según patrones (expresiones regulares).
+Buscar patrones de texto en archivos utilizando expresiones regulares.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Buscar cadenas de texto en ficheros según patrones (expresiones regulares).",
-  "usage": "grep [OPCIONES] patron fichero",
+  "description": "Herramienta de búsqueda que filtra líneas de texto que coinciden con un patrón. Soporta desde búsquedas de texto simple hasta expresiones regulares complejas (POSIX y Perl).",
+  "usage": "grep -rinE 'error|fail' /var/log",
   "options": {
-    "-i": "Buscar ignorando mayúsculas/minúsculas",
-    "-r": "Buscar recursivamente en directorios",
-    "-n": "Mostrar número de línea",
-    "-v": "Mostrar líneas que NO coinciden",
-    "-E": "Usar expresiones regulares extendidas",
-    "-o": "Mostrar sólo la parte coincidente de cada línea",
-    "-P": "Usar expresiones regulares Perl-compatible (PCRE)",
-    "-l": "Mostrar sólo nombres de ficheros con coincidencias",
-    "-c": "Contar coincidencias por fichero",
-    "-q": "Modo silencioso (devuelve código de salida)",
-    "--color=auto": "Resaltar coincidencias"
+    "-i": "Ignorar mayúsculas y minúsculas (ignore-case)",
+    "-r": "Búsqueda recursiva en directorios y subdirectorios",
+    "-n": "Prefijar cada línea de salida con su número de línea en el archivo",
+    "-v": "Invertir la búsqueda: mostrar las líneas que NO coinciden con el patrón",
+    "-E": "Interpretar el patrón como una Expresión Regular Extendida (ERE)",
+    "-P": "Interpretar el patrón como una Expresión Regular de Perl (PCRE)",
+    "-o": "Mostrar únicamente la parte de la línea que coincide, no la línea completa",
+    "-l": "Mostrar solo los nombres de los archivos que contienen coincidencias",
+    "-L": "Mostrar solo los nombres de los archivos que NO contienen coincidencias",
+    "-c": "Mostrar el conteo total de líneas coincidentes por cada archivo",
+    "-q": "Modo silencioso: no escribe nada, solo devuelve un código de salida (0 si hay éxito)",
+    "-w": "Buscar solo coincidencias de palabras completas",
+    "-x": "Buscar solo coincidencias de líneas completas",
+    "-A": "Mostrar N líneas de contexto después (After) de la coincidencia",
+    "-B": "Mostrar N líneas de contexto antes (Before) de la coincidencia",
+    "-C": "Mostrar N líneas de contexto antes y después (Context)",
+    "--color": "Resaltar el texto coincidente con colores (auto, always, never)"
   }
 }
 
 [source,bash]
 ----
-# Buscar una cadena en un fichero
-grep "Hola Mundo" fichero.txt
+# Buscar una palabra específica en un archivo
+grep "root" /etc/passwd
 ----
 
-* -i:: `grep -i` Buscar ignorando mayúsculas
-
-[source,bash]
-----
-# Buscar sin distinguir mayúsculas
-grep -i "hola mundo" fichero.txt
-----
-
-* -r:: `grep -r` Buscar recursivamente en directorios
+-i:: `-i` Permite encontrar el patrón sin importar si está en mayúsculas o minúsculas
 
 [source,bash]
 ----
-# Buscar recursivamente en proyecto
-grep -r "TODO" /ruta/proyecto/
+# Busca "ERROR", "error", "Error", etc.
+grep -i "error" sistema.log
 ----
 
-* -n:: `grep -n` Mostrar número de línea
-
-[source,bash]
-----
-# Mostrar líneas con número
-grep -n "funcion" fichero.c
-----
-
-* -v:: `grep -v` Mostrar líneas que NO coinciden
+-r:: `-r` (o `-R`) Escanea todos los archivos dentro de una estructura de carpetas
 
 [source,bash]
 ----
-# Excluir líneas que contengan 'DEBUG'
-grep -v "DEBUG" log.txt
+# Buscar una cadena en todo el código fuente del proyecto
+grep -r "API_KEY" ./src
 ----
 
-* -E:: `grep -E` Usar expresiones regulares extendidas
-
-[source,bash]
-----
-# Usar regex extendida
-grep -E "error|warning" logfile.txt
-----
-
-* -o:: `grep -o` Mostrar sólo la parte coincidente de cada línea
+-v:: `-v` (invert-match) Filtra la salida para descartar lo que no nos interesa
 
 [source,bash]
 ----
-# Mostrar sólo coincidencias
-grep -o "pattern" fichero.txt
+# Ver procesos del sistema ignorando los del usuario root
+ps aux | grep -v "root"
 ----
 
-* -P:: `grep -P` Usar expresiones regulares Perl-compatible (PCRE)
-
-[source,bash]
-----
-# Usar PCRE
-grep -P "\d{4}-\d{2}-\d{2}" logfile.txt
-----
-
-* -l:: `grep -l` Mostrar sólo nombres de ficheros con coincidencias
+-E:: `-E` (extended-regexp) Habilita el uso de operadores modernos como `|`, `+`, `?` y `()` sin escapar
 
 [source,bash]
 ----
-# Listar archivos que contienen la cadena
-grep -l "TODO" -r src/
+# Buscar líneas que contengan 'HTTP/1.1' o 'HTTP/2.0'
+grep -E "HTTP/(1.1|2.0)" access.log
 ----
 
-* -c:: `grep -c` Contar coincidencias por fichero
-
-[source,bash]
-----
-# Contar coincidencias en fichero
-grep -c "import" script.py
-----
-
-* -q:: `grep -q` Modo silencioso (devuelve código de salida)
+-o:: `-o` (only-matching) Extrae exclusivamente el fragmento que cumple la regla
 
 [source,bash]
 ----
-# Usar en scripts, sin salida
-if grep -q "pattern" fichero.txt; then echo "found"; fi
+# Extraer todas las direcciones IP de un archivo de log (usando regex)
+grep -oE "[0-9]{1,3}(\.[0-9]{1,3}){3}" access.log
 ----
 
-* --color:: `grep --color=auto` Resaltar coincidencias
+-A, -B, -C:: Control de contexto para visualizar líneas adyacentes a la coincidencia
 
 [source,bash]
 ----
-# Resaltar coincidencias en la salida
-grep --color=auto "error" logfile.txt
+# Mostrar el error y las 3 líneas siguientes para ver la causa
+grep -A 3 "CRITICAL_ERROR" app.log
+
+# Mostrar 2 líneas antes y 2 después (contexto total)
+grep -C 2 "usuario_login" auth.log
+----
+
+-w:: `-w` (word-regexp) Evita coincidencias parciales (ej: busca 'vaca' pero no 'vacaciones')
+
+[source,bash]
+----
+# Buscar la variable 'id' pero no 'identity' o 'uuid'
+grep -w "id" script.py
+----
+
+-l / -L:: `-l` (files-with-matches) o `-L` (files-without-match) para auditoría de archivos
+
+[source,bash]
+----
+# ¿Qué archivos de configuración contienen la palabra 'bind'?
+grep -l "bind" /etc/*.conf
+----
+
+-c:: `-c` (count) Devuelve un resumen numérico en lugar del texto
+
+[source,bash]
+----
+# Contar cuántas veces aparece una IP en el log de hoy
+grep -c "192.168.1.50" access.log
+----
+
+-q:: `-q` (quiet) Ideal para condicionales en scripts de Bash
+
+[source,bash]
+----
+# Comprobar si un usuario existe sin llenar la pantalla de texto
+if grep -q "^usuario1:" /etc/passwd; then
+    echo "El usuario existe"
+fi
+----
+
+-P:: `-P` (perl-regexp) Permite usar funciones avanzadas como Lookahead o cuantificadores de Perl
+
+[source,bash]
+----
+# Buscar texto entre comillas dobles
+grep -P '(?<=").*?(?=")' archivo.json
 ----
 

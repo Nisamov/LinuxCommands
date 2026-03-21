@@ -1,90 +1,133 @@
 === find
-Buscar ficheros y directorios que cumplan criterios especificados.
+Buscar archivos y directorios en una jerarquía de directorios según diversos criterios.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Buscar ficheros y directorios que cumplan criterios especificados.",
-  "usage": "find [RUTA] [OPCIONES]",
+  "description": "Herramienta de búsqueda extremadamente versátil que permite filtrar por nombre, tipo, tamaño, permisos, fechas de acceso/modificación y ejecutar comandos sobre los resultados.",
+  "usage": "find /var/log -type f -name '*.log' -mtime -7",
   "options": {
-    "-name": "Buscar por nombre",
-    "-type": "Buscar por tipo (f=fichero, d=directorio)",
-    "-mtime": "Buscar por fecha de modificación",
-    "-atime": "Buscar por fecha de acceso",
-    "-size": "Buscar por tamaño",
-    "-maxdepth": "Limitar profundidad máxima",
-    "-mindepth": "Limitar profundidad mínima",
-    "-exec": "Ejecutar comando sobre resultados"
+    "-name": "Buscar por nombre (distingue mayúsculas)",
+    "-iname": "Buscar por nombre (ignora mayúsculas)",
+    "-type": "Filtrar por tipo (f: archivo, d: directorio, l: enlace simbólico)",
+    "-size": "Filtrar por tamaño (+ superior, - inferior, b, k, M, G)",
+    "-mtime": "Días desde la última modificación del contenido",
+    "-atime": "Días desde el último acceso al archivo",
+    "-ctime": "Días desde el último cambio de estado (metadatos/permisos)",
+    "-user": "Buscar archivos que pertenecen a un usuario específico",
+    "-group": "Buscar archivos que pertenecen a un grupo específico",
+    "-perm": "Buscar por permisos específicos (ej: 755 o -644)",
+    "-maxdepth": "Limitar la profundidad máxima de búsqueda en subdirectorios",
+    "-mindepth": "No aplicar tests o acciones en niveles inferiores al indicado",
+    "-empty": "Buscar archivos o directorios vacíos",
+    "-delete": "Eliminar los archivos encontrados (usar con precaución)",
+    "-exec": "Ejecutar un comando externo sobre cada resultado encontrado",
+    "-ok": "Igual que -exec pero solicita confirmación previa",
+    "-print": "Imprimir el nombre de la ruta (comportamiento por defecto)",
+    "-print0": "Imprimir la ruta seguida de un carácter nulo (para nombres con espacios)"
   }
 }
 
 [source,bash]
 ----
-# Buscar por nombre en árbol actual
+# Buscar todos los archivos .txt en el directorio actual y subdirectorios
 find . -name "*.txt"
 ----
 
-* -name:: `find -name` Buscar por nombre
+-name / -iname:: `-name` (exacto) o `-iname` (insensible a mayúsculas)
 
 [source,bash]
 ----
-# Buscar archivos con extensión .log
-find /var/log -name "*.log"
+# Buscar "Foto.jpg", "foto.JPG" o "FOTO.jpg"
+find /home/usuario/Imagenes -iname "foto.jpg"
 ----
 
-* -type:: `find -type` Buscar por tipo (`f` fichero, `d` directorio)
-
-[source,bash]
-----
-# Buscar sólo ficheros
-find . -type f -name "*.conf"
-----
-
-* -mtime:: `find -mtime` Buscar por fecha de modificación
+-type:: `-type` Filtra el tipo de objeto en el sistema de archivos
 
 [source,bash]
 ----
-# Buscar ficheros modificados en los últimos 7 días
-find . -mtime -7
+# Listar solo directorios que contengan la palabra "backup"
+find /mnt/datos -type d -name "*backup*"
 ----
 
-* -atime:: `find -atime` Buscar por fecha de acceso
-
-[source,bash]
-----
-# Buscar archivos accedidos en el último día
-find . -atime -1
-----
-
-* -size:: `find -size` Buscar por tamaño (ej: 1M)
+-mtime / -atime / -ctime:: `+/-N` Filtros temporales (en días)
 
 [source,bash]
 ----
-# Buscar ficheros mayores a 1M
-find /ruta -size 1M
+# Buscar archivos modificados hace menos de 24 horas (-1)
+find /etc -mtime -1
+
+# Buscar archivos cuyo contenido no ha cambiado en más de 30 días (+30)
+find /var/www -mtime +30
 ----
 
-* -maxdepth:: `find -maxdepth` Limitar profundidad máxima
-
-[source,bash]
-----
-# Limitar búsqueda a profundidad 2
-find . -maxdepth 2 -name "*.sh"
-----
-
-* -mindepth:: `find -mindepth` Limitar profundidad mínima
+-size:: `-size` Filtra por peso del archivo (c: bytes, k: KiB, M: MiB, G: GiB)
 
 [source,bash]
 ----
-# Buscar a partir de profundidad 1
-find . -mindepth 1 -name "README.md"
+# Buscar archivos mayores a 100 Megabytes
+find / -type f -size +100M
 ----
 
-* -exec:: `find -exec` Ejecutar comando sobre resultados
+-perm:: `-perm` Busca archivos con permisos específicos (octal o simbólico)
 
 [source,bash]
 ----
-# Cambiar permisos de los ficheros encontrados
-find . -type f -exec chmod 644 {} \;
+# Buscar archivos con permisos de ejecución para todos (777)
+find . -perm 777
+----
+
+-user / -group:: Filtra por propietario o grupo
+
+[source,bash]
+----
+# Buscar archivos que pertenecen al usuario 'www-data'
+find /var/www -user www-data
+----
+
+-maxdepth / -mindepth:: Controlan la recursividad de la búsqueda
+
+[source,bash]
+----
+# Buscar solo en el directorio actual, sin entrar en subcarpetas
+find /tmp -maxdepth 1 -name "*.tmp"
+----
+
+-exec / -ok:: Ejecuta una acción sobre cada coincidencia. `{}` es el marcador del archivo y `\;` finaliza el comando.
+
+[source,bash]
+----
+# Buscar archivos .log antiguos y comprimirlos
+find /var/log -name "*.log" -mtime +30 -exec gzip {} \;
+
+# Buscar y borrar pidiendo confirmación
+find . -name "test_*" -ok rm {} \;
+----
+
+-delete:: `-delete` Borra directamente los resultados encontrados
+
+[source,bash]
+----
+# Limpiar todos los archivos temporales .bak (Peligro: no pide confirmación)
+find . -name "*.bak" -delete
+----
+
+-print0:: `-print0` Útil para enviar resultados a `xargs -0` evitando errores con espacios
+
+[source,bash]
+----
+# Borrar de forma segura archivos que puedan tener espacios en el nombre
+find . -name "archivo sucio.*" -print0 | xargs -0 rm
+----
+
+Operadores Lógicos:: Permiten combinar múltiples criterios (`-and`, `-or`, `-not`)
+
+[source,bash]
+----
+# Buscar archivos que sean .sh Y que pertenezcan a root
+find /bin -name "*.sh" -and -user root
+
+# Buscar archivos que NO sean directorios
+find . -not -type d
 ----
 

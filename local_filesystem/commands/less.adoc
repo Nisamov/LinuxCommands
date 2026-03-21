@@ -1,25 +1,84 @@
 === less
-Ver ficheros de texto paginados en la terminal.
+Visor de archivos de texto que permite la navegación bidireccional y búsqueda eficiente.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Ver ficheros de texto paginados en la terminal.",
-  "usage": "less [OPCIONES] fichero",
+  "description": "Paginador de terminal que permite desplazarse hacia adelante y hacia atrás a través de un archivo. No carga el archivo completo en memoria, ideal para archivos de gran tamaño.",
+  "usage": "less +G -N /var/log/syslog",
   "options": {
-    "-n": "Mostrar número de línea",
-    "-N": "Mostrar número de línea en cada línea",
-    "-S": "Truncar líneas largas",
-    "-w": "Mostrar solo las primeras N caracteres de cada línea"
+    "-N": "Mostrar el número de línea al inicio de cada fila",
+    "-S": "Recorte de líneas largas (Chop long lines) en lugar de ajustarlas al ancho",
+    "-i": "Ignorar mayúsculas y minúsculas en las búsquedas",
+    "-M": "Mostrar un indicador de posición más detallado (líneas y porcentaje)",
+    "-X": "No limpiar la pantalla al salir del programa",
+    "-F": "Cerrar automáticamente si el contenido cabe en una sola pantalla",
+    "-R": "Interpretar secuencias de escape de color ANSI (útil para logs coloreados)",
+    "+G": "Abrir el archivo y saltar directamente al final (útil para logs activos)",
+    "+/patron": "Abrir el archivo y saltar a la primera coincidencia del patrón"
   }
 }
 
 [source,bash]
 ----
-# Abrir un fichero con less
-less fichero.txt
-
-# Buscar dentro de less (presionar / e introducir texto)
-less fichero.txt
+# Abrir un archivo para lectura interactiva
+less produccion.log
 ----
 
+-N:: `-N` (line-numbers) Facilita la referencia visual de la ubicación en el código o log
+
+[source,bash]
+----
+# Leer un script viendo los números de línea
+less -N script_complejo.sh
+----
+
+-S:: `-S` (chop-long-lines) Desactiva el ajuste de línea automático. Útil para ver tablas o CSVs anchos
+
+[source,bash]
+----
+# Desplazarse horizontalmente con las flechas para ver líneas muy largas
+less -S datos_tabulares.csv
+----
+
+-i:: `-i` (ignore-case) Hace que las búsquedas internas con `/` sean más flexibles
+
+[source,bash]
+----
+# Buscar "error" sin preocuparse por si está en mayúsculas
+less -i webserver.log
+----
+
+-R:: `-R` (raw-control-chars) Permite que se vean los colores de salida de otros comandos
+
+[source,bash]
+----
+# Ver la salida de un comando coloreado de forma paginada
+ls --color=always | less -R
+----
+
+Navegación Interna:: Comandos de teclado mientras `less` está abierto
+
+* **Flechas / J, K**: Subir o bajar una línea.
+* **Espacio / RePág**: Avanzar o retroceder una pantalla completa.
+* **G / g**: Ir al final del archivo (`G`) o al principio (`g`).
+* **/texto**: Buscar "texto" hacia adelante.
+* **?texto**: Buscar "texto" hacia atrás.
+* **n / N**: Ir a la siguiente (`n`) o anterior (`N`) coincidencia de búsqueda.
+* **&patron**: Mostrar solo las líneas que coinciden con el patrón (filtro).
+* **F**: Entrar en modo "follow" (similar a `tail -f`); presionar Ctrl+C para salir del modo.
+* **q**: Salir de `less`.
+
+[source,bash]
+----
+# Abrir el log y seguirlo en tiempo real (modo follow)
+less +F /var/log/mail.log
+----
+
+Uso con Pipes:: `less` es el destino final más común para flujos de datos largos
+
+[source,bash]
+----
+# Listar todos los archivos del sistema y navegar por la lista
+find / -type f 2>/dev/null | less
+----

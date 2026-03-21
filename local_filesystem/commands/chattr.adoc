@@ -1,73 +1,114 @@
 === chattr
-Cambiar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.
+Cambiar los atributos de archivos en sistemas de ficheros Linux (ext2, ext3, ext4, etc.).
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Herramienta para cambiar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.",
-  "usage": "chattr [OPCIONES] archivo",
+  "description": "Modifica atributos especiales del sistema de archivos que van más allá de los permisos tradicionales (lectura, escritura, ejecución). Permite hacer archivos inmutables o de solo suma.",
+  "usage": "chattr +i archivo_critico.conf",
   "options": {
-    "+i": "Hacer archivo inmutable",
-    "-i": "Hacer archivo mutable",
-    "+a": "Hacer archivo solo para añadir datos (append-only)",
-    "-a": "Quitar atributo append-only",
-    "+A": "Evitar actualización de tiempo de acceso",
-    "-A": "Permitir actualización de tiempo de acceso",
-    "-R": "Aplicar cambios recursivamente"
+    "+": "Añadir un atributo específico",
+    "-": "Quitar un atributo específico",
+    "=": "Establecer solo los atributos indicados",
+    "-R": "Aplicar cambios de forma recursiva en directorios",
+    "-V": "Modo verbose (detallado), muestra la versión del programa",
+    "-f": "Suprimir la mayoría de los mensajes de error",
+    "+i": "Atributo: Inmutable (no se puede borrar, renombrar ni modificar)",
+    "+a": "Atributo: Append-only (solo permite añadir datos al final)",
+    "+A": "Atributo: No actualizar el tiempo de acceso (atime)",
+    "+c": "Atributo: Comprimido automáticamente en el disco",
+    "+C": "Atributo: No Copy-on-Write (NOCOW)",
+    "+d": "Atributo: No incluir en volcados de dump (respaldos)",
+    "+e": "Atributo: Usar extents para la gestión de bloques",
+    "+s": "Atributo: Borrado seguro (sobrescribe con ceros al eliminar)",
+    "+S": "Atributo: Actualización síncrona (escribe a disco inmediatamente)",
+    "+u": "Atributo: Indeletable (permite recuperar el archivo tras borrarlo)"
   }
 }
 
 [source,bash]
 ----
-# Hacer un archivo inmutable
-chattr +i fichero.txt
+# Proteger un archivo contra cualquier modificación, incluso por parte de root
+chattr +i /etc/shadow
 ----
 
--R:: `chattr -R` Aplicar cambios recursivamente
-
-[source,bash]
-----
-# Hacer inmutable todos los ficheros de un directorio
-chattr -R +i /ruta/directorio
-----
-
-+i:: `chattr +i` Activar atributo inmutable
+-R:: `-R` Aplicar los cambios recursivamente a todos los archivos y subdirectorios
 
 [source,bash]
 ----
-# Evitar que el archivo sea modificado o borrado
-chattr +i fichero.txt
+# Hacer que toda una carpeta de logs sea de solo lectura/añadido
+chattr -R +a /var/log/aplicacion/
 ----
 
--i:: `chattr -i` Desactivar atributo inmutable
-
-[source,bash]
-----
-# Permitir modificaciones de nuevo
-chattr -i fichero.txt
-----
-
-+a:: `chattr +a` Activar solo agregado (append-only)
+-V:: `-V` Modo detallado que indica qué atributos se están aplicando
 
 [source,bash]
 ----
-# Solo se pueden añadir datos, no eliminar
-chattr +a logfile.log
+# Cambiar atributos viendo el resultado de la operación
+chattr -V +i fichero.txt
 ----
 
--A:: `chattr -A` Desactivar actualización de tiempo de acceso
-
-[source,bash]
-----
-# Evitar modificar el tiempo de último acceso
-chattr +A fichero.txt
-----
-
---help:: `chattr --help` Mostrar ayuda
++i / -i:: `+/-i` Activar o desactivar el atributo de inmutabilidad
 
 [source,bash]
 ----
-# Ver opciones disponibles
-chattr --help
+# Quitar la protección para poder editar un archivo protegido
+chattr -i /etc/resolv.conf
+----
+
++a / -a:: `+/-a` Activar o desactivar el modo de "solo añadir" (útil para logs)
+
+[source,bash]
+----
+# Impedir que se borren líneas antiguas de un log, permitiendo solo nuevas
+chattr +a /var/log/auth.log
+----
+
++A / -A:: `+/-A` Controlar si se actualiza el registro de último acceso (atime)
+
+[source,bash]
+----
+# Mejorar rendimiento de disco evitando escribir la hora de cada lectura
+chattr +A base_de_datos.db
+----
+
++s / -s:: `+/-s` Borrado seguro para datos altamente sensibles
+
+[source,bash]
+----
+# Asegurar que los bloques del archivo se limpien al borrarlo
+chattr +s claves_secretas.txt
+----
+
++c:: `+c` Indica al kernel que comprima el archivo de forma transparente
+
+[source,bash]
+----
+# Ahorrar espacio en disco mediante compresión nativa del FS
+chattr +c archivo_muy_grande.txt
+----
+
++C:: `+C` Desactivar Copy-on-Write (específico para sistemas como Btrfs)
+
+[source,bash]
+----
+# Optimizar el rendimiento de archivos de máquinas virtuales o DB
+chattr +C imagen_vm.qcow2
+----
+
++d:: `+d` Evitar que el comando 'dump' procese este archivo
+
+[source,bash]
+----
+# Excluir archivos temporales de las copias de seguridad del sistema
+chattr +d /tmp/archivo_temporal
+----
+
++u:: `+u` Permite la recuperación del archivo tras ser eliminado (Undelete)
+
+[source,bash]
+----
+# Facilitar el rescate de datos en caso de borrado accidental
+chattr +u tesis_final.doc
 ----
 

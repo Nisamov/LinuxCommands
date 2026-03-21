@@ -1,81 +1,87 @@
 === locate
-Buscar rápidamente archivos en el sistema usando la base de datos actualizada por `updatedb`.
+Buscar archivos rápidamente en todo el sistema mediante una base de datos indexada.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Buscar rápidamente archivos en el sistema usando la base de datos actualizada por `updatedb`.",
-  "usage": "locate [OPCIONES] patrón",
+  "description": "Encuentra rutas de archivos que coinciden con un patrón consultando una base de datos local (generalmente /var/lib/mlocate). Es mucho más rápido que 'find', pero puede no mostrar archivos creados muy recientemente si el índice no se ha actualizado.",
+  "usage": "locate -i config.xml",
   "options": {
-    "-i": "Ignorar mayúsculas/minúsculas",
-    "-r": "Usar expresiones regulares",
-    "-c": "Contar coincidencias",
-    "-l": "Limitar el número de resultados",
-    "--existing": "Mostrar solo archivos existentes",
-    "--database": "Especificar base de datos",
-    "--help": "Mostrar ayudaA"
+    "-i": "Ignorar diferencias entre mayúsculas y minúsculas (ignore-case)",
+    "-c": "Mostrar solo el número total de coincidencias encontradas",
+    "-l": "Limitar el número de resultados a la cantidad N especificada",
+    "-r": "Interpretar el patrón como una expresión regular básica",
+    "--regexp": "Interpretar el patrón como una expresión regular extendida",
+    "-e": "Mostrar solo entradas de archivos que existan físicamente en el momento de la búsqueda",
+    "-w": "Buscar coincidencias solo en el nombre del archivo (no en la ruta completa)",
+    "-b": "Buscar coincidencias solo en el nombre base (último componente de la ruta)",
+    "-d": "Utilizar una base de datos específica en lugar de la predeterminada",
+    "-S": "Mostrar estadísticas sobre la base de datos actual (nº de archivos, tamaño, etc.)",
+    "-q": "Modo silencioso: no imprimir mensajes de error sobre bases de datos no legibles"
   }
 }
 
 [source,bash]
 ----
-# Buscar archivos por nombre
-locate fichero.txt
+# Buscar cualquier ruta que contenga la palabra "backup"
+locate backup
 ----
 
-* -i:: `locate -i` Ignorar mayúsculas/minúsculas
 
-[source,bash]
-----
-# Buscar sin diferenciar entre mayúsculas y minúsculas
-locate -i FICHERO.TXT
-----
 
-* -r:: `locate -r` Usar expresiones regulares
+-i:: `-i` Realiza la búsqueda sin distinguir entre mayúsculas y minúsculas.
 
 [source,bash]
 ----
-# Buscar todos los archivos que terminen en .log
-locate -r '\.log$'
+# Encontrará "Documento.pdf", "documento.PDF" y "DOCUMENTO.pdf"
+locate -i documento.pdf
 ----
 
-* -c:: `locate -c` Contar coincidencias
-
-[source,bash]
-----
-# Contar cuántos archivos coinciden con el patrón
-locate -c fichero.txt
-----
-
-* -l:: `locate -l` Limitar el número de resultados
+-c:: `-c` (count) Devuelve el número de archivos encontrados en lugar de sus rutas.
 
 [source,bash]
 ----
-# Mostrar solo las primeras 10 coincidencias
-locate -l 10 fichero.txt
+# Saber cuántos archivos .jpg hay indexados en el sistema
+locate -c ".jpg"
 ----
 
-* --existing:: `locate --existing` Mostrar solo archivos existentes
-
-[source,bash]
-----
-# Filtrar resultados que aún existan
-locate --existing fichero.txt
-----
-
-* --database:: `locate --database` Especificar base de datos
+-l:: `-l` (limit) Útil para evitar que la terminal se llene de miles de resultados.
 
 [source,bash]
 ----
-# Usar base de datos personalizada
-locate --database /tmp/mi_locate.db fichero.txt
+# Ver solo los primeros 5 resultados de una búsqueda amplia
+locate -l 5 ".conf"
 ----
 
-* --help:: `locate --help` Mostrar ayuda
+-e:: `-e` (existing) Verifica si el archivo sigue en el disco antes de mostrarlo.
 
 [source,bash]
 ----
-# Ver opciones disponibles
-locate --help
+# Evita mostrar archivos que fueron borrados después de la última actualización del índice
+locate -e proyecto_antiguo.zip
+----
+
+-b / -w:: Controlan si la búsqueda afecta a toda la ruta o solo al nombre del archivo.
+
+[source,bash]
+----
+# Buscar archivos llamados exactamente 'passwd' (evita rutas como /etc/passwd.bak)
+locate -b '\passwd'
+----
+
+-r:: `-r` (regexp) Permite búsquedas complejas mediante expresiones regulares.
+
+[source,bash]
+----
+# Buscar archivos que terminen exactamente en .mp4 o .mkv
+locate -r '\.\(mp4\|mkv\)$'
+----
+
+-S:: `-S` (statistics) Muestra información técnica sobre el índice de búsqueda.
+
+[source,bash]
+----
+# Ver cuántos archivos hay indexados y cuánto ocupa la base de datos
+locate -S
 ----
 

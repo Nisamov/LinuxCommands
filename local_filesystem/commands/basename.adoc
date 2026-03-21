@@ -1,45 +1,71 @@
 === basename
-Extraer el nombre del fichero o directorio a partir de una ruta.
+Extraer el nombre del fichero o directorio a partir de una ruta completa.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Herramienta para obtener el nombre de un fichero o directorio a partir de una ruta completa, con opciones para eliminar sufijos o procesar múltiples rutas.",
-  "usage": "basename [OPCIONES] RUTA [SUFIJO]",
+  "description": "Elimina los directorios principales de una ruta para devolver solo el nombre base, permitiendo además quitar sufijos específicos.",
+  "usage": "basename -s '.sh' /usr/local/bin/script.sh",
   "options": {
-    "-s": "Eliminar un sufijo específico del nombre",
-    "-a": "Procesar múltiples rutas",
-    "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+    "-a": "Procesar múltiples argumentos como rutas individuales",
+    "-s": "Eliminar un sufijo específico del final del nombre",
+    "-z": "Finalizar cada línea de salida con un carácter nulo (NUL)",
+    "--help": "Mostrar la ayuda del comando y salir",
+    "--version": "Mostrar información de la versión y salir"
   }
 }
 
 [source,bash]
 ----
 # Obtener el nombre del fichero desde una ruta completa
-basename /ruta/completa/fichero.txt
+basename /home/usuario/documentos/nota.txt
 ----
 
--s:: `basename -s` Eliminar un sufijo específico del nombre
-
-[source,bash]
-----
-# Eliminar la extensión .txt del nombre
-basename -s .txt /ruta/completa/fichero.txt
-----
-
--a:: `basename -a` Procesar múltiples rutas
+-a:: `-a` (multiple) Permite pasar varias rutas como argumentos independientes
 
 [source,bash]
 ----
-# Obtener el nombre de varios ficheros
-basename -a /ruta/uno.txt /otra/ruta/dos.log
+# Extraer el nombre de tres archivos distintos en una sola ejecución
+basename -a /etc/passwd /var/log/syslog /bin/bash
 ----
 
--z:: `basename -z` Terminar cada resultado con carácter nulo (útil en scripts)
+-s:: `-s` (suffix) Elimina el sufijo indicado si coincide con el final del nombre
 
 [source,bash]
 ----
-# Salida segura para uso con xargs -0
-basename -z /ruta/completa/fichero.txt
+# Obtener el nombre del archivo eliminando la extensión .conf
+basename -s .conf /etc/apache2/apache2.conf
+----
+
+-z:: `-z` (zero) Sustituye el salto de línea por un carácter nulo (\0)
+
+[source,bash]
+----
+# Útil para tuberías (pipelines) con xargs -0 para manejar nombres con espacios
+basename -az /fotos/vacaciones\ 2024.jpg /fotos/perro.png
+----
+
+--help:: `--help` Muestra la pantalla de ayuda con la sintaxis y opciones
+
+[source,bash]
+----
+# Consultar rápidamente el manual de uso en terminal
+basename --help
+----
+
+--version:: `--version` Indica la versión instalada de coreutils
+
+[source,bash]
+----
+# Verificar la versión del binario basename
+basename --version
+----
+
+SUFIJO (Legacy):: Forma clásica de eliminar una extensión (sin usar el flag -s)
+
+[source,bash]
+----
+# Sintaxis: basename RUTA SUFIJO (Solo funciona para una ruta)
+basename /ruta/archivo.log .log
 ----
 

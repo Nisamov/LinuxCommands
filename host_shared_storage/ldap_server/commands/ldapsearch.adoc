@@ -5,11 +5,11 @@ Herramienta de shell para abrir una conexión a un servidor LDAP y realizar bús
 [.metadata]
 {
   "description": "Lleva a cabo una búsqueda LDAP basada en filtros específicos y devuelve los resultados en formato LDIF.",
-  "usage": "ldapsearch [opciones] [filtro]",
+  "usage": "ldapsearch -H ldap://localhost -x -b 'dc=empresa,dc=com' '(uid=usuario)'",
   "options": {
-    "conexion": "-x (Simple auth), -H (URI del servidor), -b (Base DN)",
-    "autenticacion": "-D (Bind DN), -W (Pedir contraseña), -w (Contraseña en texto)",
-    "salida": "-LLL (Formato LDIF limpio), -A (Solo atributos, sin valores)",
+    "-x": "-x (Simple auth), -H (URI del servidor), -b (Base DN)",
+    "-D": "-D (Bind DN), -W (Pedir contraseña), -w (Contraseña en texto)",
+    "-LLL": "-LLL (Formato LDIF limpio), -A (Solo atributos, sin valores)",
     "filtros": "Soporta operadores lógicos como (&), (|) y (!)"
   }
 }
@@ -20,27 +20,35 @@ Herramienta de shell para abrir una conexión a un servidor LDAP y realizar bús
 ldapsearch -x -b "dc=ejemplo,dc=com" -H ldap://localhost
 ----
 
-conexion:: El parámetro `-b` define el punto de partida en el árbol del directorio (Base DN). Sin esto, la búsqueda suele fallar.
+conexion:: `-x -H -b` Definir el método de conexión y el punto de inicio (Base DN)
 
 [source,bash]
 ----
-# Buscar un usuario específico por su UID
+# Buscar un usuario específico dentro de una unidad organizativa concreta
 ldapsearch -x -H ldaps://ldap.server.com -b "ou=users,dc=empresa,dc=es" "(uid=usuario1)"
 ----
 
-autenticacion:: Para realizar búsquedas que requieren permisos, se usa `-D` para identificarse como un usuario con privilegios (como el admin).
+autenticacion:: `-D -W -w` Credenciales para búsquedas que requieren privilegios
 
 [source,bash]
 ----
-# Autenticarse como administrador para buscar
-ldapsearch -x -D "cn=admin,dc=ejemplo,dc=com" -W -b "dc=ejemplo,dc=com"
+# Realizar búsqueda autenticado como administrador (solicita contraseña)
+ldapsearch -x -D "cn=admin,dc=ejemplo,dc=com" -W -b "dc=ejemplo,dc=com" "(cn=John*)"
 ----
 
-salida:: El flag `-LLL` elimina comentarios y metadatos innecesarios de la respuesta, ideal para procesar la salida con scripts.
+salida:: `-LLL -A` Formatear la respuesta para scripts o visualización limpia
 
 [source,bash]
 ----
-# Listar solo los correos electrónicos de los usuarios
+# Listar solo los correos de los usuarios en formato LDIF limpio
 ldapsearch -x -LLL -b "dc=com" "(objectClass=person)" mail
+----
+
+filtros:: `(&)(|)(!)` Uso de operadores lógicos para búsquedas complejas
+
+[source,bash]
+----
+# Buscar usuarios que pertenezcan al departamento IT Y tengan cuenta activa
+ldapsearch -x -b "dc=com" "(&(ou=IT)(objectClass=posixAccount))"
 ----
 

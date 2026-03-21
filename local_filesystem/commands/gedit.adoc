@@ -1,22 +1,79 @@
 === gedit
-Editor de texto gráfico para entornos GNOME.
+Editor de texto oficial del entorno de escritorio GNOME.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Editor de texto gráfico para entornos GNOME.",
-  "usage": "gedit [OPCIONES] fichero",
+  "description": "Editor de texto potente y sencillo con resaltado de sintaxis, pestañas y soporte para plugins, diseñado para el escritorio GNOME.",
+  "usage": "gedit --new-window archivo.txt",
   "options": {
-    "--help": "Mostrar ayuda"
+    "--new-window": "Abrir una nueva ventana en lugar de una pestaña en una instancia existente",
+    "--new-document": "Crear un nuevo documento vacío en una instancia de gedit ya abierta",
+    "-s": "Modo standalone: ejecutar como una instancia única e independiente",
+    "-w": "Esperar (wait) a que se cierre el archivo antes de devolver el control a la terminal",
+    "--list-encodings": "Mostrar todas las codificaciones de caracteres disponibles",
+    "--encoding": "Especificar la codificación de caracteres para abrir el archivo (ej: UTF-8)",
+    "--geometry": "Configurar el tamaño y posición de la ventana (ANCHO[xALTO][+X+Y])",
+    "--display": "X display a utilizar (para sesiones remotas)",
+    "--help": "Mostrar todas las opciones de ayuda del editor",
+    "--version": "Mostrar la versión de gedit instalada"
   }
 }
 
 [source,bash]
 ----
-# Abrir un fichero en gedit
-gedit ejemplo.txt
+# Abrir uno o varios archivos simultáneamente
+gedit notas.txt config.conf
 
-# Abrir en segundo plano para no bloquear la terminal
-gedit ejemplo.txt &
+# Abrir en segundo plano para seguir usando la terminal
+gedit documento.txt &
+----
+
+--new-window:: `--new-window` Fuerza la apertura en una ventana de GNOME independiente
+
+[source,bash]
+----
+# Abrir el archivo sin mezclarlo con las pestañas de otros gedit abiertos
+gedit --new-window proyecto.py
+----
+
+-w:: `-w` (wait) Bloquea la terminal hasta que el usuario cierra el archivo en el editor
+
+[source,bash]
+----
+# Útil para usar gedit como editor de mensajes en Git o scripts
+gedit -w /tmp/mensaje_temporal.txt
+----
+
+-s:: `-s` (standalone) Ejecuta gedit sin conectarse a la instancia principal del sistema
+
+[source,bash]
+----
+# Iniciar un proceso de gedit totalmente aislado
+gedit -s configuracion_critica.xml
+----
+
+--encoding:: `--encoding` Fuerza una codificación específica si el archivo se ve mal (mojibake)
+
+[source,bash]
+----
+# Abrir un archivo antiguo guardado en formato Windows
+gedit --encoding=WINDOWS-1252 archivo_viejo.txt
+----
+
+Línea Específica:: Abrir un archivo y situar el cursor directamente en una línea
+
+[source,bash]
+----
+# Abrir el código fuente justo donde está el error (línea 45)
+gedit +45 script.sh
+----
+
+Uso con privilegios:: Editar archivos del sistema de forma segura
+
+[source,bash]
+----
+# Usar 'admin://' es el método moderno preferido sobre 'sudo gedit'
+gedit admin:///etc/fstab
 ----
 

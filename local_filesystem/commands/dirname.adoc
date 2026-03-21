@@ -1,27 +1,68 @@
 === dirname
-Extraer el directorio padre a partir de una ruta.
+Extraer la ruta del directorio padre a partir de una ruta completa.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Extraer el directorio padre de una ruta completa.",
-  "usage": "dirname RUTA",
+  "description": "Elimina el último componente de una ruta (generalmente el nombre del archivo o la carpeta final) para devolver la ruta del directorio que lo contiene.",
+  "usage": "dirname /usr/local/bin/script.sh",
   "options": {
-    "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+    "-z": "Finalizar cada línea de salida con un carácter nulo (NUL) en lugar de nueva línea",
+    "-a": "Procesar múltiples argumentos como rutas individuales (en versiones recientes)",
+    "--help": "Mostrar la ayuda del comando y salir",
+    "--version": "Mostrar información de la versión y salir"
   }
 }
 
 [source,bash]
 ----
-# Obtener el directorio padre de una ruta
-dirname /ruta/completa/fichero.txt
+# Obtener el directorio donde se encuentra un archivo
+dirname /home/usuario/documentos/nota.txt
+# Salida: /home/usuario/documentos
 ----
 
--z:: `dirname -z` Terminar cada resultado con carácter nulo (útil en scripts)
+-z:: `-z` (zero) Sustituye el salto de línea por un carácter nulo (\0) al final de la salida
 
 [source,bash]
 ----
-# Salida segura para uso con xargs -0
-dirname -z /ruta/completa/fichero.txt
+# Útil para procesar rutas con espacios junto a comandos como xargs -0
+dirname -z "/ruta con espacios/archivo.txt" | xargs -0 echo
+----
+
+-a:: `-a` (multiple) Permite pasar varias rutas como argumentos y obtener el directorio de cada una
+
+[source,bash]
+----
+# Extraer directorios de varios archivos simultáneamente
+dirname -a /etc/passwd /var/log/syslog /bin/bash
+----
+
+--help:: `--help` Muestra la pantalla de ayuda con la sintaxis y opciones detalladas
+
+[source,bash]
+----
+# Consultar el manual rápido de dirname
+dirname --help
+----
+
+--version:: `--version` Indica la versión instalada de las coreutils de GNU
+
+[source,bash]
+----
+# Comprobar la versión del binario
+dirname --version
+----
+
+Casos Especiales:: Comportamiento de `dirname` con rutas relativas o raíces
+
+[source,bash]
+----
+# Si no hay directorios en la ruta, devuelve un punto (directorio actual)
+dirname archivo.txt
+# Salida: .
+
+# Si se apunta a la raíz, devuelve la raíz
+dirname /
+# Salida: /
 ----
 

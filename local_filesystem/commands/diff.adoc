@@ -1,54 +1,112 @@
 === diff
-Comparar ficheros línea por línea y mostrar diferencias.
+Comparar archivos línea por línea y mostrar las diferencias detectadas.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Comparar ficheros línea por línea y mostrar diferencias.",
-  "usage": "diff [OPCIONES] archivo1 archivo2",
+  "description": "Analiza dos archivos o directorios y genera una lista de cambios necesarios para que el primero sea igual al segundo. Es la base para la creación de parches en software.",
+  "usage": "diff -u archivo_original.txt archivo_modificado.txt",
   "options": {
-    "-c": "Mostrar diferencias con contexto",
-    "-u": "Mostrar diferencias en formato unificado",
-    "-r": "Comparar directorios recursivamente",
-    "-i": "Ignorar mayúsculas/minúsculas"
+    "-u": "Mostrar diferencias en formato unificado (estándar para parches)",
+    "-c": "Mostrar diferencias con formato de contexto (copia líneas adyacentes)",
+    "-r": "Comparar directorios de forma recursiva",
+    "-i": "Ignorar diferencias entre mayúsculas y minúsculas",
+    "-w": "Ignorar todos los espacios en blanco al comparar líneas",
+    "-b": "Ignorar cambios en la cantidad de espacio en blanco",
+    "-B": "Ignorar cambios que solo insertan o eliminan líneas vacías",
+    "-y": "Mostrar la salida en dos columnas (lado a lado)",
+    "-W": "Especificar el ancho de columna para la salida en paralelo (-y)",
+    "-q": "Modo breve: solo indica si los archivos difieren, sin dar detalles",
+    "-s": "Informar cuando dos archivos son idénticos",
+    "-e": "Generar un script de edición válido para el comando 'ed'",
+    "-N": "Tratar los archivos ausentes como archivos vacíos (útil en directorios)",
+    "--suppress-common-lines": "No mostrar líneas que sean iguales (usado con -y)"
   }
 }
 
 [source,bash]
 ----
-# Comparar dos ficheros
-diff fichero1.txt fichero2.txt
+# Comparación simple entre dos archivos de texto
+diff nota1.txt nota2.txt
 ----
 
-* -u:: `diff -u` Mostrar diferencias en formato unificado
-
-[source,bash]
-----
-# Comparar en formato unificado (útil para parches)
-diff -u fichero1.txt fichero2.txt > cambios.patch
-----
-
-* -c:: `diff -c` Mostrar diferencias con contexto
+-u:: `-u` (unified) Genera una salida compacta que agrupa los cambios; es el formato estándar para la herramienta `patch`
 
 [source,bash]
 ----
-# Comparar mostrando contexto adicional
-diff -c fichero1.txt fichero2.txt
+# Crear un archivo de parche con las diferencias unificadas
+diff -u configuracion.old configuracion.new > cambios.patch
 ----
 
-* -r:: `diff -r` Comparar directorios recursivamente
-
-[source,bash]
-----
-# Comparar dos directorios recursivamente
-diff -r dir1/ dir2/
-----
-
-* -i:: `diff -i` Ignorar mayúsculas/minúsculas
+-c:: `-c` (context) Muestra las líneas que rodean al cambio para facilitar la lectura humana
 
 [source,bash]
 ----
-# Ignorar case
-diff -i fichero1.txt fichero2.txt
+# Ver diferencias con 3 líneas de contexto por defecto
+diff -c archivo_a.txt archivo_b.txt
+----
+
+-r:: `-r` (recursive) Compara archivos con el mismo nombre en estructuras de directorios distintas
+
+[source,bash]
+----
+# Encontrar qué archivos cambian entre dos versiones de un proyecto
+diff -r proyecto_v1/ proyecto_v2/
+----
+
+-i:: `-i` (ignore-case) No distingue entre 'A' y 'a' al realizar la comparación
+
+[source,bash]
+----
+# Comparar archivos de texto sin importar las mayúsculas
+diff -i lista_nombres.txt lista_Nombres.txt
+----
+
+-w / -b:: `-w` (white-space) Ignora por completo los espacios; `-b` ignora variaciones en su cantidad
+
+[source,bash]
+----
+# Comparar código fuente ignorando cambios de indentación o espacios extra
+diff -w codigo.c copia_codigo.c
+----
+
+-y:: `-y` (side-by-side) Muestra los archivos en dos columnas para una comparación visual directa
+
+[source,bash]
+----
+# Comparar visualmente en terminal con un ancho de 120 caracteres
+diff -y -W 120 archivo1.txt archivo2.txt
+----
+
+-q:: `-q` (brief) Solo informa si hay diferencias, sin mostrar el contenido de las mismas
+
+[source,bash]
+----
+# Comprobar rápidamente si dos archivos son distintos en un script
+diff -q imagen1.iso imagen2.iso
+----
+
+-s:: `-s` (report-identical-files) Confirma explícitamente si los archivos son exactamente iguales
+
+[source,bash]
+----
+# Verificar que una copia se ha realizado sin cambios de contenido
+diff -s original.zip copia.zip
+----
+
+-B:: `-B` (ignore-blank-lines) No considera como diferencia la inserción o borrado de líneas sin contenido
+
+[source,bash]
+----
+# Comparar archivos ignorando saltos de línea adicionales
+diff -B documento.txt documento_espaciado.txt
+----
+
+--suppress-common-lines:: Oculta las líneas que coinciden (útil con la opción `-y`)
+
+[source,bash]
+----
+# Ver solo las líneas que han cambiado en formato de dos columnas
+diff -y --suppress-common-lines f1.txt f2.txt
 ----
 

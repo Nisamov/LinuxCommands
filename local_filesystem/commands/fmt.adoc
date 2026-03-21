@@ -1,54 +1,83 @@
 === fmt
-Formatear texto ajustando líneas y párrafos para mejorar legibilidad.
+Reformateador de texto simple para ajustar el ancho de líneas y párrafos.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Formatear texto ajustando líneas y párrafos para mejorar legibilidad.",
-  "usage": "fmt [OPCIONES] fichero",
+  "description": "Optimiza la legibilidad de archivos de texto plano uniendo líneas cortas y dividiendo las largas, preservando los párrafos y las sangrías originales.",
+  "usage": "fmt -w 80 archivo.txt",
   "options": {
-    "-w": "Ancho máximo de línea",
-    "--prefix": "Mantener prefijo de cada línea",
-    "-c": "Centrar líneas",
-    "--help": "Mostrar ayuda"
+    "-w": "Establecer el ancho máximo de línea (por defecto 75)",
+    "-g": "Establecer el ancho objetivo (goal) de línea (menor que el máximo)",
+    "-s": "Solo dividir líneas largas, no unir líneas cortas (split only)",
+    "-u": "Espaciado uniforme: un espacio entre palabras, dos tras signos de puntuación",
+    "-c": "Modo corona: preservar la sangría de las dos primeras líneas de cada párrafo",
+    "-t": "Modo tagged: la sangría de la primera línea es diferente a la del resto",
+    "-p": "Formatear solo líneas que comienzan con el prefijo especificado",
+    "--help": "Mostrar la ayuda del comando",
+    "--version": "Mostrar información de la versión"
   }
 }
 
 [source,bash]
 ----
-# Ajustar líneas a 75 caracteres
-fmt -w 75 fichero.txt
+# Ajustar un texto desordenado a un ancho estándar de 75 caracteres
+fmt cuento.txt
 ----
 
-* -w:: `fmt -w` Ancho máximo de línea
-
-[source,bash]
-----
-# Ajustar líneas a 50 caracteres
-fmt -w 50 fichero.txt
-----
-
-* --prefix:: `fmt --prefix` Mantener prefijo de cada línea
+-w:: `-w WIDTH` Define el ancho máximo de la columna de texto
 
 [source,bash]
 ----
-# Mantener sangría de 4 espacios al formatear
-fmt --prefix="    " fichero.txt
+# Ajustar el texto para que quepa en una terminal estrecha de 50 caracteres
+fmt -w 50 notas.txt
 ----
 
-* -c:: `fmt -c` Centrar líneas
-
-[source,bash]
-----
-# Centrar el texto (cuando se usa con ciertas configuraciones)
-fmt -c fichero.txt
-----
-
-* --help:: `fmt --help` Mostrar ayuda
+-s:: `-s` (split-only) Evita que `fmt` fusione líneas cortas para rellenar huecos
 
 [source,bash]
 ----
-# Ver opciones disponibles
-fmt --help
+# Útil para evitar que líneas de código o listas se mezclen al romper líneas largas
+fmt -s -w 60 script_comentado.txt
+----
+
+-u:: `-u` (uniform-spacing) Normaliza el espacio entre palabras y sentencias
+
+[source,bash]
+----
+# Limpiar un texto con espacios irregulares entre palabras
+fmt -u documento_sucio.txt
+----
+
+-p:: `-p PREFIX` Procesa solo las líneas que empiezan con la cadena indicada
+
+[source,bash]
+----
+# Formatear solo los comentarios de un archivo de código que empiezan por '#'
+fmt -p '#' codigo.py
+----
+
+-t:: `-t` (tagged-paragraph) Ideal para párrafos donde la primera línea cuelga o tiene sangría especial
+
+[source,bash]
+----
+# Formatear una lista bibliográfica o de ítems manteniendo su estructura
+fmt -t lista.txt
+----
+
+-c:: `-c` (crown-margin) Preserva la sangría de las dos primeras líneas de un párrafo
+
+[source,bash]
+----
+# Formatear texto con estilo de "sangría francesa" o de encabezado
+fmt -c parrafos_especiales.txt
+----
+
+-g:: `-g` (goal) Intenta que las líneas terminen cerca de este ancho (menor que -w)
+
+[source,bash]
+----
+# Establecer un límite estricto de 80, pero intentar apuntar a 70
+fmt -w 80 -g 70 ensayo.txt
 ----
 

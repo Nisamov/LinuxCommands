@@ -1,81 +1,93 @@
 === join
-Combinar líneas de dos ficheros basándose en un campo común.
+Combinar las líneas de dos archivos basándose en un campo común (clave).
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Combinar líneas de dos ficheros basándose en un campo común.",
-  "usage": "join [OPCIONES] fichero1 fichero2",
+  "description": "Une filas de dos archivos de texto que comparten un campo común. Es el equivalente funcional a un 'JOIN' de SQL para archivos planos.",
+  "usage": "join -t ',' -1 1 -2 1 archivo1.csv archivo2.csv",
   "options": {
-    "-1": "Especificar campo del primer fichero",
-    "-2": "Especificar campo del segundo fichero",
-    "-a": "Incluir líneas sin coincidencias",
-    "-e": "Rellenar campos vacíos",
-    "-o": "Especificar campos a mostrar",
-    "-t": "Definir delimitador",
-    "-v": "Mostrar solo líneas sin coincidencia"
+    "-1": "Especificar el número de columna (campo) del primer archivo para la unión",
+    "-2": "Especificar el número de columna (campo) del segundo archivo para la unión",
+    "-j": "Equivalente a usar el mismo número de campo en ambos archivos (-1 N -2 N)",
+    "-t": "Definir el carácter delimitador de campos (por defecto es el espacio en blanco)",
+    "-a": "Realizar un 'Outer Join': incluir líneas que no tienen coincidencia del archivo 1 o 2",
+    "-v": "Mostrar únicamente las líneas que NO tienen coincidencia (según el archivo indicado)",
+    "-e": "Sustituir los campos vacíos de la salida por la cadena especificada",
+    "-o": "Formatear la salida seleccionando qué campos mostrar (ej: 1.1, 2.3)",
+    "-i": "Ignorar diferencias entre mayúsculas y minúsculas al comparar claves",
+    "--check-order": "Verificar que la entrada esté correctamente ordenada",
+    "--header": "Tratar la primera línea de cada archivo como una cabecera (no unirla)"
   }
 }
 
 [source,bash]
 ----
-# Unir dos ficheros por la primera columna
-join fichero1.txt fichero2.txt
+# Unir archivos usando la primera columna de ambos (por defecto)
+join usuarios.txt ventas.txt
 ----
 
-* -1:: `join -1` Especificar campo del primer fichero
-
-[source,bash]
-----
-# Usar segunda columna del primer fichero como clave
-join -1 2 fichero1.txt fichero2.txt
-----
-
-* -2:: `join -2` Especificar campo del segundo fichero
+-1 / -2:: `-1 FIELD` y `-2 FIELD` definen qué columna se usa como clave en cada archivo
 
 [source,bash]
 ----
-# Usar tercera columna del segundo fichero como clave
-join -2 3 fichero1.txt fichero2.txt
+# Unir usando la columna 2 del archivo A y la columna 3 del archivo B
+join -1 2 -2 3 empleados.txt departamentos.txt
 ----
 
-* -a:: `join -a` Incluir líneas sin coincidencias
-
-[source,bash]
-----
-# Incluir todas las líneas del primer fichero, incluso sin coincidencia
-join -a 1 fichero1.txt fichero2.txt
-----
-
-* -e:: `join -e` Rellenar campos vacíos
+-a:: `-a [1|2]` Permite incluir registros que no encontraron pareja (Left/Right/Full Outer Join)
 
 [source,bash]
 ----
-# Rellenar campos vacíos con “NA”
-join -a 1 -a 2 -e NA fichero1.txt fichero2.txt
+# Incluir todos los clientes, aunque no tengan compras registradas en el segundo archivo
+join -a 1 clientes.txt compras.txt
 ----
 
-* -o:: `join -o` Especificar campos a mostrar
-
-[source,bash]
-----
-# Mostrar solo campos seleccionados: 1.1 y 2.2
-join -o 1.1,2.2 fichero1.txt fichero2.txt
-----
-
-* -t:: `join -t` Definir delimitador
+-v:: `-v [1|2]` Filtra para mostrar exclusivamente lo que NO coincide (útil para auditorías)
 
 [source,bash]
 ----
-# Usar coma como separador
-join -t ',' fichero1.csv fichero2.csv
+# Encontrar IDs de productos que están en el inventario pero no en el catálogo
+join -v 1 inventario.txt catalogo.txt
 ----
 
-* -v:: `join -v` Mostrar solo líneas sin coincidencias
+-o:: `-o FORMAT` Define exactamente qué columnas queremos ver en el resultado final
 
 [source,bash]
 ----
-# Mostrar solo líneas del primer fichero sin coincidencia
-join -v 1 fichero1.txt fichero2.txt
+# Mostrar: Campo clave, Columna 2 del archivo 1 y Columna 3 del archivo 2
+join -o 0,1.2,2.3 archivo1.txt archivo2.txt
+----
+
+-t:: `-t CHAR` Cambia el separador de campos. Fundamental para procesar archivos CSV
+
+[source,bash]
+----
+# Unir dos archivos separados por comas
+join -t ',' datos_a.csv datos_b.csv
+----
+
+-e:: `-e STR` Define un valor por defecto para los huecos que quedan al usar `-a`
+
+[source,bash]
+----
+# Rellenar con '0' las columnas sin datos encontrados
+join -a 1 -e '0' -o 1.1,1.2,2.2 precios.txt rebajas.txt
+----
+
+--header:: `--header` Evita que la línea de títulos se pierda o se intente unir como dato
+
+[source,bash]
+----
+# Unir archivos manteniendo las cabeceras intactas en la parte superior
+join --header -j 1 archivo1.txt archivo2.txt
+----
+
+Importante: Ordenación:: Join fallará si los archivos no están alfabéticamente ordenados por la clave
+
+[source,bash]
+----
+# Forma correcta de usar join con archivos desordenados usando procesos
+join <(sort file1.txt) <(sort file2.txt)
 ----
 

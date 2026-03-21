@@ -5,37 +5,55 @@ Modifica o elimina atributos de entradas existentes en el árbol LDAP.
 [.metadata]
 {
   "description": "Permite alterar el contenido del directorio mediante instrucciones de cambio (add, replace, delete) en formato LDIF.",
-  "usage": "ldapmodify [opciones] -f cambios.ldif",
+  "usage": "ldapmodify -H ldap://localhost -x -D 'cn=admin,dc=empresa,dc=com' -W -f cambios.ldif",
   "options": {
-    "operacion": "-a (Añadir nuevas entradas, igual que ldapadd)",
-    "conexion": "-H (Servidor), -x (Auth simple)",
-    "seguridad": "-Z (Iniciar TLS), -D (Usuario con permisos)",
-    "archivo": "-f (Archivo con las directivas de modificación)"
+    "-a": "-a (Añadir nuevas entradas, igual que ldapadd)",
+    "-H": "-H (URI del servidor), -x (Autenticación simple)",
+    "-Z": "-Z (Iniciar TLS), -D (DN del administrador)",
+    "-f": "-f (Archivo con las directivas de modificación)"
   }
 }
 
 [source,bash]
 ----
-# Cambiar el apellido (sn) de un usuario
-ldapmodify -x -D "cn=admin,dc=com" -W -f cambio.ldif
+# Aplicar cambios definidos en un archivo LDIF
+ldapmodify -x -D "cn=admin,dc=ejemplo,dc=com" -W -f cambio.ldif
 ----
 
-operacion:: A diferencia de `ldapadd`, `ldapmodify` requiere que el LDIF especifique el tipo de cambio (`changetype: modify`).
+operacion:: `-a` Añadir nuevas entradas (comportamiento idéntico a ldapadd)
 
 [source,bash]
 ----
-# Ejemplo de archivo de modificación
+# Usar ldapmodify para insertar una entrada nueva en lugar de modificar
+ldapmodify -a -x -D "cn=admin,dc=com" -W -f nueva_entrada.ldif
+----
+
+conexion:: `-H -x` Especificar servidor y método de autenticación simple
+
+[source,bash]
+----
+# Conectar al servidor local usando autenticación por contraseña
+ldapmodify -H ldap://127.0.0.1 -x -D "cn=admin,dc=com" -W -f mod.ldif
+----
+
+seguridad:: `-Z -D` Uso de StartTLS y definición del usuario con permisos
+
+[source,bash]
+----
+# Modificación segura cifrando la sesión con TLS
+ldapmodify -Z -x -H ldap://servidor.com -D "cn=admin,dc=com" -W -f mod.ldif
+----
+
+archivo:: `-f` Ruta al archivo LDIF con las directivas de cambio
+
+[source,bash]
+----
+# Ejemplo de contenido de cambios.ldif para reemplazar un correo
 # dn: uid=jdoe,ou=users,dc=com
 # changetype: modify
 # replace: mail
 # mail: nuevo_correo@ejemplo.com
-----
 
-seguridad:: En entornos de producción, es obligatorio usar `-Z` para asegurar que la contraseña y los datos viajen cifrados.
-
-[source,bash]
-----
-# Modificación segura usando StartTLS
-ldapmodify -Z -x -H ldap://servidor.com -D "cn=admin,dc=com" -W -f mod.ldif
+ldapmodify -f cambios.ldif
 ----
 

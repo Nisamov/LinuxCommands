@@ -1,41 +1,135 @@
-=== slappasswd
-Genera valores de contraseña hash para usar en configuraciones LDAP.
+=== slapadd
+Añade entradas a una base de datos LDAP directamente a nivel de archivos (en frío).
 
 :category: host_shared_storage
 [.metadata]
 {
-  "description": "Herramienta de utilidad para crear hashes de contraseñas compatibles con 'userPassword' en slapd.",
-  "usage": "slappasswd [opciones]",
+  "description": "Herramienta para importar datos LDIF directamente a los archivos de base de datos de slapd, saltándose el protocolo LDAP.",
+  "usage": "slapadd -n 1 -l datos_iniciales.ldif",
   "options": {
-    "esquema": "-s (Contraseña en texto plano), -h (Algoritmo: {SSHA}, {SHA}, {SMD5})",
-    "verificacion": "-u (Muestra solo el hash, sin etiquetas)",
-    "entrada": "-T (Leer contraseña de un archivo)",
-    "ayuda": "--help para ver algoritmos de cifrado disponibles"
+    "-n": "Seleccionar base de datos por número de índice",
+    "-b": "Especificar el DN base para la importación",
+    "-l": "Leer datos desde un archivo LDIF en lugar de stdin",
+    "-f": "Especificar la ruta al archivo de configuración slapd.conf",
+    "-F": "Especificar el directorio de configuración slapd.d",
+    "-c": "Continuar en caso de errores (ignora errores menores)",
+    "-d": "Activar nivel de depuración (debug)",
+    "-q": "Modo 'quick' (rápido), no actualiza índices (usar con precaución)",
+    "-u": "Modo dry-run (simulación), no escribe en disco",
+    "-v": "Modo verbose (detallado)",
+    "-w": "Escribir sinapsis de cambios (write syncrepl checkpoint)",
+    "-S": "SID para registros de replicación",
+    "-g": "Deshabilitar la comprobación de límites (no-glue)"
   }
 }
 
 [source,bash]
 ----
-# Generar un hash SSHA (por defecto) de forma interactiva
-slappasswd
-# New password: 
-# Re-enter new password: 
-# {SSHA}yUv6...
+# Importar un archivo LDIF a la base de datos principal
+slapadd -l backup.ldif
 ----
 
-esquema:: Permite elegir algoritmos más robustos. Se recomienda `{SSHA}` (Salted SHA) sobre MD5 o SHA simple.
+-n:: `-n` Seleccionar la base de datos por su número de orden
 
 [source,bash]
 ----
-# Generar un hash usando el algoritmo SHA-512
-slappasswd -h "{SHA512}" -s "mi_password_secreta"
+# Importar datos específicamente en la segunda base de datos configurada
+slapadd -n 2 -l datos.ldif
 ----
 
-entrada:: El flag `-s` es útil para scripts, pero deja la contraseña en el historial de bash. Es más seguro usar la forma interactiva.
+-b:: `-b` Definir el DN base para filtrar qué entradas se añaden
 
 [source,bash]
 ----
-# Uso rápido (Cuidado: queda en el historial de comandos)
-slappasswd -s "12345"
+# Añadir solo las entradas que cuelguen de un DN específico
+slapadd -b "dc=empresa,dc=com" -l export.ldif
+----
+
+-l:: `-l` Leer las entradas desde un archivo específico
+
+[source,bash]
+----
+# Cargar el contenido de un backup LDIF
+slapadd -l /tmp/respaldo_usuarios.ldif
+----
+
+-f:: `-f` Ruta al archivo de configuración tradicional slapd.conf
+
+[source,bash]
+----
+# Usar una configuración específica para la importación
+slapadd -f /etc/ldap/slapd.conf -l datos.ldif
+----
+
+-F:: `-F` Ruta al directorio de configuración moderno (slapd.d)
+
+[source,bash]
+----
+# Importar datos usando la configuración dinámica de OpenLDAP
+slapadd -F /etc/ldap/slapd.d -l datos.ldif
+----
+
+-c:: `-c` Continuar la operación aunque se encuentren errores de validación
+
+[source,bash]
+----
+# Forzar la carga de un archivo ignorando entradas duplicadas o erróneas
+slapadd -c -l carga_masiva.ldif
+----
+
+-d:: `-d` Mostrar información de depuración interna
+
+[source,bash]
+----
+# Ejecutar slapadd con rastreo de errores de base de datos
+slapadd -d 1 -l datos.ldif
+----
+
+-q:: `-q` Modo rápido: desactiva la actualización de índices durante la carga
+
+[source,bash]
+----
+# Carga masiva ultra rápida (requiere regenerar índices después con slapindex)
+slapadd -q -l millones_de_usuarios.ldif
+----
+
+-u:: `-u` Simulación de importación (Dry-run)
+
+[source,bash]
+----
+# Comprobar si el archivo LDIF es válido sin escribir nada en la base de datos
+slapadd -u -l prueba.ldif
+----
+
+-v:: `-v` Mostrar detalles de cada entrada procesada
+
+[source,bash]
+----
+# Importar viendo en tiempo real qué objeto se está insertando
+slapadd -v -l datos.ldif
+----
+
+-w:: `-w` Escribir información de puntos de control de replicación
+
+[source,bash]
+----
+# Mantener la coherencia de los contextos de sincronización (syncrepl)
+slapadd -w -l backup_replica.ldif
+----
+
+-S:: `-S` Asignar un Server ID (SID) para la replicación
+
+[source,bash]
+----
+# Importar registros asignando un ID de servidor específico para logs
+slapadd -S 001 -l datos.ldif
+----
+
+-g:: `-g` Deshabilitar el control de "glueing" (unión de bases de datos)
+
+[source,bash]
+----
+# Impedir que se procesen bases de datos subordinadas unidas
+slapadd -g -l datos.ldif
 ----
 

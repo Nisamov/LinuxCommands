@@ -1,52 +1,87 @@
 === ln
-Creación de enlaces duros y simbólicos.
+Crear enlaces (vínculos) entre archivos y directorios.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Crear enlaces duros y simbólicos.",
-  "usage": "ln [OPCIONES] origen destino",
+  "description": "Crea una referencia a un archivo existente. Por defecto crea enlaces duros (hard links); con la opción -s crea enlaces simbólicos (symlinks).",
+  "usage": "ln -s /ruta/real /ruta/enlace",
   "options": {
-    "-s": "Crear un enlace simbólico",
-    "-f": "Forzar creación de enlace sobrescribiendo el destino",
-    "-i": "Solicitar confirmación antes de sobrescribir",
-    "--help": "Mostrar ayuda breve"
+    "-s": "Crear un enlace simbólico (soft link) en lugar de un enlace duro",
+    "-f": "Forzar la creación del enlace eliminando el destino si ya existe",
+    "-i": "Modo interactivo: preguntar antes de eliminar destinos existentes",
+    "-v": "Modo detallado: mostrar el nombre de cada archivo enlazado",
+    "-n": "Tratar el destino como un archivo normal si es un enlace simbólico a un directorio",
+    "-r": "Crear enlaces simbólicos con rutas relativas al lugar del enlace",
+    "-b": "Crear una copia de seguridad de cada archivo de destino que ya exista",
+    "-T": "Tratar el destino siempre como un archivo normal (no como un directorio)",
+    "-d": "Permitir al superusuario crear enlaces duros a directorios (restringido)",
+    "-L": "Crear enlaces duros a los objetivos de los enlaces simbólicos",
+    "-P": "Crear enlaces duros directamente a los enlaces simbólicos"
   }
 }
 
 [source,bash]
 ----
-# Crear un enlace simbólico
-ln -s /ruta/origen/archivo.txt enlace.txt
+# Crear un enlace duro (ambos nombres apuntan al mismo inodo en el disco)
+ln archivo_real.txt enlace_duro.txt
 ----
 
-* -s:: `ln -s` Crear un enlace simbólico
 
-[source,bash]
-----
-# Crear enlace simbólico
-ln -s /ruta/origen/archivo.txt enlace.txt
-----
 
-* -f:: `ln -f` Forzar creación de enlace sobrescribiendo el destino
+-s:: `-s` (symbolic) Crea un puntero a la ruta del archivo original. Si el original se borra, el enlace queda "roto".
 
 [source,bash]
 ----
-# Forzar creación de enlace y sobrescribir si existe
-ln -f archivo.txt enlace_existente.txt
+# Crear un acceso directo a un ejecutable o carpeta
+ln -s /opt/mi_app/bin/ejecutable /usr/local/bin/mi_app
 ----
 
-* -i:: `ln -i` Solicitar confirmación antes de sobrescribir
-
-[source,bash]
-----
-# Crear enlace solicitando confirmación
-ln -i archivo.txt enlace.txt
-----
-
-* --help:: `ln --help` Mostrar ayuda breve
+-f:: `-f` (force) Reemplaza cualquier archivo o enlace previo que ocupe el nombre del destino.
 
 [source,bash]
 ----
-ln --help
+# Actualizar un enlace simbólico existente para que apunte a una nueva versión
+ln -sf /var/www/v2 /var/www/current
 ----
+
+-i:: `-i` (interactive) Evita sobrescribir archivos por accidente pidiendo confirmación.
+
+[source,bash]
+----
+# Confirmar antes de reemplazar un archivo con un enlace
+ln -si origen.txt destino_existente.txt
+----
+
+-v:: `-v` (verbose) Imprime un mensaje confirmando la creación del vínculo.
+
+[source,bash]
+----
+# Ver el resultado de la operación en la terminal
+ln -sv /datos/multimedia ~/Videos
+----
+
+-r:: `-r` (relative) Calcula automáticamente la ruta relativa desde el destino al origen.
+
+[source,bash]
+----
+# Crea el enlace usando ../ en lugar de la ruta absoluta (más portable)
+ln -sr /home/user/docs/file.txt /home/user/links/link.txt
+----
+
+-b:: `-b` (backup) Antes de sobrescribir el destino, crea una copia de seguridad (suele añadir un `~`).
+
+[source,bash]
+----
+# Conservar el enlace antiguo como backup mientras se crea el nuevo
+ln -sb origen.txt enlace_viejo.txt
+----
+
+-n:: `-n` (no-dereference) Evita que `ln` entre en un directorio si el destino es un enlace simbólico a uno.
+
+[source,bash]
+----
+# Útil al actualizar enlaces de carpetas para evitar anidamientos erróneos
+ln -snf /nueva/carpeta /enlace/a/carpeta_actual
+----
+

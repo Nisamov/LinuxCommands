@@ -1,46 +1,99 @@
 === cut
-Extraer secciones de cada línea de un fichero o flujo de datos.
+Extraer secciones de cada línea de archivos o flujos de datos.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Extraer secciones de cada línea de un fichero o flujo de datos usando delimitadores o rangos de caracteres.",
-  "usage": "cut [OPCIONES] archivo",
+  "description": "Corta secciones de cada línea de la entrada (archivo o stdin) basándose en posiciones de bytes, caracteres o campos delimitados.",
+  "usage": "cut -d ':' -f 1,3 /etc/passwd",
   "options": {
-    "-c": "Extraer caracteres por rango",
-    "-d": "Usar un delimitador para campos",
-    "-f": "Seleccionar columnas (campos)",
-    "--complement": "Invertir selección de campos o caracteres"
+    "-b": "Seleccionar solo los bytes especificados",
+    "-c": "Seleccionar solo los caracteres especificados",
+    "-d": "Definir el delimitador que separa los campos (por defecto es TAB)",
+    "-f": "Seleccionar solo los campos (columnas) especificados",
+    "-n": "No dividir caracteres multiocteto (usado con -b)",
+    "--complement": "Invertir la selección: extraer todo excepto lo indicado",
+    "-s": "No imprimir líneas que no contengan el delimitador",
+    "--output-delimiter": "Especificar la cadena para separar los campos en la salida",
+    "-z": "Finalizar cada línea con el carácter nulo (NUL) en lugar de nueva línea"
   }
 }
 
 [source,bash]
 ----
-# Uso básico: extraer campos o caracteres
-cut -f 1 archivo.csv
+# Uso básico: extraer el primer campo de un archivo separado por tabulaciones
+cut -f 1 datos.txt
 ----
 
-* -c:: Extraer caracteres por rango
-
-[source,bash]
-----
-# Extraer primeros 5 caracteres de cada línea
-cut -c 1-5 fichero.txt
-----
-
-* -d:: `cut -d'<delimitador>'` Usar un delimitador para campos
+-b:: `-b LISTA` Extraer secciones basadas en la posición de los bytes
 
 [source,bash]
 ----
-# Extraer la segunda columna usando ':' como separador
-cut -d ':' -f 2 fichero.csv
+# Extraer los primeros 10 bytes de cada línea
+cut -b 1-10 archivo.bin
 ----
 
-* -f:: `cut -f <columna>` Seleccionar columnas (campos)
+-c:: `-c LISTA` Extraer secciones basadas en la posición de los caracteres
 
 [source,bash]
 ----
-# Extraer múltiples campos
-cut -d ',' -f 1,3 datos.csv
+# Extraer del carácter 1 al 5 y del 10 en adelante
+cut -c 1-5,10- fichero.txt
+----
+
+-d:: `-d DELIM` Especificar un delimitador de campo único (sustituye al tabulador)
+
+[source,bash]
+----
+# Usar el carácter ';' como separador de campos
+cut -d ';' -f 1 archivo.csv
+----
+
+-f:: `-f LISTA` Seleccionar los campos (columnas) que se desean mostrar
+
+[source,bash]
+----
+# Extraer la primera, tercera y cuarta columna
+cut -d ',' -f 1,3-4 datos.csv
+----
+
+--complement:: `--complement` Invierte el conjunto de bytes, caracteres o campos seleccionados
+
+[source,bash]
+----
+# Mostrar todas las columnas EXCEPTO la segunda
+cut -d ':' --complement -f 2 /etc/passwd
+----
+
+-s:: `-s` (only-delimited) Ignorar y no mostrar las líneas que no contengan el delimitador
+
+[source,bash]
+----
+# Extraer campos solo de las líneas que realmente tienen el separador ':'
+cut -d ':' -f 1 -s configuracion.conf
+----
+
+--output-delimiter:: `--output-delimiter=STRING` Cambiar el separador en la salida final
+
+[source,bash]
+----
+# Leer con coma pero mostrar los resultados separados por un guion
+cut -d ',' -f 1,2 --output-delimiter=' - ' datos.csv
+----
+
+-n:: `-n` Utilizado con -b para evitar que se corten caracteres multiocteto a la mitad
+
+[source,bash]
+----
+# Extraer bytes asegurando la integridad de caracteres especiales
+cut -nb 1-8 texto_utf8.txt
+----
+
+-z:: `-z` (zero-terminated) Utiliza el carácter nulo como separador de línea
+
+[source,bash]
+----
+# Procesar salidas de comandos que usan NUL (como find -print0)
+cat lista.txt | cut -z -d $'\n' -f 1
 ----
 

@@ -1,171 +1,118 @@
 === ls
-Listar ficheros del directorio actual.
+Listar el contenido de directorios y mostrar información sobre archivos.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Listar ficheros del directorio actual.",
-  "usage": "ls [OPCIONES] [DIRECTORIO]",
+  "description": "Muestra los nombres de archivos y subdirectorios. Permite ver metadatos como permisos, propietarios, tamaños y fechas de modificación.",
+  "usage": "ls -alh /var/log",
   "options": {
-    "-l": "Lista detallada (permisos, propietario, tamaño)",
-    "-a": "Mostrar ficheros ocultos",
-    "-h": "Mostrar tamaños legibles por humanos",
-    "-t": "Ordenar por fecha de modificación",
-    "-S": "Ordenar por tamaño (mayor a menor)",
-    "-r": "Invertir orden",
-    "-R": "Mostrar recursivamente",
-    "-d": "Mostrar directorios en sí, no su contenido",
-    "-F": "Añadir indicador de tipo a nombres",
-    "-1": "Un elemento por línea",
-    "-Q": "Poner nombres entre comillas",
-    "-v": "Orden natural (útil con números)",
-    "-X": "Ordenar por extensión",
-    "--color": "Colorear la salida",
-    "--block-size": "Mostrar tamaños en unidad específica",
-    "--time": "Seleccionar campo de tiempo",
-    "--sort": "Ordenar según criterio (size,time,version,extension)"
+    "-l": "Formato de listado largo: muestra permisos, dueño, grupo, tamaño y fecha",
+    "-a": "Mostrar todos (all): incluye archivos ocultos (los que empiezan por punto)",
+    "-A": "Casi todos (Almost all): como -a pero excluye los directorios '.' y '..'",
+    "-h": "Tamaños legibles (human-readable): usa K, M, G en lugar de bytes",
+    "-t": "Ordenar por tiempo de modificación (los más nuevos primero)",
+    "-S": "Ordenar por tamaño del archivo (los más grandes primero)",
+    "-r": "Invertir (reverse) el orden de la clasificación",
+    "-R": "Listado recursivo: muestra el contenido de todos los subdirectorios",
+    "-d": "Listar el directorio en sí, no su contenido",
+    "-F": "Clasificar: añade un sufijo indicador (/ para carpetas, * para ejecutables)",
+    "-1": "Un archivo por línea: ideal para procesar con scripts",
+    "-Q": "Encerrar los nombres de archivos entre comillas dobles",
+    "-v": "Orden natural de números dentro del texto (ej: 1, 2, 10 en vez de 1, 10, 2)",
+    "-X": "Clasificar alfabéticamente por la extensión del archivo",
+    "-i": "Mostrar el número de índice (inode) de cada archivo",
+    "--color": "Colorear la salida según el tipo de archivo (auto, always, never)",
+    "--block-size": "Escalar los tamaños según la unidad (K, M, G, T, P, E, Z, Y)",
+    "--time": "Mostrar un tiempo específico (atime: acceso, ctime: cambio, birth: creación)",
+    "--sort": "Criterio de ordenación (none, size, time, version, extension)"
   }
 }
 
 [source,bash]
 ----
-# Listar ficheros en el directorio actual
+# Listado básico en el directorio actual
 ls
 ----
 
--l:: `ls -l` Lista detallada (permisos, propietario, tamaño)
+Estructura de salida detallada (ls -l)::
+[source,bash]
+----
+# Ejemplo de salida de ls -l:
+# -rw-r--r-- 1 usuario grupo 1024 mar 21 01:00 archivo.txt
+# ^ (1)      ^ (2) ^ (3)  ^ (4) ^ (5)        ^ (6)
+# (1) Permisos (2) Enlaces (3) Dueño (4) Grupo (5) Tamaño (6) Nombre
+----
+
+-l / -h / -a:: Combinación clásica para administración diaria
 
 [source,bash]
 ----
-# Listado detallado
-ls -l
+# Ver todos los archivos, con tamaños legibles y detalles técnicos
+ls -lah
 ----
 
--a:: `ls -a` Mostrar ficheros ocultos
-
-[source,bash]
-----
-# Mostrar todo, incluidos ficheros ocultos
-ls -a
-----
-
--h:: `ls -h` Mostrar tamaños legibles por humanos
+-t / -r:: Gestionar archivos por fecha
 
 [source,bash]
 ----
-# Listado con tamaños legibles
-ls -lh
+# Listar archivos modificados recientemente al final de la lista
+ls -ltr
 ----
 
--t:: `ls -t` Ordenar por fecha de modificación
-
-[source,bash]
-----
-# Ordenar por fecha
-ls -lt
-----
-
--S:: `ls -S` Ordenar por tamaño (mayor a menor)
+-S:: Identificar archivos pesados
 
 [source,bash]
 ----
-# Ordenar por tamaño
+# Ver qué archivos ocupan más espacio en la carpeta actual
 ls -lS
 ----
 
--r:: `ls -r` Invertir orden
+-d:: Inspeccionar el directorio, no lo que hay dentro
 
 [source,bash]
 ----
-# Invertir orden
-ls -lr
+# Útil para verificar permisos de una carpeta específica
+ls -ld /home/usuario
 ----
 
--R:: `ls -R` Mostrar recursivamente
-
-[source,bash]
-----
-# Listar recursivamente
-ls -R
-----
-
--d:: `ls -d` Mostrar directorios en sí, no su contenido
+-F:: Identificación visual rápida de tipos de archivos
 
 [source,bash]
 ----
-# Mostrar directorio en sí en lugar de su contenido
-ls -d /etc
-----
-
--F:: `ls -F` Añadir indicador de tipo a nombres
-
-[source,bash]
-----
-# Añadir indicadores (/ para directorios, * para ejecutables)
+# Los directorios terminan en '/', ejecutables en '*', enlaces en '@'
 ls -F
 ----
 
--1:: `ls -1` Un elemento por línea
+-v:: Ordenar versiones o series numéricas correctamente
 
 [source,bash]
 ----
-# Un elemento por línea
-ls -1
-----
-
--Q:: `ls -Q` Poner nombres entre comillas
-
-[source,bash]
-----
-# Nombres entre comillas
-ls -Q
-----
-
--v:: `ls -v` Orden natural (útil con números)
-
-[source,bash]
-----
-# Orden natural
+# Útil para listar archivos como 'foto1.jpg', 'foto2.jpg', 'foto10.jpg' en orden
 ls -v
 ----
 
--X:: `ls -X` Ordenar por extensión
+--time:: Consultar fechas de acceso o cambio de estado
 
 [source,bash]
 ----
-# Ordenar por extensión
-ls -lX
-----
-
----color:: `ls --color` Colorear la salida
-
-[source,bash]
-----
-# Colorear salida
-ls --color=auto
-----
-
---block-size:: `ls --block-size=<unidad>` Mostrar tamaños en unidad específica
-
-[source,bash]
-----
-# Mostrar tamaños en kilobytes
-ls -l --block-size=K
-----
-
---time:: `ls --time=<atime|ctime|mtime|birth>` Seleccionar campo de tiempo
-
-[source,bash]
-----
-# Ordenar por tiempo de acceso
+# Ver cuándo fue la última vez que se leyó (accedió) cada archivo
 ls -l --time=atime
 ----
 
---sort:: `ls --sort=<criterio>` Ordenar según criterio (size,time,version,extension)
+--block-size:: Forzar unidades de medida específicas
 
 [source,bash]
 ----
-# Ordenar por tamaño usando --sort
-ls -l --sort=size
+# Mostrar todos los tamaños estrictamente en Megabytes
+ls -l --block-size=M
+----
+
+--sort:: Alternativa explícita para ordenar
+
+[source,bash]
+----
+# Agrupar archivos por su extensión
+ls -l --sort=extension
 ----
 

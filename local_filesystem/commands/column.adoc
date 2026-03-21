@@ -1,53 +1,110 @@
 === column
-Formatear la salida en columnas para mejorar la legibilidad.
+Formatear listas o archivos de texto en columnas o tablas alineadas.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Herramienta para formatear la salida en columnas para mejorar la legibilidad.",
-  "usage": "column [OPCIONES] [ARCHIVO]",
+  "description": "Utilidad para transformar una entrada de texto plano en una salida visualmente organizada, permitiendo crear tablas alineadas a partir de delimitadores.",
+  "usage": "column -t -s ',' archivo.csv",
   "options": {
-    "-t": "Ajustar columnas en tabla",
-    "-s": "Definir delimitador",
-    "-x": "Llenar filas antes de columnas"
+    "-t": "Determinar el número de columnas y crear una tabla",
+    "-s": "Especificar los caracteres delimitadores de la entrada",
+    "-o": "Definir el delimitador de la salida (por defecto dos espacios)",
+    "-x": "Llenar antes las filas que las columnas",
+    "-c": "Ancho de la salida en caracteres (formato de lista)",
+    "-e": "No ignorar líneas vacías",
+    "-n": "No limitar el ancho de las columnas (permitir desborde)",
+    "-R": "Alinear a la derecha las columnas especificadas",
+    "-L": "Mantener las líneas vacías en la salida (por defecto se ignoran)",
+    "-N": "Asignar nombres a las columnas para la cabecera",
+    "-T": "Permitir que el texto de las columnas se ajuste (wrap)",
+    "-W": "Especificar qué columnas pueden ajustarse (wrap)"
   }
 }
 
 [source,bash]
 ----
-# Mostrar un listado en columnas
-ls | column
+# Formatear la salida de un comando en columnas simples
+ls /usr/bin | column
 ----
 
-* -t:: `column -t` Ajustar columnas en tabla
-
-[source,bash]
-----
-# Separar por tabulaciones y alinear columnas
-cat datos.txt | column -t
-----
-
-* -s:: `column -s` Definir delimitador
+-t:: `-t` Crea una tabla alineando automáticamente las columnas según el contenido
 
 [source,bash]
 ----
-# Usar coma como separador de columnas
-cat datos.csv | column -s ',' -t
+# Convertir un archivo de texto con espacios en una tabla perfecta
+column -t lista_precios.txt
 ----
 
-* -x:: `column -x` Llenar filas antes de columnas
+-s:: `-s` Define qué carácter se debe interpretar como separador de columnas en la entrada
 
 [source,bash]
 ----
-# Mostrar las columnas llenando filas primero
+# Formatear el archivo /etc/passwd usando ':' como separador
+column -s ':' -t /etc/passwd
+----
+
+-o:: `-o` Establece el carácter o cadena que separará las columnas en la salida final
+
+[source,bash]
+----
+# Crear una tabla con columnas separadas por un pipe '|' visual
+column -s ',' -t -o ' | ' datos.csv
+----
+
+-x:: `-x` Cambia el orden de llenado: primero completa la fila y luego pasa a la siguiente
+
+[source,bash]
+----
+# Listar archivos llenando horizontalmente en lugar de verticalmente
 ls | column -x
 ----
 
-* --help:: `column --help` Mostrar ayuda
+-c:: `-c` Define el ancho total de la pantalla para el cálculo de columnas
 
 [source,bash]
 ----
-# Ver opciones disponibles
-column --help
+# Forzar un formato de columnas para una pantalla estrecha de 40 caracteres
+ls | column -c 40
+----
+
+-R:: `-R` Alinea el texto a la derecha en las columnas indicadas (útil para números)
+
+[source,bash]
+----
+# Alinear a la derecha la segunda y tercera columna
+column -t -s ',' -R 2,3 contabilidad.csv
+----
+
+-N:: `-N` Añade una fila de cabecera con los nombres de columna especificados
+
+[source,bash]
+----
+# Formatear datos añadiendo títulos a las columnas
+column -t -s ',' -N ID,NOMBRE,CIUDAD datos.csv
+----
+
+-W:: `-W` Indica qué columnas pueden contener texto largo que deba ajustarse (wrap)
+
+[source,bash]
+----
+# Permitir que la segunda columna se ajuste si el texto es muy largo
+column -t -s ';' -W 2 descripciones.txt
+----
+
+-L:: `-L` Evita que las líneas que no contienen datos sean eliminadas de la salida
+
+[source,bash]
+----
+# Mostrar la tabla manteniendo los saltos de línea originales del archivo
+column -t -L documento.txt
+----
+
+-e:: `-e` No ignora las líneas vacías de la entrada al calcular la tabla
+
+[source,bash]
+----
+# Tratar líneas vacías como registros válidos
+cat log.txt | column -t -e
 ----
 

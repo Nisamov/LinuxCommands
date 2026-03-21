@@ -1,26 +1,69 @@
 === export
-Establecer variables de entorno para la sesión actual o procesos hijos.
+Establecer variables de entorno para la sesión actual y procesos hijos.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Establecer variables de entorno para la sesión actual o procesos hijos.",
-  "usage": "export [VAR=VALOR]",
+  "description": "Marca variables o funciones de la shell para que sean exportadas al entorno de todos los procesos que se ejecuten a partir de la sesión actual.",
+  "usage": "export [-f] [-n] [NOMBRE[=VALOR]]",
   "options": {
-    "-n": "No añadir salto de línea final",
-    "-e": "Interpretar escapes como \\n, \\t"
+    "-p": "Listar todas las variables exportadas en la sesión actual",
+    "-f": "Indicar que los NOMBRES se refieren a funciones, no a variables",
+    "-n": "Eliminar la propiedad de 'exportada' a una variable (vuelve a ser local)",
+    "NOMBRE=VALOR": "Asignar un valor y exportar en un solo paso"
   }
 }
 
 [source,bash]
 ----
-# Establecer una variable de entorno para la sesión actual
-export MI_VAR="valor"
+# Crear y exportar una variable para que esté disponible en scripts hijos
+export API_KEY="12345-abcde"
 
-# Mostrar el valor de la variable
-echo $MI_VAR
+# Añadir un nuevo directorio al buscador de ejecutables (PATH)
+export PATH="$PATH:/opt/mis_herramientas/bin"
+----
 
-# Añadir una ruta al PATH
-export PATH="$PATH:/ruta/a/bin"
+-p:: `-p` Muestra una lista de todas las variables que están marcadas para exportarse
+
+[source,bash]
+----
+# Ver todas las variables de entorno actuales en formato de exportación
+export -p
+----
+
+-f:: `-f` (functions) Permite exportar funciones definidas por el usuario a subshells
+
+[source,bash]
+----
+# Definir una función y exportarla
+mi_saludo() { echo "Hola $USER"; }
+export -f mi_saludo
+----
+
+-n:: `-n` (no-export) Quita la variable del entorno global, manteniéndola solo como variable local de la shell
+
+[source,bash]
+----
+# La variable sigue existiendo, pero los programas hijos ya no la verán
+export -n API_KEY
+----
+
+NOMBRE=VALOR:: Asignación directa de contenido a la variable durante la exportación
+
+[source,bash]
+----
+# Es equivalente a hacer: VAR="valor" y luego export VAR
+export EDITOR=/usr/bin/vim
+----
+
+Uso con Variables de Sistema:: Modificación de variables críticas del entorno
+
+[source,bash]
+----
+# Cambiar el idioma de la sesión actual a inglés
+export LANG=en_US.UTF-8
+
+# Definir el editor por defecto para comandos como 'visudo' o 'git commit'
+export EDITOR=nano
 ----
 

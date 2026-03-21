@@ -1,93 +1,90 @@
 === slapcat
-Permite exportar el contenido de una base de datos LDAP a formato LDIF. Es comúnmente utilizado para realizar copias de seguridad o inspeccionar los datos almacenados en un servidor OpenLDAP.
+Exportar el contenido de una base de datos LDAP a formato LDIF para copias de seguridad.
 
 :category: host_shared_storage
 [.metadata]
 {
-  "description": "Exportar bases de datos LDAP a formato LDIF para backup o análisis.",
-  "usage": "slapcat [OPCIONES]",
+  "description": "Herramienta para generar volcados de la base de datos LDAP directamente desde los archivos de datos, sin pasar por el protocolo LDAP.",
+  "usage": "slapcat -n 1 -l backup_diario.ldif",
   "options": {
     "-n": "Seleccionar base de datos por número",
     "-b": "Especificar el DN base a exportar",
     "-l": "Guardar salida en un archivo",
-    "-o": "Opciones adicionales",
-    "-d": "Modo debug",
+    "-o": "Opciones adicionales de formato",
+    "-d": "Modo debug para depuración",
     "-c": "Continuar en caso de errores",
-    "-v": "Modo verbose",
-    "-F": "Especificar directorio de configuración",
-    "--help": "Mostrar ayuda en pantalla"
+    "-v": "Modo verbose (detallado)",
+    "-F": "Especificar directorio de configuración"
   }
 }
 
--Seleccionar base de datos:: `-n`
+[source,bash]
+----
+# Realizar un volcado completo de la base de datos principal a un archivo
+slapcat -l backup_total.ldif
+----
+
+-n:: `-n` Seleccionar base de datos por número de índice
 
 [source,bash]
 ----
-# Exportar la base de datos número 1
+# Exportar la base de datos número 1 (usualmente la de datos de usuario)
 slapcat -n 1
 ----
 
--Especificar DN base:: `-b`
+-b:: `-b` Especificar el DN base a exportar
 
 [source,bash]
 ----
-# Exportar únicamente una rama específica del directorio LDAP
-slapcat -b "dc=example,dc=com"
+# Exportar únicamente una rama específica del directorio
+slapcat -b "ou=users,dc=example,dc=com"
 ----
 
--Guardar salida en archivo:: `-l`
-
-[source,bash]
-----
-# Exportar la base de datos a un archivo LDIF
-slapcat -l backup.ldif
-----
-
--Opciones adicionales:: `-o`
+-l:: `-l` Guardar la salida directamente en un archivo LDIF
 
 [source,bash]
 ----
-# Ejecutar slapcat con opciones adicionales
+# Crear un archivo de respaldo en la ruta especificada
+slapcat -l /var/backups/ldap_backup.ldif
+----
+
+-o:: `-o` Definir opciones adicionales de configuración
+
+[source,bash]
+----
+# Exportar sin limitar el ancho de línea en el archivo resultante
 slapcat -o ldif-wrap=no
 ----
 
--Modo debug:: `-d`
+-d:: `-d` Activar el modo debug para detectar fallos de lectura
 
 [source,bash]
 ----
-# Ejecutar slapcat en modo debug
+# Ejecutar con nivel de depuración 1 (rastreo de llamadas)
 slapcat -d 1
 ----
 
--Continuar en caso de errores:: `-c`
+-c:: `-c` Modo de recuperación ante errores
 
 [source,bash]
 ----
-# Continuar exportación aunque existan errores
-slapcat -c -l backup.ldif
+# Continuar la exportación aunque se encuentren entradas corruptas
+slapcat -c -l backup_emergencia.ldif
 ----
 
--Modo verbose:: `-v`
+-v:: `-v` Modo verbose para ver el progreso
 
 [source,bash]
 ----
-# Mostrar información detallada durante la ejecución
+# Mostrar estadísticas y detalles durante el proceso de volcado
 slapcat -v
 ----
 
--Especificar directorio de configuración:: `-F`
+-F:: `-F` Especificar la ubicación del directorio de configuración (slapd.d)
 
 [source,bash]
 ----
-# Usar un directorio de configuración específico
-slapcat -F /etc/ldap/slapd.d
-----
-
---help:: Mostrar ayuda en pantalla
-
-[source,bash]
-----
-# slapcat --help
-# Muestra todas las opciones disponibles y la sintaxis de uso
+# Usar una ruta de configuración no estándar para la exportación
+slapcat -F /etc/ldap/config_especifica.d -n 1
 ----
 

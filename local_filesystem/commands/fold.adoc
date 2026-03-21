@@ -1,54 +1,66 @@
 === fold
-Dividir líneas largas en varias más cortas, ajustando el ancho de la línea.
+Dividir líneas largas de archivos para ajustarlas a un ancho específico.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Dividir líneas largas en varias más cortas, ajustando el ancho de la línea.",
-  "usage": "fold [OPCIONES] fichero",
+  "description": "Corta las líneas de cada archivo de entrada (o entrada estándar) y las escribe en la salida estándar, limitando su longitud mediante saltos de línea forzados.",
+  "usage": "fold -w 80 -s archivo.txt",
   "options": {
-    "-w": "Ancho máximo de línea",
-    "-s": "Ajustar por espacios en blanco",
-    "-b": "Contar bytes en lugar de caracteres",
-    "--help": "Mostrar ayuda"
+    "-w": "Establecer el ancho máximo de la línea en columnas (por defecto 80)",
+    "-s": "Romper la línea únicamente en los espacios en blanco (evita cortar palabras)",
+    "-b": "Contar bytes en lugar de columnas (útil para archivos con caracteres multibyte)",
+    "--help": "Mostrar la ayuda del comando y salir",
+    "--version": "Mostrar información de la versión y salir"
   }
 }
 
 [source,bash]
 ----
-# Ajustar líneas a 80 caracteres
-fold -w 80 fichero.txt
+# Limitar el ancho de un archivo de texto a las 80 columnas estándar
+fold notas_largas.txt
 ----
 
-* -w:: `fold -w` Ancho de línea
-
-[source,bash]
-----
-# Ajustar líneas a 50 caracteres
-fold -w 50 fichero.txt
-----
-
-* -s:: `fold -s` Ajustar por espacios en blanco
+-w:: `-w WIDTH` Define el número máximo de columnas antes de insertar un salto de línea
 
 [source,bash]
 ----
-# Evitar cortar palabras, dividir solo en espacios
-fold -s -w 60 fichero.txt
+# Forzar una visualización estrecha de 30 caracteres
+echo "Este es un texto extremadamente largo que queremos dividir" | fold -w 30
 ----
 
-* -b:: `fold -b` Contar bytes en lugar de caracteres
-
-[source,bash]
-----
-# Ajustar según bytes en lugar de caracteres
-fold -b -w 40 fichero.txt
-----
-
-* --help:: `fold --help` Mostrar ayuda
+-s:: `-s` (spaces) Fuerza a que el corte se realice en el último espacio en blanco antes del límite
 
 [source,bash]
 ----
-# Ver opciones disponibles
-fold --help
+# Dividir el texto de forma legible, sin romper palabras por la mitad
+fold -w 40 -s parrafo_largo.txt
+----
+
+-b:: `-b` (bytes) Cuenta bytes individuales en lugar de posiciones de columna (caracteres)
+
+[source,bash]
+----
+# Útil cuando se trabaja con archivos binarios o codificaciones específicas
+fold -b -w 1024 datos_crudos.bin
+----
+
+Diferencia con fmt:: Mientras `fmt` reformatea párrafos, `fold` corta líneas de forma bruta
+
+[source,bash]
+----
+# fold cortará exactamente en la columna 10, incluso a mitad de palabra:
+echo "1234567890ABCDE" | fold -w 10
+# Salida:
+# 1234567890
+# ABCDE
+----
+
+Uso con Pipes:: Combinación frecuente para previsualizar archivos en terminales pequeñas
+
+[source,bash]
+----
+# Leer un archivo largo asegurando que no se desborde horizontalmente
+cat log_sistema.log | fold -w $COLUMNS -s | less
 ----
 

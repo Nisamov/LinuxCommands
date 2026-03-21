@@ -5,12 +5,15 @@ Inserta nuevas entradas en el directorio LDAP desde un archivo LDIF.
 [.metadata]
 {
   "description": "Variante de ldapmodify que está configurada por defecto para añadir nuevas entradas.",
-  "usage": "ldapadd [opciones] -f archivo.ldif",
+  "usage": "ldapadd -H ldap://localhost -x -D 'cn=admin,dc=empresa,dc=com' -W -f usuarios.ldif",
   "options": {
-    "archivo": "-f (Ruta al archivo LDIF con los datos)",
-    "identidad": "-x (Simple auth), -D (Bind DN), -W (Contraseña)",
-    "control": "-c (Continuar en caso de error), -n (Simulación/Dry-run)",
-    "servidor": "-H (URI del servidor LDAP)"
+    "-f": "-f (Ruta al archivo LDIF con los datos)",
+    "-x": "-x (Simple auth)",
+    "-D": "-D (Bind DN)",
+    "-W": "-W (Contraseña)",
+    "-c": "-c (Continuar en caso de error)",
+    "-n": "-n (Simulación sin ejecutar cambios)",
+    "-H": "-H (URI del servidor LDAP)"
   }
 }
 
@@ -20,23 +23,43 @@ Inserta nuevas entradas en el directorio LDAP desde un archivo LDIF.
 ldapadd -x -D "cn=admin,dc=ejemplo,dc=com" -W -f nuevo_usuario.ldif
 ----
 
-archivo:: El archivo LDIF debe estar correctamente formateado, empezando con el `dn:` de la nueva entrada.
+archivo:: `-f` Ruta al archivo LDIF con los datos
 
 [source,bash]
 ----
-# Ejemplo de contenido de nuevo_usuario.ldif
-# dn: uid=jdoe,ou=users,dc=ejemplo,dc=com
-# objectClass: inetOrgPerson
-# cn: John Doe
-# sn: Doe
-# uid: jdoe
+# Especificar el archivo que contiene las entradas a insertar
+ldapadd -f datos_importar.ldif
 ----
 
-control:: Si estás cargando un archivo masivo, el flag `-c` evita que el proceso se detenga si una entrada ya existe o tiene errores.
+identidad:: `-x -D -W` Métodos de autenticación (Simple, DN y Contraseña)
 
 [source,bash]
 ----
-# Carga masiva ignorando errores de duplicados
-ldapadd -x -D "cn=admin,dc=com" -W -c -f backup_usuarios.ldif
+# Autenticarse como administrador solicitando la contraseña por terminal
+ldapadd -x -D "cn=admin,dc=ejemplo,dc=com" -W
+----
+
+control:: `-c` Continuar el proceso aunque ocurran errores
+
+[source,bash]
+----
+# Seguir procesando el archivo LDIF si una entrada ya existe o falla
+ldapadd -c -f carga_masiva.ldif
+----
+
+dry-run:: `-n` Simular la operación para verificar errores
+
+[source,bash]
+----
+# Probar la inserción sin realizar cambios reales en el directorio
+ldapadd -n -f prueba.ldif
+----
+
+servidor:: `-H` Especificar la URI del servidor LDAP
+
+[source,bash]
+----
+# Conectarse a un servidor específico por IP o nombre de host
+ldapadd -H ldap://192.168.1.50 -f usuarios.ldif
 ----
 

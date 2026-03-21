@@ -1,45 +1,102 @@
 === cat
-Concatenar y mostrar el contenido de ficheros.
+Concatenar y mostrar el contenido de ficheros en la salida estándar.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Herramienta para concatenar y mostrar el contenido de ficheros.",
-  "usage": "cat [OPCIONES] archivo",
+  "description": "Utilidad para leer archivos de forma secuencial, escribiéndolos en la salida estándar. Permite combinar varios archivos, numerar líneas y visualizar caracteres no imprimibles.",
+  "usage": "cat -n archivo1.txt archivo2.txt",
   "options": {
-    "-n": "Numerar líneas de salida",
-    "-b": "Numerar solo líneas no vacías",
-    "-A": "Mostrar caracteres especiales (tabuladores, finales de línea)"
+    "-n": "Numerar todas las líneas de salida",
+    "-b": "Numerar solo las líneas que no están vacías",
+    "-s": "Suprimir líneas vacías consecutivas (compactar)",
+    "-A": "Equivalente a -vET (muestra todo, incluidos tabuladores y finales de línea)",
+    "-E": "Mostrar un símbolo '$' al final de cada línea",
+    "-T": "Mostrar los caracteres de tabulación como '^I'",
+    "-v": "Mostrar caracteres no imprimibles (excepto tabuladores y saltos de línea)",
+    "-e": "Equivalente a -vE",
+    "-t": "Equivalente a -vT"
   }
 }
 
 [source,bash]
 ----
-# Mostrar un fichero
-cat fichero.txt
+# Mostrar el contenido de un fichero por pantalla
+cat notas.txt
+
+# Concatenar dos ficheros en uno nuevo
+cat parte1.txt parte2.txt > manual_completo.txt
 ----
 
--n:: `cat -n` Numerar líneas de salida
-
-[source,bash]
-----
-# Mostrar con numeración de líneas
-cat -n fichero.txt
-----
-
--b:: `cat -b` Numerar sólo líneas no vacías
+-n:: `-n` Numerar todas las líneas de la salida, incluyendo las vacías
 
 [source,bash]
 ----
-# Numerar sólo líneas no vacías
-cat -b fichero.txt
+# Ver el contenido con índices de línea para referencia
+cat -n script.sh
 ----
 
--A:: `cat -A` Mostrar caracteres especiales
+-b:: `-b` Numerar únicamente las líneas que contienen texto
 
 [source,bash]
 ----
-# Mostrar caracteres especiales (tabuladores, finales de línea)
-cat -A fichero.txt
+# Numerar líneas ignorando los espacios en blanco entre párrafos
+cat -b poema.txt
+----
+
+-s:: `-s` Compactar múltiples líneas vacías consecutivas en una sola
+
+[source,bash]
+----
+# Limpiar la visualización de un archivo con demasiados saltos de línea
+cat -s archivo_sucio.txt
+----
+
+-A:: `-A` Mostrar visualmente todos los caracteres (finales de línea y tabuladores)
+
+[source,bash]
+----
+# Ver el contenido 'invisible' del archivo (útil para depurar scripts)
+cat -A configuracion.conf
+----
+
+-E:: `-E` Añadir el carácter '$' al final de cada línea para detectar espacios ocultos
+
+[source,bash]
+----
+# Verificar si hay espacios en blanco al final de las líneas
+cat -E lista.txt
+----
+
+-T:: `-T` Visualizar las tabulaciones como el carácter '^I'
+
+[source,bash]
+----
+# Distinguir entre espacios y tabuladores en un código fuente
+cat -T codigo.c
+----
+
+-v:: `-v` Mostrar caracteres de control y no imprimibles usando la notación '^' y 'M-'
+
+[source,bash]
+----
+# Detectar caracteres extraños en un archivo binario o corrupto
+cat -v datos_binarios.dat
+----
+
+-e:: `-e` Atajo para aplicar las opciones -v y -E simultáneamente
+
+[source,bash]
+----
+# Mostrar caracteres no imprimibles y el final de línea '$'
+cat -e documento.txt
+----
+
+-t:: `-t` Atajo para aplicar las opciones -v y -T simultáneamente
+
+[source,bash]
+----
+# Mostrar caracteres no imprimibles y representar tabuladores
+cat -t log_sistema.log
 ----
 

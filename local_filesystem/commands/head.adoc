@@ -1,29 +1,78 @@
 === head
-Mostrar las primeras líneas de uno o varios ficheros.
+Mostrar la parte inicial (cabecera) de uno o varios archivos o flujos de datos.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Mostrar las primeras líneas de uno o varios ficheros.",
-  "usage": "head [OPCIONES] fichero(s)",
+  "description": "Imprime las primeras líneas (10 por defecto) de cada archivo indicado. Si se proporcionan varios archivos, precede cada uno con una cabecera con su nombre.",
+  "usage": "head -n 15 archivo.log",
   "options": {
-    "-n <numero>": "Mostrar las primeras N líneas",
-    "-c <bytes>": "Mostrar los primeros N bytes",
-    "--help": "Mostrar ayuda"
+    "-n": "Mostrar las primeras N líneas. Si es negativo (-N), muestra todo excepto las últimas N líneas",
+    "-c": "Mostrar los primeros N bytes de cada archivo",
+    "-q": "Modo silencioso (quiet): nunca imprime cabeceras con nombres de archivos",
+    "-v": "Modo detallado (verbose): siempre imprime cabeceras con nombres de archivos",
+    "-z": "Las líneas terminan con el carácter nulo (NUL) en lugar de nueva línea",
+    "--help": "Mostrar la ayuda del comando",
+    "--version": "Mostrar información de la versión"
   }
 }
 
 [source,bash]
 ----
-# Mostrar las 10 primeras líneas (por defecto)
-head fichero.txt
+# Ver las primeras 10 líneas de un archivo (comportamiento estándar)
+head sistema.log
 ----
 
-* -n:: `head -n <numero>` Mostrar las primeras N líneas
+-n:: `-n [+/-]N` Controla el número de líneas a visualizar
 
 [source,bash]
 ----
-# Mostrar las primeras 3 líneas
-head -n 3 fichero.txt
+# Mostrar exactamente las primeras 20 líneas
+head -n 20 documento.txt
+
+# Mostrar todo el archivo EXCEPTO las últimas 5 líneas
+head -n -5 archivo_largo.txt
+----
+
+-c:: `-c [+/-]N` Extrae una cantidad específica de datos en bytes
+
+[source,bash]
+----
+# Leer los primeros 512 bytes (útil para inspeccionar cabeceras binarias)
+head -c 512 datos.bin
+
+# Mostrar todo excepto los últimos 100 bytes
+head -c -100 datos.bin
+----
+
+-q / -v:: `-q` (quiet) y `-v` (verbose) Controlan la visibilidad del nombre del archivo
+
+[source,bash]
+----
+# Comparar las primeras líneas de varios archivos sin ver sus nombres
+head -q -n 3 file1.txt file2.txt file3.txt
+
+# Forzar la visualización del nombre incluso con un solo archivo
+head -v -n 5 unico_archivo.txt
+----
+
+Uso con Pipes:: Combinación frecuente para filtrar resultados de otros comandos
+
+[source,bash]
+----
+# Ver solo los 5 procesos que más CPU consumen
+ps aux --sort=-%cpu | head -n 6
+
+# Obtener la línea central de un archivo (ej: línea 10)
+# Primero tomamos las 10 primeras y de esas, la última
+head -n 10 archivo.txt | tail -n 1
+----
+
+-z:: `-z` (zero-terminated) Procesa archivos donde los elementos están separados por NUL
+
+[source,bash]
+----
+# Útil para manejar listas de archivos generadas por find -print0
+find . -type f -print0 | head -z -n 5
 ----
 

@@ -1,30 +1,100 @@
 === gzip
-Empaquetamiento de múltiples archivos y directorios.
+Comprimir o expandir archivos utilizando la codificación Lempel-Ziv (LZ77).
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Empaquetar archivos con compresión gzip.",
-  "usage": "gzip [OPCIONES] archivo(s)",
+  "description": "Reduce el tamaño de los archivos individuales. Por defecto, reemplaza el archivo original por uno con la extensión .gz.",
+  "usage": "gzip -vk9 archivo.txt",
   "options": {
-    "-c": "Escribir salida a stdout",
-    "-d": "Desempaquetar archivo",
-    "-f": "Forzar sobrescritura",
-    "-k": "Mantener archivos originales",
-    "-9": "Usar máxima compresión",
-    "--help": "Mostrar ayuda"
+    "-d": "Descomprimir el archivo (equivalente a gunzip)",
+    "-c": "Escribir el resultado en la salida estándar (stdout)",
+    "-k": "Mantener (keep) los archivos de entrada, no borrarlos",
+    "-f": "Forzar la compresión o descompresión incluso si existen archivos",
+    "-t": "Comprobar la integridad del archivo comprimido",
+    "-v": "Modo verbose: muestra el nombre y el porcentaje de reducción",
+    "-l": "Mostrar información sobre el archivo comprimido (tamaño original y ratio)",
+    "-r": "Recorrer directorios recursivamente y comprimir todos sus archivos",
+    "-1": "Compresión rápida (menor ratio)",
+    "-9": "Compresión máxima (más lenta, mejor ratio)",
+    "--best": "Equivalente a -9",
+    "--fast": "Equivalente a -1"
   }
 }
 
 [source,bash]
 ----
-# Empaquetar archivos
-gzip archivo.tar archivo1 archivo2
+# Comprimir un archivo (crea archivo.txt.gz y borra el original)
+gzip archivo.txt
 
-# Desempaquetar archivo
+# Descomprimir un archivo .gz
 gunzip archivo.txt.gz
 ----
 
-* -c:: `gzip -c` Empaquetar mantieniendo archivos originales
-* -9:: `gzip -9` Empaquetar con la maxima compresión posible
+-c:: `-c` Envía la salida a `stdout`, permitiendo redirigir el flujo o mantener el original
+
+[source,bash]
+----
+# Comprimir manteniendo el original mediante redirección
+gzip -c base_datos.sql > base_datos.sql.gz
+----
+
+-d:: `-d` (decompress) Descomprime el archivo (funciona igual que invocar `gunzip`)
+
+[source,bash]
+----
+# Descomprimir forzando el proceso
+gzip -d archivo.gz
+----
+
+-k:: `-k` (keep) Evita que `gzip` elimine el archivo original tras la compresión
+
+[source,bash]
+----
+# Comprimir sin perder el fichero fuente
+gzip -k reporte.log
+----
+
+-l:: `-l` (list) Muestra estadísticas del archivo comprimido sin descomprimirlo
+
+[source,bash]
+----
+# Ver el tamaño original vs comprimido y el ratio
+gzip -l backup.tar.gz
+----
+
+-r:: `-r` (recursive) Busca archivos en toda la estructura de carpetas y los comprime uno a uno
+
+[source,bash]
+----
+# Comprimir todos los archivos dentro de una carpeta de logs
+gzip -r /var/log/antiguos/
+----
+
+-1 .. -9:: Controlan el balance entre velocidad de procesamiento y nivel de compresión
+
+[source,bash]
+----
+# Usar la máxima compresión posible (ideal para archivos grandes)
+gzip -9 archivo_pesado.iso
+
+# Usar la compresión más rápida (útil si el tiempo es crítico)
+gzip -1 log_transacciones.txt
+----
+
+-t:: `-t` (test) Verifica si un archivo comprimido es válido o está corrupto
+
+[source,bash]
+----
+# Validar la integridad de un archivo antes de moverlo
+gzip -t paquete_datos.gz
+----
+
+-v:: `-v` (verbose) Muestra detalles sobre el proceso de compresión
+
+[source,bash]
+----
+# Comprimir viendo el porcentaje de espacio ahorrado
+gzip -v documento.pdf
+----
 

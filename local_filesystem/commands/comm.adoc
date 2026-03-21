@@ -4,69 +4,113 @@ Comparar dos archivos ordenados línea por línea.
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Compara dos archivos editados u ordenados y muestra las líneas únicas de cada uno y las líneas comunes.",
-  "usage": "comm [OPCIONES] archivo1 archivo2",
+  "description": "Compara dos archivos que deben estar ordenados previamente. Genera una salida en tres columnas: líneas únicas del archivo1, líneas únicas del archivo2 y líneas comunes.",
+  "usage": "comm -12 archivo1.txt archivo2.txt",
   "options": {
-    "-1": "Suprimir líneas únicas del archivo 1",
-    "-2": "Suprimir líneas únicas del archivo 2",
-    "-3": "Suprimir líneas que aparecen en ambos archivos",
+    "-1": "Suprimir la columna 1 (líneas exclusivas del archivo 1)",
+    "-2": "Suprimir la columna 2 (líneas exclusivas del archivo 2)",
+    "-3": "Suprimir la columna 3 (líneas comunes a ambos archivos)",
     "--check-order": "Verificar que la entrada esté correctamente ordenada",
-    "--nocheck-order": "No verificar que la entrada esté ordenada",
-    "--output-delimiter": "Cambiar el separador entre columnas"
+    "--nocheck-order": "No verificar si la entrada está ordenada (no recomendado)",
+    "--output-delimiter": "Especificar una cadena para separar las columnas de salida",
+    "--total": "Mostrar un resumen con el conteo de líneas de cada columna",
+    "-z": "Terminar las líneas con el carácter nulo (NUL) en lugar de nueva línea",
+    "--help": "Mostrar la ayuda del comando",
+    "--version": "Mostrar información de la versión"
   }
 }
 
 [source,bash]
 ----
-# Comparar dos archivos (salida por defecto: 3 columnas)
-comm lista1.txt lista2.txt
+# Comparación estándar: genera 3 columnas (únicas1, únicas2, comunes)
+comm lista_a.txt lista_b.txt
 ----
 
--1:: `comm -1` Ocultar líneas exclusivas del primer fichero
+-1:: `-1` Oculta la primera columna (líneas que solo están en el primer archivo)
 
 [source,bash]
 ----
-# Mostrar solo líneas del archivo 2 y las comunes
+# Ver solo lo que es exclusivo del archivo 2 y lo que es común
 comm -1 archivo1.txt archivo2.txt
 ----
 
--2:: `comm -2` Ocultar líneas exclusivas del segundo fichero
+-2:: `-2` Oculta la segunda columna (líneas que solo están en el segundo archivo)
 
 [source,bash]
 ----
-# Mostrar solo líneas del archivo 1 y las comunes
+# Ver solo lo que es exclusivo del archivo 1 y lo que es común
 comm -2 archivo1.txt archivo2.txt
 ----
 
--3:: `comm -3` Ocultar líneas que están en ambos ficheros
+-3:: `-3` Oculta la tercera columna (las líneas que coinciden en ambos)
 
 [source,bash]
 ----
-# Mostrar solo las diferencias (lo que no es común)
+# Mostrar exclusivamente las diferencias entre ambos archivos
 comm -3 archivo1.txt archivo2.txt
 ----
 
--12:: `comm -12` Mostrar solo las líneas comunes
+-12:: `-12` Combinación: suprime columnas 1 y 2 para mostrar solo las coincidencias
 
 [source,bash]
 ----
-# Útil para encontrar intersecciones entre dos listas
-comm -12 lista_a.txt lista_b.txt
+# Obtener la intersección exacta de dos listas ordenadas
+comm -12 usuarios_viejos.txt usuarios_nuevos.txt
 ----
 
--23:: `comm -23` Mostrar líneas exclusivas del archivo 1
-
-[source,bash]
-----
-# Útil para ver qué elementos se han borrado en la lista 2
-comm -23 lista_vieja.txt lista_nueva.txt
-----
-
---output-delimiter:: `comm --output-delimiter=STR` Definir un nuevo separador
+-23:: `-23` Combinación: suprime columnas 2 y 3 para mostrar solo lo exclusivo del primero
 
 [source,bash]
 ----
-# Usar una flecha como separador de columnas
-comm --output-delimiter=" --> " archivo1.txt archivo2.txt
+# Identificar líneas que han sido eliminadas o que no existen en el segundo archivo
+comm -23 master_list.txt backup_list.txt
+----
+
+-13:: `-13` Combinación: suprime columnas 1 y 3 para mostrar solo lo exclusivo del segundo
+
+[source,bash]
+----
+# Identificar líneas nuevas o añadidas en el segundo archivo
+comm -13 lista_ayer.txt lista_hoy.txt
+----
+
+--check-order:: `--check-order` Fuerza al programa a fallar si los archivos no están ordenados
+
+[source,bash]
+----
+# Asegurar que el resultado es fiable validando el orden alfabético
+comm --check-order archivo1.txt archivo2.txt
+----
+
+--nocheck-order:: `--nocheck-order` Ignora si los archivos están desordenados (puede dar resultados erróneos)
+
+[source,bash]
+----
+# Comparar archivos sin previo 'sort' (usar con precaución)
+comm --nocheck-order datos1.txt datos2.txt
+----
+
+--output-delimiter:: `--output-delimiter` Cambia el separador (tabulador por defecto) por una cadena personalizada
+
+[source,bash]
+----
+# Usar un separador visual más claro para scripts o lectura humana
+comm --output-delimiter=" | " archivo1.txt archivo2.txt
+----
+
+--total:: `--total` Añade una fila al final con el recuento total de cada columna
+
+[source,bash]
+----
+# Comparar y obtener estadísticas de cuántas líneas son únicas o comunes
+comm --total lista_a.txt lista_b.txt
+----
+
+-z:: `-z` (zero) Finaliza cada registro con el carácter nulo (\0)
+
+[source,bash]
+----
+# Procesar la salida de comm de forma segura con xargs o en pipes complejos
+comm -z -12 lista1.txt lista2.txt
 ----
 

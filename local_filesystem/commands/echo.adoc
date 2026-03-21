@@ -1,36 +1,79 @@
 === echo
-Mostrar una línea de texto o variables en la salida estándar.
+Mostrar una línea de texto o el valor de variables en la salida estándar.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Mostrar una línea de texto o variables en la salida estándar.",
-  "usage": "echo [OPCIONES] TEXTO",
+  "description": "Escribe los argumentos proporcionados en la salida estándar, separados por espacios y finalizados con un salto de línea.",
+  "usage": "echo -e 'Línea 1\\nLínea 2'",
   "options": {
-    "-n": "No añadir salto de línea final",
-    "-e": "Interpretar escapes como \\n, \\t"
+    "-n": "No añadir el salto de línea automático al final",
+    "-e": "Habilitar la interpretación de caracteres de escape con barra invertida",
+    "-E": "Deshabilitar explícitamente la interpretación de escapes (comportamiento por defecto)",
+    "--help": "Mostrar la ayuda del comando (solo en versiones binarias externas)",
+    "--version": "Mostrar información de la versión"
   }
 }
 
 [source,bash]
 ----
-# Mostrar una cadena simple
-echo "Hola Mundo"
+# Mostrar un texto simple seguido de un salto de línea
+echo "Configuración completada con éxito."
+
+# Mostrar el valor de una variable de entorno
+echo $USER
 ----
 
-* -n:: `echo -n` No añadir salto de línea final
-
-[source,bash]
-----
-# No añadir salto de línea
-echo -n "Hola"
-----
-
-* -e:: `echo -e` Interpretar escapes como \n, \t
+-n:: `-n` Suprime el carácter de nueva línea al final de la salida
 
 [source,bash]
 ----
-# Interpretar escapes
-echo -e "Linea1\nLinea2"
+# Útil para crear prompts personalizados o mensajes continuos
+echo -n "Procesando datos... "
+# (Aquí el cursor se queda al final de la palabra 'datos... ')
+----
+
+-e:: `-e` Permite que `echo` reconozca y procese caracteres especiales como saltos de línea o tabulaciones
+
+[source,bash]
+----
+# Insertar una tabulación (\t) y un salto de línea (\n)
+echo -e "Columna1\tColumna2\nFila2"
+----
+
+Escapes comunes (con -e):: Secuencias especiales para formatear la salida de texto
+
+[source,bash]
+----
+# \a : Alerta (emite un pitido del sistema)
+echo -e "\aAtención: Proceso finalizado"
+
+# \b : Retroceso (borra el carácter anterior)
+echo -e "Holaa\b" # Salida: Hola
+
+# \c : Termina la salida en ese punto (ignora el resto de la línea)
+echo -e "Texto visible \c invisible"
+
+# \r : Retorno de carro (vuelve al inicio de la línea actual)
+echo -e "Cargando...\rListo" # Salida: Listo
+----
+
+-E:: `-E` Ignora los caracteres de escape incluso si se usan barras invertidas (comportamiento estándar)
+
+[source,bash]
+----
+# Mostrar literalmente la cadena sin procesar el \n
+echo -E "Esta es una línea con \n literal"
+----
+
+Comillas y Variables:: Diferencia entre comillas simples y dobles al usar echo
+
+[source,bash]
+----
+# Las comillas dobles permiten expandir variables
+echo "Mi home es $HOME"
+
+# Las comillas simples muestran el texto literal
+echo 'El valor de $HOME no se expande aquí'
 ----
 

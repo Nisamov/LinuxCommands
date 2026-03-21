@@ -1,108 +1,140 @@
 === cp
-Copiar archivos o directorios.
+Copiar archivos y directorios en el sistema de archivos.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Herramienta para copiar archivos o directorios.",
-  "usage": "cp [OPCIONES] ORIGEN DESTINO",
+  "description": "Copia el contenido de ORIGEN a DESTINO, o varios ORIGENES a un DIRECTORIO. Soporta preservación de atributos, copias recursivas y backups automáticos.",
+  "usage": "cp -av /ruta/origen /ruta/destino",
   "options": {
-    "-r": "Copiar recursivamente",
-    "-f": "Forzar la copia sobrescribiendo sin preguntar",
-    "-a": "Copiar archivos manteniendo atributos (recursivo)",
-    "-b": "Crear copia de seguridad del destino",
-    "-i": "Pedir confirmación antes de sobrescribir",
-    "-v": "Mostrar archivos mientras se copian (verbose)",
-    "--preserve=ATTRS": "Preservar atributos (mode,ownership,timestamps)",
-    "--no-preserve=ATTRS": "No preservar ciertos atributos",
-    "--parents": "Mantener la ruta de origen al copiar",
-    "--reflink[=always|never]": "Intentar copia por referencia (CoW)"
+    "-r": "Copiar directorios recursivamente",
+    "-f": "Forzar la copia eliminando el destino si es necesario",
+    "-a": "Modo archivo: equivalente a -dR --preserve=all",
+    "-b": "Crear un backup de cada archivo de destino existente",
+    "-i": "Interactivo: preguntar antes de sobrescribir",
+    "-v": "Modo verbose: explicar qué se está haciendo",
+    "-p": "Equivalente a --preserve=mode,ownership,timestamps",
+    "-u": "Copiar solo si el origen es más reciente que el destino",
+    "-l": "Crear enlaces duros (hard links) en lugar de copiar",
+    "-s": "Crear enlaces simbólicos (symlinks) en lugar de copiar",
+    "-n": "No sobrescribir un archivo existente (no-clobber)",
+    "-L": "Seguir siempre los enlaces simbólicos en el origen",
+    "-P": "No seguir nunca los enlaces simbólicos en el origen",
+    "-x": "Permanecer en este sistema de archivos (no cruzar montajes)",
+    "--parents": "Usar el nombre completo del archivo origen bajo el directorio destino",
+    "--reflink": "Controlar copias por referencia (Copy-on-Write)",
+    "--preserve": "Preservar atributos específicos (mode, ownership, timestamps, etc.)",
+    "--no-preserve": "No preservar los atributos indicados"
   }
 }
 
 [source,bash]
 ----
-# Copiar un fichero a un directorio destino
-cp fichero.txt /ruta/destino/
+# Copiar un archivo a una nueva ubicación
+cp documento.txt /home/usuario/respaldos/
 ----
 
-* -r:: `cp -r` Copiar recursivamente el objetivo
-
-[source,bash]
-----
-# Copiar recursivamente un directorio
-cp -r carpeta_origen/ carpeta_destino/
-----
-
-* -f:: `cp -f` Forzar la copia sobrescribiendo sin preguntar
+-r:: `-r` (o `-R`) Copiar directorios y todo su contenido de forma recursiva
 
 [source,bash]
 ----
-# Forzar copia
-cp -f fichero_origen fichero_destino
+# Copiar una carpeta entera a otro lugar
+cp -r /etc/configuracion /backup/central/
 ----
 
-* -a:: `cp -a` Copiar archivos manteniendo atributos (recursivo)
-
-[source,bash]
-----
-# Copiar preservando atributos
-cp -a carpeta_origen/ carpeta_destino/
-----
-
-* -b:: `cp -b` Crear copia de seguridad del destino
+-f:: `-f` (force) Si el destino no se puede abrir, lo elimina e intenta de nuevo
 
 [source,bash]
 ----
-# Copiar con copia de seguridad
-cp -b fichero.txt fichero.txt.bak
+# Forzar la copia incluso si el destino tiene restricciones de escritura
+cp -f sistema.bin /dev/sdb1
 ----
 
-* -i:: `cp -i` Pedir confirmación antes de sobrescribir
-
-[source,bash]
-----
-# Copiar solicitando confirmación
-cp -i fichero.txt /ruta/destino/
-----
-
-* -v:: `cp -v` Mostrar archivos mientras se copian (verbose)
+-a:: `-a` (archive) Preserva enlaces, atributos y copia recursivamente (ideal para backups)
 
 [source,bash]
 ----
-# Copiar mostrando archivos procesados
-cp -v fichero.txt /ruta/destino/
+# Copiar manteniendo exactamente la estructura y permisos originales
+cp -a /home/usuario /mnt/disco_externo/
 ----
 
-* --preserve:: `cp --preserve=ATTRS` Preservar atributos (mode,ownership,timestamps)
-
-[source,bash]
-----
-# Copiar preservando permisos y timestamps
-cp --preserve=mode,timestamps fichero.txt /ruta/destino/
-----
-
-* --no-preserve:: `cp --no-preserve=ATTRS` No preservar ciertos atributos
+-b:: `-b` (backup) Realiza una copia de seguridad de los archivos que van a ser sobrescritos
 
 [source,bash]
 ----
-# Copiar sin preservar propietario
-cp --no-preserve=ownership fichero.txt /ruta/destino/
+# El archivo original en destino se renombrará (ej: file.txt~)
+cp -b nuevo_script.sh /usr/local/bin/script.sh
 ----
 
-* --parents:: `cp --parents` Mantener la ruta de origen al copiar
-
-[source,bash]
-----
-# Copiar creando la ruta relativa en destino
-cp --parents dir/a/b/file.txt /backup/
-----
-
-* --reflink:: `cp --reflink[=always|never]` Intentar copia por referencia (CoW)
+-i:: `-i` (interactive) Solicita confirmación manual antes de destruir datos existentes
 
 [source,bash]
 ----
-# Intentar copia por referencia cuando sea posible
-cp --reflink=auto fichero.bin /ruta/destino/
+# Evitar sobrescribir archivos por error
+cp -i foto.jpg /galería/vacaciones/
+----
+
+-v:: `-v` (verbose) Muestra el nombre de cada archivo a medida que se procesa
+
+[source,bash]
+----
+# Ver el progreso de la copia en la terminal
+cp -v *.mp3 /musica/pendientes/
+----
+
+-u:: `-u` (update) Copia solo cuando el origen es más nuevo o el destino no existe
+
+[source,bash]
+----
+# Sincronizar archivos modificados recientemente
+cp -u *.doc /nube/documentos/
+----
+
+-l / -s:: `-l` (link) o `-s` (symbolic link) No copia datos, crea punteros al origen
+
+[source,bash]
+----
+# Crear un acceso directo en lugar de duplicar el archivo
+cp -s /ruta/real/ejecutable /usr/bin/comando
+----
+
+-n:: `-n` (no-clobber) Jamás sobrescribe un archivo que ya existe
+
+[source,bash]
+----
+# Añadir archivos nuevos a una carpeta sin tocar los ya existentes
+cp -n * /destino/coleccion/
+----
+
+--parents:: `--parents` Recrea la estructura de directorios del origen en el destino
+
+[source,bash]
+----
+# Creará /backup/var/log/apache2/access.log
+cp --parents var/log/apache2/access.log /backup/
+----
+
+--preserve:: `--preserve[=ATTR_LIST]` Control fino sobre qué metadatos mantener
+
+[source,bash]
+----
+# Copiar preservando solo el propietario y los grupos
+cp --preserve=ownership archivo.txt /tmp/
+----
+
+--reflink:: `--reflink[=always|never]` Realiza copias ligeras en sistemas como Btrfs o XFS
+
+[source,bash]
+----
+# Copia instantánea que no ocupa espacio extra (Copy-on-Write)
+cp --reflink=always base_datos_gigante.db backup_db.db
+----
+
+-x:: `-x` (one-file-system) No atraviesa puntos de montaje de otros discos
+
+[source,bash]
+----
+# Copiar la raíz sin incluir datos de discos externos montados en /mnt o /media
+cp -ax / /destino/clon_sistema
 ----
 

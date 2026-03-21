@@ -1,28 +1,109 @@
 === bzip2
-Empaquetamiento de múltiples archivos y directorios.
+Compresión y descompresión de archivos mediante el algoritmo de ordenamiento de bloques.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Herramienta para comprimir y descomprimir archivos con alta compresión.",
-  "usage": "bzip2 [OPCIONES] archivo",
+  "description": "Herramienta de compresión de archivos de alta eficiencia que utiliza el algoritmo Burrows-Wheeler. Sustituye el archivo original por una versión .bz2.",
+  "usage": "bzip2 -vk9 archivo.tar",
   "options": {
-    "-c": "Escribir salida a stdout",
-    "-d": "Descomprimir archivo",
-    "-k": "Mantener archivo original",
-    "-v": "Mostrar información de progreso",
-    "-z": "Comprimir archivo"
+    "-z": "Forzar la compresión (comportamiento por defecto)",
+    "-d": "Descomprimir el archivo (equivalente a bunzip2)",
+    "-k": "Mantener (keep) los archivos de entrada tras la operación",
+    "-f": "Forzar el sobrescrito de archivos de salida",
+    "-c": "Enviar el resultado a la salida estándar (stdout)",
+    "-v": "Modo verbose: muestra el porcentaje de compresión",
+    "-t": "Verificar la integridad de los archivos comprimidos",
+    "-q": "Modo silencioso: suprime mensajes de error no críticos",
+    "-1": "Compresión rápida (menor ratio, usa menos memoria)",
+    "-9": "Compresión máxima (mejor ratio, usa más memoria)",
+    "--small": "Usar modo de descompresión de bajo consumo de RAM"
   }
 }
 
 [source,bash]
 ----
-# Empaquetado de archivos
+# Comprimir un archivo (elimina el original y crea archivo.txt.bz2)
 bzip2 archivo.txt
-
-# Desempaquetar archvivos
-bunzip2 archivo.txt.bz2
 ----
 
--c:: `bzip -c archivo > archivo.txt.bz2` Comprimir manteniendo archivos originales
+-z:: `-z` Fuerza la compresión independientemente del nombre del binario invocado
+
+[source,bash]
+----
+# Comprimir explícitamente un fichero
+bzip2 -z datos.sql
+----
+
+-d:: `-d` Descomprimir archivos (funciona igual que el comando bunzip2)
+
+[source,bash]
+----
+# Descomprimir un archivo .bz2 devolviéndolo a su estado original
+bzip2 -d archivo.txt.bz2
+----
+
+-k:: `-k` Mantener el archivo original después de comprimir o descomprimir
+
+[source,bash]
+----
+# Comprimir sin borrar el archivo fuente
+bzip2 -k notas.txt
+----
+
+-f:: `-f` Forzar la operación aunque el archivo de destino ya exista
+
+[source,bash]
+----
+# Sobrescribir un .bz2 previo sin preguntar
+bzip2 -f backup.tar
+----
+
+-c:: `-c` Envía la salida a la consola o a un pipe en lugar de crear un archivo
+
+[source,bash]
+----
+# Comprimir y redirigir a un nombre de archivo personalizado
+bzip2 -c base_datos.sql > copia_seguridad.bz2
+----
+
+-v:: `-v` Muestra detalles técnicos y el ratio de compresión obtenido
+
+[source,bash]
+----
+# Ver cuánto espacio se ha ahorrado al comprimir
+bzip2 -v imagen.iso
+----
+
+-t:: `-t` Comprueba si un archivo comprimido está corrupto
+
+[source,bash]
+----
+# Verificar la integridad de un archivo descargado
+bzip2 -t paquete.bz2
+----
+
+-q:: `-q` Suprimir avisos y mensajes de error (quiet)
+
+[source,bash]
+----
+# Ejecutar compresión en scripts sin mostrar alertas
+bzip2 -q archivo_grande.log
+----
+
+-1 .. -9:: `-1` al `-9` Establece el tamaño del bloque (de 100k a 900k)
+
+[source,bash]
+----
+# Usar compresión máxima (9) para ahorrar el mayor espacio posible
+bzip2 -9 archivo_pesado.tar
+----
+
+--small:: `--small` Reduce el uso de memoria para la descompresión (a costa de velocidad)
+
+[source,bash]
+----
+# Descomprimir en sistemas con muy poca memoria RAM
+bzip2 -d --small archivo.bz2
+----
 

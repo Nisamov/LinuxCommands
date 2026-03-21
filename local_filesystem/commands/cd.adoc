@@ -1,46 +1,84 @@
 === cd
-Establecer directorio de trabajo.
+Cambiar el directorio de trabajo actual del shell.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Herramienta para cambiar el directorio de trabajo actual.",
-  "usage": "cd [OPCIONES] DIRECTORIO",
+  "description": "Actualiza la variable de entorno PWD para desplazar la ubicación del usuario dentro de la jerarquía de directorios.",
+  "usage": "cd [-L|[-P [-e]] [-@]] [directorio]",
   "options": {
-    "-": "Volver al directorio anterior (OLDPWD)",
-    "~": "Ir al directorio home del usuario",
-    "..": "Ir al directorio padre"
+    "-L": "Seguir enlaces simbólicos (comportamiento por defecto)",
+    "-P": "Usar la estructura de directorios física en lugar de seguir enlaces",
+    "-e": "Si se usa con -P, devuelve un error si no se puede determinar el directorio",
+    "-@": "En sistemas que lo soportan, visualiza atributos extendidos como directorios",
+    "-": "Regresar al directorio de trabajo anterior ($OLDPWD)",
+    "..": "Subir un nivel en la jerarquía (directorio padre)",
+    "~": "Desplazarse al directorio personal del usuario ($HOME)"
   }
 }
 
 [source,bash]
 ----
-# Ir al directorio padre
-cd ..
 # Ir a una ruta absoluta
-cd /home/usuario/Documentos
+cd /var/www/html
+
+# Ir a una ruta relativa desde la posición actual
+cd documentos/proyectos
 ----
 
--~:: `cd ~` Ir al directorio home del usuario
+-L:: `-L` Fuerza a que se sigan los enlaces simbólicos (Logical)
 
 [source,bash]
 ----
-# Volver al directorio anterior (OLDPWD)
+# Si /enlace es un link a /real/dir, 'pwd' mostrará /enlace
+cd -L /enlace
+----
+
+-P:: `-P` Utiliza la ruta física real ignorando enlaces simbólicos (Physical)
+
+[source,bash]
+----
+# Si /enlace apunta a /real/dir, 'pwd' mostrará /real/dir directamente
+cd -P /enlace
+----
+
+-:: `-` Alternar entre el directorio actual y el último directorio visitado
+
+[source,bash]
+----
+# Volver rápidamente al directorio donde estábamos antes del último 'cd'
+cd -
+----
+
+..:: `..` Referencia al directorio inmediatamente superior en el árbol
+
+[source,bash]
+----
+# Subir dos niveles de golpe
+cd ../..
+----
+
+~:: `~` Atajo para la raíz del directorio del usuario actual
+
+[source,bash]
+----
+# Volver a la carpeta personal (/home/usuario) desde cualquier lugar
 cd ~
 ----
 
--..:: `cd ..` Acceder al directorio padre
+-e:: `-e` Utilizado con -P, asegura que el cambio sea exitoso o devuelve error
 
 [source,bash]
 ----
-cd ..
+# Útil en scripts para asegurar que la ruta física es válida
+cd -Pe /ruta/critica
 ----
 
---:: `cd -` Volver al directorio anterior (OLDPWD)
+-@:: `-@` Permite entrar en directorios de atributos extendidos (específico de ciertos sistemas)
 
 [source,bash]
 ----
-# Volver al directorio anterior (OLDPWD)
-cd -
+# Acceder a metadatos extendidos del sistema de archivos
+cd -@ archivo_con_atributos
 ----
 

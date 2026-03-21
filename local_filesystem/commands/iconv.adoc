@@ -4,69 +4,83 @@ Convertir la codificación de caracteres de archivos o flujos de texto.
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Convertir la codificación de caracteres de archivos o flujos de texto.",
-  "usage": "iconv [OPCIONES] fichero",
+  "description": "Transforma texto de una codificación (encoding) a otra. Es esencial para corregir problemas de visualización de caracteres (mojibake) entre sistemas Windows, Linux y formatos antiguos.",
+  "usage": "iconv -f ISO-8859-1 -t UTF-8 archivo.txt",
   "options": {
-    "-f": "Especificar codificación de origen (from)",
-    "-t": "Especificar codificación de destino (to)",
-    "-o": "Especificar archivo de salida",
-    "-c": "Omitir caracteres no convertibles",
-    "-l": "Listar todas las codificaciones disponibles",
-    "--verbose": "Mostrar información detallada"
+    "-f": "Especificar la codificación de origen (From-code)",
+    "-t": "Especificar la codificación de destino (To-code)",
+    "-o": "Escribir el resultado en un archivo en lugar de la salida estándar",
+    "-l": "Listar todas las codificaciones de caracteres soportadas",
+    "-c": "Omitir silenciosamente los caracteres que no se pueden convertir",
+    "-s": "Modo silencioso: suprimir mensajes de advertencia sobre errores",
+    "--verbose": "Mostrar información sobre el progreso y estadísticas",
+    "--byte-subst": "Sustituir bytes no convertibles con una secuencia específica",
+    "--widechar-subst": "Sustituir caracteres anchos no convertibles"
   }
 }
 
 [source,bash]
 ----
-# Convertir un archivo de UTF-8 a ISO-8859-1
-iconv -f UTF-8 -t ISO-8859-1 fichero.txt -o fichero_latin1.txt
+# Convertir un archivo de Windows (CP1252) a Linux estándar (UTF-8)
+iconv -f CP1252 -t UTF-8 archivo_windows.txt > archivo_linux.txt
 ----
 
-* -f:: `iconv -f` Especificar codificación de origen (from)
-
-[source,bash]
-----
-# Leer un archivo en UTF-16
-iconv -f UTF-16 -t UTF-8 fichero_utf16.txt > fichero_utf8.txt
-----
-
-* -t:: `iconv -t` Especificar codificación de destino (to)
+-f / -t:: `-f` (from) y `-t` (to) definen el puente de conversión
 
 [source,bash]
 ----
-# Convertir a ASCII ignorando caracteres no representables
-iconv -f UTF-8 -t ASCII//TRANSLIT fichero.txt
+# Convertir de UTF-8 a la codificación clásica de Europa Occidental
+iconv -f UTF-8 -t ISO-8859-15 entrada.txt
 ----
 
-* -o:: `iconv -o` Especificar archivo de salida
-
-[source,bash]
-----
-# Guardar la salida en un fichero específico
-iconv -f UTF-8 -t ISO-8859-1 fichero.txt -o salida.txt
-----
-
-* -c:: `iconv -c` Omitir caracteres no convertibles
+Modificadores de destino:: Añadir `//TRANSLIT` o `//IGNORE` al final del código destino (`-t`)
 
 [source,bash]
 ----
-# Convertir ignorando caracteres inválidos
-iconv -f UTF-8 -t ISO-8859-1 -c fichero.txt -o salida.txt
+# //TRANSLIT: Aproximar caracteres (ej: '©' se convierte en '(c)')
+iconv -f UTF-8 -t ASCII//TRANSLIT texto.txt
+
+# //IGNORE: Eliminar cualquier carácter que no quepa en el destino
+iconv -f UTF-8 -t ASCII//IGNORE texto.txt
 ----
 
-* -l:: `iconv -l` Listar todas las codificaciones disponibles
-
-[source,bash]
-----
-# Ver codificaciones soportadas
-iconv -l
-----
-
-* --verbose:: `iconv --verbose` Mostrar información detallada
+-o:: `-o` (output) Permite especificar el archivo de salida directamente sin usar redirecciones de shell (`>`)
 
 [source,bash]
 ----
-# Información detallada sobre la conversión
-iconv --verbose -f UTF-8 -t ISO-8859-1 fichero.txt
+# Convertir y guardar en un nuevo archivo
+iconv -f UTF-8 -t UTF-16 -o salida_win.txt entrada.txt
+----
+
+-c:: `-c` Descarta los caracteres que no pueden ser convertidos en lugar de detener el proceso con un error
+
+[source,bash]
+----
+# Forzar la conversión de un archivo corrupto ignorando errores
+iconv -c -f UTF-8 -t ISO-8859-1 archivo_danado.txt
+----
+
+-l:: `-l` (list) Muestra la lista completa de nombres y alias de codificaciones que tu sistema reconoce
+
+[source,bash]
+----
+# Buscar si el sistema soporta una codificación específica de IBM
+iconv -l | grep -i "IBM"
+----
+
+Uso con find:: Convertir de forma masiva todos los archivos de un directorio
+
+[source,bash]
+----
+# Convertir todos los .txt de una carpeta a UTF-8 (requiere precaución)
+find . -name "*.txt" -exec sh -c 'iconv -f ISO-8859-1 -t UTF-8 "{}" > "{}.tmp" && mv "{}.tmp" "{}"' \;
+----
+
+Detección previa:: Antes de usar iconv, es útil saber qué tenemos entre manos
+
+[source,bash]
+----
+# Usar el comando 'file' para intentar adivinar la codificación actual
+file -i documento.txt
 ----
 

@@ -1,71 +1,103 @@
 === cksum
-Calcular y verificar la suma de comprobación (checksum) CRC y el conteo de bytes de un archivo.
+Calcular y verificar sumas de comprobación (checksum) y conteo de bytes.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Calcula un valor de redundancia cíclica (CRC) y el tamaño en bytes de los archivos para verificar la integridad de los datos.",
-  "usage": "cksum [ARCHIVO]...",
+  "description": "Calcula valores de redundancia cíclica (CRC) o hashes criptográficos para verificar la integridad de los archivos.",
+  "usage": "cksum -a sha256 -c sumas.txt",
   "options": {
-    "-algorithm": "Especificar el algoritmo de hash (en versiones modernas)",
-    "-check": "Verificar sumas de comprobación desde un archivo",
-    "-untouched": "No mostrar salida para archivos que pasen la verificación",
-    "-quiet": "No imprimir 'OK' por cada archivo verificado correctamente",
-    "-length": "Interrumpir la suma tras un número determinado de bytes"
+    "-a": "Especificar el algoritmo de hash (sysv, bsd, crc, md5, sha1, sha256, etc.)",
+    "-c": "Verificar las sumas de comprobación desde un archivo",
+    "-l": "Especificar la longitud del hash (solo para algoritmos como BLAKE2)",
+    "-t": "Leer en modo texto (por defecto)",
+    "-b": "Leer en modo binario",
+    "-z": "Terminar cada línea de salida con un carácter nulo en lugar de nueva línea",
+    "--status": "No mostrar salida, solo devolver el código de estado",
+    "--quiet": "No imprimir 'OK' por cada archivo verificado correctamente",
+    "--strict": "Salir con error si alguna suma está mal formateada",
+    "--tag": "Crear una salida de estilo BSD (nombre del algoritmo al inicio)",
+    "--ignore-missing": "No fallar ni mostrar avisos si faltan archivos",
+    "--debug": "Indicar el algoritmo que se está utilizando",
+    "--help": "Mostrar la ayuda del comando"
   }
 }
 
 [source,bash]
 ----
-# Obtener el CRC, tamaño y nombre del archivo
+# Uso clásico: Obtener CRC (POSIX), tamaño en bytes y nombre del archivo
 cksum documento.txt
 ----
 
--CRC:: `cksum` Generar el código de integridad estándar (POSIX)
+-a:: `-a` (algorithm) Seleccionar el algoritmo de hash deseado
 
 [source,bash]
 ----
-# Comparar la salida entre varios archivos para verificar si son idénticos
-cksum archivo1.zip archivo2.zip
+# Calcular un hash SHA256 en lugar del CRC tradicional
+cksum -a sha256 imagen_sistema.iso
 ----
 
--algorithm:: `--algorithm` Seleccionar un algoritmo específico (ej. sha1, md5, blake2b)
-
-[source,bash]
-----
-# Usar el algoritmo SHA256 en lugar del CRC tradicional (Coreutils 9.0+)
-cksum -a sha256 imagen.iso
-----
-
--check:: `--check` Verificar la integridad basada en un archivo de sumas previo
+-c:: `-c` (check) Leer sumas de comprobación desde un archivo y verificarlas
 
 [source,bash]
 ----
-# Verificar que los archivos listados en un fichero no se hayan corrompido
-cksum -c sumas_verificacion.txt
+# Comprobar que los archivos coinciden con las sumas guardadas previamente
+cksum -c lista_verificacion.txt
 ----
 
--untouched:: `--untouched` Filtrar la salida para omitir archivos correctos
-
-[source,bash]
-----
-# Mostrar solo los archivos que han fallado la verificación
-cksum -c sumas.txt --untouched
-----
-
--quiet:: `--quiet` Modo silencioso para suprimir mensajes de éxito
+-l:: `-l` (length) Ajustar la longitud de la suma (útil para BLAKE2b)
 
 [source,bash]
 ----
-# No mostrar mensajes 'OK', útil para scripts de automatización
+# Generar un hash BLAKE2b limitado a 256 bits
+cksum -a blake2b -l 256 archivo.zip
+----
+
+--quiet:: `--quiet` Suprimir los mensajes de confirmación 'OK'
+
+[source,bash]
+----
+# Mostrar solo los errores detectados durante la verificación
 cksum -c --quiet sumas.txt
 ----
 
--length:: `--length` Limitar la cantidad de bytes a procesar
+--status:: `--status` Modo silencioso total, ideal para condicionales en scripts
 
 [source,bash]
 ----
-# Calcular la suma solo de los primeros 1024 bytes
-cksum --length 1024 archivo_grande.bin
+# Verificar integridad y usar el código de salida ($?) para decidir acciones
+if cksum -c --status sumas.txt; then echo "Todo correcto"; fi
+----
+
+--tag:: `--tag` Formatear la salida con el nombre del algoritmo al principio
+
+[source,bash]
+----
+# Generar una salida descriptiva compatible con el formato BSD
+cksum --tag -a md5 datos.tar.gz
+----
+
+-z:: `-z` (zero) Finalizar cada línea con el carácter nulo (\0)
+
+[source,bash]
+----
+# Generar salida segura para ser procesada por otros comandos (como xargs -0)
+cksum -z archivo.txt
+----
+
+--ignore-missing:: `--ignore-missing` Ignorar los archivos que no se encuentran en el disco
+
+[source,bash]
+----
+# Verificar solo los archivos presentes sin lanzar errores por los ausentes
+cksum -c --ignore-missing sumas.txt
+----
+
+-b / -t:: `-b` (binary) / `-t` (text) Forzar el modo de lectura del archivo
+
+[source,bash]
+----
+# Leer el archivo en modo binario (crucial en sistemas no-POSIX/Windows)
+cksum -b imagen.png
 ----
 

@@ -1,54 +1,101 @@
 === file
-Determinar el tipo de fichero según su contenido.
+Determinar el tipo de archivo mediante el análisis de su contenido y cabeceras.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Determinar el tipo de fichero según su contenido.",
-  "usage": "file [OPCIONES] RUTA",
+  "description": "Clasifica archivos analizando sus 'números mágicos' (magic numbers) y estructura interna, en lugar de confiar únicamente en la extensión del nombre.",
+  "usage": "file -i imagen.png",
   "options": {
-    "-b": "Mostrar tipo sin el nombre del fichero",
-    "-i": "Mostrar tipo MIME",
-    "-L": "Seguir enlaces simbólicos",
-    "--mime-type": "Mostrar sólo MIME type"
+    "-b": "Modo breve: no incluir el nombre del archivo en la salida",
+    "-i": "Mostrar la cadena del tipo MIME y el conjunto de caracteres (encoding)",
+    "-L": "Seguir enlaces simbólicos para analizar el archivo real al que apuntan",
+    "-s": "Analizar archivos especiales (dispositivos de bloque o caracteres)",
+    "-z": "Intentar mirar dentro de archivos comprimidos",
+    "-f": "Leer una lista de archivos a examinar desde un fichero externo",
+    "-k": "No detenerse en la primera coincidencia; mostrar todos los tipos posibles",
+    "-m": "Especificar un archivo alternativo de 'magic numbers'",
+    "-N": "No acolchar la salida con espacios para alinear nombres",
+    "--mime-type": "Mostrar únicamente la cadena del tipo MIME",
+    "--mime-encoding": "Mostrar únicamente el conjunto de caracteres utilizado"
   }
 }
 
 [source,bash]
 ----
-# Mostrar tipo de un fichero
-file fichero.txt
+# Identificar un archivo sin extensión
+file binario_desconocido
 ----
 
-* -b:: `file -b` Mostrar tipo sin el nombre del fichero
-
-[source,bash]
-----
-# Mostrar sólo el tipo
-file -b fichero.txt
-----
-
-* -i:: `file -i` Mostrar tipo MIME
+-b:: `-b` (brief) Suprime el nombre del archivo en el resultado, devolviendo solo la descripción
 
 [source,bash]
 ----
-# Mostrar tipo MIME
-file -i fichero.txt
+# Obtener solo la descripción técnica del contenido
+file -b script.py
 ----
 
-* -L:: `file -L` Seguir enlaces simbólicos
-
-[source,bash]
-----
-# Seguir enlace simbólico
-file -L enlace.txt
-----
-
-* --mime-type:: `file --mime-type` Mostrar sólo MIME type
+-i:: `-i` (mime) Muestra el tipo de medio de Internet (MIME) y la codificación
 
 [source,bash]
 ----
-# Mostrar sólo MIME type
-file --mime-type fichero.txt
+# Ver el tipo MIME completo (ej: text/plain; charset=utf-8)
+file -i documento.txt
+----
+
+-L:: `-L` (dereference) Fuerza al comando a seguir enlaces simbólicos
+
+[source,bash]
+----
+# Analizar el archivo original detrás de un acceso directo
+file -L /etc/vtrgb
+----
+
+--mime-type:: `--mime-type` Versión simplificada de -i que solo devuelve el tipo de contenido
+
+[source,bash]
+----
+# Útil para scripts que validan subidas de archivos (ej: image/jpeg)
+file --mime-type -b foto.jpg
+----
+
+-s:: `-s` (special-files) Permite leer archivos de dispositivos en /dev/
+
+[source,bash]
+----
+# Identificar el sistema de archivos de una partición directamente
+sudo file -s /dev/sda1
+----
+
+-z:: `-z` (uncompress) Intenta leer el contenido de archivos comprimidos (gz, bz2, etc.)
+
+[source,bash]
+----
+# Ver qué tipo de datos hay dentro de un log comprimido
+file -z log_sistema.gz
+----
+
+-f:: `-f` (files-from) Procesa una lista de rutas contenidas en un archivo de texto
+
+[source,bash]
+----
+# Analizar múltiples rutas listadas en un archivo externo
+file -f lista_archivos.txt
+----
+
+-k:: `-k` (keep-going) Muestra múltiples resultados si el archivo coincide con varios patrones
+
+[source,bash]
+----
+# Ver todas las posibles interpretaciones de un archivo complejo
+file -k archivo_datos.dat
+----
+
+--mime-encoding:: `--mime-encoding` Muestra exclusivamente la codificación de caracteres
+
+[source,bash]
+----
+# Determinar si un archivo de texto es us-ascii o utf-8
+file --mime-encoding -b texto.txt
 ----
 
