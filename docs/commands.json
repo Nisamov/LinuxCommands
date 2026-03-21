@@ -77,16 +77,20 @@
     "source_path": "local_network/commands/arp.adoc"
   },
   {
-    "description": "Herramienta de procesamiento de texto para analizar y manipular datos estructurados por columnas.",
-    "usage": "awk [OPCIONES] 'programa' archivo",
+    "description": "Herramienta de procesamiento de texto para analizar y manipular datos estructurados por columnas mediante un lenguaje de programación propio.",
+    "usage": "awk -F':' '$3 > 1000 {print $1, $NF}' /etc/passwd",
     "options": {
-      "-F": "Definir separador de campos",
-      "-print": "Mostrar campos específicos",
-      "-condicion": "Filtrar líneas según una condición",
-      "-BEGIN": "Ejecutar acciones iniciales antes de procesar el archivo",
-      "-END": "Ejecutar acciones finales después de procesar el archivo",
-      "-NR": "Número de registro (línea)",
-      "-NF": "Número de campos por línea"
+      "-F": "Definir el separador de campos (FS)",
+      "-v": "Asignar un valor a una variable externa",
+      "-f": "Leer el programa awk desde un archivo",
+      "print": "Instrucción para mostrar campos específicos",
+      "condicion": "Filtrar líneas basadas en comparaciones lógicas",
+      "BEGIN": "Bloque que se ejecuta antes de procesar el texto",
+      "END": "Bloque que se ejecuta después de procesar el texto",
+      "NR": "Variable: Número de Registro (línea actual)",
+      "NF": "Variable: Número de Campos en la línea actual",
+      "OFS": "Variable: Separador de campos de salida",
+      "ORS": "Variable: Separador de registros de salida"
     },
     "name": "awk",
     "category": "local_filesystem",
@@ -105,12 +109,14 @@
     "source_path": "local_miscellaneous/commands/banner.adoc"
   },
   {
-    "description": "Herramienta para obtener el nombre de un fichero o directorio a partir de una ruta completa, con opciones para eliminar sufijos o procesar múltiples rutas.",
-    "usage": "basename [OPCIONES] RUTA [SUFIJO]",
+    "description": "Elimina los directorios principales de una ruta para devolver solo el nombre base, permitiendo además quitar sufijos específicos.",
+    "usage": "basename -s '.sh' /usr/local/bin/script.sh",
     "options": {
-      "-s": "Eliminar un sufijo específico del nombre",
-      "-a": "Procesar múltiples rutas",
-      "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+      "-a": "Procesar múltiples argumentos como rutas individuales",
+      "-s": "Eliminar un sufijo específico del final del nombre",
+      "-z": "Finalizar cada línea de salida con un carácter nulo (NUL)",
+      "--help": "Mostrar la ayuda del comando y salir",
+      "--version": "Mostrar información de la versión y salir"
     },
     "name": "basename",
     "category": "local_filesystem",
@@ -148,14 +154,20 @@
     "source_path": "local_storage/commands/blkid.adoc"
   },
   {
-    "description": "Herramienta para comprimir y descomprimir archivos con alta compresión.",
-    "usage": "bzip2 [OPCIONES] archivo",
+    "description": "Herramienta de compresión de archivos de alta eficiencia que utiliza el algoritmo Burrows-Wheeler. Sustituye el archivo original por una versión .bz2.",
+    "usage": "bzip2 -vk9 archivo.tar",
     "options": {
-      "-c": "Escribir salida a stdout",
-      "-d": "Descomprimir archivo",
-      "-k": "Mantener archivo original",
-      "-v": "Mostrar información de progreso",
-      "-z": "Comprimir archivo"
+      "-z": "Forzar la compresión (comportamiento por defecto)",
+      "-d": "Descomprimir el archivo (equivalente a bunzip2)",
+      "-k": "Mantener (keep) los archivos de entrada tras la operación",
+      "-f": "Forzar el sobrescrito de archivos de salida",
+      "-c": "Enviar el resultado a la salida estándar (stdout)",
+      "-v": "Modo verbose: muestra el porcentaje de compresión",
+      "-t": "Verificar la integridad de los archivos comprimidos",
+      "-q": "Modo silencioso: suprime mensajes de error no críticos",
+      "-1": "Compresión rápida (menor ratio, usa menos memoria)",
+      "-9": "Compresión máxima (mejor ratio, usa más memoria)",
+      "--small": "Usar modo de descompresión de bajo consumo de RAM"
     },
     "name": "bzip2",
     "category": "local_filesystem",
@@ -177,24 +189,34 @@
     "source_path": "local_system_data/in_out/commands/cal.adoc"
   },
   {
-    "description": "Herramienta para concatenar y mostrar el contenido de ficheros.",
-    "usage": "cat [OPCIONES] archivo",
+    "description": "Utilidad para leer archivos de forma secuencial, escribiéndolos en la salida estándar. Permite combinar varios archivos, numerar líneas y visualizar caracteres no imprimibles.",
+    "usage": "cat -n archivo1.txt archivo2.txt",
     "options": {
-      "-n": "Numerar líneas de salida",
-      "-b": "Numerar solo líneas no vacías",
-      "-A": "Mostrar caracteres especiales (tabuladores, finales de línea)"
+      "-n": "Numerar todas las líneas de salida",
+      "-b": "Numerar solo las líneas que no están vacías",
+      "-s": "Suprimir líneas vacías consecutivas (compactar)",
+      "-A": "Equivalente a -vET (muestra todo, incluidos tabuladores y finales de línea)",
+      "-E": "Mostrar un símbolo '$' al final de cada línea",
+      "-T": "Mostrar los caracteres de tabulación como '^I'",
+      "-v": "Mostrar caracteres no imprimibles (excepto tabuladores y saltos de línea)",
+      "-e": "Equivalente a -vE",
+      "-t": "Equivalente a -vT"
     },
     "name": "cat",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/cat.adoc"
   },
   {
-    "description": "Herramienta para cambiar el directorio de trabajo actual.",
-    "usage": "cd [OPCIONES] DIRECTORIO",
+    "description": "Actualiza la variable de entorno PWD para desplazar la ubicación del usuario dentro de la jerarquía de directorios.",
+    "usage": "cd [-L|[-P [-e]] [-@]] [directorio]",
     "options": {
-      "-": "Volver al directorio anterior (OLDPWD)",
-      "~": "Ir al directorio home del usuario",
-      "..": "Ir al directorio padre"
+      "-L": "Seguir enlaces simbólicos (comportamiento por defecto)",
+      "-P": "Usar la estructura de directorios física en lugar de seguir enlaces",
+      "-e": "Si se usa con -P, devuelve un error si no se puede determinar el directorio",
+      "-@": "En sistemas que lo soportan, visualiza atributos extendidos como directorios",
+      "-": "Regresar al directorio de trabajo anterior ($OLDPWD)",
+      "..": "Subir un nivel en la jerarquía (directorio padre)",
+      "~": "Desplazarse al directorio personal del usuario ($HOME)"
     },
     "name": "cd",
     "category": "local_filesystem",
@@ -230,16 +252,25 @@
     "source_path": "local_users/commands/chage.adoc"
   },
   {
-    "description": "Herramienta para cambiar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.",
-    "usage": "chattr [OPCIONES] archivo",
+    "description": "Modifica atributos especiales del sistema de archivos que van más allá de los permisos tradicionales (lectura, escritura, ejecución). Permite hacer archivos inmutables o de solo suma.",
+    "usage": "chattr +i archivo_critico.conf",
     "options": {
-      "+i": "Hacer archivo inmutable",
-      "-i": "Hacer archivo mutable",
-      "+a": "Hacer archivo solo para añadir datos (append-only)",
-      "-a": "Quitar atributo append-only",
-      "+A": "Evitar actualización de tiempo de acceso",
-      "-A": "Permitir actualización de tiempo de acceso",
-      "-R": "Aplicar cambios recursivamente"
+      "+": "Añadir un atributo específico",
+      "-": "Quitar un atributo específico",
+      "=": "Establecer solo los atributos indicados",
+      "-R": "Aplicar cambios de forma recursiva en directorios",
+      "-V": "Modo verbose (detallado), muestra la versión del programa",
+      "-f": "Suprimir la mayoría de los mensajes de error",
+      "+i": "Atributo: Inmutable (no se puede borrar, renombrar ni modificar)",
+      "+a": "Atributo: Append-only (solo permite añadir datos al final)",
+      "+A": "Atributo: No actualizar el tiempo de acceso (atime)",
+      "+c": "Atributo: Comprimido automáticamente en el disco",
+      "+C": "Atributo: No Copy-on-Write (NOCOW)",
+      "+d": "Atributo: No incluir en volcados de dump (respaldos)",
+      "+e": "Atributo: Usar extents para la gestión de bloques",
+      "+s": "Atributo: Borrado seguro (sobrescribe con ceros al eliminar)",
+      "+S": "Atributo: Actualización síncrona (escribe a disco inmediatamente)",
+      "+u": "Atributo: Indeletable (permite recuperar el archivo tras borrarlo)"
     },
     "name": "chattr",
     "category": "local_filesystem",
@@ -314,14 +345,22 @@
     "source_path": "local_users/commands/chsh.adoc"
   },
   {
-    "description": "Calcula un valor de redundancia cíclica (CRC) y el tamaño en bytes de los archivos para verificar la integridad de los datos.",
-    "usage": "cksum [ARCHIVO]...",
+    "description": "Calcula valores de redundancia cíclica (CRC) o hashes criptográficos para verificar la integridad de los archivos.",
+    "usage": "cksum -a sha256 -c sumas.txt",
     "options": {
-      "-algorithm": "Especificar el algoritmo de hash (en versiones modernas)",
-      "-check": "Verificar sumas de comprobación desde un archivo",
-      "-untouched": "No mostrar salida para archivos que pasen la verificación",
-      "-quiet": "No imprimir 'OK' por cada archivo verificado correctamente",
-      "-length": "Interrumpir la suma tras un número determinado de bytes"
+      "-a": "Especificar el algoritmo de hash (sysv, bsd, crc, md5, sha1, sha256, etc.)",
+      "-c": "Verificar las sumas de comprobación desde un archivo",
+      "-l": "Especificar la longitud del hash (solo para algoritmos como BLAKE2)",
+      "-t": "Leer en modo texto (por defecto)",
+      "-b": "Leer en modo binario",
+      "-z": "Terminar cada línea de salida con un carácter nulo en lugar de nueva línea",
+      "--status": "No mostrar salida, solo devolver el código de estado",
+      "--quiet": "No imprimir 'OK' por cada archivo verificado correctamente",
+      "--strict": "Salir con error si alguna suma está mal formateada",
+      "--tag": "Crear una salida de estilo BSD (nombre del algoritmo al inicio)",
+      "--ignore-missing": "No fallar ni mostrar avisos si faltan archivos",
+      "--debug": "Indicar el algoritmo que se está utilizando",
+      "--help": "Mostrar la ayuda del comando"
     },
     "name": "cksum",
     "category": "local_filesystem",
@@ -343,27 +382,40 @@
     "source_path": "local_miscellaneous/commands/cmatrix.adoc"
   },
   {
-    "description": "Herramienta para formatear la salida en columnas para mejorar la legibilidad.",
-    "usage": "column [OPCIONES] [ARCHIVO]",
+    "description": "Utilidad para transformar una entrada de texto plano en una salida visualmente organizada, permitiendo crear tablas alineadas a partir de delimitadores.",
+    "usage": "column -t -s ',' archivo.csv",
     "options": {
-      "-t": "Ajustar columnas en tabla",
-      "-s": "Definir delimitador",
-      "-x": "Llenar filas antes de columnas"
+      "-t": "Determinar el número de columnas y crear una tabla",
+      "-s": "Especificar los caracteres delimitadores de la entrada",
+      "-o": "Definir el delimitador de la salida (por defecto dos espacios)",
+      "-x": "Llenar antes las filas que las columnas",
+      "-c": "Ancho de la salida en caracteres (formato de lista)",
+      "-e": "No ignorar líneas vacías",
+      "-n": "No limitar el ancho de las columnas (permitir desborde)",
+      "-R": "Alinear a la derecha las columnas especificadas",
+      "-L": "Mantener las líneas vacías en la salida (por defecto se ignoran)",
+      "-N": "Asignar nombres a las columnas para la cabecera",
+      "-T": "Permitir que el texto de las columnas se ajuste (wrap)",
+      "-W": "Especificar qué columnas pueden ajustarse (wrap)"
     },
     "name": "column",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/column.adoc"
   },
   {
-    "description": "Compara dos archivos editados u ordenados y muestra las líneas únicas de cada uno y las líneas comunes.",
-    "usage": "comm [OPCIONES] archivo1 archivo2",
+    "description": "Compara dos archivos que deben estar ordenados previamente. Genera una salida en tres columnas: líneas únicas del archivo1, líneas únicas del archivo2 y líneas comunes.",
+    "usage": "comm -12 archivo1.txt archivo2.txt",
     "options": {
-      "-1": "Suprimir líneas únicas del archivo 1",
-      "-2": "Suprimir líneas únicas del archivo 2",
-      "-3": "Suprimir líneas que aparecen en ambos archivos",
+      "-1": "Suprimir la columna 1 (líneas exclusivas del archivo 1)",
+      "-2": "Suprimir la columna 2 (líneas exclusivas del archivo 2)",
+      "-3": "Suprimir la columna 3 (líneas comunes a ambos archivos)",
       "--check-order": "Verificar que la entrada esté correctamente ordenada",
-      "--nocheck-order": "No verificar que la entrada esté ordenada",
-      "--output-delimiter": "Cambiar el separador entre columnas"
+      "--nocheck-order": "No verificar si la entrada está ordenada (no recomendado)",
+      "--output-delimiter": "Especificar una cadena para separar las columnas de salida",
+      "--total": "Mostrar un resumen con el conteo de líneas de cada columna",
+      "-z": "Terminar las líneas con el carácter nulo (NUL) en lugar de nueva línea",
+      "--help": "Mostrar la ayuda del comando",
+      "--version": "Mostrar información de la versión"
     },
     "name": "comm",
     "category": "local_filesystem",
@@ -385,19 +437,27 @@
     "source_path": "local_miscellaneous/commands/cowsay.adoc"
   },
   {
-    "description": "Herramienta para copiar archivos o directorios.",
-    "usage": "cp [OPCIONES] ORIGEN DESTINO",
+    "description": "Copia el contenido de ORIGEN a DESTINO, o varios ORIGENES a un DIRECTORIO. Soporta preservación de atributos, copias recursivas y backups automáticos.",
+    "usage": "cp -av /ruta/origen /ruta/destino",
     "options": {
-      "-r": "Copiar recursivamente",
-      "-f": "Forzar la copia sobrescribiendo sin preguntar",
-      "-a": "Copiar archivos manteniendo atributos (recursivo)",
-      "-b": "Crear copia de seguridad del destino",
-      "-i": "Pedir confirmación antes de sobrescribir",
-      "-v": "Mostrar archivos mientras se copian (verbose)",
-      "--preserve=ATTRS": "Preservar atributos (mode,ownership,timestamps)",
-      "--no-preserve=ATTRS": "No preservar ciertos atributos",
-      "--parents": "Mantener la ruta de origen al copiar",
-      "--reflink[=always|never]": "Intentar copia por referencia (CoW)"
+      "-r": "Copiar directorios recursivamente",
+      "-f": "Forzar la copia eliminando el destino si es necesario",
+      "-a": "Modo archivo: equivalente a -dR --preserve=all",
+      "-b": "Crear un backup de cada archivo de destino existente",
+      "-i": "Interactivo: preguntar antes de sobrescribir",
+      "-v": "Modo verbose: explicar qué se está haciendo",
+      "-p": "Equivalente a --preserve=mode,ownership,timestamps",
+      "-u": "Copiar solo si el origen es más reciente que el destino",
+      "-l": "Crear enlaces duros (hard links) en lugar de copiar",
+      "-s": "Crear enlaces simbólicos (symlinks) en lugar de copiar",
+      "-n": "No sobrescribir un archivo existente (no-clobber)",
+      "-L": "Seguir siempre los enlaces simbólicos en el origen",
+      "-P": "No seguir nunca los enlaces simbólicos en el origen",
+      "-x": "Permanecer en este sistema de archivos (no cruzar montajes)",
+      "--parents": "Usar el nombre completo del archivo origen bajo el directorio destino",
+      "--reflink": "Controlar copias por referencia (Copy-on-Write)",
+      "--preserve": "Preservar atributos específicos (mode, ownership, timestamps, etc.)",
+      "--no-preserve": "No preservar los atributos indicados"
     },
     "name": "cp",
     "category": "local_filesystem",
@@ -422,13 +482,18 @@
     "source_path": "local_network/commands/curl.adoc"
   },
   {
-    "description": "Extraer secciones de cada línea de un fichero o flujo de datos usando delimitadores o rangos de caracteres.",
-    "usage": "cut [OPCIONES] archivo",
+    "description": "Corta secciones de cada línea de la entrada (archivo o stdin) basándose en posiciones de bytes, caracteres o campos delimitados.",
+    "usage": "cut -d ':' -f 1,3 /etc/passwd",
     "options": {
-      "-c": "Extraer caracteres por rango",
-      "-d": "Usar un delimitador para campos",
-      "-f": "Seleccionar columnas (campos)",
-      "--complement": "Invertir selección de campos o caracteres"
+      "-b": "Seleccionar solo los bytes especificados",
+      "-c": "Seleccionar solo los caracteres especificados",
+      "-d": "Definir el delimitador que separa los campos (por defecto es TAB)",
+      "-f": "Seleccionar solo los campos (columnas) especificados",
+      "-n": "No dividir caracteres multiocteto (usado con -b)",
+      "--complement": "Invertir la selección: extraer todo excepto lo indicado",
+      "-s": "No imprimir líneas que no contengan el delimitador",
+      "--output-delimiter": "Especificar la cadena para separar los campos en la salida",
+      "-z": "Finalizar cada línea con el carácter nulo (NUL) en lugar de nueva línea"
     },
     "name": "cut",
     "category": "local_filesystem",
@@ -496,13 +561,23 @@
     "source_path": "local_storage/commands/df.adoc"
   },
   {
-    "description": "Comparar ficheros línea por línea y mostrar diferencias.",
-    "usage": "diff [OPCIONES] archivo1 archivo2",
+    "description": "Analiza dos archivos o directorios y genera una lista de cambios necesarios para que el primero sea igual al segundo. Es la base para la creación de parches en software.",
+    "usage": "diff -u archivo_original.txt archivo_modificado.txt",
     "options": {
-      "-c": "Mostrar diferencias con contexto",
-      "-u": "Mostrar diferencias en formato unificado",
-      "-r": "Comparar directorios recursivamente",
-      "-i": "Ignorar mayúsculas/minúsculas"
+      "-u": "Mostrar diferencias en formato unificado (estándar para parches)",
+      "-c": "Mostrar diferencias con formato de contexto (copia líneas adyacentes)",
+      "-r": "Comparar directorios de forma recursiva",
+      "-i": "Ignorar diferencias entre mayúsculas y minúsculas",
+      "-w": "Ignorar todos los espacios en blanco al comparar líneas",
+      "-b": "Ignorar cambios en la cantidad de espacio en blanco",
+      "-B": "Ignorar cambios que solo insertan o eliminan líneas vacías",
+      "-y": "Mostrar la salida en dos columnas (lado a lado)",
+      "-W": "Especificar el ancho de columna para la salida en paralelo (-y)",
+      "-q": "Modo breve: solo indica si los archivos difieren, sin dar detalles",
+      "-s": "Informar cuando dos archivos son idénticos",
+      "-e": "Generar un script de edición válido para el comando 'ed'",
+      "-N": "Tratar los archivos ausentes como archivos vacíos (útil en directorios)",
+      "--suppress-common-lines": "No mostrar líneas que sean iguales (usado con -y)"
     },
     "name": "diff",
     "category": "local_filesystem",
@@ -522,10 +597,13 @@
     "source_path": "local_network/commands/dig.adoc"
   },
   {
-    "description": "Extraer el directorio padre de una ruta completa.",
-    "usage": "dirname RUTA",
+    "description": "Elimina el último componente de una ruta (generalmente el nombre del archivo o la carpeta final) para devolver la ruta del directorio que lo contiene.",
+    "usage": "dirname /usr/local/bin/script.sh",
     "options": {
-      "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+      "-z": "Finalizar cada línea de salida con un carácter nulo (NUL) en lugar de nueva línea",
+      "-a": "Procesar múltiples argumentos como rutas individuales (en versiones recientes)",
+      "--help": "Mostrar la ayuda del comando y salir",
+      "--version": "Mostrar información de la versión y salir"
     },
     "name": "dirname",
     "category": "local_filesystem",
@@ -632,11 +710,14 @@
     "source_path": "local_storage/commands/du.adoc"
   },
   {
-    "description": "Mostrar una línea de texto o variables en la salida estándar.",
-    "usage": "echo [OPCIONES] TEXTO",
+    "description": "Escribe los argumentos proporcionados en la salida estándar, separados por espacios y finalizados con un salto de línea.",
+    "usage": "echo -e 'Línea 1\\nLínea 2'",
     "options": {
-      "-n": "No añadir salto de línea final",
-      "-e": "Interpretar escapes como \\n, \\t"
+      "-n": "No añadir el salto de línea automático al final",
+      "-e": "Habilitar la interpretación de caracteres de escape con barra invertida",
+      "-E": "Deshabilitar explícitamente la interpretación de escapes (comportamiento por defecto)",
+      "--help": "Mostrar la ayuda del comando (solo en versiones binarias externas)",
+      "--version": "Mostrar información de la versión"
     },
     "name": "echo",
     "category": "local_filesystem",
@@ -674,11 +755,13 @@
     "source_path": "local_security/forensics/exiftool/commands/exiftool.adoc"
   },
   {
-    "description": "Establecer variables de entorno para la sesión actual o procesos hijos.",
-    "usage": "export [VAR=VALOR]",
+    "description": "Marca variables o funciones de la shell para que sean exportadas al entorno de todos los procesos que se ejecuten a partir de la sesión actual.",
+    "usage": "export [-f] [-n] [NOMBRE[=VALOR]]",
     "options": {
-      "-n": "No añadir salto de línea final",
-      "-e": "Interpretar escapes como \\n, \\t"
+      "-p": "Listar todas las variables exportadas en la sesión actual",
+      "-f": "Indicar que los NOMBRES se refieren a funciones, no a variables",
+      "-n": "Eliminar la propiedad de 'exportada' a una variable (vuelve a ser local)",
+      "NOMBRE=VALOR": "Asignar un valor y exportar en un solo paso"
     },
     "name": "export",
     "category": "local_filesystem",
@@ -727,30 +810,47 @@
     "source_path": "local_miscellaneous/commands/figlet.adoc"
   },
   {
-    "description": "Determinar el tipo de fichero según su contenido.",
-    "usage": "file [OPCIONES] RUTA",
+    "description": "Clasifica archivos analizando sus 'números mágicos' (magic numbers) y estructura interna, en lugar de confiar únicamente en la extensión del nombre.",
+    "usage": "file -i imagen.png",
     "options": {
-      "-b": "Mostrar tipo sin el nombre del fichero",
-      "-i": "Mostrar tipo MIME",
-      "-L": "Seguir enlaces simbólicos",
-      "--mime-type": "Mostrar sólo MIME type"
+      "-b": "Modo breve: no incluir el nombre del archivo en la salida",
+      "-i": "Mostrar la cadena del tipo MIME y el conjunto de caracteres (encoding)",
+      "-L": "Seguir enlaces simbólicos para analizar el archivo real al que apuntan",
+      "-s": "Analizar archivos especiales (dispositivos de bloque o caracteres)",
+      "-z": "Intentar mirar dentro de archivos comprimidos",
+      "-f": "Leer una lista de archivos a examinar desde un fichero externo",
+      "-k": "No detenerse en la primera coincidencia; mostrar todos los tipos posibles",
+      "-m": "Especificar un archivo alternativo de 'magic numbers'",
+      "-N": "No acolchar la salida con espacios para alinear nombres",
+      "--mime-type": "Mostrar únicamente la cadena del tipo MIME",
+      "--mime-encoding": "Mostrar únicamente el conjunto de caracteres utilizado"
     },
     "name": "file",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/file.adoc"
   },
   {
-    "description": "Buscar ficheros y directorios que cumplan criterios especificados.",
-    "usage": "find [RUTA] [OPCIONES]",
+    "description": "Herramienta de búsqueda extremadamente versátil que permite filtrar por nombre, tipo, tamaño, permisos, fechas de acceso/modificación y ejecutar comandos sobre los resultados.",
+    "usage": "find /var/log -type f -name '*.log' -mtime -7",
     "options": {
-      "-name": "Buscar por nombre",
-      "-type": "Buscar por tipo (f=fichero, d=directorio)",
-      "-mtime": "Buscar por fecha de modificación",
-      "-atime": "Buscar por fecha de acceso",
-      "-size": "Buscar por tamaño",
-      "-maxdepth": "Limitar profundidad máxima",
-      "-mindepth": "Limitar profundidad mínima",
-      "-exec": "Ejecutar comando sobre resultados"
+      "-name": "Buscar por nombre (distingue mayúsculas)",
+      "-iname": "Buscar por nombre (ignora mayúsculas)",
+      "-type": "Filtrar por tipo (f: archivo, d: directorio, l: enlace simbólico)",
+      "-size": "Filtrar por tamaño (+ superior, - inferior, b, k, M, G)",
+      "-mtime": "Días desde la última modificación del contenido",
+      "-atime": "Días desde el último acceso al archivo",
+      "-ctime": "Días desde el último cambio de estado (metadatos/permisos)",
+      "-user": "Buscar archivos que pertenecen a un usuario específico",
+      "-group": "Buscar archivos que pertenecen a un grupo específico",
+      "-perm": "Buscar por permisos específicos (ej: 755 o -644)",
+      "-maxdepth": "Limitar la profundidad máxima de búsqueda en subdirectorios",
+      "-mindepth": "No aplicar tests o acciones en niveles inferiores al indicado",
+      "-empty": "Buscar archivos o directorios vacíos",
+      "-delete": "Eliminar los archivos encontrados (usar con precaución)",
+      "-exec": "Ejecutar un comando externo sobre cada resultado encontrado",
+      "-ok": "Igual que -exec pero solicita confirmación previa",
+      "-print": "Imprimir el nombre de la ruta (comportamiento por defecto)",
+      "-print0": "Imprimir la ruta seguida de un carácter nulo (para nombres con espacios)"
     },
     "name": "find",
     "category": "local_filesystem",
@@ -772,26 +872,32 @@
     "source_path": "local_software/commands/flatpak.adoc"
   },
   {
-    "description": "Formatear texto ajustando líneas y párrafos para mejorar legibilidad.",
-    "usage": "fmt [OPCIONES] fichero",
+    "description": "Optimiza la legibilidad de archivos de texto plano uniendo líneas cortas y dividiendo las largas, preservando los párrafos y las sangrías originales.",
+    "usage": "fmt -w 80 archivo.txt",
     "options": {
-      "-w": "Ancho máximo de línea",
-      "--prefix": "Mantener prefijo de cada línea",
-      "-c": "Centrar líneas",
-      "--help": "Mostrar ayuda"
+      "-w": "Establecer el ancho máximo de línea (por defecto 75)",
+      "-g": "Establecer el ancho objetivo (goal) de línea (menor que el máximo)",
+      "-s": "Solo dividir líneas largas, no unir líneas cortas (split only)",
+      "-u": "Espaciado uniforme: un espacio entre palabras, dos tras signos de puntuación",
+      "-c": "Modo corona: preservar la sangría de las dos primeras líneas de cada párrafo",
+      "-t": "Modo tagged: la sangría de la primera línea es diferente a la del resto",
+      "-p": "Formatear solo líneas que comienzan con el prefijo especificado",
+      "--help": "Mostrar la ayuda del comando",
+      "--version": "Mostrar información de la versión"
     },
     "name": "fmt",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/fmt.adoc"
   },
   {
-    "description": "Dividir líneas largas en varias más cortas, ajustando el ancho de la línea.",
-    "usage": "fold [OPCIONES] fichero",
+    "description": "Corta las líneas de cada archivo de entrada (o entrada estándar) y las escribe en la salida estándar, limitando su longitud mediante saltos de línea forzados.",
+    "usage": "fold -w 80 -s archivo.txt",
     "options": {
-      "-w": "Ancho máximo de línea",
-      "-s": "Ajustar por espacios en blanco",
-      "-b": "Contar bytes en lugar de caracteres",
-      "--help": "Mostrar ayuda"
+      "-w": "Establecer el ancho máximo de la línea en columnas (por defecto 80)",
+      "-s": "Romper la línea únicamente en los espacios en blanco (evita cortar palabras)",
+      "-b": "Contar bytes en lugar de columnas (útil para archivos con caracteres multibyte)",
+      "--help": "Mostrar la ayuda del comando y salir",
+      "--version": "Mostrar información de la versión y salir"
     },
     "name": "fold",
     "category": "local_filesystem",
@@ -876,10 +982,19 @@
     "source_path": "local_process/commands/fuser.adoc"
   },
   {
-    "description": "Editor de texto gráfico para entornos GNOME.",
-    "usage": "gedit [OPCIONES] fichero",
+    "description": "Editor de texto potente y sencillo con resaltado de sintaxis, pestañas y soporte para plugins, diseñado para el escritorio GNOME.",
+    "usage": "gedit --new-window archivo.txt",
     "options": {
-      "--help": "Mostrar ayuda"
+      "--new-window": "Abrir una nueva ventana en lugar de una pestaña en una instancia existente",
+      "--new-document": "Crear un nuevo documento vacío en una instancia de gedit ya abierta",
+      "-s": "Modo standalone: ejecutar como una instancia única e independiente",
+      "-w": "Esperar (wait) a que se cierre el archivo antes de devolver el control a la terminal",
+      "--list-encodings": "Mostrar todas las codificaciones de caracteres disponibles",
+      "--encoding": "Especificar la codificación de caracteres para abrir el archivo (ej: UTF-8)",
+      "--geometry": "Configurar el tamaño y posición de la ventana (ANCHO[xALTO][+X+Y])",
+      "--display": "X display a utilizar (para sesiones remotas)",
+      "--help": "Mostrar todas las opciones de ayuda del editor",
+      "--version": "Mostrar la versión de gedit instalada"
     },
     "name": "gedit",
     "category": "local_filesystem",
@@ -944,20 +1059,26 @@
     "source_path": "local_group/commands/gpasswd.adoc"
   },
   {
-    "description": "Buscar cadenas de texto en ficheros según patrones (expresiones regulares).",
-    "usage": "grep [OPCIONES] patron fichero",
+    "description": "Herramienta de búsqueda que filtra líneas de texto que coinciden con un patrón. Soporta desde búsquedas de texto simple hasta expresiones regulares complejas (POSIX y Perl).",
+    "usage": "grep -rinE 'error|fail' /var/log",
     "options": {
-      "-i": "Buscar ignorando mayúsculas/minúsculas",
-      "-r": "Buscar recursivamente en directorios",
-      "-n": "Mostrar número de línea",
-      "-v": "Mostrar líneas que NO coinciden",
-      "-E": "Usar expresiones regulares extendidas",
-      "-o": "Mostrar sólo la parte coincidente de cada línea",
-      "-P": "Usar expresiones regulares Perl-compatible (PCRE)",
-      "-l": "Mostrar sólo nombres de ficheros con coincidencias",
-      "-c": "Contar coincidencias por fichero",
-      "-q": "Modo silencioso (devuelve código de salida)",
-      "--color=auto": "Resaltar coincidencias"
+      "-i": "Ignorar mayúsculas y minúsculas (ignore-case)",
+      "-r": "Búsqueda recursiva en directorios y subdirectorios",
+      "-n": "Prefijar cada línea de salida con su número de línea en el archivo",
+      "-v": "Invertir la búsqueda: mostrar las líneas que NO coinciden con el patrón",
+      "-E": "Interpretar el patrón como una Expresión Regular Extendida (ERE)",
+      "-P": "Interpretar el patrón como una Expresión Regular de Perl (PCRE)",
+      "-o": "Mostrar únicamente la parte de la línea que coincide, no la línea completa",
+      "-l": "Mostrar solo los nombres de los archivos que contienen coincidencias",
+      "-L": "Mostrar solo los nombres de los archivos que NO contienen coincidencias",
+      "-c": "Mostrar el conteo total de líneas coincidentes por cada archivo",
+      "-q": "Modo silencioso: no escribe nada, solo devuelve un código de salida (0 si hay éxito)",
+      "-w": "Buscar solo coincidencias de palabras completas",
+      "-x": "Buscar solo coincidencias de líneas completas",
+      "-A": "Mostrar N líneas de contexto después (After) de la coincidencia",
+      "-B": "Mostrar N líneas de contexto antes (Before) de la coincidencia",
+      "-C": "Mostrar N líneas de contexto antes y después (Context)",
+      "--color": "Resaltar el texto coincidente con colores (auto, always, never)"
     },
     "name": "grep",
     "category": "local_filesystem",
@@ -1011,15 +1132,21 @@
     "source_path": "local_group/commands/groups.adoc"
   },
   {
-    "description": "Empaquetar archivos con compresión gzip.",
-    "usage": "gzip [OPCIONES] archivo(s)",
+    "description": "Reduce el tamaño de los archivos individuales. Por defecto, reemplaza el archivo original por uno con la extensión .gz.",
+    "usage": "gzip -vk9 archivo.txt",
     "options": {
-      "-c": "Escribir salida a stdout",
-      "-d": "Desempaquetar archivo",
-      "-f": "Forzar sobrescritura",
-      "-k": "Mantener archivos originales",
-      "-9": "Usar máxima compresión",
-      "--help": "Mostrar ayuda"
+      "-d": "Descomprimir el archivo (equivalente a gunzip)",
+      "-c": "Escribir el resultado en la salida estándar (stdout)",
+      "-k": "Mantener (keep) los archivos de entrada, no borrarlos",
+      "-f": "Forzar la compresión o descompresión incluso si existen archivos",
+      "-t": "Comprobar la integridad del archivo comprimido",
+      "-v": "Modo verbose: muestra el nombre y el porcentaje de reducción",
+      "-l": "Mostrar información sobre el archivo comprimido (tamaño original y ratio)",
+      "-r": "Recorrer directorios recursivamente y comprimir todos sus archivos",
+      "-1": "Compresión rápida (menor ratio)",
+      "-9": "Compresión máxima (más lenta, mejor ratio)",
+      "--best": "Equivalente a -9",
+      "--fast": "Equivalente a -1"
     },
     "name": "gzip",
     "category": "local_filesystem",
@@ -1039,12 +1166,16 @@
     "source_path": "local_security/commands/hashcat.adoc"
   },
   {
-    "description": "Mostrar las primeras líneas de uno o varios ficheros.",
-    "usage": "head [OPCIONES] fichero(s)",
+    "description": "Imprime las primeras líneas (10 por defecto) de cada archivo indicado. Si se proporcionan varios archivos, precede cada uno con una cabecera con su nombre.",
+    "usage": "head -n 15 archivo.log",
     "options": {
-      "-n <numero>": "Mostrar las primeras N líneas",
-      "-c <bytes>": "Mostrar los primeros N bytes",
-      "--help": "Mostrar ayuda"
+      "-n": "Mostrar las primeras N líneas. Si es negativo (-N), muestra todo excepto las últimas N líneas",
+      "-c": "Mostrar los primeros N bytes de cada archivo",
+      "-q": "Modo silencioso (quiet): nunca imprime cabeceras con nombres de archivos",
+      "-v": "Modo detallado (verbose): siempre imprime cabeceras con nombres de archivos",
+      "-z": "Las líneas terminan con el carácter nulo (NUL) en lugar de nueva línea",
+      "--help": "Mostrar la ayuda del comando",
+      "--version": "Mostrar información de la versión"
     },
     "name": "head",
     "category": "local_filesystem",
@@ -1117,15 +1248,18 @@
     "source_path": "host_web_services/commands/httrack.adoc"
   },
   {
-    "description": "Convertir la codificación de caracteres de archivos o flujos de texto.",
-    "usage": "iconv [OPCIONES] fichero",
+    "description": "Transforma texto de una codificación (encoding) a otra. Es esencial para corregir problemas de visualización de caracteres (mojibake) entre sistemas Windows, Linux y formatos antiguos.",
+    "usage": "iconv -f ISO-8859-1 -t UTF-8 archivo.txt",
     "options": {
-      "-f": "Especificar codificación de origen (from)",
-      "-t": "Especificar codificación de destino (to)",
-      "-o": "Especificar archivo de salida",
-      "-c": "Omitir caracteres no convertibles",
-      "-l": "Listar todas las codificaciones disponibles",
-      "--verbose": "Mostrar información detallada"
+      "-f": "Especificar la codificación de origen (From-code)",
+      "-t": "Especificar la codificación de destino (To-code)",
+      "-o": "Escribir el resultado en un archivo en lugar de la salida estándar",
+      "-l": "Listar todas las codificaciones de caracteres soportadas",
+      "-c": "Omitir silenciosamente los caracteres que no se pueden convertir",
+      "-s": "Modo silencioso: suprimir mensajes de advertencia sobre errores",
+      "--verbose": "Mostrar información sobre el progreso y estadísticas",
+      "--byte-subst": "Sustituir bytes no convertibles con una secuencia específica",
+      "--widechar-subst": "Sustituir caracteres anchos no convertibles"
     },
     "name": "iconv",
     "category": "local_filesystem",
@@ -1259,16 +1393,20 @@
     "source_path": "local_storage/commands/ipmitool.adoc"
   },
   {
-    "description": "Combinar líneas de dos ficheros basándose en un campo común.",
-    "usage": "join [OPCIONES] fichero1 fichero2",
+    "description": "Une filas de dos archivos de texto que comparten un campo común. Es el equivalente funcional a un 'JOIN' de SQL para archivos planos.",
+    "usage": "join -t ',' -1 1 -2 1 archivo1.csv archivo2.csv",
     "options": {
-      "-1": "Especificar campo del primer fichero",
-      "-2": "Especificar campo del segundo fichero",
-      "-a": "Incluir líneas sin coincidencias",
-      "-e": "Rellenar campos vacíos",
-      "-o": "Especificar campos a mostrar",
-      "-t": "Definir delimitador",
-      "-v": "Mostrar solo líneas sin coincidencia"
+      "-1": "Especificar el número de columna (campo) del primer archivo para la unión",
+      "-2": "Especificar el número de columna (campo) del segundo archivo para la unión",
+      "-j": "Equivalente a usar el mismo número de campo en ambos archivos (-1 N -2 N)",
+      "-t": "Definir el carácter delimitador de campos (por defecto es el espacio en blanco)",
+      "-a": "Realizar un 'Outer Join': incluir líneas que no tienen coincidencia del archivo 1 o 2",
+      "-v": "Mostrar únicamente las líneas que NO tienen coincidencia (según el archivo indicado)",
+      "-e": "Sustituir los campos vacíos de la salida por la cadena especificada",
+      "-o": "Formatear la salida seleccionando qué campos mostrar (ej: 1.1, 2.3)",
+      "-i": "Ignorar diferencias entre mayúsculas y minúsculas al comparar claves",
+      "--check-order": "Verificar que la entrada esté correctamente ordenada",
+      "--header": "Tratar la primera línea de cada archivo como una cabecera (no unirla)"
     },
     "name": "join",
     "category": "local_filesystem",
@@ -1334,45 +1472,6 @@
     "source_path": "local_users/commands/last.adoc"
   },
   {
-    "description": "Variante de ldapmodify que está configurada por defecto para añadir nuevas entradas.",
-    "usage": "ldapadd [opciones] -f archivo.ldif",
-    "options": {
-      "archivo": "-f (Ruta al archivo LDIF con los datos)",
-      "identidad": "-x (Simple auth), -D (Bind DN), -W (Contraseña)",
-      "control": "-c (Continuar en caso de error), -n (Simulación/Dry-run)",
-      "servidor": "-H (URI del servidor LDAP)"
-    },
-    "name": "ldapadd",
-    "category": "host_shared_storage",
-    "source_path": "host_shared_storage/ldap_server/commands/ldapadd.adoc"
-  },
-  {
-    "description": "Permite alterar el contenido del directorio mediante instrucciones de cambio (add, replace, delete) en formato LDIF.",
-    "usage": "ldapmodify [opciones] -f cambios.ldif",
-    "options": {
-      "operacion": "-a (Añadir nuevas entradas, igual que ldapadd)",
-      "conexion": "-H (Servidor), -x (Auth simple)",
-      "seguridad": "-Z (Iniciar TLS), -D (Usuario con permisos)",
-      "archivo": "-f (Archivo con las directivas de modificación)"
-    },
-    "name": "ldapmodify",
-    "category": "host_shared_storage",
-    "source_path": "host_shared_storage/ldap_server/commands/ldapmodify.adoc"
-  },
-  {
-    "description": "Lleva a cabo una búsqueda LDAP basada en filtros específicos y devuelve los resultados en formato LDIF.",
-    "usage": "ldapsearch [opciones] [filtro]",
-    "options": {
-      "conexion": "-x (Simple auth), -H (URI del servidor), -b (Base DN)",
-      "autenticacion": "-D (Bind DN), -W (Pedir contraseña), -w (Contraseña en texto)",
-      "salida": "-LLL (Formato LDIF limpio), -A (Solo atributos, sin valores)",
-      "filtros": "Soporta operadores lógicos como (&), (|) y (!)"
-    },
-    "name": "ldapsearch",
-    "category": "host_shared_storage",
-    "source_path": "host_shared_storage/ldap_server/commands/ldapsearch.adoc"
-  },
-  {
     "description": "Utilidad que imprime las bibliotecas compartidas (LSOs) requeridas por cada programa o biblioteca compartida especificada en la línea de comandos.",
     "usage": "ldd [OPCIONES] [ARCHIVO]",
     "options": {
@@ -1387,13 +1486,18 @@
     "source_path": "local_system_data/system_info/commands/ldd.adoc"
   },
   {
-    "description": "Ver ficheros de texto paginados en la terminal.",
-    "usage": "less [OPCIONES] fichero",
+    "description": "Paginador de terminal que permite desplazarse hacia adelante y hacia atrás a través de un archivo. No carga el archivo completo en memoria, ideal para archivos de gran tamaño.",
+    "usage": "less +G -N /var/log/syslog",
     "options": {
-      "-n": "Mostrar número de línea",
-      "-N": "Mostrar número de línea en cada línea",
-      "-S": "Truncar líneas largas",
-      "-w": "Mostrar solo las primeras N caracteres de cada línea"
+      "-N": "Mostrar el número de línea al inicio de cada fila",
+      "-S": "Recorte de líneas largas (Chop long lines) en lugar de ajustarlas al ancho",
+      "-i": "Ignorar mayúsculas y minúsculas en las búsquedas",
+      "-M": "Mostrar un indicador de posición más detallado (líneas y porcentaje)",
+      "-X": "No limpiar la pantalla al salir del programa",
+      "-F": "Cerrar automáticamente si el contenido cabe en una sola pantalla",
+      "-R": "Interpretar secuencias de escape de color ANSI (útil para logs coloreados)",
+      "+G": "Abrir el archivo y saltar directamente al final (útil para logs activos)",
+      "+/patron": "Abrir el archivo y saltar a la primera coincidencia del patrón"
     },
     "name": "less",
     "category": "local_filesystem",
@@ -1414,29 +1518,40 @@
     "source_path": "local_security/forensics/lime/commands/lime.adoc"
   },
   {
-    "description": "Crear enlaces duros y simbólicos.",
-    "usage": "ln [OPCIONES] origen destino",
+    "description": "Crea una referencia a un archivo existente. Por defecto crea enlaces duros (hard links); con la opción -s crea enlaces simbólicos (symlinks).",
+    "usage": "ln -s /ruta/real /ruta/enlace",
     "options": {
-      "-s": "Crear un enlace simbólico",
-      "-f": "Forzar creación de enlace sobrescribiendo el destino",
-      "-i": "Solicitar confirmación antes de sobrescribir",
-      "--help": "Mostrar ayuda breve"
+      "-s": "Crear un enlace simbólico (soft link) en lugar de un enlace duro",
+      "-f": "Forzar la creación del enlace eliminando el destino si ya existe",
+      "-i": "Modo interactivo: preguntar antes de eliminar destinos existentes",
+      "-v": "Modo detallado: mostrar el nombre de cada archivo enlazado",
+      "-n": "Tratar el destino como un archivo normal si es un enlace simbólico a un directorio",
+      "-r": "Crear enlaces simbólicos con rutas relativas al lugar del enlace",
+      "-b": "Crear una copia de seguridad de cada archivo de destino que ya exista",
+      "-T": "Tratar el destino siempre como un archivo normal (no como un directorio)",
+      "-d": "Permitir al superusuario crear enlaces duros a directorios (restringido)",
+      "-L": "Crear enlaces duros a los objetivos de los enlaces simbólicos",
+      "-P": "Crear enlaces duros directamente a los enlaces simbólicos"
     },
     "name": "ln",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/ln.adoc"
   },
   {
-    "description": "Buscar rápidamente archivos en el sistema usando la base de datos actualizada por `updatedb`.",
-    "usage": "locate [OPCIONES] patrón",
+    "description": "Encuentra rutas de archivos que coinciden con un patrón consultando una base de datos local (generalmente /var/lib/mlocate). Es mucho más rápido que 'find', pero puede no mostrar archivos creados muy recientemente si el índice no se ha actualizado.",
+    "usage": "locate -i config.xml",
     "options": {
-      "-i": "Ignorar mayúsculas/minúsculas",
-      "-r": "Usar expresiones regulares",
-      "-c": "Contar coincidencias",
-      "-l": "Limitar el número de resultados",
-      "--existing": "Mostrar solo archivos existentes",
-      "--database": "Especificar base de datos",
-      "--help": "Mostrar ayudaA"
+      "-i": "Ignorar diferencias entre mayúsculas y minúsculas (ignore-case)",
+      "-c": "Mostrar solo el número total de coincidencias encontradas",
+      "-l": "Limitar el número de resultados a la cantidad N especificada",
+      "-r": "Interpretar el patrón como una expresión regular básica",
+      "--regexp": "Interpretar el patrón como una expresión regular extendida",
+      "-e": "Mostrar solo entradas de archivos que existan físicamente en el momento de la búsqueda",
+      "-w": "Buscar coincidencias solo en el nombre del archivo (no en la ruta completa)",
+      "-b": "Buscar coincidencias solo en el nombre base (último componente de la ruta)",
+      "-d": "Utilizar una base de datos específica en lugar de la predeterminada",
+      "-S": "Mostrar estadísticas sobre la base de datos actual (nº de archivos, tamaño, etc.)",
+      "-q": "Modo silencioso: no imprimir mensajes de error sobre bases de datos no legibles"
     },
     "name": "locate",
     "category": "local_filesystem",
@@ -1488,26 +1603,28 @@
     "source_path": "local_storage/commands/losetup.adoc"
   },
   {
-    "description": "Listar ficheros del directorio actual.",
-    "usage": "ls [OPCIONES] [DIRECTORIO]",
+    "description": "Muestra los nombres de archivos y subdirectorios. Permite ver metadatos como permisos, propietarios, tamaños y fechas de modificación.",
+    "usage": "ls -alh /var/log",
     "options": {
-      "-l": "Lista detallada (permisos, propietario, tamaño)",
-      "-a": "Mostrar ficheros ocultos",
-      "-h": "Mostrar tamaños legibles por humanos",
-      "-t": "Ordenar por fecha de modificación",
-      "-S": "Ordenar por tamaño (mayor a menor)",
-      "-r": "Invertir orden",
-      "-R": "Mostrar recursivamente",
-      "-d": "Mostrar directorios en sí, no su contenido",
-      "-F": "Añadir indicador de tipo a nombres",
-      "-1": "Un elemento por línea",
-      "-Q": "Poner nombres entre comillas",
-      "-v": "Orden natural (útil con números)",
-      "-X": "Ordenar por extensión",
-      "--color": "Colorear la salida",
-      "--block-size": "Mostrar tamaños en unidad específica",
-      "--time": "Seleccionar campo de tiempo",
-      "--sort": "Ordenar según criterio (size,time,version,extension)"
+      "-l": "Formato de listado largo: muestra permisos, dueño, grupo, tamaño y fecha",
+      "-a": "Mostrar todos (all): incluye archivos ocultos (los que empiezan por punto)",
+      "-A": "Casi todos (Almost all): como -a pero excluye los directorios '.' y '..'",
+      "-h": "Tamaños legibles (human-readable): usa K, M, G en lugar de bytes",
+      "-t": "Ordenar por tiempo de modificación (los más nuevos primero)",
+      "-S": "Ordenar por tamaño del archivo (los más grandes primero)",
+      "-r": "Invertir (reverse) el orden de la clasificación",
+      "-R": "Listado recursivo: muestra el contenido de todos los subdirectorios",
+      "-d": "Listar el directorio en sí, no su contenido",
+      "-F": "Clasificar: añade un sufijo indicador (/ para carpetas, * para ejecutables)",
+      "-1": "Un archivo por línea: ideal para procesar con scripts",
+      "-Q": "Encerrar los nombres de archivos entre comillas dobles",
+      "-v": "Orden natural de números dentro del texto (ej: 1, 2, 10 en vez de 1, 10, 2)",
+      "-X": "Clasificar alfabéticamente por la extensión del archivo",
+      "-i": "Mostrar el número de índice (inode) de cada archivo",
+      "--color": "Colorear la salida según el tipo de archivo (auto, always, never)",
+      "--block-size": "Escalar los tamaños según la unidad (K, M, G, T, P, E, Z, Y)",
+      "--time": "Mostrar un tiempo específico (atime: acceso, ctime: cambio, birth: creación)",
+      "--sort": "Criterio de ordenación (none, size, time, version, extension)"
     },
     "name": "ls",
     "category": "local_filesystem",
@@ -2702,31 +2819,39 @@
     "source_path": "local_miscellaneous/commands/sl.adoc"
   },
   {
-    "description": "Exportar bases de datos LDAP a formato LDIF para backup o análisis.",
-    "usage": "slapcat [OPCIONES]",
+    "description": "Herramienta para generar volcados de la base de datos LDAP directamente desde los archivos de datos, sin pasar por el protocolo LDAP.",
+    "usage": "slapcat -n 1 -l backup_diario.ldif",
     "options": {
       "-n": "Seleccionar base de datos por número",
       "-b": "Especificar el DN base a exportar",
       "-l": "Guardar salida en un archivo",
-      "-o": "Opciones adicionales",
-      "-d": "Modo debug",
+      "-o": "Opciones adicionales de formato",
+      "-d": "Modo debug para depuración",
       "-c": "Continuar en caso de errores",
-      "-v": "Modo verbose",
-      "-F": "Especificar directorio de configuración",
-      "--help": "Mostrar ayuda en pantalla"
+      "-v": "Modo verbose (detallado)",
+      "-F": "Especificar directorio de configuración"
     },
     "name": "slapcat",
     "category": "host_shared_storage",
     "source_path": "host_shared_storage/ldap_server/commands/slapcat.adoc"
   },
   {
-    "description": "Herramienta de utilidad para crear hashes de contraseñas compatibles con 'userPassword' en slapd.",
-    "usage": "slappasswd [opciones]",
+    "description": "Herramienta para importar datos LDIF directamente a los archivos de base de datos de slapd, saltándose el protocolo LDAP.",
+    "usage": "slapadd -n 1 -l datos_iniciales.ldif",
     "options": {
-      "esquema": "-s (Contraseña en texto plano), -h (Algoritmo: {SSHA}, {SHA}, {SMD5})",
-      "verificacion": "-u (Muestra solo el hash, sin etiquetas)",
-      "entrada": "-T (Leer contraseña de un archivo)",
-      "ayuda": "--help para ver algoritmos de cifrado disponibles"
+      "-n": "Seleccionar base de datos por número de índice",
+      "-b": "Especificar el DN base para la importación",
+      "-l": "Leer datos desde un archivo LDIF en lugar de stdin",
+      "-f": "Especificar la ruta al archivo de configuración slapd.conf",
+      "-F": "Especificar el directorio de configuración slapd.d",
+      "-c": "Continuar en caso de errores (ignora errores menores)",
+      "-d": "Activar nivel de depuración (debug)",
+      "-q": "Modo 'quick' (rápido), no actualiza índices (usar con precaución)",
+      "-u": "Modo dry-run (simulación), no escribe en disco",
+      "-v": "Modo verbose (detallado)",
+      "-w": "Escribir sinapsis de cambios (write syncrepl checkpoint)",
+      "-S": "SID para registros de replicación",
+      "-g": "Deshabilitar la comprobación de límites (no-glue)"
     },
     "name": "slappasswd",
     "category": "host_shared_storage",
