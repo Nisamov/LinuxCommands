@@ -1,46 +1,78 @@
 === mkdir
-Crear uno o varios directorios.
+Crear uno o más directorios en el sistema de archivos.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Crear uno o varios directorios.",
-  "usage": "mkdir [OPCIONES] NOMBRE_DIRECTORIO...",
+  "description": "Crea carpetas físicas en la ruta especificada. Permite la creación de estructuras multinivel y la asignación de permisos iniciales.",
+  "usage": "mkdir -p proyecto/{src,bin,doc}",
   "options": {
-    "-p": "Crear árbol de directorios (crea padres según sea necesario)",
-    "-v": "Mostrar cada directorio creado (verbose)",
-    "--help": "Mostrar ayuda",
-    "--version": "Mostrar versión del comando"
+    "-p": "Crear directorios padres según sea necesario (parents); no da error si ya existen",
+    "-m": "Establecer los permisos (modo) del directorio en el momento de creación (ej: 755)",
+    "-v": "Modo detallado (verbose): imprime un mensaje por cada directorio creado",
+    "-Z": "Establecer el contexto de seguridad SELinux al valor por defecto",
+    "--help": "Mostrar la ayuda del comando y salir",
+    "--version": "Mostrar la versión del programa"
   }
 }
 
 [source,bash]
 ----
-# Crear un directorio
-mkdir Documentos
+# Crear un único directorio en la ubicación actual
+mkdir Fotos
 ----
 
--p:: `mkdir -p` Crear árbol de directorios (crea padres según sea necesario)
-
-[source,bash]
-----
-# Crear árbol de directorios (padre e hijo)
-mkdir -p /ruta/principal/subcarpeta
-----
-
--v:: `mkdir -v` Mostrar cada directorio creado (verbose)
+-p:: `-p` (parents) Crea toda la ruta de directorios si los niveles intermedios no existen.
 
 [source,bash]
 ----
-# Crear varios directorios y mostrar cada creación
-mkdir -v dir1 dir2 dir3
+# Crea 'empresa', luego '2024' y finalmente 'facturas' de una sola vez
+mkdir -p empresa/2024/facturas
 ----
 
--[x..y]:: `mkdir {1..100}` Crear directorios por rango numerico
+-m:: `-m` (mode) Define los permisos del directorio usando notación octal, ignorando el `umask` por defecto.
 
 [source,bash]
 ----
-# Crear varios directorios con brace expansion
-mkdir {1..5}
+# Crear un directorio privado (solo lectura/escritura para el dueño)
+mkdir -m 700 carpeta_privada
+----
+
+-v:: `-v` (verbose) Útil en scripts para confirmar que la estructura se ha generado correctamente.
+
+[source,bash]
+----
+# Confirmar visualmente la creación
+mkdir -v backups
+# Salida: mkdir: se ha creado el directorio 'backups'
+----
+
+Brace Expansion:: Uso de llaves `{}` para crear múltiples carpetas con un patrón.
+
+[source,bash]
+----
+# Crear carpetas para todos los meses del año
+mkdir mes_{01..12}
+
+# Crear una estructura de proyecto estándar
+mkdir -p proyecto/{src,include,lib,tests,docs}
+----
+
+Uso con Variables:: Crear directorios basados en datos dinámicos.
+
+[source,bash]
+----
+# Crear una carpeta con la fecha actual
+mkdir "backup_$(date +%Y-%m-%d)"
+----
+
+Error común:: Intentar crear una ruta profunda sin el parámetro `-p`.
+
+[source,bash]
+----
+# Esto fallará si 'dir1' no existe:
+mkdir dir1/dir2
+# Esto funcionará siempre:
+mkdir -p dir1/dir2
 ----
 

@@ -1,63 +1,53 @@
 === paste
-Combinar columnas de uno o más ficheros línea a línea.
+Escribir líneas de varios archivos de forma paralela (columna a columna).
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Combinar columnas de uno o más ficheros línea a línea.",
-  "usage": "paste [OPCIONES] FICHEROS",
+  "description": "Une las líneas correspondientes de cada archivo indicado, separándolas por tabuladores en la salida estándar. Es la herramienta ideal para crear tablas a partir de listas separadas.",
+  "usage": "paste -d ',' nombres.txt edades.txt > datos.csv",
   "options": {
-    "-d": "Definir delimitador entre columnas",
-    "-s": "Serializar líneas de un fichero",
-    "--help": "Mostrar ayuda",
-    "--version": "Mostrar versión",
-    "-m": "Combinar múltiples archivos de forma paralela"
+    "-d": "Especificar una lista de delimitadores para usar en lugar de tabuladores",
+    "-s": "Serializar: pega todas las líneas de un solo archivo en una única línea larga",
+    "-z": "Las líneas terminan con el carácter nulo (NUL) en lugar de nueva línea",
+    "--help": "Mostrar la ayuda del comando",
+    "--version": "Mostrar la versión del programa"
   }
 }
 
 [source,bash]
 ----
-# Combinar dos archivos separando por tabulador
-paste fichero1.txt fichero2.txt
+# Unir dos listas: la primera será la columna 1 y la segunda la columna 2
+paste nombres.txt apellidos.txt
 ----
 
--d:: `paste -d` Definir delimitador
-
-[source,bash]
-----
-# Usar coma como separador
-paste -d ',' fichero1.txt fichero2.txt
-----
-
--s:: `paste -s` Serializar líneas de un fichero
+-d:: `-d <delimitadores>` Cambia el tabulador por el carácter que elijas. Si pones varios, los irá rotando.
 
 [source,bash]
 ----
-# Combinar todas las líneas de un archivo en una sola
-paste -s fichero.txt
+# Crear un formato CSV sencillo usando comas
+paste -d ',' nombres.txt telefonos.txt
+
+# Usar delimitadores alternos (guion y luego dos puntos)
+paste -d '-:' file1.txt file2.txt file3.txt
 ----
 
---help:: `paste --help` Mostrar ayuda
-
-[source,bash]
-----
-# Ver opciones disponibles
-paste --help
-----
-
---version:: `paste --version` Mostrar versión
+-s:: `-s` (serial) En lugar de pegar archivos en paralelo, toma un archivo y pone todas sus líneas seguidas horizontalmente.
 
 [source,bash]
 ----
-# Ver versión del comando
-paste --version
+# Convertir una lista vertical en una fila separada por espacios
+paste -s -d ' ' lista_items.txt
 ----
 
--m:: `paste -m` Combinar múltiples archivos de forma paralela
+Uso con Stdin (el guion `-`):: Permite leer de la entrada estándar y organizar los datos en columnas.
 
 [source,bash]
 ----
-# Combinar ficheros mezclando sus líneas
-paste -m fichero1.txt fichero2.txt
+# Tomar una lista de 6 elementos y ponerlos en 2 columnas de 3
+cat lista.txt | paste - -
+
+# Convertir un listado simple en una tabla de 3 columnas
+ls | paste - - -
 ----
 

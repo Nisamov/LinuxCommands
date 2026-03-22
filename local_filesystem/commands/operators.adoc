@@ -1,63 +1,93 @@
-=== operadores
-Descripción breve de operadores y redirecciones en shell.
+=== Operadores y Redirecciones
+Símbolos especiales para controlar el flujo de datos y la lógica de ejecución en la shell.
 
-:category: local_filesystem
+:category: system_shell
 [.metadata]
 {
-  "description": "Descripción breve de operadores y redirecciones en shell.",
-  "usage": "operators [OPCIONES]",
+  "description": "Permiten manipular los tres flujos estándar (stdin, stdout, stderr) y encadenar comandos según su éxito o fracaso.",
+  "usage": "comando1 | comando2 && comando3 > salida.txt",
   "options": {
-    ">": "Redirigir salida estándar a un fichero (sobrescribe)",
-    ">>": "Redirigir salida estándar a un fichero (añadir)",
-    "|": "Pipe: enviar salida de un comando como entrada a otro",
-    "&": "Ejecutar en segundo plano",
-    "2>": "Redirigir salida de error (stderr)"
+    ">": "Redirigir salida estándar (stdout) a un archivo (sobrescribe)",
+    ">>": "Redirigir salida estándar (stdout) a un archivo (añade al final)",
+    "<": "Redirigir entrada estándar (stdin) desde un archivo",
+    "2>": "Redirigir la salida de errores (stderr) a un archivo",
+    "&>": "Redirigir tanto stdout como stderr al mismo destino",
+    "|": "Tubería (pipe): conecta la salida de un proceso con la entrada de otro",
+    "&&": "Ejecución condicional: ejecuta el segundo comando solo si el primero tiene éxito",
+    "||": "Ejecución condicional: ejecuta el segundo comando solo si el primero falla",
+    "&": "Ejecutar comando en segundo plano (background)",
+    ";": "Separador de comandos: ejecuta uno tras otro secuencialmente"
   }
 }
 
 [source,bash]
 ----
-# Uso básico de operadores y redirecciones
-echo "hola" > fichero.txt
+# Ejemplo combinado: buscar un texto y guardar errores en un log aparte
+grep "patrón" archivo.txt > resultados.txt 2> errores.log
 ----
 
-->:: `>` Redirigir salida estándar a un fichero (sobrescribe)
-
-[source,bash]
-----
-# Redirigir stdout a fichero (sobrescribe)
-echo "hola" > fichero.txt
-----
-
-->>:: `>>` Redirigir salida estándar a un fichero (añadir)
+> / >>:: Redirección de salida. `>` trunca el archivo antes de escribir; `>>` preserva el contenido previo.
 
 [source,bash]
 ----
-# Añadir al final de fichero
-echo "más" >> fichero.txt
+# Crear un archivo nuevo con el listado
+ls /etc > lista_config.txt
+
+# Añadir la fecha actual al final del log sin borrar lo anterior
+date >> registro_actividad.log
 ----
 
-->|:: `|` Pipe: enviar salida de un comando como entrada a otro
-
-[source,bash]
-----
-# Pipear la salida de un comando a otro
-ls -l | grep "^d"
-----
-
-->&:: `&` Ejecutar en segundo plano
+| (Pipe):: Conecta comandos para crear "pipelines" de procesamiento de datos.
 
 [source,bash]
 ----
-# Ejecutar en segundo plano
-gedit archivo.txt &
+# Ver cuántas líneas del log contienen la palabra 'Accepted'
+cat auth.log | grep "Accepted" | wc -l
 ----
 
-->2>:: `2>` Redirigir salida de error (stderr)
+2> / &>:: Control de errores. El descriptor `2` representa a `stderr`.
 
 [source,bash]
 ----
-# Redirigir stderr a fichero
-ls /noexiste 2> errores.txt
+# Descartar errores enviándolos al "agujero negro" del sistema
+find / -name "*.conf" 2> /dev/null
+
+# Guardar todo (salida y errores) en un solo archivo de log
+comando_complejo &> salida_total.log
+----
+
+&& / ||:: Operadores lógicos de control. El éxito se define por un código de salida `0`.
+
+[source,bash]
+----
+# &&: 'Si esto funciona, haz lo siguiente'
+mkdir nueva_carpeta && cd nueva_carpeta
+
+# ||: 'Si esto falla, haz lo siguiente'
+ls archivo_critico.txt || echo "El archivo ha desaparecido"
+----
+
+< (Stdin):: Alimenta un comando con el contenido de un archivo en lugar de escribirlo por teclado.
+
+[source,bash]
+----
+# Enviar el contenido de un archivo como cuerpo de un correo
+mail -s "Reporte" admin@example.com < reporte.txt
+----
+
+&:: Libera la terminal permitiendo que el proceso corra "detrás" de la sesión actual.
+
+[source,bash]
+----
+# Abrir el editor de texto y poder seguir usando la terminal inmediatamente
+gedit notas.txt &
+----
+
+<<< (Here String):: Pasa una cadena de texto directamente a un comando que espera un archivo.
+
+[source,bash]
+----
+# Convertir un texto a mayúsculas sin crear archivos intermedios
+tr '[:lower:]' '[:upper:]' <<< "hola mundo"
 ----
 

@@ -1,30 +1,79 @@
 === more
-Ver ficheros de texto paginados en la terminal (similar a `less`).
+Visor de archivos de texto para paginación básica en la terminal.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Ver ficheros de texto paginados en la terminal (similar a `less`).",
-  "usage": "more [OPCIONES] FICHERO...",
+  "description": "Filtro para leer texto pantalla por pantalla. A diferencia de 'less', 'more' carga el archivo secuencialmente y su navegación principal es hacia adelante.",
+  "usage": "more -d archivo.txt",
   "options": {
-    "-d": "Mostrar mensaje de ayuda al final de cada página",
-    "-c": "Limpiar pantalla antes de mostrar la siguiente página",
-    "-s": "Sustituir múltiples líneas en blanco por una sola",
-    "-u": "No subrayar el texto (útil para terminales sin soporte de subrayado)"
+    "-d": "Mostrar mensajes de ayuda detallados ('Presione espacio para continuar, 'q' para salir')",
+    "-c": "Limpiar la pantalla antes de dibujar cada nueva página (redibujo superior)",
+    "-p": "No desplazar el texto; limpiar la pantalla y luego presentar el texto (más rápido)",
+    "-s": "Squeeze: exprime múltiples líneas en blanco consecutivas en una sola",
+    "-u": "Suprimir el subrayado de texto",
+    "-n": "Especificar el número de líneas por pantalla (ej: -10)",
+    "+num": "Comenzar la visualización en el número de línea 'num'",
+    "+/pattern": "Comenzar la visualización en la primera coincidencia del patrón"
   }
 }
 
 [source,bash]
 ----
-# Mostrar un fichero con more
-more fichero.txt
+# Leer un archivo largo pausadamente
+more logs_extensos.log
 ----
 
-- (uso):: `more <fichero>` Ver paginado básico
+-d:: `-d` (display) Útil para usuarios noveles, añade una línea informativa en la parte inferior de la pantalla.
 
 [source,bash]
 ----
-# Avanzar página por página
-more fichero.txt
+# Mostrar ayuda para navegar mientras se lee
+more -d manual.txt
+----
+
+-s:: `-s` (squeeze) Compacta el archivo visualmente eliminando el exceso de saltos de línea.
+
+[source,bash]
+----
+# Ideal para leer archivos de código con demasiado espacio vertical
+more -s main.c
+----
+
+-c:: `-c` (clean) En lugar de desplazar el texto hacia arriba, redibuja la pantalla desde la línea superior.
+
+[source,bash]
+----
+# Evita el efecto de 'scroll' visual en terminales lentas
+more -c configuracion.conf
+----
+
+Navegación Interna:: Comandos clave mientras el visor está activo:
+
+* **Espacio**: Avanzar una pantalla completa.
+* **Enter**: Avanzar una sola línea.
+* **b**: Retroceder una pantalla (solo disponible en archivos, no en pipes).
+* **/patrón**: Buscar un texto hacia adelante.
+* **v**: Abrir el archivo actual en el editor por defecto (`vi` o `nano`) en la línea actual.
+* **=**: Mostrar el número de línea actual.
+* **q**: Salir del visor inmediatamente.
+
++num / +/pattern:: Saltos directos al abrir el archivo.
+
+[source,bash]
+----
+# Empezar a leer directamente desde la línea 100
+more +100 lista_usuarios.csv
+
+# Empezar en la primera mención de "ERROR"
+more +/ERROR syslog
+----
+
+Uso con Pipes:: `more` es el paginador clásico para comandos que generan mucha salida.
+
+[source,bash]
+----
+# Listar todos los archivos de la raíz y leerlos cómodamente
+ls -R / | more
 ----
 

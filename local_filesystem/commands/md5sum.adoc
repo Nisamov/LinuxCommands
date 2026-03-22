@@ -1,70 +1,83 @@
 === md5sum
-Calcular y verificar hashes MD5.
+Calcular y verificar resúmenes de mensajes MD5 (128 bits).
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Herramienta para calcular y verificar resúmenes de huella digital MD5 (128 bits). Se utiliza principalmente para comprobar la integridad de archivos.",
-  "usage": "md5sum [OPCIONES] [ARCHIVO]...",
+  "description": "Genera una 'huella digital' única de un archivo. Si el contenido del archivo cambia, aunque sea un solo bit, el hash resultante será completamente distinto. Es el estándar clásico para verificar que una descarga no se ha corrompido.",
+  "usage": "md5sum archivo.zip > archivo.zip.md5",
   "options": {
-    "-b": "Leer en modo binario",
-    "-c": "Verificar hashes desde un archivo",
-    "-t": "Leer en modo texto",
-    "--tag": "Crear una salida de estilo BSD",
-    "--status": "No imprimir nada, el código de salida indica el éxito",
-    "--quiet": "No imprimir OK por cada archivo verificado con éxito"
+    "-b": "Leer en modo binario (por defecto en casi todos los sistemas)",
+    "-t": "Leer en modo texto (trata los saltos de línea de forma distinta)",
+    "-c": "Verificar los hashes contenidos en un archivo contra los archivos reales",
+    "--tag": "Formato de salida estilo BSD (MD5 (archivo) = hash)",
+    "--status": "No mostrar salida; el éxito se comprueba mediante el código de salida",
+    "--quiet": "No imprimir 'OK' por cada archivo verificado correctamente",
+    "--warn": "Advertir sobre líneas de sumas de comprobación mal formateadas",
+    "--strict": "Salir con error si alguna línea del archivo de sumas está mal",
+    "--help": "Mostrar la ayuda del comando",
+    "--version": "Mostrar información de la versión"
   }
 }
 
 [source,bash]
 ----
-# Generar el hash MD5 de un archivo
-md5sum imagen.iso
+# Generar el hash de un archivo
+md5sum instalador.exe
+# Salida: 4906f343468695034c4f3468903e1a8e  instalador.exe
 ----
 
--b:: `md5sum -b` Leer archivos en modo binario
-
-[source,bash]
-----
-# Generar hash indicando que es un archivo binario (marcado con *)
-md5sum -b ejecutable.bin
-----
-
--c:: `md5sum -c` Verificar integridad desde un archivo de hashes
+-c:: `-c` (check) Lee un archivo que contiene rutas y hashes, y comprueba si coinciden con los archivos actuales.
 
 [source,bash]
 ----
-# Comprobar si los archivos coinciden con sus hashes almacenados
-md5sum -c sumas.md5
+# Verificar la integridad de todos los archivos listados en el índice
+md5sum -c sumas_de_verificacion.md5
+# Salida esperada: archivo1.zip: LA SUMA COINCIDE
 ----
 
---tag:: `md5sum --tag` Formato de salida estilo BSD
-
-[source,bash]
-----
-# Generar una salida más legible que identifica el algoritmo
-md5sum --tag archivo.zip
-----
-
---status:: `md5sum --status` Modo silencioso para scripts
+--tag:: `--tag` Crea una salida más descriptiva que indica el algoritmo utilizado explícitamente.
 
 [source,bash]
 ----
-# Verificar sin salida de texto; se comprueba con 'echo $?'
-md5sum -c --status sumas.md5
+# Formato legible para humanos
+md5sum --tag reporte.pdf
+# Salida: MD5 (reporte.pdf) = 54e9...
 ----
 
---quiet:: `md5sum --quiet` Omitir mensajes de éxito
-
-[source,bash]
-----
-# Mostrar solo los archivos que fallan la verificación o tienen errores
-md5sum -c --quiet sumas.md5
-----
+--status:: `--status` Ideal para automatización; no ensucia la terminal con texto.
 
 [source,bash]
 ----
-# Ejemplo: Redirigir salida a un archivo para verificación posterior
-md5sum *.txt > sumas.md5
+# Usar en un script para tomar decisiones según el resultado
+if md5sum -c --status lista.md5; then
+    echo "Archivos íntegros"
+else
+    echo "Corrupción detectada"
+fi
+----
+
+-b / -t:: Diferencia entre modo binario y texto.
+
+[source,bash]
+----
+# En Linux no suele haber diferencia, pero en Windows afecta a los finales de línea (\r\n)
+md5sum -b imagen.iso
+----
+
+Seguridad (Nota Crítica):: MD5 ya no se considera seguro contra ataques malintencionados (colisiones).
+
+[source,bash]
+----
+# Para seguridad criptográfica, usa algoritmos de la familia SHA:
+sha256sum archivo.tar.gz
+----
+
+Uso con Pipes:: Calcular el hash de un flujo de datos directamente.
+
+[source,bash]
+----
+# Verificar el hash de un archivo remoto sin descargarlo físicamente
+curl -s http://ejemplo.com/archivo.iso | md5sum
 ----
 

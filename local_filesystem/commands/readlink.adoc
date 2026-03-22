@@ -1,45 +1,70 @@
 === readlink
-Mostrar el destino de un enlace simbólico.
+Mostrar el valor de un enlace simbólico o la ruta canónica de un archivo.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Mostrar el destino de un enlace simbólico.",
-  "usage": "readlink [OPCIONES] ENLACE",
+  "description": "Lee el contenido de un enlace simbólico (la ruta a la que apunta). También se utiliza para convertir rutas relativas en rutas absolutas y resolver estructuras complejas de enlaces anidados.",
+  "usage": "readlink -f /usr/bin/python",
   "options": {
-    "-f": "Resolver la ruta completa (absoluta) siguiendo todos los enlaces",
-    "-e": "Resolver la ruta sólo si el destino existe",
-    "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+    "-f": "Canonizar: sigue todos los enlaces simbólicos recursivamente y devuelve la ruta absoluta",
+    "-e": "Canonizar y verificar: como -f, pero falla si algún componente de la ruta no existe",
+    "-m": "Canonizar sin verificar: resuelve la ruta aunque los directorios o el archivo no existan",
+    "-n": "No imprimir el salto de línea final (útil para asignar a variables en scripts)",
+    "-q": "Modo silencioso (quiet)",
+    "-v": "Modo detallado (verbose): informa sobre errores",
+    "-z": "Separar las salidas con el carácter nulo (NUL) en lugar de una nueva línea"
   }
 }
 
 [source,bash]
 ----
-# Mostrar el destino de un enlace simbólico
-readlink enlace_simbolico
+# Ver a dónde apunta un enlace simple
+readlink mi_enlace
 ----
 
--f:: `readlink -f` Resolver la ruta completa (absoluta) siguiendo todos los enlaces
-
-[source,bash]
-----
-# Obtener la ruta real completa del fichero
-readlink -f enlace_simbolico
-----
-
--e:: `readlink -e` Resolver la ruta sólo si el destino existe
+-f:: `-f` (canonicalize) Es la opción más utilizada. Resuelve todos los niveles de enlaces y elimina redundancias como `./` o `../` para darte la ruta real en el disco.
 
 [source,bash]
 ----
-# Mostrar la ruta real sólo si el fichero existe
-readlink -e enlace_simbolico
+# Descubrir la ubicación real de un ejecutable en sistemas con muchos enlaces (como Java)
+readlink -f /usr/bin/java
+# Salida ejemplo: /usr/lib/jvm/java-11-openjdk-amd64/bin/java
 ----
 
--z:: `readlink -z` Terminar cada resultado con carácter nulo (útil en scripts)
+-e:: `-e` (existing) Similar a `-f`, pero actúa como una validación de seguridad. Si el archivo final ha sido borrado, el comando no devolverá nada.
 
 [source,bash]
 ----
-# Salida segura para uso con xargs -0
-readlink -z enlace_simbolico
+# Obtener la ruta solo si el destino es válido y accesible
+ruta_real=$(readlink -e configuracion.conf)
+----
+
+-n:: `-n` (no-newline) Evita que se añada un carácter de nueva línea al final. Es vital para comparaciones de cadenas exactas en Bash.
+
+[source,bash]
+----
+# Uso típico en scripts para guardar la ruta en una variable limpia
+ORIGEN=$(readlink -n mi_link)
+----
+
+-z:: `-z` (zero-terminated) Genera una salida compatible con procesos que manejan nombres de archivos con espacios o caracteres especiales.
+
+[source,bash]
+----
+# Combinar con xargs para procesar los destinos de varios enlaces
+readlink -fz enlaces/*.lnk | xargs -0 ls -l
+----
+
+Uso para Normalizar Rutas:: `readlink` puede convertir una ruta relativa en absoluta incluso si no es un enlace.
+
+[source,bash]
+----
+# Obtener la ruta completa del directorio actual (similar a pwd)
+readlink -f .
+
+# Resolver una ruta con saltos de directorio
+readlink -f ../../etc/passwd
+# Salida: /etc/passwd
 ----
 

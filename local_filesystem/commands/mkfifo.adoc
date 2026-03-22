@@ -1,29 +1,71 @@
 === mkfifo
-Crear una tubería con nombre (FIFO) en el sistema de ficheros.
+Crear tuberías con nombre (FIFOs) para la comunicación entre procesos.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Crear una tubería con nombre (FIFO) en el sistema de ficheros.",
-  "usage": "mkfifo [OPCIONES] NOMBRE_TUBERIA",
+  "description": "Crea archivos especiales de tipo FIFO (First-In, First-Out). A diferencia de las tuberías normales (|), una FIFO tiene un nombre en el sistema de archivos y permite que procesos independientes se comuniquen enviando y recibiendo datos a través de ella.",
+  "usage": "mkfifo -m 600 mi_tuberia",
   "options": {
-    "-m": "Establecer permisos de la tubería (modo)",
-    "-Z": "Establecer contexto de seguridad (SELinux)"
+    "-m": "Establecer los permisos (modo) del archivo FIFO (ej: 644)",
+    "-Z": "Establecer el contexto de seguridad SELinux para la tubería",
+    "--context": "Igual que -Z, pero permite especificar el contexto de seguridad",
+    "--help": "Mostrar la ayuda del comando",
+    "--version": "Mostrar la versión del programa"
   }
 }
 
 [source,bash]
 ----
-# Crear una tubería llamada 'tuberia'
-mkfifo tuberia
+# Crear una tubería con nombre básica
+mkfifo flujo_datos
 ----
 
-- (uso):: `mkfifo <nombre>` Crear tubería con nombre
+Concepto FIFO:: El primer dato que entra es el primero que sale. El archivo no ocupa espacio en disco; actúa como un búfer temporal en memoria.
+
+-m:: `-m MODE` Define los permisos de acceso en el momento de la creación.
 
 [source,bash]
 ----
-# Escribir en la tubería desde un proceso y leer en otro
-echo "Hola" > tuberia &
-cat < tuberia
+# Crear una tubería que solo el dueño pueda leer y escribir
+mkfifo -m 600 datos_privados
+----
+
+Funcionamiento Bloqueante:: Por defecto, un proceso que escribe en una FIFO se detendrá (bloqueará) hasta que otro proceso lea de ella, y viceversa.
+
+[source,bash]
+----
+# Terminal 1: El comando se queda esperando...
+echo "Mensaje enviado" > mi_fifo
+
+# Terminal 2: Al ejecutar esto, se libera el bloqueo en la Terminal 1
+cat mi_fifo
+----
+
+Uso Avanzado: Comunicación entre Scripts:: Ideal para enviar comandos a un proceso que corre de fondo.
+
+[source,bash]
+----
+# Crear la tubería
+mkfifo monitor_pipe
+
+# En un script o terminal (Lector):
+while true; do eval "$(cat monitor_pipe)"; done &
+
+# Desde cualquier otra parte (Escritor):
+echo "date" > monitor_pipe
+echo "ls -l" > monitor_pipe
+----
+
+Diferencia con tubería anónima (|):: 
+* **Anónima**: Solo comunica procesos con un ancestro común (padre/hijo). Desaparece cuando el comando termina.
+* **FIFO (Named Pipe)**: Cualquier proceso con permisos puede abrirla por su nombre. Persiste en el sistema de archivos hasta que se borra con `rm`.
+
+-Z:: `-Z` (SELinux) Asigna un contexto de seguridad específico, crucial en sistemas con seguridad reforzada (RHEL, Fedora, CentOS).
+
+[source,bash]
+----
+# Crear una tubería con un contexto de seguridad específico
+mkfifo -Z system_u:object_r:tmp_t:s0 pipe_segura
 ----
 

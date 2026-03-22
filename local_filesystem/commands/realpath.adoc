@@ -1,45 +1,69 @@
 === realpath
-Mostrar la ruta absoluta y real de un fichero o directorio.
+Convertir rutas relativas o con enlaces simbólicos en rutas absolutas canónicas.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Mostrar la ruta absoluta y real de un fichero o directorio.",
-  "usage": "realpath [OPCIONES] RUTA",
+  "description": "Resuelve todos los componentes de una ruta (incluyendo enlaces simbólicos y referencias como '.' o '..') para devolver la ubicación física real y única en el sistema de archivos.",
+  "usage": "realpath ../../etc/passwd",
   "options": {
-    "-e": "Resolver la ruta sólo si el destino existe",
-    "-m": "Resolver la ruta incluso si el destino no existe",
-    "-z": "Terminar cada resultado con carácter nulo (útil en scripts)"
+    "-e": "Verificar existencia: la ruta debe ser válida y todos sus componentes deben existir",
+    "-m": "Sin verificar (missing): resuelve la ruta de forma lógica aunque los archivos no existan",
+    "-L": "Resolver enlaces simbólicos antes que los componentes '..' (comportamiento lógico)",
+    "-P": "Resolver componentes '..' antes que los enlaces simbólicos (comportamiento físico, por defecto)",
+    "-q": "Modo silencioso: no muestra mensajes de error",
+    "-s": "No expandir enlaces simbólicos (solo normaliza '.' y '..')",
+    "-z": "Separar las rutas de salida con el carácter nulo (NUL) en lugar de nueva línea",
+    "--relative-to": "Mostrar la ruta real relativa a otro directorio específico",
+    "--relative-base": "Mostrar la ruta relativa solo si está bajo la base especificada"
   }
 }
 
 [source,bash]
 ----
-# Obtener la ruta absoluta real
-realpath fichero.txt
+# Convertir una ruta relativa en la ruta absoluta real
+realpath ./mi_archivo.txt
+# Salida: /home/usuario/documentos/mi_archivo.txt
 ----
 
--e:: `realpath -e` Resolver la ruta sólo si el destino existe
-
-[source,bash]
-----
-# Mostrar la ruta real sólo si el fichero existe
-realpath -e fichero.txt
-----
-
--m:: `realpath -m` Resolver la ruta incluso si el destino no existe
+-e:: `-e` (existing) Es ideal para scripts de seguridad. Si el archivo fue borrado o la ruta es falsa, el comando fallará con un error.
 
 [source,bash]
 ----
-# Obtener una ruta absoluta aunque el fichero no exista
-realpath -m /ruta/inexistente/fichero.txt
+# Obtener la ruta solo si el archivo realmente está ahí
+realpath -e /var/www/html/index.php
 ----
 
--z:: `realpath -z` Terminar cada resultado con carácter nulo (útil en scripts)
+-m:: `-m` (missing) Útil para predecir dónde *estaría* un archivo antes de crearlo, limpiando la ruta de puntos y carpetas superiores.
 
 [source,bash]
 ----
-# Salida segura para uso con xargs -0
-realpath -z fichero.txt
+# Normalizar una ruta que aún no hemos creado
+realpath -m ../backup/sistema/logs/hoy.log
+----
+
+--relative-to:: Una de las funciones más potentes de `realpath`. Calcula el "camino" necesario para llegar de un punto A a un punto B.
+
+[source,bash]
+----
+# ¿Cómo llego a /etc/passwd desde mi carpeta Home?
+realpath --relative-to=$HOME /etc/passwd
+# Salida: ../../etc/passwd
+----
+
+-s:: `-s` (strip) Normaliza la ruta eliminando `./` y `../` pero **mantiene** el enlace simbólico sin resolver a qué archivo apunta realmente.
+
+[source,bash]
+----
+# Limpiar la ruta pero conservar el nombre del enlace simbólico
+realpath -s ../enlaces/mi_link
+----
+
+-z:: `-z` (zero-terminated) Esencial para canalizar rutas que contienen espacios o caracteres extraños hacia otros comandos.
+
+[source,bash]
+----
+# Pasar rutas reales de forma segura a xargs
+realpath -z *.log | xargs -0 tar -cvf logs_reales.tar
 ----
 

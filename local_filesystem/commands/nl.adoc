@@ -1,72 +1,90 @@
 === nl
-Numerar líneas de un fichero o de la entrada estándar.
+Numerar las líneas de archivos o de la entrada estándar con opciones de formato.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Numerar líneas de un fichero o de la entrada estándar.",
-  "usage": "nl [OPCIONES] FICHERO",
+  "description": "Escribe cada archivo indicado en la salida estándar, añadiendo números de línea. Es más flexible que 'cat -n' al permitir filtrar qué líneas se numeran y cómo se formatean los números.",
+  "usage": "nl -b a -n rz -w 3 archivo.txt",
   "options": {
-    "-b": "Especificar qué líneas numerar",
-    "-v": "Número inicial",
-    "-i": "Incremento entre números de línea",
-    "-n": "Formato del número",
-    "-s": "Separador entre número y línea",
-    "-w": "Ancho del número de línea"
+    "-b": "Especificar el estilo de numeración del cuerpo (Body): 'a' (todas), 't' (solo no vacías), 'n' (ninguna)",
+    "-h": "Especificar el estilo de numeración del encabezado (Header)",
+    "-f": "Especificar el estilo de numeración del pie de página (Footer)",
+    "-v": "Establecer el número inicial de la primera línea en cada sección",
+    "-i": "Establecer el valor del incremento entre números de línea",
+    "-n": "Formato del número: 'ln' (izq.), 'rn' (der.), 'rz' (der. con ceros a la izquierda)",
+    "-s": "Separador de texto a añadir entre el número de línea y el texto",
+    "-w": "Ancho (número de columnas) utilizado para los números de línea",
+    "-l": "Agrupar N líneas vacías para que cuenten como una sola a efectos de numeración",
+    "-p": "No reiniciar la numeración en cada sección del documento"
   }
 }
 
 [source,bash]
 ----
-# Numerar todas las líneas de un archivo
-nl fichero.txt
+# Numerar solo las líneas que contienen texto (comportamiento por defecto)
+nl notas.txt
 ----
 
--b:: `nl -b` Especificar qué líneas numerar
+-b:: `-b <style>` Define qué líneas del cuerpo reciben un número.
 
-[source,bash]
-----
-# Numerar solo líneas no vacías
-nl -b a fichero.txt
-----
-
--v:: `nl -v` Número inicial
+* `a`: Numerar todas las líneas.
+* `t`: Numerar solo líneas con texto (default).
+* `n`: No numerar ninguna línea.
+* `pRE`: Numerar solo líneas que coincidan con la expresión regular `RE`.
 
 [source,bash]
 ----
-# Comenzar numeración desde 100
-nl -v 100 fichero.txt
+# Numerar absolutamente todas las líneas, incluidas las vacías
+nl -b a archivo.txt
+
+# Numerar solo las líneas que empiezan por "ERROR"
+nl -b p'ERROR' syslog.log
 ----
 
--i:: `nl -i` Incremento entre números de línea
-
-[source,bash]
-----
-# Incrementar de 5 en 5
-nl -i 5 fichero.txt
-----
-
--n:: `nl -n` Formato del número
+-v / -i:: `-v` (start-number) e `-i` (increment) para controlar la secuencia numérica.
 
 [source,bash]
 ----
-# Formato con ceros a la izquierda
-nl -n rz fichero.txt
+# Empezar en 10 e ir de 10 en 10 (10, 20, 30...)
+nl -v 10 -i 10 lista.txt
 ----
 
--s:: `nl -s` Separador entre número y línea
-
-[source,bash]
-----
-# Usar “->” como separador
-nl -s '->' fichero.txt
-----
-
--w:: `nl -w` Ancho del número de línea
+-n:: `-n <format>` Controla la alineación y el relleno del número.
 
 [source,bash]
 ----
-# Ancho de 4 caracteres
-nl -w 4 fichero.txt
+# rz (Right justified, Zero padded): Útil para que todo quede alineado en listas largas
+nl -n rz -w 4 archivo.txt
+# Salida: 0001  Texto...
+----
+
+-s:: `-s <string>` Cambia el tabulador por defecto por cualquier otro separador.
+
+[source,bash]
+----
+# Usar un punto y espacio para un estilo de lista clásica
+nl -s ". " poema.txt
+----
+
+-w:: `-w <width>` Define el espacio que ocupa la columna del número.
+
+[source,bash]
+----
+# Reservar solo 2 espacios para el número (máximo 99 líneas bien alineadas)
+nl -w 2 datos.csv
+----
+
+Secciones de documento:: `nl` reconoce delimitadores especiales para tratar partes del archivo de forma distinta.
+
+[source,bash]
+----
+# El archivo debe contener estos delimitadores para activar secciones:
+# \:\:\:  -> Encabezado
+# \:\:    -> Cuerpo
+# \:      -> Pie de página
+
+# Numerar el encabezado y el cuerpo de forma distinta
+nl -h a -b t documento_complejo.txt
 ----
 

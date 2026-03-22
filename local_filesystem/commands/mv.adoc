@@ -1,72 +1,86 @@
 === mv
-Mover archivo entre rutas.
+Mover o renombrar archivos y directorios.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Mover archivos o directorios entre rutas.",
-  "usage": "mv [OPCIONES] ORIGEN DESTINO",
+  "description": "Desplaza archivos o directorios de una ubicación a otra. Si el destino está en el mismo sistema de archivos, actúa como un renombrado instantáneo; si está en otro, copia y luego elimina el origen.",
+  "usage": "mv -iv origen.txt /ruta/destino/",
   "options": {
-    "-i": "Solicitar confirmación antes de sobreescribir archivos",
-    "-v": "Mostrar archivos de origen y destino (verbose)",
-    "-f": "Forzar la acción (sobrescribir sin preguntar)",
-    "-n": "No sobrescribir archivos existentes (no-clobber)",
-    "-b": "Hacer copia de seguridad del destino al sobrescribir",
-    "--backup[=CONTROL]": "Hacer copia de seguridad con control (simple/numbered/t)"
+    "-i": "Modo interactivo: solicita confirmación antes de sobrescribir un archivo existente",
+    "-f": "Forzar: sobrescribe archivos de destino sin preguntar (anula -i)",
+    "-n": "No-clobber: no sobrescribe ningún archivo que ya exista en el destino",
+    "-v": "Modo detallado (verbose): explica qué se está haciendo con cada archivo",
+    "-u": "Actualizar (update): mueve solo si el origen es más nuevo que el destino o si el destino no existe",
+    "-b": "Copia de seguridad: crea un backup del archivo de destino antes de sobrescribirlo",
+    "-t": "Directorio de destino: útil para mover múltiples orígenes a una carpeta específica",
+    "-T": "Tratar el destino siempre como un archivo normal (no como un directorio)",
+    "--backup": "Configurar el método de control de versiones de los backups (simple, numbered, etc.)"
   }
 }
 
 [source,bash]
 ----
-# Mover un fichero a otro directorio
-mv archivo.txt /ruta/destino/
+# Renombrar un archivo en la misma carpeta
+mv antiguo_nombre.txt nuevo_nombre.txt
 ----
 
--i:: `mv -i` Solicitar confirmación antes de sobreescribir archivos
-
-[source,bash]
-----
-# Mover pidiendo confirmación antes de sobrescribir
-mv -i archivo.txt /ruta/destino/
-----
-
--v:: `mv -v` Mostrar archivos de origen y destino (verbose)
+-i:: `-i` (interactive) Evita desastres al pedir confirmación si el nombre de destino ya está ocupado.
 
 [source,bash]
 ----
-# Mover y mostrar información de la operación
-mv -v archivo.txt /ruta/destino/
+# Si 'foto.jpg' ya existe en /backup, preguntará: "¿sobrescribir?"
+mv -i foto.jpg /media/backup/
 ----
 
--f:: `mv -f` Forzar la acción (sobrescribir sin preguntar)
-
-[source,bash]
-----
-# Mover forzando la sobreescritura
-mv -f archivo.txt /ruta/destino/archivo.txt
-----
-
--n:: `mv -n` No sobrescribir archivos existentes (no-clobber)
+-f:: `-f` (force) La opción por defecto en la mayoría de shells, pero útil para anular alias de seguridad.
 
 [source,bash]
 ----
-# No sobrescribir si destino existe
-mv -n archivo.txt /ruta/destino/
+# Mover sin importar si el archivo de destino existe y es de solo lectura
+mv -f notas.txt /tmp/notas.txt
 ----
 
--b:: `mv -b` Hacer copia de seguridad del destino al sobrescribir
-
-[source,bash]
-----
-# Usar copia de seguridad al mover
-mv -b archivo.txt /ruta/destino/
-----
-
---backup:: `mv --backup[=CONTROL]` Hacer copia de seguridad con control (simple/numbered/t) 
+-n:: `-n` (no-clobber) Es la opción más segura para migraciones masivas: si el archivo existe en el destino, simplemente no hace nada con ese archivo.
 
 [source,bash]
 ----
-# Mover con copia de seguridad numerada
-mv --backup=numbered archivo.txt /ruta/destino/
+# Mover fotos nuevas sin tocar las que ya están en la carpeta organizada
+mv -n ~/Descargas/*.jpg ~/Fotos/
+----
+
+-u:: `-u` (update) Sincronización básica; solo mueve archivos que han sido modificados recientemente.
+
+[source,bash]
+----
+# Mover el informe solo si la versión actual es más reciente que la del servidor
+mv -u informe.pdf /mnt/servidor/documentos/
+----
+
+-b / --backup:: Crea una copia de seguridad automática (normalmente añade un `~` al final) antes de destruir el archivo de destino.
+
+[source,bash]
+----
+# Si existe 'config.cfg' en el destino, lo renombra a 'config.cfg~' y mueve el nuevo
+mv -b nuevo_config.cfg /etc/app/config.cfg
+
+# Usar copias numeradas (ej: archivo.txt.~1~, archivo.txt.~2~)
+mv --backup=numbered archivo.txt /destino/
+----
+
+-t:: `-t DIRECTORY` Permite listar primero el destino, lo cual es muy útil al usar `xargs` o resultados de búsqueda.
+
+[source,bash]
+----
+# Mover todos los archivos encontrados por 'find' a la carpeta 'basura'
+find . -name "*.tmp" | xargs mv -t /tmp/basura/
+----
+
+Mover Directorios:: Funciona de la misma manera que con archivos, sin necesidad de parámetros recursivos (a diferencia de `cp` o `rm`).
+
+[source,bash]
+----
+# Mover una carpeta entera y su contenido
+mv /home/user/proyecto_viejo /home/user/archivo_historico
 ----
 

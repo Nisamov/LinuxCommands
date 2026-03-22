@@ -1,63 +1,66 @@
 === lsattr
-Mostrar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.
+Listar los atributos especiales de archivos en sistemas de archivos Linux (ext2/3/4).
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Mostrar los atributos de los archivos en sistemas de ficheros ext2/ext3/ext4.",
-  "usage": "lsattr [OPCIONES] [ARCHIVO...]",
+  "description": "Muestra los atributos específicos del sistema de archivos que van más allá de los permisos tradicionales (read/write/execute). Permite ver si un archivo es inmutable, de solo adición, comprimido, etc.",
+  "usage": "lsattr -d /ruta/archivo",
   "options": {
-    "-R": "Mostrar atributos de todos los archivos en un directorio recursivamente",
-    "-d": "Mostrar atributos de directorios en lugar de su contenido",
-    "-V": "Mostrar versión del comando",
-    "--help": "Mostrar ayuda",
-    "--quiet": "Suprimir mensajes innecesarios"
+    "-R": "Listar recursivamente los atributos de directorios y su contenido",
+    "-V": "Mostrar la versión del programa y del sistema de archivos",
+    "-a": "Listar todos los archivos en los directorios, incluidos los que empiezan por punto",
+    "-d": "Listar directorios como archivos normales, en lugar de listar su contenido",
+    "-p": "Mostrar el número de proyecto del archivo (si el sistema lo soporta)",
+    "-v": "Mostrar el número de versión o generación del archivo",
+    "--help": "Mostrar ayuda y salir",
+    "--quiet": "Suprimir mensajes de error no críticos"
   }
 }
 
 [source,bash]
 ----
-# Mostrar atributos de un archivo
-lsattr fichero.txt
+# Ver los atributos del archivo de contraseñas del sistema
+lsattr /etc/shadow
 ----
 
--R:: `lsattr -R` Recursivo
+Entendiendo la salida:: Significado de los caracteres comunes en la columna de atributos
 
-[source,bash]
-----
-# Mostrar atributos de todos los archivos en un directorio recursivamente
-lsattr -R /ruta/directorio
-----
+* **i (immutable)**: El archivo no puede ser modificado, borrado, renombrado ni vinculado, incluso por root.
+* **a (append only)**: El archivo solo puede abrirse para escribir datos al final (útil para logs).
+* **e (extent format)**: Indica que el archivo está usando "extents" para gestionar bloques en disco (común en ext4).
+* **s (secure deletion)**: Cuando se borra, sus bloques se llenan con ceros (borrado seguro).
+* **A (no atime)**: No actualiza la fecha de último acceso al leer el archivo (mejora rendimiento).
 
--d:: `lsattr -d` Mostrar atributos de directorios en lugar de su contenido
-
-[source,bash]
-----
-# Mostrar atributos de un directorio
-lsattr -d /ruta/directorio
-----
-
--V:: `lsattr -V` Mostrar versión del comando
+-R:: `-R` (recursive) Aplica la consulta a toda la estructura de subdirectorios.
 
 [source,bash]
 ----
-# Ver versión de lsattr
-lsattr -V
+# Comprobar atributos de todos los archivos en la configuración del sistema
+lsattr -R /etc/network
 ----
 
---help:: `lsattr --help` Mostrar ayuda
-
-[source,bash]
-----
-# Ver opciones disponibles
-lsattr --help
-----
-
---quiet:: `lsattr --quiet` Suprimir mensajes innecesarios
+-d:: `-d` (directories) Muestra la información de la carpeta en sí, no de los archivos que contiene.
 
 [source,bash]
 ----
-# Mostrar solo información esencial
-lsattr --quiet fichero.txt
+# Ver si un directorio tiene el atributo de inmutabilidad
+lsattr -d /var/www/html
+----
+
+-a:: `-a` (all) Incluye archivos ocultos en el listado, similar a `ls -a`.
+
+[source,bash]
+----
+# Revisar atributos de archivos de configuración ocultos en el home
+lsattr -a ~/
+----
+
+Uso con chattr:: `lsattr` es el compañero de lectura del comando `chattr` (change attributes)
+
+[source,bash]
+----
+# Si ves una 'i', el archivo es inmutable. Para quitarlo necesitarás:
+sudo chattr -i archivo.txt
 ----
 
