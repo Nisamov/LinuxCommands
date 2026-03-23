@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributors - LinuxCommands</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        .filter-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .filter-container select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            font-family: 'Roboto', sans-serif;
+        }
+        .contributor-row {
+            display: grid;
+            grid-template-columns: 80px 2fr 1fr 1fr 1fr 1fr;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: transform 0.2s;
+        }
+        .contributor-row:hover {
+            transform: scale(1.01);
+            border-color: var(--accent-color);
+        }
+        .avatar-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+        }
+        .stat-box {
+            text-align: center;
+        }
+        .additions { color: var(--success-color); font-weight: bold; }
+        .deletions { color: #ef4444; font-weight: bold; }
+        .commits { color: var(--accent-color); font-weight: bold; }
+        
+        @media (max-width: 768px) {
+            .contributor-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .avatar-img { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="sidebar">
+    <div class="sidebar-header">
+        <h2><a href="index.html">LinuxCommands</a></h2>
+        <p class="subtitle">Documentación Técnica</p>
+    </div>
+    <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="contributors.html" style="background: #f1f5f9; color: var(--accent-color);">Contributors</a></li>
+        <!--<li><a href="search.html">Buscador</a></li>-->
+    </ul>
+</nav>
+
+<div class="content">
+    <header>
+        <h1>Colaboradores del Proyecto</h1>
+        <p class="subtitle">Estadísticas detalladas extraídas directamente de GitHub</p>
+    </header>
+
+    <div class="filter-container">
+        <label for="sortCriteria">Ordenar por:</label>
+        <select id="sortCriteria" onchange="renderContributors()">
+            <option value="additions">Líneas Agregadas</option>
+            <option value="deletions">Líneas Eliminadas</option>
+            <option value="commits">Commits / PRs</option>
+        </select>
+    </div>
+
+    <div id="contributors-list">
+        <p>Cargando datos de colaboradores...</p>
+    </div>
+
+    <footer>
+        <p>Datos actualizados vía GitHub API | <a href="index.html">Volver al inicio</a></p>
+    </footer>
+</div>
+
+<script>
+    const REPO = 'Nisamov/LinuxCommands';
+    let contributorsData = [];
+
+    async function fetchContributors() {
+        const listContainer = document.getElementById('contributors-list');
+        try {
+            const response = await fetch(`https://api.github.com/repos/${REPO}/stats/contributors`);
+            
+            // Si GitHub responde 202, significa que está calculando los datos. Reintentamos en 2 segundos.
+            if (response.status === 202) {
+                listContainer.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> GitHub está preparando las estadísticas, reintentando en breve...</p>';
+                setTimeout(fetchContributors, 2000);
+                return;
+            }
+
+            if (!response.ok) throw new Error(`Error de API: ${response.status}`);
+
+            const data = await response.json();
+            
+            // Si el repo es nuevo o no hay datos devueltos
+            if (!data || data.length === 0) {
+                listContainer.innerHTML = '<p>No se encontraron datos de contribuciones en este repositorio.</p>';
+                return;
+            }
+
+            contributorsData = data.map(item => {
+                const stats = item.weeks.reduce((acc, week) => {
+                    acc.additions += week.a;
+                    acc.deletions += week.d;
+                    return acc;
+                }, { additions: 0, deletions: 0 });
+
+                return {
+                    login: item.author.login,
+                    avatar: item.author.avatar_url,
+                    url: item.author.html_url,
+                    commits: item.total,
+                    additions: stats.additions,
+                    deletions: stats.deletions
+                };
+            });
+
+            renderContributors();
+        } catch (error) {
+            console.error(error);
+            listContainer.innerHTML = `
+                <div style="padding: 20px; border: 1px solid #ef4444; border-radius: 8px; background: #fee2e2; color: #b91c1c;">
+                    <strong>Error al cargar:</strong> ${error.message}<br>
+                    <small>Nota: Si refrescas muchas veces localmente, GitHub puede bloquear tu IP temporalmente.</small>
+                </div>`;
+        }
+    }
+
+    function renderContributors() {
+        const criteria = document.getElementById('sortCriteria').value;
+        const listContainer = document.getElementById('contributors-list');
+        
+        const sorted = [...contributorsData].sort((a, b) => b[criteria] - a[criteria]);
+
+        listContainer.innerHTML = sorted.map(user => `
+            <div class="contributor-row">
+                <img src="${user.avatar}" class="avatar-img" alt="${user.login}">
+                <div>
+                    <strong style="font-size: 1.1rem;">${user.login}</strong><br>
+                    <a href="${user.url}" target="_blank" class="github-link" style="font-size: 0.8rem;">Ver Perfil GitHub</a>
+                </div>
+                <div class="stat-box">
+                    <span class="commits">${user.commits}</span><br><small>Commits</small>
+                </div>
+                <div class="stat-box">
+                    <span class="additions">+${user.additions.toLocaleString()}</span><br><small>Añadido</small>
+                </div>
+                <div class="stat-box">
+                    <span class="deletions">-${user.deletions.toLocaleString()}</span><br><small>Eliminado</small>
+                </div>
+                <div class="stat-box">
+                    <small>Impacto Neto</small><br>
+                    <strong>${(user.additions - user.deletions).toLocaleString()}</strong>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Iniciar carga
+    fetchContributors();
+</script>
+</body>
+</html>
