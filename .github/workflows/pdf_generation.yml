@@ -26,9 +26,9 @@ jobs:
       - name: Process Language
         run: |
           mkdir -p pdf_outputs
-          # Definimos el código de idioma en mayúsculas usando Bash normal
           LANG_UPPER=$(echo "${{ matrix.lang }}" | tr '[:lower:]' '[:upper:]')
           
+          # Módulos a procesar
           MODULES="local_fundamentals local_filesystem local_group local_network local_permissions local_scripts local_security local_services local_software local_storage local_system_data local_users"
           
           for MOD in $MODULES; do
@@ -36,6 +36,7 @@ jobs:
               mkdir -p "tmp_${{ matrix.lang }}/$MOD"
               cp -r "$MOD/"* "tmp_${{ matrix.lang }}/$MOD/"
               
+              # Traducir (el script de python debe manejar si lang es 'es' para no traducir si no es necesario)
               python3 .github/scripts/translate_adoc.py "$MOD" "tmp_${{ matrix.lang }}/$MOD" ${{ matrix.lang }}
               
               EXTRA=""
@@ -47,7 +48,7 @@ jobs:
             fi
           done
 
-      - name: Upload
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: pdf-${{ matrix.lang }}
@@ -58,53 +59,78 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
-      - name: Download Artifacts
+      - name: Download All Artifacts
         uses: actions/download-artifact@v4
         with:
           path: all_pdfs
 
-      - name: Delete Old Data
+      - name: Eliminar tags
         run: |
+          # Obtenemos la lista de todas las releases actuales
           RELEASES=$(gh release list --limit 100 | cut -f 1)
-          for r in $RELEASES; do gh release delete "$r" -y --cleanup-tag || true; done
+          for r in $RELEASES; do
+            echo "Eliminando release y tag: $r"
+            gh release delete "$r" -y --cleanup-tag || true
+          done
+          # Limpieza extra de tags remotos que puedan haber quedado huérfanos
+          git fetch --tags
+          TAGS=$(git tag)
+          for t in $TAGS; do
+            git push origin :refs/tags/"$t" || true
+          done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Multi-Releases
+      - name: Crear releases
         run: |
-          # Lista de idiomas
-          LANGS="JA KO ZH RU PT DE EN FR"
+          # Lista de IDs de carpetas (el artifact se llama pdf-en, pdf-es, etc)
+          # Los tags finales serán los de LANGS
+          LANGS="JA KO ZH RU PT DE EN FR ESP"
+          
           declare -A TITLES=( 
-            ["JA"]="日本語のドキュメント 🇯🇵" 
-            ["KO"]="한국어 문서 🇰🇷" 
-            ["ZH"]="中文文档 🇨🇳" 
-            ["RU"]="Документация на русском 🇷🇺" 
-            ["PT"]="Documentação em Português 🇵🇹" 
-            ["DE"]="Deutsche Dokumentation 🇩🇪" 
-            ["EN"]="English Documentation 🇬🇧" 
-            ["FR"]="Documentation Française 🇫🇷"
-            ["ESP"]="Documentación en Español 🇪🇸" 
+            ["JA"]="日本語のドキュメント 🇯🇵" ["KO"]="한국어 문서 🇰🇷" ["ZH"]="中文文档 🇨🇳" 
+            ["RU"]="Документация na русском 🇷🇺" ["PT"]="Documentação em Português 🇵🇹" 
+            ["DE"]="Deutsche Dokumentation 🇩🇪" ["EN"]="English Documentation 🇬🇧" 
+            ["FR"]="Documentation Française 🇫🇷" ["ESP"]="Documentación en Español 🇪🇸" 
           )
+          
           declare -A IMGS=(
             ["JA"]="released_JA.png" ["KO"]="released_KO.png" ["ZH"]="released_ZH.png"
             ["RU"]="released_RU.png" ["PT"]="released_PT.png" ["DE"]="released_DE.png"
             ["EN"]="released_ENG.png" ["FR"]="released_FR.png" ["ESP"]="released_ESP.png"
           )
+          
           IMG_BASE="https://raw.githubusercontent.com/${{ github.repository }}/master/.github/media"
+
           for L in $LANGS; do
-            FILES=$(find "all_pdfs/pdf-${L,,}" -name "*.pdf" 2>/dev/null)
+            # Mapeo de tag a nombre de carpeta de artifact
+            if [ "$L" == "ESP" ]; then FOLDER_LANG="es"; else FOLDER_LANG="${L,,}"; fi
+            
+            # Buscar PDFs en la carpeta del artifact correspondiente
+            FILES=$(find "all_pdfs/pdf-$FOLDER_LANG" -name "*.pdf" 2>/dev/null || true)
+            
             if [ -n "$FILES" ]; then
-              NOTES="![Header]($IMG_BASE/${IMGS[$L]})\n\n## ${TITLES[$L]}\n\nContenido traducido automáticamente."
+              echo "--- Creando Release: $L ---"
+              
+              if [ "$L" == "ESP" ]; then
+                DESC="Manuales originales creados para la comunidad."
+              else
+                DESC="Contenido traducido automáticamente."
+              fi
+              
+              NOTES="![Header]($IMG_BASE/${IMGS[$L]})\n\n## ${TITLES[$L]}\n\n$DESC"
+              
+              # Intentar crear la release
               gh release create "$L" $FILES --title "🔵 ${TITLES[$L]}" --notes "$NOTES"
-              sleep 5
+              
+              # Espera mayor para evitar colisiones de API y asegurar que el tag se propague
+              sleep 10
+            else
+              echo "No se encontraron archivos para $L en all_pdfs/pdf-$FOLDER_LANG"
             fi
           done
-
-          ESP_FILES=$(find all_pdfs/pdf-es -name "*.pdf")
-          if [ -n "$ESP_FILES" ]; then
-            NOTES="![Header]($IMG_BASE/${IMGS[ESP]})\n\n## ${TITLES[ESP]}\n\nManuales originales creados para la comunidad."
-            gh release create "ESP" $ESP_FILES --title "🔵 ${TITLES[ESP]}" --notes "$NOTES"
-          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
