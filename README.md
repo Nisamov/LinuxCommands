@@ -21,11 +21,11 @@
     </td>
   </tr>
   <tr align="center">
-    <td><small><b>Wikipedia</b></small></td>
-    <td><small><b>Wikidot</b></small></td>
-    <td><small><b>Git Pages</b></small></td>
-    <td><small><b>JSON DB</b></small></td>
-    <td><small><b>Contribuyentes</b></small></td>
+    <td><small><b><a href="https://nisamov.github.io/LinuxCommands/contributors" title="Contribuciones">Wikipedia</a></b></small></td>
+    <td><small><b><a href="http://linuxcommands.wikidot.com/" title="Wikidot">Wikidot</a></b></small></td>
+    <td><small><b><a href="https://nisamov.github.io/LinuxCommands/" title="GitHub Pages">Git Pages</a></b></small></td>
+    <td><small><b><a href="https://github.com/nisamov/LinuxCommands/blob/main/docs/commands.json" title="JSON Database">JSON DB</a></b></small></td>
+    <td><small><b><a href="https://nisamov.github.io/LinuxCommands/contributors" title="Contribuciones">Contribuyentes</a></b></small></td>
   </tr>
 </table>
 

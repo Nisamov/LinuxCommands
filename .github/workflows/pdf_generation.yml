@@ -117,7 +117,8 @@ jobs:
                 DESC="Contenido traducido automáticamente."
               fi
               
-              NOTES="![Header]($IMG_BASE/${IMGS[$L]})\n\n## ${TITLES[$L]}\n\n$DESC"
+              #NOTES="![Header]($IMG_BASE/${IMGS[$L]})\n\n## ${TITLES[$L]}\n\n$DESC"
+              NOTES="![Header]($IMG_BASE/${IMGS[$L]}) ## ${TITLES[$L]}"
               
               gh release create "$L" $FILES \
                 --title "🔵 ${TITLES[$L]}" \
