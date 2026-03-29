@@ -1,72 +1,66 @@
 === uniq
-Eliminar lineas duplicadas consecutivas.
+Filtrar o reportar líneas repetidas en un archivo o en la entrada estándar.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Eliminar lineas duplicadas consecutivas.",
-  "usage": "uniq [OPCIONES] FICHERO",
+  "description": "Elimina las líneas repetidas de un archivo, siempre que sean adyacentes. Es la herramienta estándar para resumir logs, contar frecuencias de eventos y limpiar listas de datos.",
+  "usage": "sort archivo.txt | uniq -c",
   "options": {
-    "-c": "Mostrar numero de repeticiones en columna",
-    "-d": "Mostrar lineas duplicadas",
-    "-u": "Mostrar lineas no duplicadas",
-    "-i": "Ignorar mayúsculas/minúsculas",
-    "-f": "Ignorar las primeras N columnas (palabras)",
-    "-s": "Ignorar los primeros N caracteres"
+    "-c": "Count: antepone a cada línea el número de veces que aparece en el archivo",
+    "-d": "Duplicates: muestra solamente las líneas que están repetidas",
+    "-D": "Mostrar todas las líneas duplicadas (no solo una instancia de cada)",
+    "-u": "Unique: muestra solamente las líneas que no están repetidas",
+    "-i": "Ignore-case: no distingue entre mayúsculas y minúsculas al comparar",
+    "-f": "Fields: evita comparar los primeros N campos (palabras separadas por espacios)",
+    "-s": "Chars: evita comparar los primeros N caracteres de cada línea",
+    "-w": "Width: limita la comparación a los primeros N caracteres de la línea"
   }
 }
 
 [source,bash]
 ----
-# Eliminar líneas duplicadas consecutivas
-uniq entrada.txt > salida.txt
+# Uso básico (solo elimina si están una tras otra)
+uniq lista.txt
 ----
 
--c:: `uniq -c` Mostrar numero de repeticiones en columna
-
-[source,bash]
-----
-# Contar repeticiones de líneas consecutivas
-uniq -c entrada.txt
-----
-
--d:: `uniq -d` Mostrar lineas duplicadas
+-c:: `-c` (count) Es probablemente la opción más potente. Convierte una lista bruta en un informe estadístico instantáneo.
 
 [source,bash]
 ----
-# Mostrar sólo las líneas duplicadas consecutivas
-uniq -d entrada.txt
+# Saber cuántas veces ha accedido cada IP a nuestro servidor
+cut -d' ' -f1 access.log | sort | uniq -c | sort -nr
 ----
 
--u:: `uniq -u` Mostrar lineas no duplicadas
-
-[source,bash]
-----
-# Mostrar sólo líneas únicas
-uniq -u entrada.txt
-----
-
--i:: `uniq -i` Ignorar mayúsculas/minúsculas
+-d vs -u:: Permiten realizar "limpieza forense" de datos.
+* **`-d`**: "¿Qué datos tengo repetidos?" (Útil para encontrar errores de carga).
+* **`-u`**: "¿Qué elementos son únicos y no aparecen más de una vez?"
 
 [source,bash]
 ----
-# Ignorar case
-uniq -i entrada.txt
+# Mostrar solo los nombres que aparecen más de una vez
+sort nombres.txt | uniq -d
+
+# Mostrar solo los usuarios que aparecen una única vez en el log
+sort usuarios.log | uniq -u
 ----
 
--f:: `uniq -f N` Ignorar las primeras N columnas (palabras)
-
-[source,bash]
-----
-# Ignorar la primera columna al comparar
-uniq -f 1 entrada.txt
-----
-
--s:: `uniq -s N` Ignorar los primeros N caracteres
+-i:: `-i` (ignore-case) Evita que "Admin" y "admin" sean tratados como registros diferentes.
 
 [source,bash]
 ----
-# Ignorar primeros 3 caracteres
-uniq -s 3 entrada.txt
+# Comparar sin importar las mayúsculas
+sort -f lista.txt | uniq -i
+----
+
+-f / -s:: Permiten ignorar partes variables de una línea (como una marca de tiempo al principio) para comparar el resto del contenido.
+
+[source,bash]
+----
+# Ignorar la primera palabra (por ejemplo, un ID) y comparar el resto de la línea
+uniq -f 1 registros.txt
+
+# Ignorar los primeros 10 caracteres (por ejemplo, una fecha ISO 'YYYY-MM-DD')
+uniq -s 10 logs.txt
 ----
 

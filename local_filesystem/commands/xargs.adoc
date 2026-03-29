@@ -1,81 +1,77 @@
 === xargs
-Construir y ejecutar comandos a partir de la entrada estándar.
+Construir y ejecutar líneas de comandos a partir de la entrada estándar.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Construir y ejecutar comandos a partir de la entrada estándar.",
-  "usage": "xargs [OPCIONES] COMANDO",
+  "description": "Recoge datos de la entrada estándar (stdin) y los convierte en argumentos para otro comando. Es esencial para procesar listas de archivos generadas por 'find', 'ls' o 'grep', especialmente cuando la lista es demasiado larga para los límites del shell.",
+  "usage": "find . -name '*.tmp' | xargs rm",
   "options": {
-    "-n": "Número de argumentos por ejecución",
-    "-I": "Reemplazar argumentos con un marcador",
-    "-0": "Usar separador nulo",
-    "-p": "Confirmar antes de ejecutar",
-    "-t": "Mostrar el comando antes de ejecutarlo",
-    "-r": "No ejecutar si no hay entrada",
-    "--max-procs": "Ejecución en paralelo"
+    "-n": "Max-args: usa como máximo N argumentos por cada ejecución del comando",
+    "-I": "Replace: define un marcador (como {}) para insertar el argumento en una posición específica",
+    "-0": "Null: lee la entrada separada por caracteres nulos (indispensable para archivos con espacios)",
+    "-p": "Interactive: pide confirmación al usuario antes de ejecutar cada comando",
+    "-t": "Verbose: imprime el comando en la salida de error antes de ejecutarlo",
+    "-r": "No-run-if-empty: si la entrada solo contiene espacios o está vacía, no ejecuta el comando",
+    "-P": "Parallel: ejecuta hasta N procesos simultáneamente (ideal para tareas multi-núcleo)",
+    "-d": "Delimiter: define un carácter personalizado como separador de la entrada"
   }
 }
 
 [source,bash]
 ----
-# Uso básico de xargs
-echo "archivo1 archivo2" | xargs rm
+# Uso básico: convierte una lista de palabras en argumentos para 'rm'
+cat archivos_a_borrar.txt | xargs rm
 ----
 
--n:: `xargs -n` Número de argumentos por ejecución
-
-[source,bash]
-----
-# Ejecutar el comando con un argumento por vez
-echo "a b c" | xargs -n 1 echo
-----
-
--I:: `xargs -I` Reemplazar argumentos con un marcador
+-I:: `-I <marcador>` Usar cuando el comando destino necesita el argumento en medio de la frase o varias veces, no solo al final.
 
 [source,bash]
 ----
-# Usar {} como marcador de posición
-ls *.txt | xargs -I {} cp {} backup/{}
+# Mover archivos encontrados a una carpeta, renombrándolos con prefijo
+ls *.jpg | xargs -I % mv % backups/old_%
 ----
 
--0:: `xargs -0` Usar separador nulo
-
-[source,bash]
-----
-# Manejar nombres con espacios
-find . -name "*.log" -print0 | xargs -0 rm
-----
-
--p:: `xargs -p` Confirmar antes de ejecutar
+-0:: `-0` (null) Es la única forma segura de trabajar con archivos que contienen espacios, comillas o saltos de línea en su nombre.
 
 [source,bash]
 ----
-# Pedir confirmación al usuario
-echo "archivo1 archivo2" | xargs -p rm
+# Borrar archivos con espacios de forma segura (ej: "Foto de Boda.jpg")
+find . -name "*.jpg" -print0 | xargs -0 rm
 ----
 
--t:: `xargs -t` Mostrar el comando antes de ejecutarlo
-
-[source,bash]
-----
-# Mostrar comando ejecutado
-echo "a b c" | xargs -t echo
-----
-
--r:: `xargs -r` No ejecutar si no hay entrada
+-n:: `-n <número>` limita cuántos elementos se pasan al comando a la vez. Útil para no saturar la memoria o para comandos que solo aceptan un número fijo de archivos.
 
 [source,bash]
 ----
-# Evitar ejecuciones sin argumentos
-grep "error" logs.txt | xargs -r rm
+# Hacer un commit por cada archivo modificado de uno en uno
+git diff --name-only | xargs -n 1 git commit -m "Update"
 ----
 
--max-procs:: `xargs -P` Ejecución en paralelo
+-P:: `-P <procs>` (parallel) permite acelerar tareas pesadas (como compresión o descargas) usando todos los núcleos de tu procesador.
 
 [source,bash]
 ----
-# Ejecutar hasta 4 procesos en paralelo
-echo {1..10} | xargs -n 1 -P 4 sleep
+# Comprimir 10 archivos PDF usando 4 procesos en paralelo
+ls *.pdf | xargs -n 1 -P 4 gzip
 ----
+
+-p / -t:: Herramientas de seguridad y depuración. `-p` te permite revisar antes de cometer un error masivo, y `-t` te enseña exactamente qué está pasando "detrás de escena".
+
+[source,bash]
+----
+# Ver qué archivos se van a borrar y confirmar uno por uno
+find . -name "*.log" | xargs -p rm
+----
+
+-r:: `-r` (no-run-if-empty) evita errores molestos. Por ejemplo, si `grep` no encuentra nada, `rm` daría un error por recibir una lista vacía; `-r` impide que `rm` llegue a ejecutarse.
+
+[source,bash]
+----
+# Solo intenta borrar si grep realmente encontró archivos antiguos
+find . -mtime +30 | xargs -r rm
+----
+
+Límite de argumentos::
+`xargs` soluciona el error `Argument list too long` que ocurre cuando intentas hacer algo como `rm *` en una carpeta con millones de archivos. `xargs` divide la lista automáticamente en trozos que el sistema operativo sí puede manejar.
 

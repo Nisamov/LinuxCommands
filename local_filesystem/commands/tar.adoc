@@ -1,138 +1,83 @@
 === tar
-Empaquetamiento de múltiples archivos y directorios.
+Empaquetar y comprimir archivos y directorios en un solo contenedor.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Empaquetamiento de múltiples archivos y directorios.",
-  "usage": "tar [OPCIONES] ARCHIVO",
+  "description": "Permite agrupar múltiples archivos en uno solo (.tar) y, opcionalmente, comprimirlos usando algoritmos como gzip, bzip2 o xz. Es la herramienta estándar para copias de seguridad y distribución de software en Unix.",
+  "usage": "tar -czvf backup.tar.gz /home/usuario",
   "options": {
-    "-c": "Crear un nuevo archivo tar",
-    "-f": "Especificar nombre de archivo tar",
-    "-x": "Extraer archivos de un tar",
-    "-t": "Listar contenido del tar",
-    "-v": "Verbose: mostrar archivos procesados",
-    "-z": "Comprimir/Descomprimir usando gzip (con -c/-x)",
-    "-j": "Usar bzip2",
-    "-J": "Usar xz",
-    "--exclude": "Excluir archivos/paths coincidentes",
-    "--strip-components": "Omitir N componentes del path al extraer",
-    "--no-same-owner": "No restaurar propietario (útil como usuario no root)",
-    "--remove-files": "Eliminar archivos que se han archivado"
+    "-c": "Create: crear un nuevo archivo de archivo (archive)",
+    "-x": "Extract: extraer el contenido de un archivo existente",
+    "-t": "List: listar el contenido de un archivo sin extraerlo",
+    "-f": "File: especificar el nombre del archivo resultante o de origen (obligatorio)",
+    "-v": "Verbose: mostrar en pantalla los archivos que se están procesando",
+    "-z": "Gzip: comprimir el archivo usando el algoritmo gzip (.tar.gz o .tgz)",
+    "-j": "Bzip2: comprimir el archivo usando bzip2 (.tar.bz2)",
+    "-J": "XZ: comprimir el archivo usando xz (.tar.xz) - Mayor compresión, más lento",
+    "-C": "Directory: cambiar a un directorio específico antes de realizar la operación",
+    "--exclude": "Excluir archivos o directorios que coincidan con un patrón",
+    "--strip-components": "Eliminar N niveles de directorios de la ruta al extraer",
+    "-p": "Preserve: mantener los permisos originales de los archivos"
   }
 }
 
-TAR (Tape ARchive) es un software que empaqueta múltiples archivos y directorios en un único archivo contenedor (`.tar`). 
-**Importante**: TAR por sí solo no comprime, solo empaqueta.
+[source,bash]
+----
+# El comando más común: Crear un backup comprimido de una carpeta
+tar -czvf mi_proyecto.tar.gz ./proyecto
+----
+
+Diferencia entre Empaquetar y Comprimir::
+* **Empaquetar (.tar)**: Une muchos archivos en uno solo (como meter cosas en una caja). El tamaño total es la suma de los archivos.
+* **Comprimir (.gz, .bz2, .xz)**: Reduce el tamaño del paquete (como usar bolsas al vacío). `tar` utiliza herramientas externas para esto mediante sus flags.
+
+-z, -j, -J:: La elección del algoritmo depende de si prefieres velocidad o ahorro de espacio.
+
+|===
+| Flag | Algoritmo | Extensión | Características
+| `-z` | **Gzip** | .tar.gz | El más rápido y compatible.
+| `-j` | **Bzip2** | .tar.bz2 | Mejor compresión que gzip, pero más lento.
+| `-J` | **XZ** | .tar.xz | Máxima compresión, consumo alto de CPU.
+|===
+
+-x:: `tar -x` (extract) detecta automáticamente el tipo de compresión en versiones modernas de Linux, por lo que a veces basta con `-xf`.
 
 [source,bash]
 ----
-# Crear un tar simple
-tar -cf archivo.tar archivo1 archivo2
+# Extraer un archivo en una carpeta específica (que debe existir)
+tar -xzvf backup.tar.gz -C /tmp/restauracion/
 ----
 
--c:: `tar -c` Crear un nuevo archivo tar
+-t:: `-t` (test/list) es vital para verificar qué hay dentro de un archivo descargado de internet antes de "ensuciar" tu directorio actual.
 
 [source,bash]
 ----
-# Crear archivo tar
-tar -cf proyecto.tar src/
+# Ver qué contiene el archivo sin extraer nada
+tar -tvf desconocido.tar.gz
 ----
 
--f:: `tar -f` Especificar nombre de archivo tar
+--exclude:: Muy útil para ignorar carpetas pesadas o innecesarias como `node_modules`, `.git` o cachés.
 
 [source,bash]
 ----
-# Especificar archivo con -f
-tar -cf archivo.tar carpeta/
+# Empaquetar código fuente ignorando dependencias y git
+tar -czvf codigo.tar.gz --exclude='node_modules' --exclude='.git' .
 ----
 
--x:: `tar -x` Extraer archivos de un tar
+--strip-components:: Usar cuando el archivo comprimido tiene una estructura de carpetas interna que no quieres replicar exactamente.
 
 [source,bash]
 ----
-# Extraer archivo tar
-tar -xf archivo.tar
+# Si el tar contiene 'apps/web/config/file.txt', esto extrae solo 'config/file.txt'
+tar -xvf backup.tar -C . --strip-components=2
 ----
 
--t:: `tar -t` Listar contenido del tar
+Combinación con Pipes:: `tar` puede enviar su salida a la red o a otros comandos.
 
 [source,bash]
 ----
-# Listar contenido
-tar -tf archivo.tar
-----
-
--v:: `tar -v` Verbose: mostrar archivos procesados
-
-[source,bash]
-----
-# Crear con verbose
-tar -cvf archivo.tar carpeta/
-----
-
--z:: `tar -z` Comprimir/Descomprimir usando gzip (con -c/-x)
-
-[source,bash]
-----
-# Comprimir con gzip
-tar -czf proyecto.tar.gz carpeta/
-
-# Descomprimir gzip
-tar -xzf proyecto.tar.gz
-----
-
--j:: `tar -j` Usar bzip2
-
-[source,bash]
-----
-# Comprimir con bzip2
-tar -cjf proyecto.tar.bz2 carpeta/
-
-# Descomprimir bzip2
-tar -xjf proyecto.tar.bz2
-----
-
--J:: `tar -J` Usar xz
-
-[source,bash]
-----
-# Comprimir con xz
-tar -cJf proyecto.tar.xz carpeta/
-
-# Descomprimir xz
-tar -xJf proyecto.tar.xz
-----
-
---exclude:: `tar --exclude=<patrón>` Excluir archivos/paths coincidentes
-
-[source,bash]
-----
-# Crear tar excluyendo archivos .git
-tar -czf proyecto.tar.gz --exclude='.git' carpeta/
-----
-
---strip-components:: `tar --strip-components=N` Omitir N componentes del path al extraer
-
-[source,bash]
-----
-# Extraer omitiendo los dos primeros componentes del path
-tar -xzf proyecto.tar.gz --strip-components=2
-----
-
---no-same-owner:: `tar --no-same-owner` No restaurar propietario (útil como usuario no root)
-
-[source,bash]
-----
-# Extraer sin intentar restaurar propietarios
-tar --no-same-owner -xzf proyecto.tar.gz
-----
-
---remove-files:: `tar --remove-files` Eliminar archivos que se han archivado
-
-[source,bash]
-----
-# Añadir archivos al tar y borrarlos del origen
-tar -cvf archivos.tar --remove-files *.log
+# Enviar una carpeta a otro servidor vía SSH sin crear un archivo intermedio
+tar -czf - ./mi_web | ssh usuario@servidor "tar -xzf - -C /var/www/"
 ----
 

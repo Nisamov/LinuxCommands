@@ -1,90 +1,85 @@
 === sort
-Ordenar lineas de texto.
+Ordenar líneas de archivos de texto de forma alfabética, numérica o personalizada.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Ordenar lineas de texto.",
-  "usage": "sort [OPCIONES] FICHERO",
+  "description": "Lee el contenido de un archivo o de la entrada estándar y lo devuelve ordenado. Es el compañero perfecto de 'uniq' para procesar listas y de 'find/ls' para organizar salidas de sistema.",
+  "usage": "sort -n -k 2 archivo.txt",
   "options": {
-    "-n": "Ordenar por valor numérico",
-    "-r": "Ordenar en orden inverso",
-    "-u": "Eliminar duplicados",
-    "-k": "Ordenar por columna específica",
-    "-t": "Usar separador de campo",
-    "-f": "Ignorar diferencias entre mayúsculas/minúsculas",
-    "-h": "Ordenar por números con sufijos (1K, 2M)",
-    "-o": "Guardar salida en archivo"
+    "-n": "Ordenar por valor numérico (1, 2, 10 en lugar de 1, 10, 2)",
+    "-r": "Invertir el resultado de la ordenación (descendente)",
+    "-u": "Único: elimina líneas duplicadas en el resultado final",
+    "-k": "Definir la columna (key) por la que se desea ordenar (ej: -k 2)",
+    "-t": "Establecer el carácter separador de campos (por defecto es el espacio/tabulador)",
+    "-f": "Ignorar diferencias entre mayúsculas y minúsculas (fold case)",
+    "-h": "Ordenar números con sufijos legibles (ej: 2K, 1G, 50M)",
+    "-V": "Orden de versión: maneja correctamente números dentro del texto (v1.2, v1.10)",
+    "-o": "Escribir el resultado en un archivo (permite que sea el mismo archivo de origen)",
+    "-R": "Ordenar de forma aleatoria (random)",
+    "-c": "Comprobar si el archivo ya está ordenado (no ordena, solo avisa)"
   }
 }
 
 [source,bash]
 ----
-# Ordenar un fichero alfabéticamente
-sort entrada.txt
+# Ordenar alfabéticamente (comportamiento por defecto)
+sort nombres.txt
 ----
 
--n:: `sort -n` Ordenar lineas por valor numérico
-
-[source,bash]
-----
-# Ordenar numéricamente
-sort -n entrada.txt
-----
-
--r:: `sort -r` Ordenar en orden inverso
+-n:: `-n` (numeric) Sin esta opción, la shell compara carácter a carácter ("1" viene antes que "2").
 
 [source,bash]
 ----
-# Ordenar en orden descendente
-sort -r entrada.txt
+# Ordenar una lista de IDs o cantidades
+sort -n cantidades.txt
 ----
 
--u:: `sort -u` Eliminar duplicados en la salida
-
-[source,bash]
-----
-# Ordenar y eliminar duplicados
-sort -u entrada.txt
-----
-
--k:: `sort -k N` Ordenar por la columna N
+-k / -t:: Combinación para trabajar con archivos delimitados (como CSV o /etc/passwd).
 
 [source,bash]
 ----
-# Ordenar por la segunda columna usando ':' como separador
-sort -t ':' -k 2 entrada.txt
+# Ordenar los usuarios del sistema por su UID (columna 3, separada por ':')
+sort -t ':' -k 3 -n /etc/passwd
 ----
 
--t:: `sort -t` Usar separador de campo
-
-[source,bash]
-----
-# Ordenar usando separador ':'
-sort -t ':' -k 2 entrada.txt
-----
-
--f:: `sort -f` Ignorar diferencias entre mayúsculas/minúsculas
+-u:: `-u` (unique) más eficiente que usar `sort | uniq`, realiza la limpieza durante el proceso de ordenación.
 
 [source,bash]
 ----
-# Ignorar case
-sort -f entrada.txt
+# Obtener una lista limpia de dominios sin repetidos
+sort -u dominios.log
 ----
 
--h:: `sort -h` Ordenar por números con sufijos (1K, 2M)
-
-[source,bash]
-----
-# Ordenar por tamaños legibles
-sort -h entrada.txt
-----
-
--o:: `sort -o archivo` Guardar salida en archivo
+-h:: `-h` (human-numeric) Diseñado para trabajar con salidas de comandos como `du` o `df`.
 
 [source,bash]
 ----
-# Guardar resultado en 'salida.txt'
-sort entrada.txt -o salida.txt
+# Ver qué carpetas ocupan más espacio (orden descendente de tamaño legible)
+du -sh * | sort -rh
+----
+
+-V:: `-V` (version)
+
+[source,bash]
+----
+# Ordenar correctamente: v1.1, v1.2, v1.10
+ls | sort -V
+----
+
+-o:: `-o` (output) Permite leer y escribir en el mismo archivo de forma segura.
+
+[source,bash]
+----
+# Ordenar un archivo y guardar los cambios sobre sí mismo
+sort lista.txt -o lista.txt
+----
+
+-R:: `-R` (random) Barajar líneas de un archivo.
+
+[source,bash]
+----
+# Seleccionar un ganador aleatorio de una lista
+sort -R participantes.txt | head -n 1
 ----
 

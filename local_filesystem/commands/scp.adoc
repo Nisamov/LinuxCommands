@@ -1,90 +1,79 @@
 === scp
-Copiar ficheros de forma segura entre hosts usando SSH.
+Copia segura de archivos y directorios entre diferentes equipos a través de la red (Secure Copy).
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Copiar ficheros de forma segura entre hosts usando SSH.",
-  "usage": "scp [OPCIONES] FICHERO_ORIGEN USUARIO@HOST:DESTINO",
+  "description": "Utiliza SSH para la transferencia de datos, proporcionando la misma autenticación y seguridad que una sesión de terminal remota. Permite copiar de local a remoto, de remoto a local, o incluso entre dos hosts remotos.",
+  "usage": "scp -P 2222 archivo.zip usuario@servidor:/tmp/",
   "options": {
-    "-r": "Copiar directorios recursivamente",
-    "-P": "Especificar puerto SSH",
-    "-p": "Mantener permisos y fechas",
-    "-C": "Comprimir datos durante la transferencia",
-    "-i": "Usar archivo de clave privada para autenticar",
-    "-B": "Modo batch (sin preguntas interactivas)",
-    "-l": "Limitar ancho de banda (KB/s)",
-    "-o": "Pasando opciones a SSH"
+    "-r": "Copia recursiva: necesaria para transferir directorios completos",
+    "-P": "Especificar el puerto de conexión (atención: es 'P' mayúscula, a diferencia de ssh)",
+    "-p": "Preservar: mantiene los tiempos de modificación, acceso y los modos (permisos) originales",
+    "-C": "Compresión: comprime los datos sobre la marcha (útil en conexiones lentas)",
+    "-i": "Identidad: selecciona el archivo de clave privada (RSA, Ed25519) para la autenticación",
+    "-l": "Límite: limita el ancho de banda utilizado, expresado en Kbit/s",
+    "-B": "Modo Batch: evita pedir contraseñas o frases de paso (útil en scripts)",
+    "-o": "Opción: permite pasar configuraciones específicas al motor de SSH subyacente",
+    "-v": "Verbose: modo detallado para depurar problemas de conexión o permisos",
+    "-q": "Quiet: modo silencioso, no muestra la barra de progreso ni avisos"
   }
 }
 
 [source,bash]
 ----
-# Copiar un fichero a un host remoto
-scp fichero.txt usuario@192.168.1.10:/home/usuario/
+# Enviar un archivo al servidor remoto
+scp datos.tar.gz admin@10.0.0.5:/home/admin/backups/
 ----
 
--r:: `scp -r` Copiar directorios recursivamente
-
-[source,bash]
-----
-# Copiar un directorio recursivamente
-scp -r proyecto/ usuario@servidor:/ruta/destino/
-----
-
--P:: `scp -P <puerto>` Especificar puerto SSH
+Sentido de la copia:: `scp` siempre sigue la estructura `scp [ORIGEN] [DESTINO]`.
 
 [source,bash]
 ----
-# Copiar usando puerto 2222
-scp -P 2222 fichero.txt usuario@servidor:/home/usuario/
+# Traer un archivo desde el servidor a mi ordenador actual (.)
+scp usuario@servidor:/var/log/syslog .
+
+# Copiar entre dos servidores remotos (los datos pasan por tu máquina)
+scp user1@host1:/file.txt user2@host2:/dest/
 ----
 
--p:: `scp -p` Mantener permisos y fechas
-
-[source,bash]
-----
-# Copiar manteniendo permisos/fechas
-scp -p fichero.txt usuario@servidor:/home/usuario/
-----
-
--C:: `scp -C` Comprimir datos durante la transferencia
+-r:: `-r` (recursive) para mover carpetas. Sin él, `scp` omitirá los directorios.
 
 [source,bash]
 ----
-# Copiar con compresión
-scp -C fichero.iso usuario@servidor:/home/usuario/
+# Descargar toda la carpeta de imágenes del servidor
+scp -r web_user@webserver:/var/www/html/images ~/Descargas/
 ----
 
--i:: `scp -i <clave>` Usar archivo de clave privada para autenticar
-
-[source,bash]
-----
-# Usar clave privada
-scp -i ~/.ssh/id_rsa fichero.txt usuario@servidor:/home/usuario/
-----
-
--B:: `scp -B` Modo batch (sin preguntas interactivas)
+-P:: `-P <port>` (mayúscula). Muchos servidores cambian el puerto 22 por seguridad.
 
 [source,bash]
 ----
-# Usar en scripts sin interacción
-scp -B fichero.txt usuario@servidor:/home/usuario/
+# Transferir a un servidor que escucha en el puerto 443
+scp -P 443 config.json root@servidor_seguro:/etc/app/
 ----
 
--l:: `scp -l` Limitar ancho de banda (KB/s)
-
-[source,bash]
-----
-# Limitar ancho de banda a 100KB/s
-scp -l 100 fichero.txt usuario@servidor:/home/usuario/
-----
-
--o:: `scp -o` Pasar opciones a SSH (ej: puerto, identidad)
+-l:: `-l <limit>` Evita saturar la conexión de red de la oficina o casa.
 
 [source,bash]
 ----
-# Pasar opciones SSH (ejemplo: StrictHostKeyChecking=no)
-scp -o StrictHostKeyChecking=no fichero.txt usuario@servidor:/home/usuario/
+# Limitar la subida a unos 50 KB/s (el valor se da en Kbit/s, 400 Kbit ≈ 50 KB)
+scp -l 400 archivo_gigante.iso user@host:/storage/
+----
+
+-i:: `-i <identity_file>` Para conexiones automáticas o servidores con llaves.
+
+[source,bash]
+----
+# Usar una llave específica para un servidor de Amazon AWS
+scp -i ~/claves/aws_key.pem index.html ec2-user@instance-ip:/var/www/html/
+----
+
+-C:: `-C` (compress) Ahorra tiempo si transfieres archivos de texto, logs o SQL sin comprimir.
+
+[source,bash]
+----
+# Acelerar la copia de un volcado de base de datos SQL muy grande
+scp -C dump_enero.sql user@remote_backup:/sqldumps/
 ----
 

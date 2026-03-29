@@ -4,14 +4,15 @@ Contar líneas, palabras y bytes de uno o varios ficheros.
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Contar líneas, palabras y bytes de uno o varios ficheros.",
-  "usage": "wc [OPCIONES] FICHERO",
+  "description": "Calcula estadísticas de recuento para los archivos proporcionados. Si se pasan varios archivos, genera una línea para cada uno y un total acumulado al final. Es una pieza clave en scripts para validar si un proceso generó datos o para contar ocurrencias de un patrón.",
+  "usage": "ls -l | wc -l",
   "options": {
-    "-l": "Mostrar número de líneas",
-    "-w": "Mostrar número de palabras",
-    "-c": "Mostrar número de bytes",
-    "-m": "Mostrar número de caracteres",
-    "-L": "Mostrar la longitud de la línea más larga"
+    "-l": "Lines: muestra el número de saltos de línea (útil para contar registros)",
+    "-w": "Words: muestra el número de palabras (delimitadas por espacios)",
+    "-c": "Bytes: muestra el tamaño total en bytes",
+    "-m": "Chars: muestra el número de caracteres (útil con codificaciones multibyte como UTF-8)",
+    "-L": "Max-line-length: muestra la longitud (en caracteres) de la línea más larga del archivo",
+    "--files0-from": "Lee los nombres de los archivos desde un archivo específico terminado en NUL"
   }
 }
 

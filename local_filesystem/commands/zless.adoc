@@ -1,55 +1,59 @@
 === zless
-Visualizar el contenido de archivos comprimidos sin descomprimirlos.
+Visualizador de archivos de texto comprimidos con capacidades de navegación y búsqueda.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Filtro que permite examinar archivos comprimidos (gzip, zip, etc.) una pantalla a la vez. Funciona de manera idéntica al comando 'less' pero aplicado a archivos comprimidos.",
-  "usage": "zless [ARCHIVO]...",
+  "description": "Actúa como un visualizador de páginas (pager) para archivos comprimidos (principalmente .gz, .bz2, .xz). Al igual que 'less', no carga el archivo completo en memoria, lo que permite abrir archivos gigantescos de forma casi instantánea sin agotar los recursos del sistema.",
+  "usage": "zless /var/log/auth.log.1.gz",
   "options": {
-    "-N": "Mostrar números de línea",
-    "-S": "Cortar líneas largas en lugar de ajustarlas",
-    "-i": "Ignorar mayúsculas y minúsculas en las búsquedas",
-    "-m": "Mostrar porcentaje de lectura del archivo",
-    "-p": "Empezar la visualización en la primera coincidencia de un patrón"
+    "-N": "Line numbers: muestra el número de línea al principio de cada fila",
+    "-S": "Chop long lines: corta las líneas que exceden el ancho de la pantalla (evita el desorden visual)",
+    "-i": "Ignore case: hace que las búsquedas (usando /) no distingan entre mayúsculas y minúsculas",
+    "-m": "Prompt: muestra una barra de estado más detallada con el porcentaje del archivo leído",
+    "-p": "Pattern: abre el archivo y salta directamente a la primera aparición del patrón indicado",
+    "-X": "No-init: deja el contenido del archivo en la terminal al salir",
+    "G": "Ir al final del archivo (atajo de teclado)",
+    "g": "Ir al principio del archivo (atajo de teclado)"
   }
 }
 
 [source,bash]
 ----
-# Leer un archivo comprimido .gz
-zless logs_servidor.gz
+# Leer un log comprimido del sistema de forma interactiva
+zless /var/log/syslog.2.gz
 ----
 
--N:: `zless -N` Activar numeración de líneas
+Funcionamiento interno:: `zless` Es un script que descomprime el flujo de datos (usando `zcat` o similar) y lo envía directamente a `less`. Esto significa que **nunca se crea un archivo temporal descomprimido en el disco**, protegiendo tu espacio de almacenamiento.
 
-[source,bash]
-----
-# Ver el contenido con números de línea para facilitar la referencia
-zless -N historial.log.gz
-----
-
--S:: `zless -S` Desactivar el ajuste de línea (Line Wrapping)
+-N:: `-N` (line numbers) Poder referenciar líneas exactas con otros compañeros.
 
 [source,bash]
 ----
-# Ver líneas muy largas de forma horizontal (usar flechas para desplazar)
-zless -S trazas_depuracion.gz
+# Visualizar un dump de base de datos con números de línea
+zless -N backup_sql.gz
 ----
 
--i:: `zless -i` Búsquedas insensibles a mayúsculas
-
-[source,bash]
-----
-# Buscar términos sin distinguir entre mayúsculas y minúsculas
-zless -i reporte_seguridad.gz
-----
-
--p:: `zless -p` Saltar directamente a una palabra
+-S:: `-S` (chop long lines) Leer logs de Apache o Nginx. En lugar de que una línea larga se "doble" y ocupe 4 filas de pantalla, la mantiene en una sola línea que puedes desplazar lateralmente con las flechas del teclado.
 
 [source,bash]
 ----
-# Abrir el archivo directamente donde aparezca el término 'ERROR'
-zless -p "ERROR" sistema_backup.gz
+# Ver logs de peticiones web de forma tabular y limpia
+zless -S access.log.4.gz
 ----
+
+-p:: `-p` (pattern)
+
+[source,bash]
+----
+# Abrir el log comprimido justo en la sección que menciona 'CRITICAL'
+zless -p "CRITICAL" error.log.gz
+----
+
+Atajos (Legacy de less):: Una vez dentro de `zless`, puedes usar los mismos comandos que en `less`:
+* `/palabra`: Buscar "palabra" hacia adelante.
+* `?palabra`: Buscar "palabra" hacia atrás.
+* `n`: Ir a la siguiente coincidencia.
+* `N`: Ir a la coincidencia anterior.
+* `q`: Salir del visualizador.
 

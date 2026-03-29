@@ -1,72 +1,84 @@
 === split
-Dividir un archivo en piezas o fragmentos más pequeños.
+Dividir un archivo grande en fragmentos más pequeños de tamaño o longitud definida.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Divide un archivo de entrada en varios archivos de salida de un tamaño fijo (por líneas o por bytes).",
-  "usage": "split [OPCIONES] [ENTRADA] [PREFIJO]",
+  "description": "Fragmenta archivos basándose en el número de líneas, tamaño en bytes o número total de archivos resultantes. Por defecto, genera archivos con el prefijo 'x' (xaa, xab, xac...).",
+  "usage": "split -b 100M archivo_grande.zip parte_",
   "options": {
-    "-l": "Dividir el archivo según el número de líneas",
-    "-b": "Dividir el archivo según el tamaño en bytes (K, M, G, T)",
-    "-n": "Dividir en un número específico de archivos",
-    "-d": "Usar sufijos numéricos en lugar de alfabéticos",
-    "-a": "Longitud del sufijo (por defecto 2)",
-    "--additional-suffix": "Añadir una extensión personalizada a los archivos generados"
+    "-l": "Dividir el archivo según el número de líneas por fragmento",
+    "-b": "Dividir por tamaño en bytes (acepta sufijos K, M, G, T)",
+    "-n": "Dividir en un número exacto de fragmentos (ej: -n 5)",
+    "-d": "Usar sufijos numéricos (00, 01...) en lugar de alfabéticos (aa, ab...)",
+    "-a": "Longitud del sufijo (por defecto 2 dígitos; ej: -a 4 para 0001)",
+    "--additional-suffix": "Añadir una extensión personalizada al final de cada fragmento (ej: .part)",
+    "--verbose": "Mostrar un mensaje cada vez que se crea un nuevo archivo de salida",
+    "-t": "Usar un carácter separador de registros distinto al salto de línea"
   }
 }
 
 [source,bash]
 ----
-# Dividir un archivo en partes de 1000 líneas (por defecto)
-split archivo_grande.log
+# Uso básico: divide el archivo en trozos de 1000 líneas (por defecto)
+split access.log
 ----
 
--l:: `split -l` Especificar el número de líneas por fragmento
-
-[source,bash]
-----
-# Crear archivos de 500 líneas cada uno
-split -l 500 lista.txt
-----
-
--b:: `split -b` Especificar el tamaño exacto en bytes
+-l:: `-l <líneas>`Procesar archivos de texto o CSV de forma masiva sin saturar la memoria RAM.
 
 [source,bash]
 ----
-# Dividir un archivo en partes de 100 Megabytes
-split -b 100M pelicula.mkv parte_
+# Dividir una lista de 1 millón de correos en archivos de 50.000 líneas cada uno
+split -l 50000 correos.txt fragmento_
 ----
 
--d:: `split -d` Usar sufijos numéricos (00, 01, 02...)
-
-[source,bash]
-----
-# Generar fragmentos con números en lugar de letras (parte_00, parte_01...)
-split -d backup.tar.gz parte_
-----
-
--a:: `split -a` Cambiar la longitud del sufijo
+-b:: `-b <tamaño>` El parámetro estándar para archivos binarios (ISO, imágenes, bases de datos).
 
 [source,bash]
 ----
-# Usar sufijos de 4 dígitos para procesos que generan muchos archivos
-split -a 4 -d log_sistema.txt fragmento_
+# Dividir un backup de 1GB en trozos de 200MB para subir a la nube
+split -b 200M backup.tar.gz backup_part_
 ----
 
---additional-suffix:: Añadir una extensión a los archivos de salida
-
-[source,bash]
-----
-# Mantener la extensión .txt en todas las partes resultantes
-split -l 100 datos.txt parte_ --additional-suffix=.txt
-----
-
--n:: `split -n` Dividir en un número total de archivos
+-d / -a:: Mejoran la legibilidad y organización de los archivos resultantes.
 
 [source,bash]
 ----
-# Dividir el archivo exactamente en 5 partes iguales independientemente del tamaño
-split -n 5 datos.dat
+# Generar archivos numerados con 3 dígitos (x000, x001, x002...)
+split -d -a 3 logs_anuales.txt
+----
+
+--additional-suffix:: Permite que los fragmentos mantengan la extensión original.
+
+[source,bash]
+----
+# Resultado: trozo_01.sql, trozo_02.sql...
+split -d -l 1000 base_datos.sql trozo_ --additional-suffix=.sql
+----
+
+-n:: `-n <num>` Útil cuando sabes cuántos archivos quieres obtener pero no quieres calcular el tamaño de cada uno.
+
+[source,bash]
+----
+# Dividir un archivo exactamente en 4 partes iguales
+split -n 4 archivo.iso
+----
+
+[source,bash]
+----
+# Unir todos los fragmentos que empiezan por 'parte_' en un solo archivo
+cat parte_* > archivo_recompuesto.zip
+
+# Verificar que el archivo resultante es idéntico al original
+md5sum archivo_grande.zip archivo_recompuesto.zip
+----
+
+Uso con Pipes::
+`split` puede leer de la entrada estándar, lo que permite comprimir y dividir al mismo tiempo.
+
+[source,bash]
+----
+# Comprimir una carpeta y dividir el resultado en trozos de 10MB sin crear el .tar.gz intermedio
+tar -czf - /home/usuario/fotos | split -b 10M - fotos_part_
 ----
 

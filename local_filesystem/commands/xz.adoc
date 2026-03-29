@@ -1,81 +1,67 @@
 === xz
-Comprimir y descomprimir archivos usando el algoritmo LZMA/LZMA2.
+Compresor y descompresor de archivos de alta eficiencia basado en los algoritmos LZMA/LZMA2.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Comprimir y descomprimir archivos usando el algoritmo LZMA/LZMA2.",
-  "usage": "xz [OPCIONES] FICHERO",
+  "description": "Utiliza algoritmos de compresión sin pérdida para reducir drásticamente el tamaño de los archivos. Aunque requiere más memoria y CPU para comprimir que sus competidores, la descompresión es muy rápida y el ahorro de espacio es superior.",
+  "usage": "xz -9 archivo.iso",
   "options": {
-    "-d": "Descomprimir archivos .xz",
-    "-k": "Mantener el archivo original",
-    "-l": "Mostrar información del archivo comprimido",
-    "-c": "Enviar salida a stdout",
-    "-t": "Comprobar integridad del archivo",
-    "-0-9": "Nivel de compresión (0-9)",
-    "-z": "Forzar compresión (opción por defecto)"
+    "-z": "Compress: fuerza la compresión (comportamiento por defecto)",
+    "-d": "Decompress: descompone el archivo .xz (equivalente a unxz)",
+    "-k": "Keep: mantiene el archivo original después de la operación (por defecto se borra)",
+    "-l": "List: muestra información técnica (tamaño original, comprimido, ratio, integridad)",
+    "-c": "Stdout: escribe el resultado en la salida estándar en lugar de crear un archivo",
+    "-t": "Test: verifica la integridad del archivo comprimido mediante sumas de comprobación (CRC)",
+    "-0...-9": "Compression level: ajusta el nivel de 0 (rápido) a 9 (máximo ahorro de espacio)",
+    "-e": "Extreme: intenta exprimir aún más la compresión usando más tiempo de CPU",
+    "-T": "Threads: utiliza múltiples núcleos para acelerar el proceso (ej: -T 0 para usar todos)"
   }
 }
 
 [source,bash]
 ----
-# Comprimir un archivo
-xz fichero.txt
+# Uso básico: comprime y reemplaza el archivo original por 'datos.sql.xz'
+xz datos.sql
 ----
 
--d:: `xz -d` Descomprimir archivos .xz
-
-[source,bash]
-----
-# Descomprimir un archivo
-xz -d fichero.txt.xz
-----
-
--k:: `xz -k` Mantener el archivo original
+-d:: `xz -d` Decomprimir archivos.
 
 [source,bash]
 ----
-# Comprimir sin borrar el archivo original
-xz -k fichero.txt
+# Descomprimir un archivo manteniendo el comprimido
+xz -dk backup.tar.xz
 ----
 
--l:: `xz -l` Mostrar información del archivo comprimido
-
-[source,bash]
-----
-# Ver detalles del archivo .xz
-xz -l fichero.txt.xz
-----
-
--c:: `xz -c` Enviar salida a stdout
+-l:: `-l` (list) Conocer cuánto espacio has ahorrado realmente sin tener que descomprimir el archivo completo.
 
 [source,bash]
 ----
-# Comprimir y mostrar por salida estándar
-xz -c fichero.txt > fichero.txt.xz
+# Ver el ratio de compresión y el método utilizado
+xz -l kernel-source.tar.xz
 ----
 
--t:: `xz -t` Comprobar integridad del archivo
-
-[source,bash]
-----
-# Verificar que el archivo no está corrupto
-xz -t fichero.txt.xz
-----
-
--0-9:: `xz -0` a `xz -9` Nivel de compresión
+-k:: Por defecto, `xz` se comporta como `gzip`: "traga" el original y devuelve el comprimido. Usa `-k` (keep) si quieres conservar ambos.
 
 [source,bash]
 ----
-# Máxima compresión
-xz -9 fichero.txt
+# Comprimir un log pero dejar el original intacto por si acaso
+xz -k system.log
 ----
 
--z:: `xz -z` Forzar compresión (opción por defecto)
+-0 a -9:: El nivel `-6` es el predeterminadoo. El nivel `-9` puede requerir mucha memoria RAM (hasta 674 MB para el diccionario de compresión).
 
 [source,bash]
 ----
-# Forzar compresión explícitamente
-xz -z fichero.txt
+# Usar el modo extremo para archivos que se van a distribuir masivamente
+xz -9e software_v1.tar
+----
+
+-T:: Por defecto, `xz` es monohilo (usa un solo núcleo). En procesadores modernos, puedes acelerar el proceso drásticamente.
+
+[source,bash]
+----
+# Comprimir usando todos los núcleos disponibles del procesador
+xz -T 0 archivo_gigante.img
 ----
 

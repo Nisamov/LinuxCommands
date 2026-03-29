@@ -1,58 +1,76 @@
 === tail
-Mostrar las últimas líneas de uno o más ficheros.
+Mostrar la parte final (la "cola") de archivos de texto.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Mostrar las últimas líneas de uno o más ficheros.",
-  "usage": "tail [OPCIONES] FICHERO",
+  "description": "Imprime las últimas líneas (10 por defecto) de cada archivo indicado. Es especialmente útil para leer archivos que crecen continuamente, como registros de auditoría o de sistema.",
+  "usage": "tail -f /var/log/apache2/access.log",
   "options": {
-    "-n": "Mostrar las últimas N líneas",
-    "-f": "Seguir un fichero conforme crece",
-    "-F": "Seguir fichero por nombre y reabrir si rota",
-    "-c": "Mostrar por bytes en lugar de líneas",
-    "-q": "Silenciar encabezados cuando se pasan varios ficheros"
+    "-n": "Número de líneas: muestra las últimas N líneas (o usa '+N' para empezar desde la línea N)",
+    "-f": "Follow: mantiene el archivo abierto y muestra las nuevas líneas según se van escribiendo",
+    "-F": "Follow retry: igual que -f, pero sigue intentando abrir el archivo si este se borra o se renombra (rotación de logs)",
+    "-c": "Bytes: muestra los últimos N bytes en lugar de líneas",
+    "-q": "Quiet: no imprime los encabezados con el nombre del archivo cuando se visualizan varios",
+    "-v": "Verbose: obliga a mostrar siempre el encabezado con el nombre del archivo",
+    "-s": "Sleep: con -f, espera N segundos entre cada comprobación del archivo"
   }
 }
 
 [source,bash]
 ----
-# Mostrar las últimas 10 líneas (por defecto)
-tail fichero.txt
+# Ver las últimas 10 líneas de un archivo
+tail mi_archivo.txt
 ----
 
---lines, -n:: `tail -n <numero>` Mostrar las últimas N líneas
-
-[source,bash]
-----
-tail -n 30 fichero.txt
-----
-
--f:: `tail -f` Seguir un fichero conforme crece
+-f:: `-f` (follow) es el modo más famoso de `tail`. Transforma la terminal en una pantalla de monitorización en vivo. Ideal para depurar aplicaciones mientras se ejecutan.
 
 [source,bash]
 ----
-tail -f /var/log/syslog
+# Monitorizar errores de sistema en tiempo real
+sudo tail -f /var/log/syslog
 ----
 
--F:: `tail -F` Seguir fichero por nombre y reabrir si rota
-
-[source,bash]
-----
-tail -F /var/log/syslog
-----
-
--c:: `tail -c <bytes>` Mostrar por bytes en lugar de líneas
+-F:: `-F` es la versión "robusta" de `-f`. En servidores, los logs suelen "rotar" (el archivo actual se renombra a `.log.1` y se crea uno nuevo). `-F` lo detecta y salta al nuevo archivo automáticamente sin interrumpir la visualización.
 
 [source,bash]
 ----
-tail -c 100 fichero.txt
+# Monitorizar un log propenso a rotaciones automáticas
+tail -F /var/log/nginx/error.log
 ----
 
--q:: `tail -q` Silenciar encabezados cuando se pasan varios ficheros
+-n:: Permite especificar la cantidad exacta de líneas. Si usas el signo `+`, el comportamiento cambia: empieza en esa línea y llega hasta el final.
 
 [source,bash]
 ----
-tail -q fichero1.txt fichero2.txt
+# Ver exactamente las últimas 50 líneas
+tail -n 50 lista_usuarios.csv
+
+# Ver desde la línea 20 hasta el final del archivo (saltarse el encabezado)
+tail -n +20 archivo_datos.txt
+----
+
+-c:: `-c` (bytes) Recomendable usar cuando el archivo no tiene saltos de línea claros o cuando necesitas extraer trozos específicos de archivos binarios.
+
+[source,bash]
+----
+# Ver los últimos 512 bytes de un archivo (el tamaño de un sector de disco típico)
+tail -c 512 datos_crudos.bin
+----
+
+-q / -v:: Controlan la verbosidad cuando pasas múltiples archivos. Por defecto, `tail` pone una etiqueta `==> nombre <==` antes de cada uno.
+
+[source,bash]
+----
+# Ver las últimas líneas de todos los logs de logs sin etiquetas molestas
+tail -q /var/log/*.log
+----
+
+Uso con Pipes:: Combinar `tail` con otros comandos permite filtrar solo lo más reciente de una salida extensa.
+
+[source,bash]
+----
+# Ver solo los últimos 5 procesos que más memoria consumen
+ps aux --sort=-%mem | tail -n 5
 ----
 

@@ -1,67 +1,79 @@
 === touch
-Actualizar la marca temporal de un fichero o crear un fichero vacío si no existe.
+Crear archivos vacíos o modificar sus marcas de tiempo (timestamps).
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Actualizar la marca temporal de un fichero o crear un fichero vacío si no existe.",
-  "usage": "touch [OPCIONES] FICHERO",
+  "description": "Actualiza la fecha y hora de acceso y modificación de un archivo. Si el archivo no existe, lo crea vacío, a menos que se indique lo contrario. Es fundamental para engañar a sistemas de compilación (como 'make') o para inicializar archivos de log.",
+  "usage": "touch -t 202501011200 archivo.txt",
   "options": {
-    "-a": "Cambiar solo el tiempo de acceso",
-    "-m": "Cambiar solo tiempo de modificación",
-    "-c": "No crear archivo si no existe",
-    "-t": "Establecer tiempo específico",
-    "-r": "Copiar timestamp de otro fichero"
+    "-a": "Access: cambia únicamente la hora de acceso",
+    "-m": "Modification: cambia únicamente la hora de modificación",
+    "-c": "No-create: si el archivo no existe, no lo crea y no muestra error",
+    "-t": "Timestamp: usar un formato específico [[CC]YY]MMDDhhmm[.ss]",
+    "-d": "Date: usar una cadena de texto libre para la fecha (ej: 'next Tuesday')",
+    "-r": "Reference: usar las marcas de tiempo de un archivo de referencia",
+    "-h": "Affect symlink: cambia el tiempo del enlace simbólico en lugar del destino"
   }
 }
 
 [source,bash]
 ----
-# Crear un fichero vacío o actualizar su timestamp
-touch fichero.txt
+# Crear uno o varios archivos vacíos de un golpe
+touch archivo1.txt archivo2.txt index.html
 ----
 
--a:: `touch -a` Cambiar solo el tiempo de acceso
+-a vs -m:: Los archivos tienen tres tiempos (vistos con `stat`). `touch` permite discriminar cuáles actualizar.
+
+* **atime (Access)**: Cuándo se leyó el archivo.
+* **mtime (Modify)**: Cuándo se cambió el contenido.
 
 [source,bash]
 ----
-# Cambiar solo tiempo de acceso
-touch -a fichero.txt
+# Actualizar solo la fecha de modificación al momento actual
+touch -m config.json
 ----
 
-
--m:: `touch -m` Cambiar solo tiempo de modificación
+-c:: `-c` (no-create) es útil en scripts donde quieres refrescar un archivo solo si ya existe, evitando "ensuciar" el directorio con archivos nuevos accidentales.
 
 [source,bash]
 ----
-# Cambiar solo tiempo de modificación
-touch -m fichero.txt
+# Intentar actualizar el timestamp, pero no crear nada si no existe
+touch -c archivo_opcional.log
 ----
 
-
--c:: `touch -c` No crear archivo si no existe
+-t:: Permite "viajar en el tiempo" asignando una fecha exacta. El formato es: Siglo/Año/Mes/Día/Hora/Minuto.
 
 [source,bash]
 ----
-# No crear si no existe
-touch -c noexiste.txt
+# Poner fecha de 1 de enero de 2020 a las 15:30
+touch -t 202001011530 documento.pdf
 ----
 
-
--t:: `touch -t [[CC]YY]MMDDhhmm[.ss]` Establecer tiempo específico
+-d:: `-d` (date) es mucho más flexible que `-t`, ya que acepta lenguaje natural (gracias a la librería de GNU).
 
 [source,bash]
 ----
-# Establecer timestamp específico
-touch -t 202401011200 fichero.txt
+# Poner la fecha de ayer a las 5 de la tarde
+touch -d "yesterday 17:00" informe.txt
+
+# Poner la fecha de hace un año
+touch -d "1 year ago" antiguo.log
 ----
 
-
--r:: `touch -r referencia fichero` Copiar timestamp de otro fichero
+-r:: `-r` (reference) es perfecto para sincronizar archivos. "Quiero que este archivo parezca tan viejo como aquel".
 
 [source,bash]
 ----
-# Copiar timestamps de otro fichero
-touch -r referencia.txt fichero.txt
+# Igualar la fecha de 'nuevo.txt' a la que tenga 'viejo.txt'
+touch -r viejo.txt nuevo.txt
+----
+
+Uso con Wildcards (Comodines):: Refrescar todos los archivos de un tipo para que el sistema los detecte como "recientes".
+
+[source,bash]
+----
+# Actualizar la fecha de todas las imágenes .jpg a la hora actual
+touch *.jpg
 ----
 

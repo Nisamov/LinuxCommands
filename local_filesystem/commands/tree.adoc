@@ -1,72 +1,81 @@
 === tree
-Listar ficheros con estructura de árbol.
+Listar el contenido de directorios en un formato de árbol indentado visualmente.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Listar ficheros con estructura de árbol.",
-  "usage": "tree [OPCIONES]",
+  "description": "Genera una representación gráfica de la estructura de directorios. Es ideal para documentar proyectos, entender jerarquías complejas y localizar archivos rápidamente sin entrar en cada carpeta.",
+  "usage": "tree -L 2 /home/usuario",
   "options": {
-    "-d": "Mostrar solo directorios",
-    "-f": "Mostrar los archivos con su respectiva ruta",
-    "-a": "Mostrar archivos ocultos",
-    "-u": "Mostrar propietario de cada archivo",
-    "-g": "Mostrar grupos de ficheros",
-    "-h": "Mostrar peso de cada archivo"
+    "-d": "Directories: lista únicamente los directorios, ignorando los archivos",
+    "-f": "Full path: imprime el prefijo de la ruta completa para cada archivo",
+    "-a": "All: incluye archivos ocultos (aquellos que empiezan por punto '.')",
+    "-L": "Level: limita la profundidad máxima de visualización del árbol (ej: -L 2)",
+    "-P": "Pattern: lista solo los archivos que coincidan con el patrón (wildcard)",
+    "-I": "Ignore: excluye los archivos o directorios que coincidan con el patrón",
+    "-h": "Human-readable: muestra el tamaño de los archivos con sufijos (K, M, G)",
+    "-u": "User: muestra el propietario de cada archivo",
+    "-g": "Group: muestra el grupo de cada archivo",
+    "-p": "Permissions: muestra los permisos de cada archivo (estilo ls -l)",
+    "--dirsfirst": "Lista los directorios antes que los archivos"
   }
 }
 
 [source,bash]
 ----
-# Listar directorio en forma de árbol
+# Visualización estándar del directorio actual
 tree
 ----
 
--d:: `tree -d` Mostrar solo directorios
+-L:: `-L <nivel>` Para no colapsar la terminal si estás en un directorio con miles de subcarpetas (como una carpeta de sistema o `node_modules`).
 
 [source,bash]
 ----
-# Mostrar sólo directorios
-tree -d
+# Ver solo hasta el segundo nivel de profundidad
+tree -L 2
 ----
 
--f:: `tree -f` Mostrar los archivos con su respectiva ruta
+-P / -I:: Filtros de inclusión y exclusión, para buscar tipos de archivos específicos o ignorar carpetas de control de versiones.
 
 [source,bash]
 ----
-# Mostrar archivos con rutas
+# Mostrar solo archivos Python en el árbol
+tree -P '*.py'
+
+# Ignorar la carpeta .git y los archivos compilados .pyc
+tree -I '.git|*.pyc'
+----
+
+-h / -p / -u:: Añade metadatos a la estructura visual, convirtiendo a `tree` en un sustituto vitaminado de `ls`.
+
+[source,bash]
+----
+# Ver estructura con permisos, tamaños legibles y dueño
+tree -hpu
+----
+
+-f:: Copiar y pegar la ruta de un archivo específico que está enterrado en varios subniveles.
+
+[source,bash]
+----
+# Ver archivos con su ruta relativa completa
 tree -f
+# Salida: ./src/main.c, ./src/include/header.h ...
 ----
 
--a:: `tree -a` Mostrar archivos ocultos
-
-[source,bash]
-----
-# Incluir archivos ocultos
-tree -a
-----
-
--u:: `tree -u` Mostrar propietario de cada archivo
+Salida a HTML o XML:: `tree` Generar reportes para ser visualizados en un navegador, algo genial para documentar la estructura de un repositorio.
 
 [source,bash]
 ----
-# Mostrar propietarios
-tree -u
+# Generar un archivo HTML con el mapa del sitio
+tree -H . -o estructura_proyecto.html
 ----
 
--g:: `tree -g` Mostrar grupos de ficheros
-
-[source,bash]
-----
-# Mostrar grupo de cada fichero
-tree -g
-----
-
--h:: `tree -h` Mostrar peso de cada archivo
+Truco de productividad:: Ver el resumen final de cuántos archivos y carpetas hay en total sin ver la lista completa, puedes usar:
 
 [source,bash]
 ----
-# Mostrar tamaños legibles
-tree -h
+# Resumen rápido de conteo
+tree | tail -n 1
 ----
 

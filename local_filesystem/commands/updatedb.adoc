@@ -1,81 +1,67 @@
 === updatedb
-Actualizar la base de datos utilizada por el comando locate.
+Actualizar la base de datos de búsqueda utilizada por el comando locate.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Actualizar la base de datos utilizada por el comando locate.",
-  "usage": "updatedb [OPCIONES]",
+  "description": "Escanea el sistema de archivos y construye una base de datos con los nombres y rutas de todos los archivos. Esto permite que 'locate' encuentre cualquier archivo en milisegundos. Generalmente se ejecuta mediante un cron job diario, pero puede lanzarse manualmente para indexar cambios recientes.",
+  "usage": "sudo updatedb",
   "options": {
-    "-U": "Definir directorios a indexar",
-    "-o": "Especificar archivo de base de datos",
-    "--prunepaths": "Excluir rutas",
-    "--prunefs": "Excluir sistemas de ficheros",
-    "--prunenames": "Excluir nombres concretos",
-    "--localpaths": "Indexar solo sistemas locales",
-    "--debug": "Mostrar información de depuración"
+    "-U": "Update: escanea e indexa únicamente el subárbol del directorio especificado",
+    "-o": "Output: guarda la base de datos en un archivo específico en lugar del predeterminado (/var/lib/mlocate/mlocate.db)",
+    "--prunepaths": "Exclude paths: lista de rutas separadas por espacios que no deben ser indexadas (ej. /tmp, /media)",
+    "--prunefs": "Exclude FS: tipos de sistemas de archivos que se deben ignorar (ej. nfs, SSHFS, tmpfs)",
+    "--prunenames": "Exclude names: nombres de archivos o directorios específicos a omitir (ej. .git, node_modules)",
+    "-l": "Local: (0 o 1) indica si se deben indexar solo sistemas de archivos locales",
+    "--debug": "Modo depuración: muestra qué directorios se están escaneando y por qué se omiten otros"
   }
 }
 
 [source,bash]
 ----
-# Actualizar la base de datos de locate
-updatedb
+# Actualizar la base de datos global (requiere privilegios de root)
+sudo updatedb
 ----
 
--U:: `updatedb -U` Definir directorios a indexar
-
-[source,bash]
-----
-# Indexar únicamente /home
-updatedb -U /home
-----
-
--o:: `updatedb -o` Especificar archivo de base de datos
+-U:: `-U` (update) es ideal cuando solo quieres actualizar la base de datos de una carpeta específica (como un disco externo o tu /home) sin escanear todo el sistema.
 
 [source,bash]
 ----
-# Crear base de datos personalizada
-updatedb -o /tmp/mi_locate.db
+# Actualizar el índice solo de mis documentos personales
+updatedb -U /home/usuario/documentos
 ----
 
---prunepaths:: `updatedb --prunepaths` Excluir rutas
-
-[source,bash]
-----
-# Excluir /proc y /sys
-updatedb --prunepaths="/proc /sys"
-----
-
---prunefs:: `updatedb --prunefs` Excluir sistemas de ficheros
+-o:: `-o` (output) te permite crear bases de datos privadas. Esto es útil si quieres buscar en un disco duro desconectado o en una red sin afectar a la búsqueda global del sistema.
 
 [source,bash]
 ----
-# Excluir sistemas virtuales
-updatedb --prunefs="proc sysfs tmpfs"
+# Crear una base de datos solo para un disco de backup
+updatedb -U /mnt/backup -o ~/indices/backup.db
+# Para usarla: locate -d ~/indices/backup.db nombre_archivo
 ----
 
---prunenames:: `updatedb --prunenames` Excluir nombres concretos
-
-[source,bash]
-----
-# Excluir directorios .git
-updatedb --prunenames=".git"
-----
-
---localpaths:: `updatedb --localpaths` Indexar solo sistemas locales
+--prunepaths:: Evita que `updatedb` pierda tiempo indexando carpetas con archivos temporales o dispositivos de red que podrían ralentizar el proceso.
 
 [source,bash]
 ----
-# Evitar sistemas remotos
-updatedb --localpaths
+# Ignorar carpetas de montaje y temporales
+sudo updatedb --prunepaths="/media /mnt /tmp /var/spool"
 ----
 
---debug:: `updatedb --debug` Mostrar información de depuración
+--prunefs:: Similar a las rutas, pero por tipo de tecnología. Es común ignorar sistemas de archivos virtuales o remotos para evitar latencias de red.
 
 [source,bash]
 ----
-# Ver proceso detallado
-updatedb --debug
+# No indexar sistemas de archivos en red o en memoria
+sudo updatedb --prunefs="nfs nfs4 afs cifs smbfs tmpfs"
+----
+
+Configuración Permanente::
+En la mayoría de distribuciones (como Debian/Ubuntu), puedes configurar el comportamiento de `updatedb` de forma permanente editando el archivo `/etc/updatedb.conf`.
+
+[source,bash]
+----
+# Ver la configuración actual de exclusiones
+cat /etc/updatedb.conf
 ----
 

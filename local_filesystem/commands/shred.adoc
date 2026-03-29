@@ -1,72 +1,59 @@
 === shred
-Sobrescribir archivos para ocultar su contenido y opcionalmente eliminarlos.
+Destruir el contenido de archivos mediante sobrescritura repetida.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Herramienta de seguridad que sobrescribe los datos de un archivo repetidamente para que sea extremadamente difícil de recuperar, incluso con hardware especializado.",
-  "usage": "shred [OPCIONES] ARCHIVO...",
+  "description": "Sobrescribe los archivos especificados repetidamente con patrones de datos aleatorios para hacer que la recuperación de datos sea extremadamente difícil, incluso mediante examen físico del soporte magnético.",
+  "usage": "shred -u -n 5 secreto.txt",
   "options": {
-    "-n": "Número de veces que se sobrescriben los datos (por defecto 3)",
-    "-u": "Truncar y eliminar el archivo después de sobrescribirlo",
-    "-z": "Añadir una sobrescritura final con ceros para ocultar el proceso",
-    "-s": "Sobrescribir solo un número determinado de bytes",
-    "-v": "Mostrar el progreso de las iteraciones",
-    "-f": "Cambiar permisos para permitir la escritura si es necesario"
+    "-n": "Número de veces que se sobrescriben los datos (predeterminado: 3)",
+    "-u": "Eliminar (de-vincular) el archivo después de sobrescribirlo",
+    "-z": "Añadir una sobrescritura final con ceros para ocultar que el archivo fue triturado",
+    "-v": "Modo detallado: muestra el progreso de cada pasada de sobrescritura",
+    "-s": "Triturar solo el número de bytes especificado (acepta sufijos como K, M, G)",
+    "-f": "Forzar: cambia los permisos del archivo si es necesario para permitir la escritura",
+    "-x": "No redondear el tamaño del archivo hacia arriba al bloque más cercano",
+    "--random-source": "Usar un archivo específico (como /dev/urandom) como fuente de aleatoriedad"
   }
 }
 
 [source,bash]
 ----
-# Sobrescribir un archivo 3 veces (pero no lo borra del disco)
-shred secreto.txt
+# Triturar un archivo con 3 pasadas aleatorias (el archivo permanece en el disco, pero ilegible)
+shred datos_bancarios.csv
 ----
 
--n:: `shred -n` Definir el número de iteraciones
-
-[source,bash]
-----
-# Sobrescribir el archivo 10 veces para mayor seguridad
-shred -n 10 datos_sensibles.dat
-----
-
--u:: `shred -u` Eliminar el archivo tras la sobrescritura
+-u:: `-u` (remove) Si no se usa, el archivo "shredded" seguirá apareciendo en `ls`, aunque su contenido sea basura aleatoria.
 
 [source,bash]
 ----
-# Sobrescribir y borrar definitivamente el archivo
-shred -u pass.txt
+# Sobrescribir y borrar físicamente el rastro del archivo del directorio
+shred -u evidencia.jpg
 ----
 
--z:: `shred -z` Ocultar el borrado con ceros
-
-[source,bash]
-----
-# Sobrescribir, borrar y rellenar con ceros para que parezca vacío
-shred -uz archivo_confidencial.pdf
-----
-
--v:: `shred -v` Modo detallado (verbose)
+-z:: `-z` (zero) Después de las pasadas aleatorias, escribe una capa de ceros.
 
 [source,bash]
 ----
-# Ver el progreso de cada una de las pasadas de sobrescritura
-shred -v foto.jpg
+# El estándar de oro para borrado seguro: 5 pasadas, borrar archivo y ocultar con ceros
+shred -uvz -n 5 documento_confidencial.pdf
 ----
 
--s:: `shred -s` Limitar el tamaño del proceso
-
-[source,bash]
-----
-# Sobrescribir solo los primeros 100MB de un dispositivo o archivo
-shred -s 100M /dev/sdb1
-----
-
--f:: `shred -f` Forzar el cambio de permisos
+-v:: `-v` (verbose) permite ver en qué "pasada" se encuentra el proceso.
 
 [source,bash]
 ----
-# Cambiar permisos de solo lectura para poder destruir el contenido
-shred -f archivo_protegido.log
+# Ver cómo shred aplica los patrones de bits en tiempo real
+shred -v disk_dump.img
+# Salida: shred: disk_dump.img: pasada 1/3 (random)...
+----
+
+-s:: `-s` (size) Permite destruir solo una parte de un archivo o dispositivo.
+
+[source,bash]
+----
+# Destruir solo el primer Gigabyte de una partición entera
+sudo shred -v -s 1G /dev/sdb1
 ----
 

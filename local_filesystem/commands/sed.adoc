@@ -1,79 +1,69 @@
 === sed
-Editor de flujo de texto para filtrar y transformar texto línea a línea.
+Stream Editor: Editor de flujo para filtrar y transformar texto de forma no interactiva.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Editor de flujo de texto para filtrar y transformar texto línea a línea.",
-  "usage": "sed [OPCIONES] PATRON FICHERO",
+  "description": "Lee el texto entrada por entrada (línea a línea), aplica las modificaciones indicadas y devuelve el resultado. Es ideal para ediciones masivas en archivos de configuración o limpieza de logs.",
+  "usage": "sed 's/buscar/reemplazar/g' archivo.txt",
   "options": {
-    "-i": "Modificar el fichero directamente",
-    "-e": "Ejecutar múltiples comandos",
-    "-n": "Suprimir salida automática",
-    "-r": "Usar expresiones regulares extendidas",
-    "--follow-symlinks": "Modificar enlaces simbólicos"
+    "-i": "In-place: modifica el archivo original directamente (permite crear backup con -i.bak)",
+    "-e": "Expression: permite encadenar varios comandos de edición en una sola línea",
+    "-n": "Silent: suprime la salida automática (solo imprime lo que se indique con el comando 'p')",
+    "-r, -E": "Regexp: habilita el uso de expresiones regulares extendidas (ERE)",
+    "-f": "File: lee los comandos de edición desde un archivo externo",
+    "-u": "Unbuffered: procesa los datos lo más rápido posible (útil para flujos continuos)",
+    "--follow-symlinks": "Si el archivo es un enlace simbólico, edita el destino real en lugar de romper el enlace"
   }
 }
 
 [source,bash]
 ----
-# Reemplazo simple en un archivo
-sed 's/viejo/nuevo/' fichero.txt
-----
-
--i:: `sed -i` Modificar el fichero directamente
+# Sustitución básica: cambia la primera aparición de "hola" por "adiós" por cada línea
+sed 's/hola/adiós/' saludo.txt
+---
 
 [source,bash]
 ----
-# Reemplazar “viejo” por “nuevo” en el archivo original
-sed -i 's/viejo/nuevo/g' fichero.txt
+# Modificar el archivo y crear una copia de seguridad .old automáticamente
+sed -i.old 's/localhost/127.0.0.1/g' config.php
 ----
 
--e:: `sed -e` Ejecutar múltiples comandos
-
-[source,bash]
-----
-# Reemplazar y eliminar líneas al mismo tiempo
-sed -e 's/viejo/nuevo/g' -e '/^#/d' fichero.txt
-----
-
--n:: `sed -n` Suprimir salida automática
+-n / p:: Control total sobre qué líneas se muestran.
 
 [source,bash]
 ----
-# Mostrar solo líneas que coincidan con el patrón
-sed -n '/error/p' fichero.log
+# Extraer solo las líneas de la 10 a la 20 de un archivo grande
+sed -n '10,20p' log_gigante.txt
+
+# Mostrar solo las líneas que contienen la palabra "CRITICAL"
+sed -n '/CRITICAL/p' syslog
 ----
 
--d:: `sed 'Nd'` Eliminar líneas específicas
-
-[source,bash]
-----
-# Eliminar la tercera línea
-sed '3d' fichero.txt
-----
-
--a:: `sed 'Nq'` Imprimir hasta cierta línea
+-d:: `-d` (delete) Elimina líneas basándose en su número o en un patrón.
 
 [source,bash]
 ----
-# Imprimir solo las primeras 5 líneas
-sed -n '1,5p' fichero.txt
+# Eliminar todas las líneas que empiezan por comentario (#)
+sed '/^#/d' configuracion.conf
+
+# Eliminar la última línea del archivo
+sed '$d' lista.txt
 ----
 
--r:: `sed -r` Expresiones regulares extendidas
-
-[source,bash]
-----
-# Usar regex extendido para reemplazo
-sed -r 's/(foo|bar)/baz/g' fichero.txt
-----
-
---follow-symlinks:: `sed --follow-symlinks` Modificar enlaces simbólicos
+-e:: `-e` (expression) permite realizar múltiples ediciones en una sola pasada de lectura del archivo.
 
 [source,bash]
 ----
-# Editar fichero que es un enlace simbólico
-sed -i --follow-symlinks 's/viejo/nuevo/' enlace.txt
+# Borrar líneas vacías Y cambiar "provisional" por "final"
+sed -e '/^$/d' -e 's/provisional/final/g' documento.txt
+----
+
+-r / -E:: Permite usar metacaracteres modernos como `+`, `?` o grupos `()` sin escaparlos con barras invertidas.
+
+[source,bash]
+----
+# Cambiar formatos de fecha (ej: 2024-03-21 a 21-03-2024) usando grupos
+sed -E 's/([0-9]{4})-([0-9]{2})-([0-9]{2})/\3-\2-\1/' fechas.txt
 ----
 

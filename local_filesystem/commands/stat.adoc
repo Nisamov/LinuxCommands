@@ -1,77 +1,71 @@
 === stat
-Mostrar estado y metadatos de un fichero o directorio.
+Mostrar información detallada sobre el estado de archivos o sistemas de archivos.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Mostrar estado y metadatos de un fichero o directorio.",
-  "usage": "stat [OPCIONES] FICHERO",
+  "description": "Exhibe metadatos exhaustivos de un objeto del sistema de archivos. Proporciona datos técnicos que 'ls' no muestra, como el número de inodo, el tamaño en bloques reales y marcas de tiempo de alta precisión.",
+  "usage": "stat -c '%a %n' archivo.txt",
   "options": {
-    "-c": "Mostrar información en formato personalizado",
-    "-f": "Mostrar información del sistema de ficheros",
-    "-L": "Seguir enlaces simbólicos",
-    "-t": "Formato compacto",
-    "--printf": "Usar printf para formato personalizado"
+    "-c": "Format: muestra la información usando un formato personalizado (usa secuencias %)",
+    "--printf": "Similar a -c, pero interpreta secuencias de escape (como \n) y no añade salto de línea automático",
+    "-f": "File system: muestra el estado del sistema de archivos en lugar del archivo en sí",
+    "-L": "Dereference: sigue enlaces simbólicos y muestra la información del destino real",
+    "-t": "Terse: imprime la información en un formato compacto de una sola línea",
+    "--help": "Mostrar la ayuda del comando"
   }
 }
 
 [source,bash]
 ----
-# Mostrar información completa
-stat fichero.txt
+# Ver todos los metadatos de un archivo
+stat configuracion.conf
 ----
 
--c:: `stat -c` Formato personalizado con especificadores
+Las tres marcas de tiempo (Timestamps):: `stat` distingue tres estados:
+* **Access (atime)**: Última vez que se leyó el contenido.
+* **Modify (mtime)**: Última vez que se cambió el contenido.
+* **Change (ctime)**: Última vez que cambiaron los metadatos (permisos, nombre, dueño).
 
-[source,bash]
-----
-# Mostrar sólo nombre y tamaño usando formato
-stat -c "%n: %s bytes" fichero.txt
-----
-
--f:: `stat -f` Información del sistema de ficheros
+-c / --printf:: Permite extraer datos específicos para usarlos en scripts sin necesidad de usar `grep` o `awk`.
 
 [source,bash]
 ----
-# Información del sistema de ficheros
+# Obtener solo los permisos en formato octal (ej: 755)
+stat -c "%a" script.sh
+
+# Obtener el dueño y el grupo del archivo
+stat -c "Dueño: %U, Grupo: %G" informe.pdf
+----
+
+Especificadores comunes para -c::
+* `%n`: Nombre del archivo.
+* `%s`: Tamaño total en bytes.
+* `%F`: Tipo de archivo (directorio, archivo regular, etc.).
+* `%i`: Número de inodo.
+* `%h`: Número de enlaces físicos (hard links).
+
+-f:: `-f` (filesystem) Conocer el estado de salud de una partición, como el tamaño de bloque o los inodos libres.
+
+[source,bash]
+----
+# Ver cuánto espacio e inodos quedan libres en la partición raíz
 stat -f /
 ----
 
--L:: `stat -L` Seguir enlaces simbólicos
+-L:: `-L` (dereference) Si apuntas a un enlace simbólico, `stat` por defecto te da los datos del enlace. Con `-L`, te da los del archivo real al que apunta.
 
 [source,bash]
 ----
-# Seguir enlaces simbólicos
-stat -L /usr/bin/python
+# Ver el tamaño real del ejecutable al que apunta el enlace /usr/bin/python3
+stat -L /usr/bin/python3
 ----
 
--t:: `stat -t` Formato compacto
+-t:: `-t` (terse) Recolectar datos masivos que luego serán procesados por una base de datos o una hoja de cálculo.
 
 [source,bash]
 ----
-# Formato compacto
-stat -t fichero.txt
-----
-
---printf:: `stat --printf` Formato con printf
-
-[source,bash]
-----
-# Usar printf para formato personalizado
-stat --printf="%n: %s bytes\n" *
-----
-
---printf:: `stat --printf` Formato con printf
-
-[source,bash]
-----
-# Mostrar información completa
-stat fichero.txt
-
-# Mostrar sólo nombre y tamaño usando formato
-stat -c "%n: %s bytes" fichero.txt
-
-# Información del sistema de ficheros
-stat -f /
+# Generar una línea compacta de metadatos
+stat -t mi_archivo.txt
 ----
 

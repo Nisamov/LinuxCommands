@@ -1,78 +1,79 @@
 === tr
-Traducir o eliminar caracteres desde la entrada estándar.
+Traducir, comprimir o eliminar caracteres de la entrada estándar.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Traducir o eliminar caracteres desde la entrada estándar.",
-  "usage": "tr [OPCIONES] CONJUNTO1 CONJUNTO2",
+  "description": "Transforma el texto carácter a carácter. Es ideal para cambiar mayúsculas/minúsculas, eliminar saltos de línea, limpiar caracteres especiales o normalizar espacios en blanco.",
+  "usage": "echo 'texto' | tr 'a-z' 'A-Z'",
   "options": {
-    "-d": "Eliminar caracteres",
-    "-s": "Sustituir repeticiones por una sola",
-    "-c": "Complementar el conjunto de caracteres",
-    "--help": "Mostrar ayuda"
+    "-d": "Delete: elimina del flujo todos los caracteres indicados en el conjunto",
+    "-s": "Squeeze: sustituye secuencias de caracteres repetidos por una sola ocurrencia",
+    "-c, -C": "Complement: aplica la operación a todos los caracteres que NO están en el conjunto",
+    "-t": "Truncate: trunca el primer conjunto a la longitud del segundo",
+    "--help": "Mostrar la ayuda del comando",
+    "--version": "Mostrar la versión del programa"
   }
 }
 
 [source,bash]
 ----
-# Reemplazar caracteres
-echo "hola mundo" | tr 'a-z' 'A-Z'
+# Sustitución básica: cambia todas las 'e' por '3' y las 'i' por '1'
+echo "elite" | tr 'ei' '31'
 ----
 
--d:: `tr -d` Eliminar caracteres
-
-[source,bash]
-----
-# Eliminar vocales
-echo "hola mundo" | tr -d 'aeiou'
-----
-
--s:: `tr -s` Sustituir repeticiones por una sola
+-d:: `-d` (delete) Limpiar un archivo de caracteres no deseados, como símbolos de puntuación o números.
 
 [source,bash]
 ----
-# Reducir espacios repetidos a uno solo
-echo "hola    mundo" | tr -s ' '
+# Eliminar todos los dígitos de una cadena
+echo "Pedido #12345" | tr -d '0-9'
+
+# Eliminar los retornos de carro de Windows (\r) para convertir a formato Unix
+tr -d '\r' < archivo_windows.txt > archivo_unix.txt
 ----
 
--c:: `tr -c` Complementar el conjunto de caracteres
-
-[source,bash]
-----
-# Eliminar todo excepto letras
-echo "hola123!!!" | tr -cd 'a-zA-Z'
-----
-
--set1-set2:: `tr set1 set2` Traducir caracteres
+-s:: `-s` (squeeze) Limpiar salidas de comandos que tienen demasiados espacios en blanco o líneas vacías consecutivas.
 
 [source,bash]
 ----
-# Cambiar comas por puntos y coma
-echo "uno,dos,tres" | tr ',' ';'
+# Convertir múltiples espacios en uno solo para procesar con 'cut'
+echo "col1    col2        col3" | tr -s ' '
+
+# Eliminar líneas vacías repetidas (sustituir múltiples \n por uno solo)
+tr -s '\n' < archivo.txt
 ----
 
--[:class:]:: Clases de caracteres POSIX
-
-[source,bash]
-----
-# Convertir a mayúsculas usando clases POSIX
-echo "hola mundo" | tr '[:lower:]' '[:upper:]'
-----
-
--newline:: Uso con saltos de línea
+-c / -cd:: El "complemento" permite definir qué queremos **mantener**, borrando todo lo demás. Es la técnica estándar para sanear entradas.
 
 [source,bash]
 ----
-# Convertir saltos de línea en espacios
-tr '\n' ' ' < fichero.txt
+# Dejar solo los números de un texto (borra todo lo que NO sea 0-9 o salto de línea)
+echo "Mi tlf es 600-11-22" | tr -cd '0-9\n'
 ----
 
--input-only:: Uso sobre entrada estándar
+Clases de caracteres POSIX:: Clases predefinidas que respetan el idioma del sistema.
+
+|===
+| Clase | Descripción
+| `[:lower:]` | Letras minúsculas
+| `[:upper:]` | Letras mayúsculas
+| `[:alnum:]` | Letras y números
+| `[:space:]` | Espacios, tabuladores y saltos de línea
+| `[:print:]` | Caracteres imprimibles (incluyendo espacios)
+|===
 
 [source,bash]
 ----
-# tr no acepta nombres de fichero como argumento
-cat fichero.txt | tr '0-9' '#'
+# Convertir todo un archivo a mayúsculas correctamente
+cat texto.txt | tr '[:lower:]' '[:upper:]'
+----
+
+Manipulación de Saltos de Línea:: `tr` Aplanar listas.
+
+[source,bash]
+----
+# Convertir una lista vertical en una sola línea separada por comas
+cat lista.txt | tr '\n' ','
 ----
 

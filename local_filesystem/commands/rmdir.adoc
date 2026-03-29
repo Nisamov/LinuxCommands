@@ -1,31 +1,48 @@
 === rmdir
-Eliminar directorios vacíos.
+Eliminar directorios que estén completamente vacíos.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Eliminar directorios vacíos.",
-  "usage": "rmdir [OPCIONES] DIRECTORIO",
+  "description": "Elimina carpetas del sistema siempre que no contengan ningún archivo o subdirectorio. Es una herramienta de seguridad: garantiza que no borres datos por accidente al intentar eliminar una estructura jerárquica.",
+  "usage": "rmdir -p proyecto/temp/logs",
   "options": {
-    "-p": "Eliminar directorios intermedios si están vacíos",
-    "--help": "Mostrar ayuda breve"
+    "-p": "Eliminar directorios padres (parents): si al borrar el hijo el padre queda vacío, también lo borra",
+    "--ignore-fail-on-non-empty": "No devolver un estado de error si el directorio contiene archivos",
+    "-v": "Modo detallado (verbose): muestra un mensaje por cada directorio procesado",
+    "--help": "Mostrar la ayuda del comando",
+    "--version": "Mostrar la versión del programa"
   }
 }
 
 [source,bash]
 ----
-# Eliminar un directorio vacio
-rmdir Documentos
+# Eliminar una carpeta que no tiene nada dentro
+rmdir carpeta_vacia
 ----
 
-- (uso):: `rmdir <directorio>` Eliminar directorio vacío
+-p:: `-p` (parents) Permite limpiar una ruta completa de carpetas vacías de un solo golpe, recorriendo la jerarquía hacia atrás.
 
 [source,bash]
 ----
-# Eliminar un directorio vacío
-rmdir Documentos
+# Si 'dir1', 'dir2' y 'dir3' están vacíos (o solo contienen a sus hijos), borra los tres
+rmdir -p dir1/dir2/dir3
+----
 
-# Intentar eliminar un directorio no vacío falla
-rmdir carpeta_con_contenido || echo "El directorio no está vacío"
+--ignore-fail-on-non-empty:: Evita que el comando lance un mensaje de error en la terminal si la carpeta tiene contenido.
+
+[source,bash]
+----
+# Intenta limpiar pero no se queja si el usuario guardó algo ahí
+rmdir --ignore-fail-on-non-empty temporal_provisional
+----
+
+-v:: `-v` (verbose) Confirma qué carpetas han sido eliminadas exitosamente.
+
+[source,bash]
+----
+# Ver el progreso de la limpieza
+rmdir -pv a/b/c
+# Salida: rmdir: se ha eliminado el directorio 'a/b/c', 'a/b', 'a'
 ----
 

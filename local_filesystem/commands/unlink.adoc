@@ -1,26 +1,53 @@
 === unlink
-Eliminar el enlace a un fichero (equivalente a `rm` para ficheros simples). Acepta un único argumento: el nombre del fichero a eliminar.
+Eliminar un archivo o un enlace simbólico del sistema de archivos.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Eliminar un enlace simbólico o fichero.",
-  "usage": "unlink FICHERO",
+  "description": "Realiza la función más básica de borrado: elimina el nombre del archivo de su directorio. Si ese nombre era el último enlace físico al archivo, los datos se eliminan definitivamente del disco.",
+  "usage": "unlink nombre_del_archivo",
   "options": {
-    "-h": "Mostrar ayuda breve"
+    "--help": "Mostrar la ayuda del comando y salir",
+    "--version": "Mostrar la información de versión y salir"
   }
 }
 
 [source,bash]
 ----
-# Eliminar un enlace simbólico o fichero
-unlink enlace_sim.txt
+# Eliminar un enlace simbólico de forma segura
+unlink mi_acceso_directo
 ----
 
---help:: `unlink --help` Mostrar ayuda breve
+Diferencias clave con `rm`::
+Aunque ambos sirven para borrar, `unlink` tiene reglas mucho más estrictas que lo hacen ideal para scripts donde se busca la máxima seguridad:
+* **Sin recursividad**: No puede borrar directorios (fallará si lo intentas).
+* **Un solo argumento**: Solo acepta un archivo a la vez. No puedes usar `unlink file1 file2`.
+* **Sin confirmaciones**: No tiene modo interactivo (`-i`) ni de fuerza (`-f`).
 
 [source,bash]
 ----
-unlink --help
+# Intentar borrar un directorio fallará (medida de seguridad)
+unlink mi_carpeta/
+# Salida: unlink: cannot unlink 'mi_carpeta/': Is a directory
+----
+
+Uso con Enlaces Simbólicos::
+Es la forma más "limpia" de borrar un enlace simbólico, ya que garantiza que nunca borrarás accidentalmente el contenido de una carpeta (algo que puede pasar con `rm -r` si no se tiene cuidado con las barras `/` finales).
+
+[source,bash]
+----
+# Borrar solo el enlace, asegurando que el archivo original permanezca intacto
+unlink acceso_a_datos
+----
+
+Uso con Enlaces Físicos (Hard Links)::
+Cuando usas `unlink` sobre un archivo que tiene varios enlaces físicos, simplemente decrementas el contador de enlaces del inodo. Los datos solo se liberan cuando el contador llega a cero.
+
+[source,bash]
+----
+# Crear un enlace físico y luego eliminar uno de los nombres
+ln archivo_original copia_fisica
+unlink archivo_original
+# Los datos siguen vivos bajo el nombre 'copia_fisica'
 ----
 

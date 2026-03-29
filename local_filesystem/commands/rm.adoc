@@ -1,90 +1,87 @@
 === rm
-Eliminar ficheros o directorios (con precaución).
+Eliminar archivos o directorios de forma permanente.
 
 :category: local_filesystem
 [.metadata]
 {
-  "description": "Eliminar ficheros o directorios (con precaución).",
-  "usage": "rm [OPCIONES] FICHEROS",
+  "description": "Elimina las referencias a archivos del sistema. Por defecto, no elimina directorios. Ten en cuenta que en Linux, 'rm' no mueve los archivos a una papelera; los borra definitivamente.",
+  "usage": "rm -rf /ruta/al/directorio",
   "options": {
-    "-r": "Eliminar directorios de forma recursiva",
-    "-i": "Solicitar confirmación antes de borrar cada fichero",
-    "-f": "Forzar la eliminación sin preguntar",
-    "-v": "Mostrar operaciones realizadas",
-    "-d": "Eliminar directorios vacíos",
-    "--preserve-root": "No permitir eliminar la raíz '/'",
-    "--no-preserve-root": "Permite operar sobre '/'",
-    "--help": "Mostrar ayuda breve"
+    "-r": "Recursivo: elimina directorios y todo su contenido de forma jerárquica",
+    "-f": "Forzar: ignora archivos inexistentes y nunca solicita confirmación",
+    "-i": "Interactivo: solicita confirmación antes de cada eliminación",
+    "-I": "Interactivo limitado: pregunta una sola vez antes de borrar más de tres archivos o al borrar recursivamente",
+    "-v": "Modo detallado (verbose): muestra el nombre de cada archivo que se va borrando",
+    "-d": "Eliminar directorios vacíos (similar a rmdir)",
+    "--preserve-root": "Fallo de seguridad: impide que el comando actúe sobre '/' (activado por defecto)",
+    "--no-preserve-root": "Desactivar la protección de la raíz del sistema (extremadamente peligroso)",
+    "--one-file-system": "Al borrar recursivamente, omitir directorios que estén en otros sistemas de archivos"
   }
 }
 
 [source,bash]
 ----
-# Eliminar un fichero
-rm archivo.txt
+# Eliminar un archivo simple
+rm notas.txt
 ----
 
--r:: `rm -r` Eliminar directorios de forma recursiva
-
-[source,bash]
-----
-# Eliminar un directorio y su contenido
-rm -r carpeta_a_borrar/
-----
-
--i:: `rm -i` Solicitar confirmación antes de borrar cada fichero
+-r / -R:: `-r` (recursive) es obligatorio para borrar carpetas que contienen otros archivos o subcarpetas.
 
 [source,bash]
 ----
-# Eliminar pidiendo confirmación
-rm -i archivo.txt
+# Borrar un proyecto entero incluyendo todos sus archivos internos
+rm -r mi_proyecto_viejo/
 ----
 
--f:: `rm -f` Forzar la eliminación sin preguntar
-
-[source,bash]
-----
-# Forzar eliminación
-rm -f temporal.tmp
-----
-
--v:: `rm -v` Mostrar operaciones realizadas
+-f:: `-f` (force) suprime las advertencias si el archivo no existe o tiene permisos de solo lectura (siempre que tú seas el dueño).
 
 [source,bash]
 ----
-# Eliminar mostrando información
-rm -v archivo.txt
+# Borrar archivos temporales sin que el script se detenga por errores de "no encontrado"
+rm -f /tmp/*.tmp
 ----
 
--d:: `rm -d` Eliminar directorios vacíos
-
-[source,bash]
-----
-# Eliminar directorio vacío
-rmdir_temp=carpeta_vacia && rm -d "$rmdir_temp" || echo "No vacío"
-----
-
---preserve-root:: `rm --preserve-root[=all]` No permitir eliminar la raíz '/'
+-i vs -I:: Control de confirmación para evitar errores accidentales.
 
 [source,bash]
 ----
-# Evita eliminar '/'
-rm --preserve-root -rf /
+# -i: Pregunta por CADA archivo (tedioso para muchos archivos)
+rm -i *.jpg
+
+# -I: Pregunta una vez si vas a borrar más de 3 archivos (más equilibrado)
+rm -I *.log
 ----
 
---no-preserve-root:: `rm --no-preserve-root` Permite operar sobre '/'
-
-[source,bash]
-----
-# Forzar (peligroso) - deshabilita la protección de raíz
-rm --no-preserve-root -rf /ruta/peligrosa
-----
-
---help:: `rm --help` Mostrar ayuda breve
+-v:: `-v` (verbose) te da un informe en tiempo real de lo que está desapareciendo.
 
 [source,bash]
 ----
-# Mostrar ayuda
-rm --help
+# Confirmar visualmente que la limpieza se está realizando
+rm -rv carpeta_basura/
+----
+
+-d:: `-d` permite a `rm` borrar una carpeta, pero solo si está totalmente vacía.
+
+[source,bash]
+----
+# Intentar borrar una carpeta solo si no tiene contenido
+rm -d carpetas_vacias_*
+----
+
+La opción nuclear: -rf:: La combinación más potente y peligrosa en manos de un administrador.
+
+[source,bash]
+----
+# Borra TODO en la ruta especificada de forma inmediata y sin preguntas
+# ¡Úsalo con extrema precaución!
+rm -rf ./cache_inservible
+----
+
+--preserve-root:: Es una salvaguarda moderna para evitar el famoso error `rm -rf /` que destruiría el sistema operativo.
+
+[source,bash]
+----
+# Esto fallará gracias a la protección por defecto:
+rm -rf /
 ----
 
