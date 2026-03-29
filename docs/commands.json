@@ -2657,28 +2657,32 @@
     "source_path": "local_storage/commands/resize2fs.adoc"
   },
   {
-    "description": "Eliminar ficheros o directorios (con precaución).",
-    "usage": "rm [OPCIONES] FICHEROS",
+    "description": "Elimina las referencias a archivos del sistema. Por defecto, no elimina directorios. Ten en cuenta que en Linux, 'rm' no mueve los archivos a una papelera; los borra definitivamente.",
+    "usage": "rm -rf /ruta/al/directorio",
     "options": {
-      "-r": "Eliminar directorios de forma recursiva",
-      "-i": "Solicitar confirmación antes de borrar cada fichero",
-      "-f": "Forzar la eliminación sin preguntar",
-      "-v": "Mostrar operaciones realizadas",
-      "-d": "Eliminar directorios vacíos",
-      "--preserve-root": "No permitir eliminar la raíz '/'",
-      "--no-preserve-root": "Permite operar sobre '/'",
-      "--help": "Mostrar ayuda breve"
+      "-r": "Recursivo: elimina directorios y todo su contenido de forma jerárquica",
+      "-f": "Forzar: ignora archivos inexistentes y nunca solicita confirmación",
+      "-i": "Interactivo: solicita confirmación antes de cada eliminación",
+      "-I": "Interactivo limitado: pregunta una sola vez antes de borrar más de tres archivos o al borrar recursivamente",
+      "-v": "Modo detallado (verbose): muestra el nombre de cada archivo que se va borrando",
+      "-d": "Eliminar directorios vacíos (similar a rmdir)",
+      "--preserve-root": "Fallo de seguridad: impide que el comando actúe sobre '/' (activado por defecto)",
+      "--no-preserve-root": "Desactivar la protección de la raíz del sistema (extremadamente peligroso)",
+      "--one-file-system": "Al borrar recursivamente, omitir directorios que estén en otros sistemas de archivos"
     },
     "name": "rm",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/rm.adoc"
   },
   {
-    "description": "Eliminar directorios vacíos.",
-    "usage": "rmdir [OPCIONES] DIRECTORIO",
+    "description": "Elimina carpetas del sistema siempre que no contengan ningún archivo o subdirectorio. Es una herramienta de seguridad: garantiza que no borres datos por accidente al intentar eliminar una estructura jerárquica.",
+    "usage": "rmdir -p proyecto/temp/logs",
     "options": {
-      "-p": "Eliminar directorios intermedios si están vacíos",
-      "--help": "Mostrar ayuda breve"
+      "-p": "Eliminar directorios padres (parents): si al borrar el hijo el padre queda vacío, también lo borra",
+      "--ignore-fail-on-non-empty": "No devolver un estado de error si el directorio contiene archivos",
+      "-v": "Modo detallado (verbose): muestra un mensaje por cada directorio procesado",
+      "--help": "Mostrar la ayuda del comando",
+      "--version": "Mostrar la versión del programa"
     },
     "name": "rmdir",
     "category": "local_filesystem",
@@ -2722,17 +2726,19 @@
     "source_path": "local_storage/backup/rsync/commands/rsync.adoc"
   },
   {
-    "description": "Copiar ficheros de forma segura entre hosts usando SSH.",
-    "usage": "scp [OPCIONES] FICHERO_ORIGEN USUARIO@HOST:DESTINO",
+    "description": "Utiliza SSH para la transferencia de datos, proporcionando la misma autenticación y seguridad que una sesión de terminal remota. Permite copiar de local a remoto, de remoto a local, o incluso entre dos hosts remotos.",
+    "usage": "scp -P 2222 archivo.zip usuario@servidor:/tmp/",
     "options": {
-      "-r": "Copiar directorios recursivamente",
-      "-P": "Especificar puerto SSH",
-      "-p": "Mantener permisos y fechas",
-      "-C": "Comprimir datos durante la transferencia",
-      "-i": "Usar archivo de clave privada para autenticar",
-      "-B": "Modo batch (sin preguntas interactivas)",
-      "-l": "Limitar ancho de banda (KB/s)",
-      "-o": "Pasando opciones a SSH"
+      "-r": "Copia recursiva: necesaria para transferir directorios completos",
+      "-P": "Especificar el puerto de conexión (atención: es 'P' mayúscula, a diferencia de ssh)",
+      "-p": "Preservar: mantiene los tiempos de modificación, acceso y los modos (permisos) originales",
+      "-C": "Compresión: comprime los datos sobre la marcha (útil en conexiones lentas)",
+      "-i": "Identidad: selecciona el archivo de clave privada (RSA, Ed25519) para la autenticación",
+      "-l": "Límite: limita el ancho de banda utilizado, expresado en Kbit/s",
+      "-B": "Modo Batch: evita pedir contraseñas o frases de paso (útil en scripts)",
+      "-o": "Opción: permite pasar configuraciones específicas al motor de SSH subyacente",
+      "-v": "Verbose: modo detallado para depurar problemas de conexión o permisos",
+      "-q": "Quiet: modo silencioso, no muestra la barra de progreso ni avisos"
     },
     "name": "scp",
     "category": "local_filesystem",
@@ -2754,14 +2760,16 @@
     "source_path": "local_system_data/system_info/commands/screenfetch.adoc"
   },
   {
-    "description": "Editor de flujo de texto para filtrar y transformar texto línea a línea.",
-    "usage": "sed [OPCIONES] PATRON FICHERO",
+    "description": "Lee el texto entrada por entrada (línea a línea), aplica las modificaciones indicadas y devuelve el resultado. Es ideal para ediciones masivas en archivos de configuración o limpieza de logs.",
+    "usage": "sed 's/buscar/reemplazar/g' archivo.txt",
     "options": {
-      "-i": "Modificar el fichero directamente",
-      "-e": "Ejecutar múltiples comandos",
-      "-n": "Suprimir salida automática",
-      "-r": "Usar expresiones regulares extendidas",
-      "--follow-symlinks": "Modificar enlaces simbólicos"
+      "-i": "In-place: modifica el archivo original directamente (permite crear backup con -i.bak)",
+      "-e": "Expression: permite encadenar varios comandos de edición en una sola línea",
+      "-n": "Silent: suprime la salida automática (solo imprime lo que se indique con el comando 'p')",
+      "-r, -E": "Regexp: habilita el uso de expresiones regulares extendidas (ERE)",
+      "-f": "File: lee los comandos de edición desde un archivo externo",
+      "-u": "Unbuffered: procesa los datos lo más rápido posible (útil para flujos continuos)",
+      "--follow-symlinks": "Si el archivo es un enlace simbólico, edita el destino real en lugar de romper el enlace"
     },
     "name": "sed",
     "category": "local_filesystem",
@@ -2828,15 +2836,17 @@
     "source_path": "host_shared_storage/commands/sftp.adoc"
   },
   {
-    "description": "Herramienta de seguridad que sobrescribe los datos de un archivo repetidamente para que sea extremadamente difícil de recuperar, incluso con hardware especializado.",
-    "usage": "shred [OPCIONES] ARCHIVO...",
+    "description": "Sobrescribe los archivos especificados repetidamente con patrones de datos aleatorios para hacer que la recuperación de datos sea extremadamente difícil, incluso mediante examen físico del soporte magnético.",
+    "usage": "shred -u -n 5 secreto.txt",
     "options": {
-      "-n": "Número de veces que se sobrescriben los datos (por defecto 3)",
-      "-u": "Truncar y eliminar el archivo después de sobrescribirlo",
-      "-z": "Añadir una sobrescritura final con ceros para ocultar el proceso",
-      "-s": "Sobrescribir solo un número determinado de bytes",
-      "-v": "Mostrar el progreso de las iteraciones",
-      "-f": "Cambiar permisos para permitir la escritura si es necesario"
+      "-n": "Número de veces que se sobrescriben los datos (predeterminado: 3)",
+      "-u": "Eliminar (de-vincular) el archivo después de sobrescribirlo",
+      "-z": "Añadir una sobrescritura final con ceros para ocultar que el archivo fue triturado",
+      "-v": "Modo detallado: muestra el progreso de cada pasada de sobrescritura",
+      "-s": "Triturar solo el número de bytes especificado (acepta sufijos como K, M, G)",
+      "-f": "Forzar: cambia los permisos del archivo si es necesario para permitir la escritura",
+      "-x": "No redondear el tamaño del archivo hacia arriba al bloque más cercano",
+      "--random-source": "Usar un archivo específico (como /dev/urandom) como fuente de aleatoriedad"
     },
     "name": "shred",
     "category": "local_filesystem",
@@ -2996,32 +3006,37 @@
     "source_path": "local_network/commands/socat.adoc"
   },
   {
-    "description": "Ordenar lineas de texto.",
-    "usage": "sort [OPCIONES] FICHERO",
+    "description": "Lee el contenido de un archivo o de la entrada estándar y lo devuelve ordenado. Es el compañero perfecto de 'uniq' para procesar listas y de 'find/ls' para organizar salidas de sistema.",
+    "usage": "sort -n -k 2 archivo.txt",
     "options": {
-      "-n": "Ordenar por valor numérico",
-      "-r": "Ordenar en orden inverso",
-      "-u": "Eliminar duplicados",
-      "-k": "Ordenar por columna específica",
-      "-t": "Usar separador de campo",
-      "-f": "Ignorar diferencias entre mayúsculas/minúsculas",
-      "-h": "Ordenar por números con sufijos (1K, 2M)",
-      "-o": "Guardar salida en archivo"
+      "-n": "Ordenar por valor numérico (1, 2, 10 en lugar de 1, 10, 2)",
+      "-r": "Invertir el resultado de la ordenación (descendente)",
+      "-u": "Único: elimina líneas duplicadas en el resultado final",
+      "-k": "Definir la columna (key) por la que se desea ordenar (ej: -k 2)",
+      "-t": "Establecer el carácter separador de campos (por defecto es el espacio/tabulador)",
+      "-f": "Ignorar diferencias entre mayúsculas y minúsculas (fold case)",
+      "-h": "Ordenar números con sufijos legibles (ej: 2K, 1G, 50M)",
+      "-V": "Orden de versión: maneja correctamente números dentro del texto (v1.2, v1.10)",
+      "-o": "Escribir el resultado en un archivo (permite que sea el mismo archivo de origen)",
+      "-R": "Ordenar de forma aleatoria (random)",
+      "-c": "Comprobar si el archivo ya está ordenado (no ordena, solo avisa)"
     },
     "name": "sort",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/sort.adoc"
   },
   {
-    "description": "Divide un archivo de entrada en varios archivos de salida de un tamaño fijo (por líneas o por bytes).",
-    "usage": "split [OPCIONES] [ENTRADA] [PREFIJO]",
+    "description": "Fragmenta archivos basándose en el número de líneas, tamaño en bytes o número total de archivos resultantes. Por defecto, genera archivos con el prefijo 'x' (xaa, xab, xac...).",
+    "usage": "split -b 100M archivo_grande.zip parte_",
     "options": {
-      "-l": "Dividir el archivo según el número de líneas",
-      "-b": "Dividir el archivo según el tamaño en bytes (K, M, G, T)",
-      "-n": "Dividir en un número específico de archivos",
-      "-d": "Usar sufijos numéricos en lugar de alfabéticos",
-      "-a": "Longitud del sufijo (por defecto 2)",
-      "--additional-suffix": "Añadir una extensión personalizada a los archivos generados"
+      "-l": "Dividir el archivo según el número de líneas por fragmento",
+      "-b": "Dividir por tamaño en bytes (acepta sufijos K, M, G, T)",
+      "-n": "Dividir en un número exacto de fragmentos (ej: -n 5)",
+      "-d": "Usar sufijos numéricos (00, 01...) en lugar de alfabéticos (aa, ab...)",
+      "-a": "Longitud del sufijo (por defecto 2 dígitos; ej: -a 4 para 0001)",
+      "--additional-suffix": "Añadir una extensión personalizada al final de cada fragmento (ej: .part)",
+      "--verbose": "Mostrar un mensaje cada vez que se crea un nuevo archivo de salida",
+      "-t": "Usar un carácter separador de registros distinto al salto de línea"
     },
     "name": "split",
     "category": "local_filesystem",
@@ -3045,14 +3060,15 @@
     "source_path": "local_network/commands/ss.adoc"
   },
   {
-    "description": "Mostrar estado y metadatos de un fichero o directorio.",
-    "usage": "stat [OPCIONES] FICHERO",
+    "description": "Exhibe metadatos exhaustivos de un objeto del sistema de archivos. Proporciona datos técnicos que 'ls' no muestra, como el número de inodo, el tamaño en bloques reales y marcas de tiempo de alta precisión.",
+    "usage": "stat -c '%a %n' archivo.txt",
     "options": {
-      "-c": "Mostrar información en formato personalizado",
-      "-f": "Mostrar información del sistema de ficheros",
-      "-L": "Seguir enlaces simbólicos",
-      "-t": "Formato compacto",
-      "--printf": "Usar printf para formato personalizado"
+      "-c": "Format: muestra la información usando un formato personalizado (usa secuencias %)",
+      "--printf": "Similar a -c, pero interpreta secuencias de escape (como \n) y no añade salto de línea automático",
+      "-f": "File system: muestra el estado del sistema de archivos en lugar del archivo en sí",
+      "-L": "Dereference: sigue enlaces simbólicos y muestra la información del destino real",
+      "-t": "Terse: imprime la información en un formato compacto de una sola línea",
+      "--help": "Mostrar la ayuda del comando"
     },
     "name": "stat",
     "category": "local_filesystem",
@@ -3181,35 +3197,37 @@
     "source_path": "local_services/commands/systemd-analyze.adoc"
   },
   {
-    "description": "Mostrar las últimas líneas de uno o más ficheros.",
-    "usage": "tail [OPCIONES] FICHERO",
+    "description": "Imprime las últimas líneas (10 por defecto) de cada archivo indicado. Es especialmente útil para leer archivos que crecen continuamente, como registros de auditoría o de sistema.",
+    "usage": "tail -f /var/log/apache2/access.log",
     "options": {
-      "-n": "Mostrar las últimas N líneas",
-      "-f": "Seguir un fichero conforme crece",
-      "-F": "Seguir fichero por nombre y reabrir si rota",
-      "-c": "Mostrar por bytes en lugar de líneas",
-      "-q": "Silenciar encabezados cuando se pasan varios ficheros"
+      "-n": "Número de líneas: muestra las últimas N líneas (o usa '+N' para empezar desde la línea N)",
+      "-f": "Follow: mantiene el archivo abierto y muestra las nuevas líneas según se van escribiendo",
+      "-F": "Follow retry: igual que -f, pero sigue intentando abrir el archivo si este se borra o se renombra (rotación de logs)",
+      "-c": "Bytes: muestra los últimos N bytes en lugar de líneas",
+      "-q": "Quiet: no imprime los encabezados con el nombre del archivo cuando se visualizan varios",
+      "-v": "Verbose: obliga a mostrar siempre el encabezado con el nombre del archivo",
+      "-s": "Sleep: con -f, espera N segundos entre cada comprobación del archivo"
     },
     "name": "tail",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/tail.adoc"
   },
   {
-    "description": "Empaquetamiento de múltiples archivos y directorios.",
-    "usage": "tar [OPCIONES] ARCHIVO",
+    "description": "Permite agrupar múltiples archivos en uno solo (.tar) y, opcionalmente, comprimirlos usando algoritmos como gzip, bzip2 o xz. Es la herramienta estándar para copias de seguridad y distribución de software en Unix.",
+    "usage": "tar -czvf backup.tar.gz /home/usuario",
     "options": {
-      "-c": "Crear un nuevo archivo tar",
-      "-f": "Especificar nombre de archivo tar",
-      "-x": "Extraer archivos de un tar",
-      "-t": "Listar contenido del tar",
-      "-v": "Verbose: mostrar archivos procesados",
-      "-z": "Comprimir/Descomprimir usando gzip (con -c/-x)",
-      "-j": "Usar bzip2",
-      "-J": "Usar xz",
-      "--exclude": "Excluir archivos/paths coincidentes",
-      "--strip-components": "Omitir N componentes del path al extraer",
-      "--no-same-owner": "No restaurar propietario (útil como usuario no root)",
-      "--remove-files": "Eliminar archivos que se han archivado"
+      "-c": "Create: crear un nuevo archivo de archivo (archive)",
+      "-x": "Extract: extraer el contenido de un archivo existente",
+      "-t": "List: listar el contenido de un archivo sin extraerlo",
+      "-f": "File: especificar el nombre del archivo resultante o de origen (obligatorio)",
+      "-v": "Verbose: mostrar en pantalla los archivos que se están procesando",
+      "-z": "Gzip: comprimir el archivo usando el algoritmo gzip (.tar.gz o .tgz)",
+      "-j": "Bzip2: comprimir el archivo usando bzip2 (.tar.bz2)",
+      "-J": "XZ: comprimir el archivo usando xz (.tar.xz) - Mayor compresión, más lento",
+      "-C": "Directory: cambiar a un directorio específico antes de realizar la operación",
+      "--exclude": "Excluir archivos o directorios que coincidan con un patrón",
+      "--strip-components": "Eliminar N niveles de directorios de la ruta al extraer",
+      "-p": "Preserve: mantener los permisos originales de los archivos"
     },
     "name": "tar",
     "category": "local_filesystem",
@@ -3302,27 +3320,31 @@
     "source_path": "local_process/commands/top.adoc"
   },
   {
-    "description": "Actualizar la marca temporal de un fichero o crear un fichero vacío si no existe.",
-    "usage": "touch [OPCIONES] FICHERO",
+    "description": "Actualiza la fecha y hora de acceso y modificación de un archivo. Si el archivo no existe, lo crea vacío, a menos que se indique lo contrario. Es fundamental para engañar a sistemas de compilación (como 'make') o para inicializar archivos de log.",
+    "usage": "touch -t 202501011200 archivo.txt",
     "options": {
-      "-a": "Cambiar solo el tiempo de acceso",
-      "-m": "Cambiar solo tiempo de modificación",
-      "-c": "No crear archivo si no existe",
-      "-t": "Establecer tiempo específico",
-      "-r": "Copiar timestamp de otro fichero"
+      "-a": "Access: cambia únicamente la hora de acceso",
+      "-m": "Modification: cambia únicamente la hora de modificación",
+      "-c": "No-create: si el archivo no existe, no lo crea y no muestra error",
+      "-t": "Timestamp: usar un formato específico [[CC]YY]MMDDhhmm[.ss]",
+      "-d": "Date: usar una cadena de texto libre para la fecha (ej: 'next Tuesday')",
+      "-r": "Reference: usar las marcas de tiempo de un archivo de referencia",
+      "-h": "Affect symlink: cambia el tiempo del enlace simbólico en lugar del destino"
     },
     "name": "touch",
     "category": "local_filesystem",
     "source_path": "local_filesystem/commands/touch.adoc"
   },
   {
-    "description": "Traducir o eliminar caracteres desde la entrada estándar.",
-    "usage": "tr [OPCIONES] CONJUNTO1 CONJUNTO2",
+    "description": "Transforma el texto carácter a carácter. Es ideal para cambiar mayúsculas/minúsculas, eliminar saltos de línea, limpiar caracteres especiales o normalizar espacios en blanco.",
+    "usage": "echo 'texto' | tr 'a-z' 'A-Z'",
     "options": {
-      "-d": "Eliminar caracteres",
-      "-s": "Sustituir repeticiones por una sola",
-      "-c": "Complementar el conjunto de caracteres",
-      "--help": "Mostrar ayuda"
+      "-d": "Delete: elimina del flujo todos los caracteres indicados en el conjunto",
+      "-s": "Squeeze: sustituye secuencias de caracteres repetidos por una sola ocurrencia",
+      "-c, -C": "Complement: aplica la operación a todos los caracteres que NO están en el conjunto",
+      "-t": "Truncate: trunca el primer conjunto a la longitud del segundo",
+      "--help": "Mostrar la ayuda del comando",
+      "--version": "Mostrar la versión del programa"
     },
     "name": "tr",
     "category": "local_filesystem",
@@ -3344,15 +3366,20 @@
     "source_path": "local_network/commands/traceroute.adoc"
   },
   {
-    "description": "Listar ficheros con estructura de árbol.",
-    "usage": "tree [OPCIONES]",
+    "description": "Genera una representación gráfica de la estructura de directorios. Es ideal para documentar proyectos, entender jerarquías complejas y localizar archivos rápidamente sin entrar en cada carpeta.",
+    "usage": "tree -L 2 /home/usuario",
     "options": {
-      "-d": "Mostrar solo directorios",
-      "-f": "Mostrar los archivos con su respectiva ruta",
-      "-a": "Mostrar archivos ocultos",
-      "-u": "Mostrar propietario de cada archivo",
-      "-g": "Mostrar grupos de ficheros",
-      "-h": "Mostrar peso de cada archivo"
+      "-d": "Directories: lista únicamente los directorios, ignorando los archivos",
+      "-f": "Full path: imprime el prefijo de la ruta completa para cada archivo",
+      "-a": "All: incluye archivos ocultos (aquellos que empiezan por punto '.')",
+      "-L": "Level: limita la profundidad máxima de visualización del árbol (ej: -L 2)",
+      "-P": "Pattern: lista solo los archivos que coincidan con el patrón (wildcard)",
+      "-I": "Ignore: excluye los archivos o directorios que coincidan con el patrón",
+      "-h": "Human-readable: muestra el tamaño de los archivos con sufijos (K, M, G)",
+      "-u": "User: muestra el propietario de cada archivo",
+      "-g": "Group: muestra el grupo de cada archivo",
+      "-p": "Permissions: muestra los permisos de cada archivo (estilo ls -l)",
+      "--dirsfirst": "Lista los directorios antes que los archivos"
     },
     "name": "tree",
     "category": "local_filesystem",
@@ -3382,15 +3409,17 @@
     "source_path": "local_permissions/commands/umask.adoc"
   },
   {
-    "description": "Eliminar lineas duplicadas consecutivas.",
-    "usage": "uniq [OPCIONES] FICHERO",
+    "description": "Elimina las líneas repetidas de un archivo, siempre que sean adyacentes. Es la herramienta estándar para resumir logs, contar frecuencias de eventos y limpiar listas de datos.",
+    "usage": "sort archivo.txt | uniq -c",
     "options": {
-      "-c": "Mostrar numero de repeticiones en columna",
-      "-d": "Mostrar lineas duplicadas",
-      "-u": "Mostrar lineas no duplicadas",
-      "-i": "Ignorar mayúsculas/minúsculas",
-      "-f": "Ignorar las primeras N columnas (palabras)",
-      "-s": "Ignorar los primeros N caracteres"
+      "-c": "Count: antepone a cada línea el número de veces que aparece en el archivo",
+      "-d": "Duplicates: muestra solamente las líneas que están repetidas",
+      "-D": "Mostrar todas las líneas duplicadas (no solo una instancia de cada)",
+      "-u": "Unique: muestra solamente las líneas que no están repetidas",
+      "-i": "Ignore-case: no distingue entre mayúsculas y minúsculas al comparar",
+      "-f": "Fields: evita comparar los primeros N campos (palabras separadas por espacios)",
+      "-s": "Chars: evita comparar los primeros N caracteres de cada línea",
+      "-w": "Width: limita la comparación a los primeros N caracteres de la línea"
     },
     "name": "uniq",
     "category": "local_filesystem",
@@ -3411,10 +3440,11 @@
     "source_path": "local_miscellaneous/commands/units.adoc"
   },
   {
-    "description": "Eliminar un enlace simbólico o fichero.",
-    "usage": "unlink FICHERO",
+    "description": "Realiza la función más básica de borrado: elimina el nombre del archivo de su directorio. Si ese nombre era el último enlace físico al archivo, los datos se eliminan definitivamente del disco.",
+    "usage": "unlink nombre_del_archivo",
     "options": {
-      "-h": "Mostrar ayuda breve"
+      "--help": "Mostrar la ayuda del comando y salir",
+      "--version": "Mostrar la información de versión y salir"
     },
     "name": "unlink",
     "category": "local_filesystem",
@@ -3437,16 +3467,16 @@
     "source_path": "local_services/commands/update-rc.d.adoc"
   },
   {
-    "description": "Actualizar la base de datos utilizada por el comando locate.",
-    "usage": "updatedb [OPCIONES]",
+    "description": "Escanea el sistema de archivos y construye una base de datos con los nombres y rutas de todos los archivos. Esto permite que 'locate' encuentre cualquier archivo en milisegundos. Generalmente se ejecuta mediante un cron job diario, pero puede lanzarse manualmente para indexar cambios recientes.",
+    "usage": "sudo updatedb",
     "options": {
-      "-U": "Definir directorios a indexar",
-      "-o": "Especificar archivo de base de datos",
-      "--prunepaths": "Excluir rutas",
-      "--prunefs": "Excluir sistemas de ficheros",
-      "--prunenames": "Excluir nombres concretos",
-      "--localpaths": "Indexar solo sistemas locales",
-      "--debug": "Mostrar información de depuración"
+      "-U": "Update: escanea e indexa únicamente el subárbol del directorio especificado",
+      "-o": "Output: guarda la base de datos en un archivo específico en lugar del predeterminado (/var/lib/mlocate/mlocate.db)",
+      "--prunepaths": "Exclude paths: lista de rutas separadas por espacios que no deben ser indexadas (ej. /tmp, /media)",
+      "--prunefs": "Exclude FS: tipos de sistemas de archivos que se deben ignorar (ej. nfs, SSHFS, tmpfs)",
+      "--prunenames": "Exclude names: nombres de archivos o directorios específicos a omitir (ej. .git, node_modules)",
+      "-l": "Local: (0 o 1) indica si se deben indexar solo sistemas de archivos locales",
+      "--debug": "Modo depuración: muestra qué directorios se están escaneando y por qué se omiten otros"
     },
     "name": "updatedb",
     "category": "local_filesystem",
@@ -3683,14 +3713,15 @@
     "source_path": "local_system_data/monitoring/commands/watch.adoc"
   },
   {
-    "description": "Contar líneas, palabras y bytes de uno o varios ficheros.",
-    "usage": "wc [OPCIONES] FICHERO",
+    "description": "Calcula estadísticas de recuento para los archivos proporcionados. Si se pasan varios archivos, genera una línea para cada uno y un total acumulado al final. Es una pieza clave en scripts para validar si un proceso generó datos o para contar ocurrencias de un patrón.",
+    "usage": "ls -l | wc -l",
     "options": {
-      "-l": "Mostrar número de líneas",
-      "-w": "Mostrar número de palabras",
-      "-c": "Mostrar número de bytes",
-      "-m": "Mostrar número de caracteres",
-      "-L": "Mostrar la longitud de la línea más larga"
+      "-l": "Lines: muestra el número de saltos de línea (útil para contar registros)",
+      "-w": "Words: muestra el número de palabras (delimitadas por espacios)",
+      "-c": "Bytes: muestra el tamaño total en bytes",
+      "-m": "Chars: muestra el número de caracteres (útil con codificaciones multibyte como UTF-8)",
+      "-L": "Max-line-length: muestra la longitud (en caracteres) de la línea más larga del archivo",
+      "--files0-from": "Lee los nombres de los archivos desde un archivo específico terminado en NUL"
     },
     "name": "wc",
     "category": "local_filesystem",
@@ -3747,16 +3778,17 @@
     "source_path": "local_network/commands/whois.adoc"
   },
   {
-    "description": "Construir y ejecutar comandos a partir de la entrada estándar.",
-    "usage": "xargs [OPCIONES] COMANDO",
+    "description": "Recoge datos de la entrada estándar (stdin) y los convierte en argumentos para otro comando. Es esencial para procesar listas de archivos generadas por 'find', 'ls' o 'grep', especialmente cuando la lista es demasiado larga para los límites del shell.",
+    "usage": "find . -name '*.tmp' | xargs rm",
     "options": {
-      "-n": "Número de argumentos por ejecución",
-      "-I": "Reemplazar argumentos con un marcador",
-      "-0": "Usar separador nulo",
-      "-p": "Confirmar antes de ejecutar",
-      "-t": "Mostrar el comando antes de ejecutarlo",
-      "-r": "No ejecutar si no hay entrada",
-      "--max-procs": "Ejecución en paralelo"
+      "-n": "Max-args: usa como máximo N argumentos por cada ejecución del comando",
+      "-I": "Replace: define un marcador (como {}) para insertar el argumento en una posición específica",
+      "-0": "Null: lee la entrada separada por caracteres nulos (indispensable para archivos con espacios)",
+      "-p": "Interactive: pide confirmación al usuario antes de ejecutar cada comando",
+      "-t": "Verbose: imprime el comando en la salida de error antes de ejecutarlo",
+      "-r": "No-run-if-empty: si la entrada solo contiene espacios o está vacía, no ejecuta el comando",
+      "-P": "Parallel: ejecuta hasta N procesos simultáneamente (ideal para tareas multi-núcleo)",
+      "-d": "Delimiter: define un carácter personalizado como separador de la entrada"
     },
     "name": "xargs",
     "category": "local_filesystem",
@@ -3809,16 +3841,18 @@
     "source_path": "local_system_data/graphics/commands/xwininfo.adoc"
   },
   {
-    "description": "Comprimir y descomprimir archivos usando el algoritmo LZMA/LZMA2.",
-    "usage": "xz [OPCIONES] FICHERO",
+    "description": "Utiliza algoritmos de compresión sin pérdida para reducir drásticamente el tamaño de los archivos. Aunque requiere más memoria y CPU para comprimir que sus competidores, la descompresión es muy rápida y el ahorro de espacio es superior.",
+    "usage": "xz -9 archivo.iso",
     "options": {
-      "-d": "Descomprimir archivos .xz",
-      "-k": "Mantener el archivo original",
-      "-l": "Mostrar información del archivo comprimido",
-      "-c": "Enviar salida a stdout",
-      "-t": "Comprobar integridad del archivo",
-      "-0-9": "Nivel de compresión (0-9)",
-      "-z": "Forzar compresión (opción por defecto)"
+      "-z": "Compress: fuerza la compresión (comportamiento por defecto)",
+      "-d": "Decompress: descompone el archivo .xz (equivalente a unxz)",
+      "-k": "Keep: mantiene el archivo original después de la operación (por defecto se borra)",
+      "-l": "List: muestra información técnica (tamaño original, comprimido, ratio, integridad)",
+      "-c": "Stdout: escribe el resultado en la salida estándar en lugar de crear un archivo",
+      "-t": "Test: verifica la integridad del archivo comprimido mediante sumas de comprobación (CRC)",
+      "-0...-9": "Compression level: ajusta el nivel de 0 (rápido) a 9 (máximo ahorro de espacio)",
+      "-e": "Extreme: intenta exprimir aún más la compresión usando más tiempo de CPU",
+      "-T": "Threads: utiliza múltiples núcleos para acelerar el proceso (ej: -T 0 para usar todos)"
     },
     "name": "xz",
     "category": "local_filesystem",
@@ -3851,14 +3885,17 @@
     "source_path": "local_software/commands/yum.adoc"
   },
   {
-    "description": "Filtro que permite examinar archivos comprimidos (gzip, zip, etc.) una pantalla a la vez. Funciona de manera idéntica al comando 'less' pero aplicado a archivos comprimidos.",
-    "usage": "zless [ARCHIVO]...",
+    "description": "Actúa como un visualizador de páginas (pager) para archivos comprimidos (principalmente .gz, .bz2, .xz). Al igual que 'less', no carga el archivo completo en memoria, lo que permite abrir archivos gigantescos de forma casi instantánea sin agotar los recursos del sistema.",
+    "usage": "zless /var/log/auth.log.1.gz",
     "options": {
-      "-N": "Mostrar números de línea",
-      "-S": "Cortar líneas largas en lugar de ajustarlas",
-      "-i": "Ignorar mayúsculas y minúsculas en las búsquedas",
-      "-m": "Mostrar porcentaje de lectura del archivo",
-      "-p": "Empezar la visualización en la primera coincidencia de un patrón"
+      "-N": "Line numbers: muestra el número de línea al principio de cada fila",
+      "-S": "Chop long lines: corta las líneas que exceden el ancho de la pantalla (evita el desorden visual)",
+      "-i": "Ignore case: hace que las búsquedas (usando /) no distingan entre mayúsculas y minúsculas",
+      "-m": "Prompt: muestra una barra de estado más detallada con el porcentaje del archivo leído",
+      "-p": "Pattern: abre el archivo y salta directamente a la primera aparición del patrón indicado",
+      "-X": "No-init: deja el contenido del archivo en la terminal al salir",
+      "G": "Ir al final del archivo (atajo de teclado)",
+      "g": "Ir al principio del archivo (atajo de teclado)"
     },
     "name": "zless",
     "category": "local_filesystem",
