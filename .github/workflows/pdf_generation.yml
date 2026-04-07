@@ -27,19 +27,15 @@ jobs:
         run: |
           mkdir -p pdf_outputs
           LANG_UPPER=$(echo "${{ matrix.lang }}" | tr '[:lower:]' '[:upper:]')
-          
           MODULES="local_fundamentals local_filesystem local_group local_network local_permissions local_scripts local_security local_services local_software local_storage local_system_data local_users"
           
           for MOD in $MODULES; do
             if [ -d "$MOD" ]; then
               mkdir -p "tmp_${{ matrix.lang }}/$MOD"
               cp -r "$MOD/"* "tmp_${{ matrix.lang }}/$MOD/"
-              
               python3 .github/scripts/translate_adoc.py "$MOD" "tmp_${{ matrix.lang }}/$MOD" ${{ matrix.lang }}
-              
               EXTRA=""
               [[ "${{ matrix.lang }}" =~ ^(zh|ko|ja)$ ]] && EXTRA="-a scripts=cjk -a lang=${{ matrix.lang }}"
-              
               asciidoctor-pdf "tmp_${{ matrix.lang }}/$MOD/index.adoc" \
                 -a pdf-theme=default -a pdf-fontsdir=/usr/share/fonts $EXTRA \
                 -o "pdf_outputs/${LANG_UPPER}_${MOD}.pdf"
@@ -65,34 +61,24 @@ jobs:
         with:
           path: all_pdfs
 
-      - name: Eliminacion de releases previas
+      - name: Limpieza de releases y tags
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Obteniendo lista de releases..."
-          gh release list --limit 15 | awk '{print $1}' | while read -r tag; do
-            echo "Borrando release: $tag"
-            gh release delete "$tag" --yes --cleanup-tag
+          RELEASES=$(gh release list --limit 100 --json tagName --jq '.[].tagName')
+          for tag in $RELEASES; do
+            gh release delete "$tag" --yes --cleanup-tag || true
           done
-
-      - name: Reinicio de tags
-        run: |
-          RELEASES=$(gh release list --limit 100 | cut -f 1)
-          for r in $RELEASES; do
-            echo "Borrando release: $r"
-            gh release delete "$r" -y --cleanup-tag || true
-          done
-
           git fetch --tags
           TAGS=$(git tag)
           for t in $TAGS; do
-            echo "Borrando tag remoto: $t"
             git push origin :refs/tags/"$t" || true
+            git tag -d "$t" || true
           done
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generacion de multi releases
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           LANGS="JA KO ZH RU PT DE EN FR ESP"
           
@@ -113,30 +99,19 @@ jobs:
 
           for L in $LANGS; do
             if [ "$L" == "ESP" ]; then FOLDER_LANG="es"; else FOLDER_LANG="${L,,}"; fi
-            
             FILES=$(find "all_pdfs/pdf-$FOLDER_LANG" -name "*.pdf" 2>/dev/null || true)
             
             if [ -n "$FILES" ]; then
-              echo "--- Publicando Release: $L ---"
-
-              git tag -d "$L" 2>/dev/null || true
+              DESC="Contenido traducido automáticamente."
+              [ "$L" == "ESP" ] && DESC="Documentación original sin filtros."
               
-              if [ "$L" == "ESP" ]; then
-                DESC="Documentación original sin filtros."
-              else
-                DESC="Contenido traducido automáticamente."
-              fi
-              
-              #NOTES="![Header]($IMG_BASE/${IMGS[$L]})\n\n## ${TITLES[$L]}\n\n$DESC"
-              NOTES="![Header]($IMG_BASE/${IMGS[$L]}) ## ${TITLES[$L]}"
+              echo -e "![Header]($IMG_BASE/${IMGS[$L]})\n\n## ${TITLES[$L]}\n\n$DESC" > desc.md
               
               gh release create "$L" $FILES \
                 --title "🔵 ${TITLES[$L]}" \
-                --notes "$NOTES" \
+                --notes-file desc.md \
                 --target ${{ github.sha }}
               
-              sleep 10
+              sleep 5
             fi
           done
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
