@@ -65,6 +65,16 @@ jobs:
         with:
           path: all_pdfs
 
+      - name: Eliminacion de releases previas
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Obteniendo lista de releases..."
+          gh release list --limit 15 | awk '{print $1}' | while read -r tag; do
+            echo "Borrando release: $tag"
+            gh release delete "$tag" --yes --cleanup-tag
+          done
+
       - name: Reinicio de tags
         run: |
           RELEASES=$(gh release list --limit 100 | cut -f 1)
