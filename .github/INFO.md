@@ -2,7 +2,7 @@
 
 **Linux Commands** es un repositorio creado por [Andrés Abadías (Nisamov)](https://github.com/Nisamov) con el objetivo de ofrecer información completa y accesible sobre comandos de Linux.  
 
-El formato de los comandos en los archivos `commands.md` se basa en el [Documento de Origen](.github/origins/LinuxCommandsOrigen.md), creado el 15/07/2022. La versión más actualizada se encuentra en [document_management/commands.md](/document_management/commands.md).
+El formato de los comandos en los archivos `commands.md` se basa en el [Documento de Origen](.github/origins/LinuxCommandsOrigen.md), donde a raíz de este, se creó el documento [LinuxDirectories](.github/origins/Directorios.txt) creado el 31/01/2023, el cual fué absorbido por LinuxCommands. La versión más actualizada se encuentra en [document_management/commands.md](/document_management/commands.md).
 
 ---
 
