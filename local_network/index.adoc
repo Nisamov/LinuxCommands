@@ -50,7 +50,13 @@ include::commands/nmcli.adoc[]
 include::commands/socat.adoc[]
 
 == IPTables
-include::iptables/iptables.adoc[]
+include::iptables/arptables/arptables.adoc[]
+include::iptables/ebtables/ebtables.adoc[]
+include::iptables/ip6tables/ip6tables.adoc[]
+include::iptables/iptables/iptables.adoc[]
+
+== NfTables
+include::nftables/nftables.adoc[]
 
 == SNMP
 include::snmp/theory/theory.adoc[]
