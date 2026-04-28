@@ -3399,12 +3399,21 @@
     "source_path": "local_security/network_security/firewall_ufw/commands/ufw.adoc"
   },
   {
-    "description": "Establecer los permisos predeterminados para nuevos archivos y directorios creados por el usuario.",
-    "usage": "umask [MÁSCARA]",
-    "options": {
-      "MÁSCARA": "Especifica la máscara de permisos en formato octal (por ejemplo, 022) o simbólico (por ejemplo, u=rwx,g=rx,o=rx)"
-    },
     "name": "umask",
+    "description": "Establece el modo de creación de archivos aplicando un filtrado de bits mediante una operación lógica de complemento sobre los permisos base.",
+    "usage": "umask [-S] [-p] [MÁSCARA]",
+    "tags": [
+      "permissions",
+      "kernel",
+      "syscall",
+      "bitmask",
+      "security"
+    ],
+    "options": {
+      "-S": "Output en formato simbólico (representación lógica de bits activados).",
+      "-p": "Genera salida en formato de comando reutilizable.",
+      "MÁSCARA": "Valor octal de 3 o 4 dígitos que representa los bits a filtrar."
+    },
     "category": "local_permissions",
     "source_path": "local_permissions/commands/umask.adoc"
   },
