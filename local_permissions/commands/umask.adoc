@@ -1,29 +1,56 @@
 === umask
-Establece los permisos predeterminados para nuevos archivos y directorios creados por el usuario.
+
+Define la máscara de bits que determina los permisos que no se asignarán a los archivos y directorios recién creados en el proceso actual.
 
 :category: local_permissions
+
 [.metadata]
 {
-  "description": "Establecer los permisos predeterminados para nuevos archivos y directorios creados por el usuario.",
-  "usage": "umask [MÁSCARA]",
+  "name": "umask",
+  "description": "Establece el modo de creación de archivos aplicando un filtrado de bits mediante una operación lógica de complemento sobre los permisos base.",
+  "usage": "umask [-S] [-p] [MÁSCARA]",
+  "tags": ["permissions", "kernel", "syscall", "bitmask", "security"],
   "options": {
-    "MÁSCARA": "Especifica la máscara de permisos en formato octal (por ejemplo, 022) o simbólico (por ejemplo, u=rwx,g=rx,o=rx)"
+    "-S": "Output en formato simbólico (representación lógica de bits activados).",
+    "-p": "Genera salida en formato de comando reutilizable.",
+    "MÁSCARA": "Valor octal de 3 o 4 dígitos que representa los bits a filtrar."
   }
 }
 
+==== Fundamentos Técnicos
+
+A diferencia de `chmod`, que establece permisos absolutos, `umask` actúa como un **filtro**. Cuando un proceso realiza la llamada al sistema `open()` o `mkdir()`, el kernel calcula los permisos finales mediante la operación lógica:
+
+* Modo Base (Archivos): `666` (octal) `rw-rw-rw-`
+* Modo Base (Directorios): `777` (octal) `rwxrwxrwx`
+
+==== Análisis de Máscaras Comunes
+
+[cols="1,2,2,3", options="header"]
+|===
+| umask | Binario (u/g/o) | Permisos (Dir) | Implicación de Seguridad
+| `0022` | `000 010 010` | `755 / rwxr-xr-x` | Estándar: Escritura solo para propietario.
+| `0027` | `000 010 111` | `750 / rwxr-x---` | Entornos compartidos: Grupo lee, otros nada.
+| `0077` | `000 111 111` | `700 / rwx------` | Alta seguridad: Solo acceso al propietario.
+|===
+
+==== Implementación en Shell
+
 [source,bash]
 ----
-# Ver la máscara de permisos actual
+# Obtener representación octal de 4 dígitos (incluyendo sticky bit/SUID/SGID)
 umask
-
-# Establecer permisos predeterminados
-umask 022
-
-# Establecer permisos más restrictivos
-umask 077
+# Representación simbólica (bits permitidos, no filtrados)
+# Resultado típico: u=rwx,g=rx,o=rx
+umask -S
+# Configuración de máscara para sesión actual
+# Filtra bit de escritura para grupo y todos los bits para otros
+umask 027
 ----
 
-ver:: `umask` Muestra la máscara de permisos actual
-022:: `umask 022` Permite que los archivos nuevos tengan permisos 644 y los directorios 755
-077:: `umask 077` Permite que los archivos y directorios nuevos sean accesibles solo por el propietario
+==== Persistencia y Herencia
+
+El valor de `umask` es un atributo del proceso. Se hereda del proceso padre (normalmente el shell) y se define generalmente en los archivos de inicialización:
+1.  `/etc/profile` o `/etc/bashrc` (Global)
+2.  `~/.bashrc` o `~/.bash_profile` (Usuario)
 
