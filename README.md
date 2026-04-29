@@ -19,17 +19,22 @@
     <td style="padding: 0 15px;">
       <a href="https://nisamov.github.io/LinuxCommands/contributors" title="Contribuciones"><img src=".github/media/icons/contributions.png" width="28" alt="Contribuciones"></a>
     </td>
+    <!--
     <td style="padding: 0 15px;">
       <a href="https://hikarune.online" title="Proyectos Recomendados"><img src=".github/media/icons/hikarune.ico" width="28" alt="Otros Proyectos"></a>
     </td>
+    -->
   </tr>
   <tr align="center">
     <td><small><b><a href="https://nisamov.github.io/LinuxCommands/contributors" title="Contribuciones">Wikipedia</a></b></small></td>
     <td><small><b><a href="http://linuxcommands.wikidot.com/" title="Wikidot">Wikidot</a></b></small></td>
     <td><small><b><a href="https://nisamov.github.io/LinuxCommands/" title="GitHub Pages">Git Pages</a></b></small></td>
     <td><small><b><a href="https://github.com/nisamov/LinuxCommands/blob/main/docs/commands.json" title="JSON Database">JSON DB</a></b></small></td>
-    <td><small><b><a href="https://nisamov.github.io/LinuxCommands/contributors" title="Contribuciones">Contribuyentes</a></b></small></td>
-    <td><small><b><a href="https://hikarune.online" title="Proyectos Recomendados">Otros Proyectos</a></b></small></td>
+    <td><small><b><a href="https://nisamov.github.io/LinuxCommands/contributors" title="Contribuciones">Aports</a></b></small></td>
+    <!--
+    <td><small><b><a href="https://hikarune.online" title="Proyectos Recomendados">New Proj</a></b></small></td>
+    -->
+    <!--Proyectos nuevo [publicidad]-->
   </tr>
 </table>
 
