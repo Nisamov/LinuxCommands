@@ -1,0 +1,32 @@
+name: Auto Update Repository Tree
+# Genera una estructura de arbol con cada push
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+jobs:
+  update-tree:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Generate README tree
+        run: python .github/scripts/tree_generation.py
+      - name: Commit changes if needed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          if git diff --cached --quiet; then
+            echo "No changes detected"
+          else
+            git commit -m "docs: auto update repository tree"
+            git push
+          fi
