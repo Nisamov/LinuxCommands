@@ -89,12 +89,8 @@ La organización del repositorio está pensada para facilitar la navegación y e
 
 <details>
   <summary id="estrucutra_completa">Estructura completa del repositorio</summary>
-  <pre><code>
-
 <!-- AUTO-GENERATED-TREE:START -->
 <!-- AUTO-GENERATED-TREE:END -->
-
-  </code></pre>
 </details>
 
 ---
