@@ -89,7 +89,8 @@ La organización del repositorio está pensada para facilitar la navegación y e
 
 <details>
   <summary id="estrucutra_completa">Estructura completa del repositorio</summary>
-  <pre><code>
+<!-- AUTO-GENERATED-TREE:START -->
+<pre><code>
 LinuxCommands
 ├── .github
 │   ├── ISSUE_TEMPLATE
@@ -121,16 +122,13 @@ LinuxCommands
 │   ├── scripts
 │   │   ├── build_commands_db.py
 │   │   ├── generate_readme_index.py
-│   │   └── translate_adoc.py
+│   │   ├── translate_adoc.py
+│   │   └── tree_generation.py
 │   ├── templates
 │   │   ├── asciidocument_command.adoc
 │   │   ├── asciidocument_docs.adoc
 │   │   ├── asciidocument_index.adoc
 │   │   └── markdown.md
-│   ├── workflows
-│   │   ├── auto-readme.yml
-│   │   ├── pdf_generation.yml
-│   │   └── update-db.yml
 │   ├── .gitattributes
 │   ├── .gitignore
 │   ├── CODE_OF_CONDUCT.md
@@ -203,6 +201,9 @@ LinuxCommands
 │   │   │   └── slappasswd.adoc
 │   │   ├── open_ladp
 │   │   │   └── documentation.adoc
+│   │   ├── provisioning
+│   │   │   ├── file1.ldif
+│   │   │   └── file2.ldif
 │   │   ├── samba_ldap
 │   │   │   └── documentation.adoc
 │   │   ├── documentation.adoc
@@ -704,7 +705,8 @@ LinuxCommands
 │   └── README.md
 ├── LICENSE
 └── README.md
-  </code></pre>
+</code></pre>
+<!-- AUTO-GENERATED-TREE:END -->
 </details>
 
 ---

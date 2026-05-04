@@ -1,0 +1,51 @@
+dn: dc=nisa,dc=company
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: nisa.company
+dc: nisa
+
+dn: ou=usuarios,dc=nisa,dc=company
+objectClass: organizationalUnit
+ou: usuarios
+
+dn: ou=grupos,dc=nisa,dc=company
+objectClass: organizationalUnit
+ou: grupos
+
+dn: cn=admin,ou=usuarios,dc=nisa,dc=company
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: admin
+sn: NisaAdmin
+uid: admin
+uidNumber: 1001
+gidNumber: 500
+homeDirectory: /home/admin
+loginShell: /bin/bash
+userPassword: {SSHA}j3k4H5k6L7m8N9o0P1q2R3s4T5u6V7w8
+mail: admin@nisa.company
+
+dn: cn=juan.perez,ou=usuarios,dc=nisa,dc=company
+objectClass: inetOrgPerson
+objectClass: posixAccount
+cn: juan.perez
+sn: Perez
+uid: jperez
+uidNumber: 1002
+gidNumber: 501
+homeDirectory: /home/jperez
+loginShell: /bin/sh
+userPassword: {SSHA}a1b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6
+mail: jperez@nisa.company
+
+dn: cn=it_staff,ou=grupos,dc=nisa,dc=company
+objectClass: groupOfNames
+cn: it_staff
+member: cn=admin,ou=usuarios,dc=nisa,dc=company
+
+dn: cn=ventas,ou=grupos,dc=nisa,dc=company
+objectClass: groupOfNames
+cn: ventas
+member: cn=juan.perez,ou=usuarios,dc=nisa,dc=company
