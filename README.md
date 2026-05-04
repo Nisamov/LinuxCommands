@@ -731,11 +731,9 @@ El repositorio se adapta a diferentes lenguas mediante la automatización de la 
 <p align="center">
   <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/ESP">Español</a>
   &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/ENG">English</a>
+  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/EN">English</a>
   &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/DE">Deutsch</a>
-  &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/FR">Français</a>
   &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="https://github.com/Nisamov/LinuxCommands/releases/tag/PT">Português</a>
   &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
