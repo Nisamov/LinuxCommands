@@ -3090,6 +3090,21 @@
     "source_path": "local_process/commands/strace.adoc"
   },
   {
+    "description": "Herramienta diseñada para poner a prueba los límites del hardware y el kernel mediante el estrés de CPU, memoria, E/S, red y más, ayudando a identificar cuellos de botella o inestabilidades.",
+    "usage": "stress-ng [OPCIONES] [NÚMERO_DE_ESTRESORES]",
+    "options": {
+      "--cpu": "Inicia estresores de CPU",
+      "--vm": "Inicia estresores de memoria virtual (RAM)",
+      "--io": "Inicia estresores de entrada/salida (I/O)",
+      "--timeout": "Detiene el estrés después de un tiempo determinado (s, m, h, d)",
+      "--metrics-brief": "Muestra un resumen de métricas al finalizar",
+      "--temp-path": "Define la ruta para archivos temporales de estrés"
+    },
+    "name": "stress-ng",
+    "category": "local_process",
+    "source_path": "local_process/commands/stress-ng.adoc"
+  },
+  {
     "description": "Cambiar de usuario en el sistema o ejecutar comandos con la identidad de otro usuario",
     "usage": "su [OPCIONES] USUARIO",
     "options": {
