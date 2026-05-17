@@ -1,6 +1,6 @@
 # Linux Commands
 
-**Linux Commands** es un repositorio creado por [Andrés Abadías (Nisamov)](https://github.com/Nisamov) con el objetivo de ofrecer información completa y accesible sobre comandos de Linux.  
+**Linux Commands** es un repositorio creado por [Andrés Abadías (Nisamov)](https://github.com/nisamov) con el objetivo de ofrecer información completa y accesible sobre comandos de Linux.  
 
 El formato de los comandos en los archivos `commands.md` se basa en el [Documento de Origen](.github/origins/LinuxCommandsOrigen.md), donde a raíz de este, se creó el documento [LinuxDirectories](.github/origins/Directorios.txt) creado el 31/01/2023, el cual fué absorbido por LinuxCommands. La versión más actualizada se encuentra en [document_management/commands.md](/document_management/commands.md).
 
@@ -26,6 +26,7 @@ El repositorio se creó oficialmente el `25/11/2023` a las `10:42`, marcando el 
 8. **08/02/2026** – Se implementa una subpágina de búsqueda que permite indexar el repositorio y consultar comandos de manera rápida y eficiente.
 9. **03/03/2026** - Se crea la página wikidot para albergar la explicación e historia del repositorio.
 10. **16/03/2026** - Se cambia el formato de traducción de lineal a multithreading, ahorrando hasta 5 horas de espera.
+11. **17/05/2026** - El repositorio pasa a ser un proyecto secundario con la creación de [linuxcore](https://github.com/nisamov/linuxcore)
 
 Los idiomas disponibles son:  
    - Español, Inglés, Francés, Portugués, Alemán, Ruso, Chino, Japonés y Coreano.
@@ -43,7 +44,7 @@ Al pasar a grado superior, el conocimiento acumulado fué reorganizado, creando 
 
 El repositorio ha contado con la colaboración de varias personas, quienes han aportado contenido, subcategorías y mejoras en general:
 
-- ⥏﹅⥑ [Andrés Abadías](https://github.com/Nisamov) – Creador del repositorio 
+- ⥏﹅⥑ [Andrés Abadías](https://github.com/nisamov) – Creador del repositorio 
     - Creador y principal mano de obra del repositorio, aportando estructura, legibilidad y gran variedad de contenido, permitiendo hacer el repositorio escalable y otorgando una licencia MIT al repositorio.
 - ⥏﹆⥑ Clara Cirac Nerín – Profesora (Grado Medio)
     - Ayudó con la creación del documento Origen, sentando bases para lo que en el futuro sería el repositorio.
@@ -54,7 +55,7 @@ El repositorio ha contado con la colaboración de varias personas, quienes han a
 - ⥏﹆⥑ David Torralba – Profesor (Grado Superior)
     - Aportó detalles que permitieron expandir el repositorio (certificados, auditorias locales y seguridad [kerberos])
 - ⥏﹆⥑ Unai Urrestarazu – Profesor (Grado Medio y  Superior)
-    - Contribyó con el ámbito de red (mayormente para el repositorio [RouterSwitchCommands](https://github.com/Nisamov/RouterSwitchCommands)), aportando en este repositorio teoría de red (dhcp, redes locales, iptables, interfaces e ipfire).
+    - Contribyó con el ámbito de red (mayormente para el repositorio [RouterSwitchCommands](https://github.com/nisamov/RouterSwitchCommands)), aportando en este repositorio teoría de red (dhcp, redes locales, iptables, interfaces e ipfire).
 
 ---
 
