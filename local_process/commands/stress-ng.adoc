@@ -1,0 +1,81 @@
+=== stress-ng
+Herramienta avanzada para cargar y estresar los componentes del sistema.
+
+:category: local_process
+[.metadata]
+{
+  "description": "Herramienta diseñada para poner a prueba los límites del hardware y el kernel mediante el estrés de CPU, memoria, E/S, red y más, ayudando a identificar cuellos de botella o inestabilidades.",
+  "usage": "stress-ng [OPCIONES] [NÚMERO_DE_ESTRESORES]",
+  "options": {
+    "--cpu": "Inicia estresores de CPU",
+    "--vm": "Inicia estresores de memoria virtual (RAM)",
+    "--io": "Inicia estresores de entrada/salida (I/O)",
+    "--timeout": "Detiene el estrés después de un tiempo determinado (s, m, h, d)",
+    "--metrics-brief": "Muestra un resumen de métricas al finalizar",
+    "--temp-path": "Define la ruta para archivos temporales de estrés"
+  }
+}
+
+[source,bash]
+----
+# Estresar 4 núcleos de CPU durante 60 segundos
+# En caso de no indicar el flujo de tiempo (s, m, h, d), por defecto usará segundos
+stress-ng --cpu 4 --timeout 60s
+----
+
+-Estrés de CPU (--cpu):: Crea procesos que calculan funciones complejas (como raíces cuadradas o matrices) para consumir ciclos de reloj.
+
+[source,bash]
+----
+# Estresar todos los núcleos disponibles al máximo
+stress-ng --cpu 0 --cpu-method all
+----
+
+-Estrés de Memoria (--vm):: Crea estresores que reservan y escriben en la memoria RAM para probar la gestión de memoria virtual.
+
+[source,bash]
+----
+# Estresar 2 procesos de memoria consumiendo 1GB cada uno
+stress-ng --vm 2 --vm-bytes 1G
+----
+
+-Estrés de Disco e I/O (--io / --hdd):: Simula una carga pesada de lectura y escritura en el sistema de archivos.
+
+[source,bash]
+----
+# Estresar la entrada/salida de disco con 3 trabajadores
+stress-ng --hdd 3 --hdd-opts direct
+----
+
+-Limitación por tiempo (--timeout):: Es fundamental definir un límite de tiempo para evitar que el sistema se vuelva permanentemente inestable.
+
+[source,bash]
+----
+# Ejecutar una prueba de carga general durante 5 minutos
+stress-ng --cpu 4 --io 2 --vm 1 --timeout 5m
+----
+
+-Métricas de rendimiento (--metrics-brief):: Al terminar el proceso, muestra cuántas operaciones se realizaron por segundo (bogo ops).
+
+[source,bash]
+----
+# Ver el rendimiento de la CPU mientras se estresa
+stress-ng --cpu 2 --timeout 10s --metrics-brief
+----
+
+-Simulación de fallos de red (--udp / --tcp):: Estresa el stack de red enviando paquetes a través de interfaces locales.
+
+[source,bash]
+----
+# Estresar el protocolo UDP con 2 trabajadores
+stress-ng --udp 2 --timeout 30s
+----
+
+-Control de agresividad:: Puedes definir qué tan "duro" es el estrés ajustando el número de instancias (trabajadores).
+
+[source,bash]
+----
+# Si usas 0, stress-ng detectará automáticamente el número de hilos del procesador
+stress-ng --cpu 0
+----
+

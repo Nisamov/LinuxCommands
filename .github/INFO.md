@@ -26,10 +26,11 @@ El repositorio se creó oficialmente el `25/11/2023` a las `10:42`, marcando el 
 8. **08/02/2026** – Se implementa una subpágina de búsqueda que permite indexar el repositorio y consultar comandos de manera rápida y eficiente.
 9. **03/03/2026** - Se crea la página wikidot para albergar la explicación e historia del repositorio.
 10. **16/03/2026** - Se cambia el formato de traducción de lineal a multithreading, ahorrando hasta 5 horas de espera.
-11. **17/05/2026** - El repositorio pasa a ser un proyecto secundario con la creación de [linuxcore](https://github.com/nisamov/linuxcore)
+11. **02/05/2026** - Se automatiza la generación de estructura de repositorio completo en README
+12. **17/05/2026** - El repositorio pasa a ser un proyecto secundario con la creación de [linuxcore](https://github.com/nisamov/linuxcore)
 
 Los idiomas disponibles son:  
-   - Español, Inglés, Francés, Portugués, Alemán, Ruso, Chino, Japonés y Coreano.
+   - Español, Inglés, Portugués, Alemán, Ruso, Chino, Japonés y Coreano.
 ---
 
 ## Apoyo Escolar
